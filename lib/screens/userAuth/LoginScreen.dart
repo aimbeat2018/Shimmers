@@ -2,7 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmers/constant/textConstant.dart';
 
-import '../constant/globalFunction.dart';
+import '../../constant/colorsConstant.dart';
+import '../../constant/globalFunction.dart';
 import 'PasswordScreen.dart';
 
 class LoginScreen extends StatefulWidget{
@@ -42,7 +43,7 @@ class LoginScreenState extends State<LoginScreen>{
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 40,horizontal: 25),
           child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Padding(
@@ -92,10 +93,10 @@ class LoginScreenState extends State<LoginScreen>{
                     style: ButtonStyle(
                       backgroundColor:
                       MaterialStateProperty.all<
-                          Color>(Colors.blueAccent),
+                          Color>(primaryColor),
                       foregroundColor:
                       MaterialStateProperty.all<
-                          Color>(Colors.blueAccent),
+                          Color>(primaryColor),
                       textStyle: MaterialStateProperty
                           .all<TextStyle>(
                         const TextStyle(fontSize: 16),
@@ -134,7 +135,7 @@ class LoginScreenState extends State<LoginScreen>{
                     )),
               ),
               SizedBox(
-                height: 50,
+                height: 150,
               ),
               Align(
                 alignment: Alignment.bottomCenter,

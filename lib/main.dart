@@ -5,8 +5,10 @@ import 'package:responsive_framework/responsive_breakpoints.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:responsive_framework/responsive_scaled_box.dart';
 import 'package:responsive_framework/responsive_value.dart';
-import 'package:shimmers/screens/LoginScreen.dart';
-import 'package:shimmers/screens/PasswordScreen.dart';
+import 'package:shimmers/screens/userAuth/LoginScreen.dart';
+import 'package:shimmers/screens/userAuth/PasswordResetScreen.dart';
+import 'package:shimmers/screens/userAuth/PasswordResetScreen.dart';
+import 'package:shimmers/screens/userAuth/PasswordScreen.dart';
 
 import 'constant/conditional_route_widget.dart';
 import 'constant/routes.dart';
@@ -91,8 +93,8 @@ class MyApp extends StatelessWidget {
         return const LoginScreen();
       case PasswordScreen.name:
         return const PasswordScreen();
-      // case HomeScreen.name:
-      //   return     HomeScreen();
+      case PasswordResetScreen.name:
+        return const PasswordResetScreen();
       // case OtpScreen.name:
       //   return const OtpScreen();
       // case ProfileScreen.name:

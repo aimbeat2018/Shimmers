@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmers/constant/textConstant.dart';
+import 'package:shimmers/screens/home/mainScreen.dart';
 
-import '../constant/globalFunction.dart';
+import '../../constant/colorsConstant.dart';
+import '../../constant/globalFunction.dart';
+import 'PasswordResetScreen.dart';
 
 class PasswordScreen extends StatefulWidget{
   static const String name ='password';
@@ -17,14 +20,14 @@ class PasswordScreenState extends State<PasswordScreen>{
 
   bool _isLoading = false;
 
-  final _mobileOrEmailController = TextEditingController();
+  final _passwordController = TextEditingController();
   List<FocusNode> _focusNodes = [
     FocusNode(),
   ];
 
   @override
   void initState() {
-
+print('password');
     _focusNodes.forEach((node) {
       node.addListener(() {
         setState(() {});
@@ -62,9 +65,9 @@ class PasswordScreenState extends State<PasswordScreen>{
                           style: const TextStyle(fontSize: 14),
                           decoration:
                           GlobalFunctions.getInputDecoration(
-                            TextConstant.enterMobileNumberEmail,
+                            TextConstant.enterPassword,
                           ),
-                          controller: _mobileOrEmailController,
+                          controller: _passwordController,
                           keyboardType: TextInputType.text,
                           validator: (input) =>
                           // !RegExp(r"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=
@@ -74,7 +77,7 @@ class PasswordScreenState extends State<PasswordScreen>{
                               ? TextConstant.enterMobileNumberEmail
                               : null,
                           onSaved: (value) {
-                            _mobileOrEmailController.text =
+                            _passwordController.text =
                             value as String;
                           },
                         ),
@@ -92,10 +95,10 @@ class PasswordScreenState extends State<PasswordScreen>{
                             style: ButtonStyle(
                               backgroundColor:
                               MaterialStateProperty.all<
-                                  Color>(Colors.blueAccent),
+                                  Color>(primaryColor),
                               foregroundColor:
                               MaterialStateProperty.all<
-                                  Color>(Colors.blueAccent),
+                                  Color>(primaryColor),
                               textStyle: MaterialStateProperty
                                   .all<TextStyle>(
                                 const TextStyle(fontSize: 16),
@@ -133,6 +136,19 @@ class PasswordScreenState extends State<PasswordScreen>{
                                   FontWeight.w500),
                             )),
                       ),
+                      const SizedBox(height: 10),
+                      new GestureDetector(
+                        onTap: () {
+                          forgetPassword();
+                        },
+                        child: Align(
+                            alignment: Alignment.topLeft,
+                            child: Text(
+                              TextConstant.forgetPassword,
+                              style: TextStyle(fontWeight: FontWeight.normal,color: primaryColor),
+                            )
+                        ),
+                      )
                     ],
                   ),
                 )
@@ -143,11 +159,17 @@ class PasswordScreenState extends State<PasswordScreen>{
   }
 
   void _submit() {
-    // Navigator.of(context)
-    //     .push(MaterialPageRoute(
-    //     builder: (context) =>
-    //         PasswordScreen()));
-  // },
-}
+    Navigator.of(context)
+        .push(MaterialPageRoute(
+        builder: (context) =>
+            MainScreen()));
+  }
 
-}
+
+  forgetPassword() {
+    Navigator.of(context)
+        .push(MaterialPageRoute(
+        builder: (context) => PasswordResetScreen()));
+
+    }
+  }

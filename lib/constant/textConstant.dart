@@ -1,7 +1,7 @@
 class TextConstant {
   static String appName = "Shimmers";
   static String enterMobileNumberEmail = "Enter Mobile Number / Email";
-  static String forgetPassword = "Forget Password";
+  static String forgetPassword = "Forget Password?";
   static String enterPassword = "Enter Password";
   static String sendPasswordResetLink = "Send Password Reset Link";
   static String passwordResetMsg = "We will be sending you a password reset\nlink on register Email or Mobile Number";

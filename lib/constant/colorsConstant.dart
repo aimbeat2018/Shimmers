@@ -6,6 +6,7 @@ const BASE_URL =
 
 // list of colors that we use in our app
 const kBackgroundColor = Color(0xFFFEF2E3);
+const primaryColor = Color(0xFF1E8ECF);
 const kComplimentaryBackgroundColor = Color(0xFF7BA4FF);
 const kDarkButtonBg = Color(0xFF273546);
 const kSecondaryColor = Color(0xFF808080);

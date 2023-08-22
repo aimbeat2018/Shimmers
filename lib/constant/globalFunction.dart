@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'colorsConstant.dart';
+
 class GlobalFunctions {
 
   static InputDecoration getInputDecoration(String hintext) {
     return InputDecoration(
       enabledBorder: const OutlineInputBorder(
         borderRadius: BorderRadius.all(Radius.circular(12.0)),
-        borderSide: BorderSide(color: Colors.blueAccent, width: 2),
+        borderSide: BorderSide(color: primaryColor, width: 2),
       ),
       focusedBorder: const OutlineInputBorder(
         borderRadius: BorderRadius.all(Radius.circular(12.0)),
-        borderSide: BorderSide(color: Colors.blueAccent, width: 2),
+        borderSide: BorderSide(color: primaryColor, width: 2),
       ),
       border: const OutlineInputBorder(
-        borderSide: BorderSide(color: Colors.blueAccent),
+        borderSide: BorderSide(color: primaryColor),
         borderRadius: BorderRadius.all(
           Radius.circular(12.0),
         ),
@@ -28,7 +30,7 @@ class GlobalFunctions {
         borderSide: BorderSide(color: Color(0xFFF65054)),
       ),
       filled: true,
-      hintStyle: const TextStyle(color: Colors.black, fontSize: 14),
+      hintStyle: const TextStyle(color: Colors.black54, fontSize: 14),
       hintText: hintext,
       fillColor: Colors.white,
       contentPadding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
