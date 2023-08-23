@@ -39,45 +39,44 @@ class _MainScreenState extends State<MainScreen> {
             NavigationBarItem(
                 icon: Icons.home_outlined,
                 activeIcon: Icons.home,
-                color: primaryColor,
-                indicatorColor: primaryColor,
+                color: Colors.white,
+                indicatorColor: Colors.white,
                 onTap: () {
                   onTapHandler(0);
                 }),
             NavigationBarItem(
                 icon: Icons.calendar_month_outlined,
                 activeIcon: Icons.calendar_month,
-                color: primaryColor,
-                indicatorColor: primaryColor,
+                color: Colors.white,
+                indicatorColor: Colors.white,
                 onTap: () {
                   onTapHandler(1);
                 }),
             NavigationBarItem(
                 icon: Icons.school_outlined,
                 activeIcon: Icons.school,
-                color: primaryColor,
-                indicatorColor: primaryColor,
+                color: Colors.white,
+                indicatorColor: Colors.white,
                 onTap: () {
                   onTapHandler(2);
                 }),
             NavigationBarItem(
                 icon: Icons.person_outline,
                 activeIcon: Icons.person,
-                color: primaryColor,
-                indicatorColor: primaryColor,
+                color: Colors.white,
+                indicatorColor: Colors.white,
                 onTap: () {
                   onTapHandler(3);
                 })
           ],
           style: MoonyNavStyle(
             activeColor: Colors.white,
-
             indicatorPosition: IndicatorPosition.TOP,
             indicatorType: IndicatorType.LINE,
             indicatorColor: Colors.white,
             borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(25),
-              topRight: Radius.circular(25),
+              topLeft: Radius.circular(5),
+              topRight: Radius.circular(5),
             ),
           ),
         ),
