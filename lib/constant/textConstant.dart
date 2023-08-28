@@ -3,6 +3,9 @@ class TextConstant {
   static String enterMobileNumberEmail = "Enter Mobile Number / Email";
   static String forgetPassword = "Forget Password?";
   static String enterPassword = "Enter Password";
+  static String hello_abc = "Hello! User ABC";
+  static String veri_text="We will be sending you a password reset link on register Email or Mobile Number";
+
   static String sendPasswordResetLink = "Send Password Reset Link";
   static String passwordResetMsg = "We will be sending you a password reset\nlink on register Email or Mobile Number";
   static String NeedHelp = "Need Help?";

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:moony_nav_bar/moony_nav_bar.dart';
 import 'package:shimmers/constant/colorsConstant.dart';
 
 import 'homeScreen.dart';
@@ -28,59 +27,10 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        // appBar: AppBar(
-        //   title: const Text('Moony navigation bar'),
-        // ),
-        body: getBody(),
-        bottomNavigationBar: MoonyNavigationBar(
-          items: <NavigationBarItem>[
-            NavigationBarItem(
-                icon: Icons.home_outlined,
-                activeIcon: Icons.home,
-                color: Colors.white,
-                indicatorColor: Colors.white,
-                onTap: () {
-                  onTapHandler(0);
-                }),
-            NavigationBarItem(
-                icon: Icons.calendar_month_outlined,
-                activeIcon: Icons.calendar_month,
-                color: Colors.white,
-                indicatorColor: Colors.white,
-                onTap: () {
-                  onTapHandler(1);
-                }),
-            NavigationBarItem(
-                icon: Icons.school_outlined,
-                activeIcon: Icons.school,
-                color: Colors.white,
-                indicatorColor: Colors.white,
-                onTap: () {
-                  onTapHandler(2);
-                }),
-            NavigationBarItem(
-                icon: Icons.person_outline,
-                activeIcon: Icons.person,
-                color: Colors.white,
-                indicatorColor: Colors.white,
-                onTap: () {
-                  onTapHandler(3);
-                })
-          ],
-          style: MoonyNavStyle(
-            activeColor: Colors.white,
-            indicatorPosition: IndicatorPosition.TOP,
-            indicatorType: IndicatorType.LINE,
-            indicatorColor: Colors.white,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(5),
-              topRight: Radius.circular(5),
-            ),
-          ),
-        ),
-      ),
+
+    return Scaffold(
+
+      body: getBody(),
     );
   }
 

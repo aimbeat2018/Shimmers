@@ -27,7 +27,7 @@ class PasswordScreenState extends State<PasswordScreen>{
 
   @override
   void initState() {
-print('password');
+   print('password');
     _focusNodes.forEach((node) {
       node.addListener(() {
         setState(() {});
@@ -49,40 +49,57 @@ print('password');
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(top:40.0,bottom: 20),
-
-                        child: Image.asset('assets/images/logo.png',
-                          height: 150,
-                          width: 150,),
+                        child: Image.asset('assets/images/user_blue.png',
+                          height: 120,
+                          width: 120,),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            left: 20.0,
-                            top: 0.0,
-                            right: 20.0,
-                            bottom: 8.0),
-                        child: TextFormField(
-                          focusNode: _focusNodes[0],
-                          style: const TextStyle(fontSize: 14),
-                          decoration:
-                          GlobalFunctions.getInputDecoration(
-                            TextConstant.enterPassword,
+                      SizedBox(height: 80,),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('Enter Password',style: TextStyle(color: primaryColor),),
+                          SizedBox(height: 20,),
+                          Container(
+                            decoration: BoxDecoration(
+                              boxShadow: [
+                                BoxShadow(
+                                  color: primaryColor,
+                                  blurRadius: 12.0, // soften the shadow
+                                  spreadRadius: 0.5, //extend the shadow
+                                  offset: Offset(
+                                    1.0, // Move to right 5  horizontally
+                                    1.0, // Move to bottom 5 Vertically
+                                  ),
+                                )
+                              ],
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: TextFormField(
+                              focusNode: _focusNodes[0],
+                              style: const TextStyle(fontSize: 14),
+                              decoration:
+                              GlobalFunctions.getInputDecoration(
+                                TextConstant.enterPassword,
+                              ),
+                              controller: _passwordController,
+                              keyboardType: TextInputType.text,
+                              validator: (input) =>
+                              // !RegExp(r"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=
+                              // ?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
+                              //         .hasMatch(input!)
+                              input.toString() == ""
+                                  ? TextConstant.enterMobileNumberEmail
+                                  : null,
+                              onSaved: (value) {
+                                _passwordController.text =
+                                value as String;
+                              },
+                            ),
                           ),
-                          controller: _passwordController,
-                          keyboardType: TextInputType.text,
-                          validator: (input) =>
-                          // !RegExp(r"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=
-                          // ?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
-                          //         .hasMatch(input!)
-                          input.toString() == ""
-                              ? TextConstant.enterMobileNumberEmail
-                              : null,
-                          onSaved: (value) {
-                            _passwordController.text =
-                            value as String;
-                          },
-                        ),
+                        ],
                       ),
-                      const SizedBox(height: 10),
+                      const SizedBox(height: 30),
                       SizedBox(
                         width: 200,
                         // height: 45,
@@ -127,16 +144,19 @@ print('password');
                               // ));
                               _submit();
                             },
-                            child: Text(
-                              TextConstant.log_in,
-                              style: const TextStyle(
-                                  fontSize: 15,
-                                  color: Colors.white,
-                                  fontWeight:
-                                  FontWeight.w500),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                TextConstant.log_in.toUpperCase(),
+                                style: const TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.white,
+                                    fontWeight:
+                                    FontWeight.w500),
+                              ),
                             )),
                       ),
-                      const SizedBox(height: 10),
+                      const SizedBox(height: 30),
                       new GestureDetector(
                         onTap: () {
                           forgetPassword();
@@ -162,7 +182,7 @@ print('password');
     Navigator.of(context)
         .push(MaterialPageRoute(
         builder: (context) =>
-            MainScreen()));
+            PasswordResetScreen()));
   }
 
 

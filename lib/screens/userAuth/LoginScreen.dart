@@ -4,6 +4,7 @@ import 'package:shimmers/constant/textConstant.dart';
 
 import '../../constant/colorsConstant.dart';
 import '../../constant/globalFunction.dart';
+import 'PasswordResetScreen.dart';
 import 'PasswordScreen.dart';
 
 class LoginScreen extends StatefulWidget{
@@ -49,38 +50,57 @@ class LoginScreenState extends State<LoginScreen>{
               Padding(
                 padding: const EdgeInsets.only(top:40.0,bottom: 20),
 
-                  child: Image.asset('assets/images/logo.png',
+                  child: Image.asset('assets/images/logohd.png',
                   height: 150,
                   width: 150,),
                 ),
-              Padding(
-                padding: const EdgeInsets.only(
-                    left: 20.0,
-                    top: 0.0,
-                    right: 20.0,
-                    bottom: 8.0),
-                child: TextFormField(
-                  focusNode: _focusNodes[0],
-                  style: const TextStyle(fontSize: 14),
-                  decoration:
-                  GlobalFunctions.getInputDecoration(
-                    TextConstant.enterMobileNumberEmail,
+              SizedBox(height: 80,),
+
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Enter Mobile Number/Email',style: TextStyle(color: primaryColor),),
+                  SizedBox(height: 20,),
+                  Container(
+                    decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          color: primaryColor,
+                          blurRadius: 12.0, // soften the shadow
+                          spreadRadius: 0.5, //extend the shadow
+                          offset: Offset(
+                            1.0, // Move to right 5  horizontally
+                            1.0, // Move to bottom 5 Vertically
+                          ),
+                        )
+                      ],
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: TextFormField(
+                      focusNode: _focusNodes[0],
+                      style: const TextStyle(fontSize: 14),
+                      decoration:
+                      GlobalFunctions.getInputDecoration(
+                        TextConstant.enterMobileNumberEmail,
+                      ),
+                      controller: _mobileOrEmailController,
+                      keyboardType: TextInputType.text,
+                      validator: (input) =>
+                      // !RegExp(r"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
+                      //         .hasMatch(input!)
+                      input.toString() == ""
+                          ? TextConstant.enterMobileNumberEmail
+                          : null,
+                      onSaved: (value) {
+                        _mobileOrEmailController.text =
+                        value as String;
+                      },
+                    ),
                   ),
-                  controller: _mobileOrEmailController,
-                  keyboardType: TextInputType.text,
-                  validator: (input) =>
-                  // !RegExp(r"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
-                  //         .hasMatch(input!)
-                  input.toString() == ""
-                      ? TextConstant.enterMobileNumberEmail
-                      : null,
-                  onSaved: (value) {
-                    _mobileOrEmailController.text =
-                    value as String;
-                  },
-                ),
+                ],
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 30),
               SizedBox(
                 width: 200,
                 // height: 45,
@@ -125,13 +145,16 @@ class LoginScreenState extends State<LoginScreen>{
                       // ));
                       _submit();
                     },
-                    child: Text(
-                      TextConstant.next,
-                      style: const TextStyle(
-                          fontSize: 15,
-                          color: Colors.white,
-                          fontWeight:
-                          FontWeight.w500),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        TextConstant.next.toUpperCase(),
+                        style: const TextStyle(
+                            fontSize: 16,
+                            color: Colors.white,
+                            fontWeight:
+                            FontWeight.w500),
+                      ),
                     )),
               ),
               SizedBox(
@@ -141,7 +164,7 @@ class LoginScreenState extends State<LoginScreen>{
                 alignment: Alignment.bottomCenter,
               child: Text(
                 TextConstant.NeedHelp,
-                style: TextStyle(fontWeight: FontWeight.normal),
+                style: TextStyle(fontWeight: FontWeight.normal,color: primaryColor),
               )
               )
             ],
