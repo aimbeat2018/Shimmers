@@ -4,10 +4,12 @@ class TextConstant {
   static String forgetPassword = "Forget Password?";
   static String enterPassword = "Enter Password";
   static String hello_abc = "Hello! User ABC";
-  static String veri_text="We will be sending you a password reset link on register Email or Mobile Number";
+  static String veri_text =
+      "We will be sending you a password reset link on register Email or Mobile Number";
 
   static String sendPasswordResetLink = "Send Password Reset Link";
-  static String passwordResetMsg = "We will be sending you a password reset\nlink on register Email or Mobile Number";
+  static String passwordResetMsg =
+      "We will be sending you a password reset\nlink on register Email or Mobile Number";
   static String NeedHelp = "Need Help?";
   static String log_in = "Log In";
   static String next = "Next";
@@ -28,35 +30,26 @@ class TextConstant {
   static String Attendance = "Attendance";
   static String Profile = "Profile";
   static String EmployeeName = "Employee Name";
+  static String enterEmployeeName = "Enter Employee Name";
   static String DateOfBirth = "Date Of Birth";
   static String EmployeeAddress = "Employee Address";
+  static String enterEmployeeAddress = "Enter Employee Address";
   static String MobileNumber = "Mobile Number";
+  static String enterMobileNumber = "Enter Mobile Number";
+  static String MobileNumber1 = "Enter Mobile Number/Email";
   static String Email = "Email";
   static String Password = "Password";
   static String Designation = "Designation";
   static String Notification = "Notification";
-  // static String Useryouarebeingmissedtoday,Areyouonleave? = "User, you are being missed today, Are you on leave?";
-  // static String Campaigns = "Campaigns";
-  // static String Active = "Active";
-  // static String Others = "Others";
-  // static String Search = "Search...";
-  // static String View Report = "View Report";
-  // static String View Response = "View Response";
-  // static String Campaign Report = "Campaign Report";
-  // static String Average of all the rated response = "(Average of all the rated response)";
-  // static String Rating Trend = "Rating Trend";
-  // static String Salon Targeted = "Salon Targeted";
-  // static String Salon included in response = "Salon included in response";
-  // static String Total response = "Total response";
-  // static String Market Visit Report - = "Market Visit Report -";
-  // static String This form is to filled out whenever the trainer visit the salon. = "This form is to filled out whenever the trainer visit the salon.";
-  // static String Please note = "Please note -";
-  // static String View instructions = "View instructions";
-  // static String Submit the Image of the Salon. = "Submit the Image of the Salon.";
-  // static String Please click the Image of the salon % submit it.
-  // The name of the salon has to be clear. = "Please click the Image of the salon % submit it.
-  // The name of the salon has to be clear.";
-  // static String Salon included in response = "Salon included in response";
-  // static String Editable on mobile = "Editable on mobile";
-  // static String  = "";
+  static String profile = "Profile";
+  static String submit = "Submit";
+  static String mySchedule = "My Schedule";
+  static String history = "History";
+  static String schedule = "Schedule";
+  static String attendance = "Attendance";
+  static String totalWorkingDays = "TOTAL WORKING DAYS";
+  static String totalAbsents = "Total Absents";
+  static String totalPresent = "Total Presents";
+  static String applyForLeave = "Apply For Leave";
+  static String leaves = "Leaves";
 }

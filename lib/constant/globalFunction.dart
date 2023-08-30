@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import 'colorsConstant.dart';
 
 class GlobalFunctions {
-
   static InputDecoration getInputDecoration(String hintext) {
     return InputDecoration(
       enabledBorder: const OutlineInputBorder(
@@ -36,6 +34,7 @@ class GlobalFunctions {
       contentPadding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
     );
   }
+
 /*
   static InputDecoration getInputDecorationPurple(String hintext, IconData iconData) {
     return InputDecoration(
@@ -106,7 +105,8 @@ class GlobalFunctions {
     );
   }
 
-  static InputDecoration getInputDecorationWhiteBGBlackBroderColor(String hintext) {
+  static InputDecoration getInputDecorationWhiteBGBlackBroderColor(
+      String hintext) {
     return InputDecoration(
       enabledBorder: const OutlineInputBorder(
         borderRadius: BorderRadius.all(Radius.circular(12.0)),
@@ -142,6 +142,27 @@ class GlobalFunctions {
       contentPadding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
     );
   }
+
+  /// Returns a list of [DateTime] objects from [first] to [last], inclusive.
+  List<DateTime> daysInRange(DateTime first, DateTime last) {
+    final dayCount = last.difference(first).inDays + 1;
+    return List.generate(
+      dayCount,
+      (index) => DateTime.utc(first.year, first.month, first.day + index),
+    );
+  }
+
+  static final kToday = DateTime.now();
+
+  static DateTime getFirstDay() {
+    return DateTime(kToday.year, kToday.month - 3, kToday.day);
+  }
+
+  static DateTime getLastDay() {
+    return DateTime(kToday.year, kToday.month + 3, kToday.day);
+  }
+// final kFirstDay = DateTime(kToday.year, kToday.month - 3, kToday.day);
+// final kLastDay = DateTime(kToday.year, kToday.month + 3, kToday.day);
 /*
 
   static String getCurrentDate() {
