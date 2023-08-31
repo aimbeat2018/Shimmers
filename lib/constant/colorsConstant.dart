@@ -60,4 +60,3 @@ const kDefaultShadow = BoxShadow(
   blurRadius: 20,
   color: Colors.black12, // Black color with 12% opacity
 );
-

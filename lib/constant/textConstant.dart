@@ -52,4 +52,14 @@ class TextConstant {
   static String totalPresent = "Total Presents";
   static String applyForLeave = "Apply For Leave";
   static String leaves = "Leaves";
+  static String applyForNewLeaves = "Apply For New Leave";
+  static String leaveType = "Leave Type";
+  static String leaveDuration = "Leave Duration";
+  static String fromDate = "From Date";
+  static String toDate = "To Date";
+  static String note = "Note";
+  static String newStr = "New";
+  static String existing = "Existing";
+  static String notAssigned = "Not Assigned";
+  static String addSalon = "Add Salon";
 }

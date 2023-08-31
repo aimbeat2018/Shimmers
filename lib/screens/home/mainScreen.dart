@@ -91,7 +91,7 @@ class _MainScreenState extends State<MainScreen> {
         curve: Curves.ease,
         duration: Duration(milliseconds: 200),
       ),
-      navBarStyle: NavBarStyle.style9,
+      navBarStyle: NavBarStyle.style1,
     );
   }
 }

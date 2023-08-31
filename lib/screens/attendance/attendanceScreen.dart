@@ -83,13 +83,13 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                 calendarBuilders: CalendarBuilders(
                   defaultBuilder: (context, day, focusedDay) {
                     for (DateTime d in eventList) {
-                      print(d.day);
-                      print(d.month);
-                      print(d.year);
-
-                      print("day" + day.day.toString());
-                      print("month" + day.month.toString());
-                      print("year" + day.year.toString());
+                      // print(d.day);
+                      // print(d.month);
+                      // print(d.year);
+                      //
+                      // print("day" + day.day.toString());
+                      // print("month" + day.month.toString());
+                      // print("year" + day.year.toString());
 
                       if (day.day == d.day &&
                           day.month == d.month &&

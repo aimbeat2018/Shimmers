@@ -4,6 +4,7 @@ import 'package:shimmers/screens/attendance/applyLeaveScreen.dart';
 import 'package:shimmers/screens/attendance/leavesScreen.dart';
 import 'package:shimmers/screens/home/mainScreen.dart';
 import 'package:shimmers/screens/profile/profileScreen.dart';
+import 'package:shimmers/screens/salons/salonListScreen.dart';
 import 'package:shimmers/screens/userAuth/LoginScreen.dart';
 import 'package:shimmers/screens/userAuth/PasswordResetScreen.dart';
 import 'package:shimmers/screens/userAuth/PasswordScreen.dart';
@@ -88,6 +89,8 @@ class MyApp extends StatelessWidget {
         return const LeavesScreen();
       case ApplyLeaveScreen.name:
         return const ApplyLeaveScreen();
+      case SalonListScreen.name:
+        return const SalonListScreen();
       default:
         return const SizedBox.shrink();
     }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shimmers/screens/profile/profileScreen.dart';
+import 'package:shimmers/screens/salons/salonListScreen.dart';
 
 import '../../constant/colorsConstant.dart';
 import '../../constant/textConstant.dart';
@@ -63,7 +63,7 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                               child: InkWell(
                                 onTap: () {
                                   Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (context) => ProfileScreen()));
+                                      builder: (context) => SalonListScreen()));
                                 },
                                 child: SizedBox(
                                   height: 135,
