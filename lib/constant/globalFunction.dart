@@ -74,6 +74,20 @@ class GlobalFunctions {
 */
   static InputDecoration getInputDecorationWhite(String hintext) {
     return InputDecoration(
+      enabledBorder: const OutlineInputBorder(
+        borderRadius: BorderRadius.all(Radius.circular(12.0)),
+        borderSide: BorderSide(color: Colors.white, width: 2),
+      ),
+      focusedBorder: const OutlineInputBorder(
+        borderRadius: BorderRadius.all(Radius.circular(12.0)),
+        borderSide: BorderSide(color: Colors.white, width: 2),
+      ),
+      border: const OutlineInputBorder(
+        borderSide: BorderSide(color: Colors.white),
+        borderRadius: BorderRadius.all(
+          Radius.circular(12.0),
+        ),
+      ),
       /*enabledBorder: const OutlineInputBorder(
         borderRadius: BorderRadius.all(Radius.circular(12.0)),
         borderSide: BorderSide(color: Colors.black, width: 2),

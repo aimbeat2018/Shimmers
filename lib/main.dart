@@ -4,7 +4,10 @@ import 'package:shimmers/screens/attendance/applyLeaveScreen.dart';
 import 'package:shimmers/screens/attendance/leavesScreen.dart';
 import 'package:shimmers/screens/home/mainScreen.dart';
 import 'package:shimmers/screens/profile/profileScreen.dart';
-import 'package:shimmers/screens/salons/salonListScreen.dart';
+import 'package:shimmers/screens/salons/addSalon/addFinalSalonScreen.dart';
+import 'package:shimmers/screens/salons/addSalon/addSalonBasicDetailsScreen.dart';
+import 'package:shimmers/screens/salons/addSalon/addSalonPersonalDetailsScreen.dart';
+import 'package:shimmers/screens/salons/salonList/salonListScreen.dart';
 import 'package:shimmers/screens/userAuth/LoginScreen.dart';
 import 'package:shimmers/screens/userAuth/PasswordResetScreen.dart';
 import 'package:shimmers/screens/userAuth/PasswordScreen.dart';
@@ -91,6 +94,15 @@ class MyApp extends StatelessWidget {
         return const ApplyLeaveScreen();
       case SalonListScreen.name:
         return const SalonListScreen();
+      case AddSalonBasicDetailsScreen.name:
+        return const AddSalonBasicDetailsScreen();
+      case AddSalonPersonalDetailsScreen.name:
+        return AddSalonPersonalDetailsScreen(
+          salonCategory: "",
+          salonName: "",
+        );
+      case AddFinalSalonScreen.name:
+        return const AddFinalSalonScreen();
       default:
         return const SizedBox.shrink();
     }

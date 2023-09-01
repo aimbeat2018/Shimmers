@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:shimmers/screens/salons/existingSalonsScreen.dart';
-import 'package:shimmers/screens/salons/newSalonsScreen.dart';
-import 'package:shimmers/screens/salons/notAssignedSalonsScreen.dart';
+import 'package:shimmers/screens/salons/salonList/existingSalonsScreen.dart';
+import 'package:shimmers/screens/salons/salonList/newSalonsScreen.dart';
 
-import '../../constant/colorsConstant.dart';
-import '../../constant/textConstant.dart';
+import '../../../constant/colorsConstant.dart';
+import '../../../constant/textConstant.dart';
 
 class SalonListScreen extends StatefulWidget {
   static const String name = 'salonListScreen';
@@ -21,7 +20,7 @@ class _SalonListScreenState extends State<SalonListScreen> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      length: 2,
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: primaryColor,
@@ -31,24 +30,24 @@ class _SalonListScreenState extends State<SalonListScreen> {
             style: const TextStyle(
                 color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
           ),
-          actions: [
-            Padding(
-              padding: const EdgeInsets.only(right: 10.0),
-              child: Image.asset(
-                'assets/images/sort.png',
-                height: 20,
-                width: 20,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(right: 10.0),
-              child: Image.asset(
-                'assets/images/filter.png',
-                height: 25,
-                width: 25,
-              ),
-            ),
-          ],
+          // actions: [
+          //   Padding(
+          //     padding: const EdgeInsets.only(right: 10.0),
+          //     child: Image.asset(
+          //       'assets/images/sort.png',
+          //       height: 20,
+          //       width: 20,
+          //     ),
+          //   ),
+          //   Padding(
+          //     padding: const EdgeInsets.only(right: 10.0),
+          //     child: Image.asset(
+          //       'assets/images/filter.png',
+          //       height: 25,
+          //       width: 25,
+          //     ),
+          //   ),
+          // ],
           bottom: TabBar(
             indicatorColor: Colors.white,
             tabs: [
@@ -58,9 +57,9 @@ class _SalonListScreenState extends State<SalonListScreen> {
               Tab(
                 text: TextConstant.existing,
               ),
-              Tab(
-                text: TextConstant.notAssigned,
-              )
+              // Tab(
+              //   text: TextConstant.notAssigned,
+              // )
             ],
           ),
         ),
@@ -68,7 +67,7 @@ class _SalonListScreenState extends State<SalonListScreen> {
           children: [
             NewSalonsScreen(),
             ExistingSalonsScreen(),
-            NotAssignedSalonsScreen()
+            // NotAssignedSalonsScreen()
           ],
         ),
       ),

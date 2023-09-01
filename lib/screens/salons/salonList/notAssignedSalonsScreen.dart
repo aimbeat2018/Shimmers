@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:shimmers/constant/colorsConstant.dart';
-import 'package:shimmers/constant/textConstant.dart';
 
-import '../../model/scheduleModel.dart';
+import '../../../constant/colorsConstant.dart';
+import '../../../constant/textConstant.dart';
+import '../../../model/scheduleModel.dart';
+import 'listWidget/locationSalonsWidget.dart';
 
-class NewSalonsScreen extends StatefulWidget {
-  const NewSalonsScreen({Key? key}) : super(key: key);
+class NotAssignedSalonsScreen extends StatefulWidget {
+  const NotAssignedSalonsScreen({Key? key}) : super(key: key);
 
   @override
-  State<NewSalonsScreen> createState() => _NewSalonsScreenState();
+  State<NotAssignedSalonsScreen> createState() =>
+      _NotAssignedSalonsScreenState();
 }
 
-class _NewSalonsScreenState extends State<NewSalonsScreen> {
+class _NotAssignedSalonsScreenState extends State<NotAssignedSalonsScreen> {
   List<ScheduleModel> scheduleList = [
     ScheduleModel(
         salonName: "Purple - The Family Salon",
@@ -47,7 +49,7 @@ class _NewSalonsScreenState extends State<NewSalonsScreen> {
               Align(
                 alignment: Alignment.topRight,
                 child: Container(
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(10)),
                       color: primaryColor),
                   child: Padding(
@@ -56,11 +58,11 @@ class _NewSalonsScreenState extends State<NewSalonsScreen> {
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.add_circle_outline,
                           color: Colors.white,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 5,
                         ),
                         Text(
@@ -75,37 +77,17 @@ class _NewSalonsScreenState extends State<NewSalonsScreen> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               ListView.builder(
-                  physics: AlwaysScrollableScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   itemCount: scheduleList.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return ExpansionTile(
-                      title: Text(scheduleList[index].location!),
-                      subtitle: Text(scheduleList[index].time!),
-                      initiallyExpanded: index == selectedTile,
-                      children: [
-                        ListView.builder(
-                            physics: NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            itemCount: scheduleList.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return Text(scheduleList[index].location!);
-                            })
-                      ],
-                      onExpansionChanged: ((newState) {
-                        if (newState)
-                          setState(() {
-                            selectedTile = index;
-                          });
-                        else
-                          setState(() {
-                            selectedTile = -1;
-                          });
-                      }),
+                    return LocationSalonsWidget(
+                      model: scheduleList[index],
+                      position: index,
                     );
                   })
             ],

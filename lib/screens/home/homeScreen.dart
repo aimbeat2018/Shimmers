@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shimmers/screens/salons/salonListScreen.dart';
+import 'package:shimmers/screens/salons/salonList/salonListScreen.dart';
 
 import '../../constant/colorsConstant.dart';
 import '../../constant/textConstant.dart';

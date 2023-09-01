@@ -62,4 +62,23 @@ class TextConstant {
   static String existing = "Existing";
   static String notAssigned = "Not Assigned";
   static String addSalon = "Add Salon";
+  static String cancel = "Cancel";
+  static String yes = "Yes";
+  static String backTitle =
+      "Are you sure? This will remove the added information.";
+  static String backDescription =
+      "Going back will delete the information added. you will have to add the Salon again.";
+  static String salonCategory = "Salon Category";
+  static String salonName = "Salon Name";
+  static String salonImage = "Salon Image";
+  static String gstNumber = "GST Number";
+  static String pincode = "Pincode";
+  static String companyAddress = "Company Address";
+  static String shippingAddress = "Shipping Address";
+  static String country = "Country";
+  static String state = "State";
+  static String city = "City";
+  static String contactPersonName = "Contact Person Name";
+  static String contactPersonNumber = "Contact Person Number";
+  static String salonType = "Salon Type";
 }
