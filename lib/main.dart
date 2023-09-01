@@ -7,6 +7,7 @@ import 'package:shimmers/screens/profile/profileScreen.dart';
 import 'package:shimmers/screens/salons/addSalon/addFinalSalonScreen.dart';
 import 'package:shimmers/screens/salons/addSalon/addSalonBasicDetailsScreen.dart';
 import 'package:shimmers/screens/salons/addSalon/addSalonPersonalDetailsScreen.dart';
+import 'package:shimmers/screens/salons/salonDetails/salonDetailsScreen.dart';
 import 'package:shimmers/screens/salons/salonList/salonListScreen.dart';
 import 'package:shimmers/screens/userAuth/LoginScreen.dart';
 import 'package:shimmers/screens/userAuth/PasswordResetScreen.dart';
@@ -97,12 +98,14 @@ class MyApp extends StatelessWidget {
       case AddSalonBasicDetailsScreen.name:
         return const AddSalonBasicDetailsScreen();
       case AddSalonPersonalDetailsScreen.name:
-        return AddSalonPersonalDetailsScreen(
+        return const AddSalonPersonalDetailsScreen(
           salonCategory: "",
           salonName: "",
         );
       case AddFinalSalonScreen.name:
         return const AddFinalSalonScreen();
+      case SalonDetailsScreen.name:
+        return const SalonDetailsScreen();
       default:
         return const SizedBox.shrink();
     }

@@ -81,4 +81,17 @@ class TextConstant {
   static String contactPersonName = "Contact Person Name";
   static String contactPersonNumber = "Contact Person Number";
   static String salonType = "Salon Type";
+  static String route = "Route";
+  static String updateStock = "Update Stock";
+  static String takeOrder = "Take Order";
+  static String takeFeedback = "Take Feedback";
+  static String collectPayment = "Collect Payment";
+  static String takeNote = "Take Note";
+  static String reportCampaign = "Report Campaign";
+  static String demonstrate = "Demonstrate";
+  static String scheduleVisitsAndCalls = "Scheduled Visits and Calls";
+  static String recentNotes = "Recent Notes";
+  static String stage = "Stage";
+  static String outstandingPayment = "Outstanding Payment";
+  static String availableCredit = "Available Credit";
 }

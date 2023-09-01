@@ -654,6 +654,71 @@ class _AddFinalSalonScreenState extends State<AddFinalSalonScreen> {
                                 }).toList()),
                           ),
                         ),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        Align(
+                          alignment: Alignment.topLeft,
+                          child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 8.0),
+                              child: RichText(
+                                  text: TextSpan(
+                                      style: const TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w500),
+                                      children: <TextSpan>[
+                                    TextSpan(
+                                      text: TextConstant.route,
+                                    ),
+                                    TextSpan(
+                                      text: ' *',
+                                      style: const TextStyle(
+                                          color: Colors.red,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                  ]))),
+                        ),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        Container(
+                          width: MediaQuery.of(context).size.width,
+                          padding: EdgeInsets.symmetric(horizontal: 15),
+                          decoration: BoxDecoration(
+                            boxShadow: const [
+                              BoxShadow(
+                                color: primaryColor,
+                                blurRadius: 12.0, // soften the shadow
+                                spreadRadius: 0.5, //extend the shadow
+                                offset: Offset(
+                                  1.0, // Move to right 5  horizontally
+                                  1.0, // Move to bottom 5 Vertically
+                                ),
+                              )
+                            ],
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: DropdownButtonHideUnderline(
+                            child: DropdownButton(
+                                isExpanded: true,
+                                value: _selectedLocation,
+                                onChanged: (newValue) {
+                                  setState(() {
+                                    _selectedLocation = newValue;
+                                  });
+                                },
+                                items: _locations.map((location) {
+                                  return DropdownMenuItem(
+                                    child: new Text(location),
+                                    value: location,
+                                  );
+                                }).toList()),
+                          ),
+                        ),
                         const SizedBox(height: 30),
                         SizedBox(
                           width: 200,
