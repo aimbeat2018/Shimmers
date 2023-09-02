@@ -7,11 +7,11 @@ class GlobalFunctions {
     return InputDecoration(
       enabledBorder: const OutlineInputBorder(
         borderRadius: BorderRadius.all(Radius.circular(12.0)),
-        borderSide: BorderSide(color: primaryColor, width: 2),
+        borderSide: BorderSide(color: primaryColor, width: 1),
       ),
       focusedBorder: const OutlineInputBorder(
         borderRadius: BorderRadius.all(Radius.circular(12.0)),
-        borderSide: BorderSide(color: primaryColor, width: 2),
+        borderSide: BorderSide(color: primaryColor, width: 1),
       ),
       border: const OutlineInputBorder(
         borderSide: BorderSide(color: primaryColor),

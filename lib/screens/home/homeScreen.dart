@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shimmers/screens/distributors/distributorsScreen.dart';
 import 'package:shimmers/screens/salons/salonList/salonListScreen.dart';
 
 import '../../constant/colorsConstant.dart';
@@ -98,33 +99,40 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             ),
                             VerticalDividerFadeUp(),
                             Center(
-                              child: SizedBox(
-                                height: 135,
-                                width: 115,
-                                child: Column(
-                                  children: [
-                                    SizedBox(
-                                      height: 20,
-                                    ),
-                                    Image.asset(
-                                      'assets/images/distribution.png',
-                                      width: 35,
-                                      height: 35,
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(15.0),
-                                      child: Text(
-                                        TextConstant.Distributor,
-                                        maxLines: 2,
-                                        textAlign: TextAlign.center,
-                                        overflow: TextOverflow.clip,
-                                        style: const TextStyle(
-                                            color: primaryColor,
-                                            fontSize: 13,
-                                            fontWeight: FontWeight.w600),
+                              child: InkWell(
+                                onTap: () {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) =>
+                                          DistributorsScreen()));
+                                },
+                                child: SizedBox(
+                                  height: 135,
+                                  width: 115,
+                                  child: Column(
+                                    children: [
+                                      SizedBox(
+                                        height: 20,
                                       ),
-                                    ),
-                                  ],
+                                      Image.asset(
+                                        'assets/images/distribution.png',
+                                        width: 35,
+                                        height: 35,
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(15.0),
+                                        child: Text(
+                                          TextConstant.Distributor,
+                                          maxLines: 2,
+                                          textAlign: TextAlign.center,
+                                          overflow: TextOverflow.clip,
+                                          style: const TextStyle(
+                                              color: primaryColor,
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.w600),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),

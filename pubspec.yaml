@@ -45,6 +45,7 @@ dependencies:
   intl: ^0.18.0
   table_calendar: ^3.0.9
   syncfusion_flutter_datepicker: ^22.2.11
+  flutter_animate: ^4.2.0+1
 
 dev_dependencies:
   flutter_test:

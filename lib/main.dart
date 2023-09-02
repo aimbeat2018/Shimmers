@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:shimmers/screens/attendance/applyLeaveScreen.dart';
 import 'package:shimmers/screens/attendance/leavesScreen.dart';
+import 'package:shimmers/screens/distributors/distributorWiseSalonScreen.dart';
 import 'package:shimmers/screens/home/mainScreen.dart';
 import 'package:shimmers/screens/profile/profileScreen.dart';
 import 'package:shimmers/screens/salons/addSalon/addFinalSalonScreen.dart';
@@ -106,6 +107,10 @@ class MyApp extends StatelessWidget {
         return const AddFinalSalonScreen();
       case SalonDetailsScreen.name:
         return const SalonDetailsScreen();
+      case DistributorWiseSalonScreen.name:
+        return DistributorWiseSalonScreen(
+          distributorName: '',
+        );
       default:
         return const SizedBox.shrink();
     }

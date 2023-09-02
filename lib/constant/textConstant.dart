@@ -15,7 +15,7 @@ class TextConstant {
   static String next = "Next";
   static String helloUser = "Hello! User ";
   static String Salon = "Salon";
-  static String Distributor = "Distributor";
+  static String Distributor = "Distributors";
   static String Campaigns = "Campaigns";
   static String Learn = "Learn";
   static String Activity = "Activity";
@@ -90,8 +90,12 @@ class TextConstant {
   static String reportCampaign = "Report Campaign";
   static String demonstrate = "Demonstrate";
   static String scheduleVisitsAndCalls = "Scheduled Visits and Calls";
+  static String scheduleVisitsAndCallsMsg =
+      "Schedule Calls and Visits at specific times with the salon..";
   static String recentNotes = "Recent Notes";
+  static String recentNotesMsg =
+      "Make note of your important discussion with the salon";
   static String stage = "Stage";
-  static String outstandingPayment = "Outstanding Payment";
+  static String outstandingPayment = "Outstanding\nPayment";
   static String availableCredit = "Available Credit";
 }
