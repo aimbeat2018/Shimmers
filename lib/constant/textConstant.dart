@@ -98,4 +98,9 @@ class TextConstant {
   static String stage = "Stage";
   static String outstandingPayment = "Outstanding\nPayment";
   static String availableCredit = "Available Credit";
+  static String viewResponse = "View Response";
+  static String campaignsReport = "Campaigns Report";
+  static String teamRole = "Role & team";
+  static String response = "Response";
+  static String tourVisit = "Tour Visit";
 }

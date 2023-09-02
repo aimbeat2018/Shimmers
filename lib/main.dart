@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:shimmers/screens/attendance/applyLeaveScreen.dart';
 import 'package:shimmers/screens/attendance/leavesScreen.dart';
+import 'package:shimmers/screens/campaigns/campaignsListScreen.dart';
+import 'package:shimmers/screens/campaigns/campaignsResponseScreen.dart';
 import 'package:shimmers/screens/distributors/distributorWiseSalonScreen.dart';
 import 'package:shimmers/screens/home/mainScreen.dart';
 import 'package:shimmers/screens/profile/profileScreen.dart';
@@ -10,6 +12,7 @@ import 'package:shimmers/screens/salons/addSalon/addSalonBasicDetailsScreen.dart
 import 'package:shimmers/screens/salons/addSalon/addSalonPersonalDetailsScreen.dart';
 import 'package:shimmers/screens/salons/salonDetails/salonDetailsScreen.dart';
 import 'package:shimmers/screens/salons/salonList/salonListScreen.dart';
+import 'package:shimmers/screens/tourVisit/tourVisitScreen.dart';
 import 'package:shimmers/screens/userAuth/LoginScreen.dart';
 import 'package:shimmers/screens/userAuth/PasswordResetScreen.dart';
 import 'package:shimmers/screens/userAuth/PasswordScreen.dart';
@@ -111,6 +114,12 @@ class MyApp extends StatelessWidget {
         return DistributorWiseSalonScreen(
           distributorName: '',
         );
+      case CampaignsListScreen.name:
+        return const CampaignsListScreen();
+      case CampaignsResponseScreen.name:
+        return const CampaignsResponseScreen();
+      case TourVisitScreen.name:
+        return const TourVisitScreen();
       default:
         return const SizedBox.shrink();
     }

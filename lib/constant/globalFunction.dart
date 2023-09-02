@@ -24,9 +24,8 @@ class GlobalFunctions {
         borderSide: BorderSide(color: Color(0xFFF65054)),
       ),
       errorBorder: const OutlineInputBorder(
-        borderRadius: BorderRadius.all(Radius.circular(12.0)),
-        borderSide: BorderSide(color: Color(0xFFF65054)),
-      ),
+          borderRadius: BorderRadius.all(Radius.circular(12.0)),
+          borderSide: BorderSide(color: Color(0xFFF65054))),
       filled: true,
       hintStyle: const TextStyle(color: Colors.black54, fontSize: 14),
       hintText: hintext,
