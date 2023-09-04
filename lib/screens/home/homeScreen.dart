@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shimmers/screens/campaigns/campaignsListScreen.dart';
 import 'package:shimmers/screens/distributors/distributorsScreen.dart';
 import 'package:shimmers/screens/salons/salonList/salonListScreen.dart';
+import 'package:shimmers/screens/setTarget/setTargetScreen.dart';
 import 'package:shimmers/screens/tourVisit/tourVisitScreen.dart';
 
 import '../../constant/colorsConstant.dart';
@@ -186,33 +187,39 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Center(
-                              child: SizedBox(
-                                height: 135,
-                                width: 115,
-                                child: Column(
-                                  children: [
-                                    SizedBox(
-                                      height: 20,
-                                    ),
-                                    Image.asset(
-                                      'assets/images/machine-learning.png',
-                                      width: 35,
-                                      height: 35,
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(15.0),
-                                      child: Text(
-                                        TextConstant.Learn,
-                                        maxLines: 2,
-                                        textAlign: TextAlign.center,
-                                        overflow: TextOverflow.clip,
-                                        style: const TextStyle(
-                                            color: primaryColor,
-                                            fontSize: 13,
-                                            fontWeight: FontWeight.w600),
+                              child: InkWell(
+                                onTap: () => Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            SetTargetScreen())),
+                                child: SizedBox(
+                                  height: 135,
+                                  width: 115,
+                                  child: Column(
+                                    children: [
+                                      SizedBox(
+                                        height: 20,
                                       ),
-                                    ),
-                                  ],
+                                      Image.asset(
+                                        'assets/images/target-audience.png',
+                                        width: 35,
+                                        height: 35,
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(15.0),
+                                        child: Text(
+                                          TextConstant.SetTarget,
+                                          maxLines: 2,
+                                          textAlign: TextAlign.center,
+                                          overflow: TextOverflow.clip,
+                                          style: const TextStyle(
+                                              color: primaryColor,
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.w600),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
@@ -332,7 +339,7 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                   width: 115,
                                   child: Column(
                                     children: [
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 20,
                                       ),
                                       Image.asset(
@@ -369,16 +376,15 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                       height: 20,
                                     ),
                                     Image.asset(
-                                      'assets/images/work.png',
+                                      'assets/images/list.png',
                                       width: 35,
                                       height: 35,
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.all(15.0),
                                       child: Text(
-                                        TextConstant.Scheme,
-                                        maxLines: 2,
-                                        textAlign: TextAlign.center,
+                                        TextConstant.NCE,
+                                        maxLines: 1,
                                         overflow: TextOverflow.clip,
                                         style: const TextStyle(
                                             color: primaryColor,
@@ -392,84 +398,84 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             ),
                           ]),
                     ),
-                    Divider(),
-                    IntrinsicHeight(
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Center(
-                            child: SizedBox(
-                              height: 135,
-                              width: 115,
-                              child: Column(
-                                children: [
-                                  SizedBox(
-                                    height: 20,
-                                  ),
-                                  Image.asset(
-                                    'assets/images/target-audience.png',
-                                    width: 35,
-                                    height: 35,
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(15.0),
-                                    child: Text(
-                                      TextConstant.SetTarget,
-                                      maxLines: 2,
-                                      textAlign: TextAlign.center,
-                                      overflow: TextOverflow.clip,
-                                      style: const TextStyle(
-                                          color: primaryColor,
-                                          fontSize: 13,
-                                          fontWeight: FontWeight.w600),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          VerticalDividerFadeDown(),
-                          Center(
-                            child: SizedBox(
-                              height: 135,
-                              width: 115,
-                              child: Column(
-                                children: [
-                                  SizedBox(
-                                    height: 20,
-                                  ),
-                                  Image.asset(
-                                    'assets/images/list.png',
-                                    width: 35,
-                                    height: 35,
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(15.0),
-                                    child: Text(
-                                      TextConstant.NCE,
-                                      maxLines: 1,
-                                      overflow: TextOverflow.clip,
-                                      style: const TextStyle(
-                                          color: primaryColor,
-                                          fontSize: 13,
-                                          fontWeight: FontWeight.w600),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          VerticalDividerFadeDown(),
-                          Center(
-                            child: SizedBox(
-                              height: 135,
-                              width: 115,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                    // Divider(),
+                    // IntrinsicHeight(
+                    //   child: Row(
+                    //     crossAxisAlignment: CrossAxisAlignment.center,
+                    //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    //     children: [
+                    //       Center(
+                    //         child: SizedBox(
+                    //           height: 135,
+                    //           width: 115,
+                    //           child: Column(
+                    //             children: [
+                    //               SizedBox(
+                    //                 height: 20,
+                    //               ),
+                    //               Image.asset(
+                    //                 'assets/images/target-audience.png',
+                    //                 width: 35,
+                    //                 height: 35,
+                    //               ),
+                    //               Padding(
+                    //                 padding: const EdgeInsets.all(15.0),
+                    //                 child: Text(
+                    //                   TextConstant.SetTarget,
+                    //                   maxLines: 2,
+                    //                   textAlign: TextAlign.center,
+                    //                   overflow: TextOverflow.clip,
+                    //                   style: const TextStyle(
+                    //                       color: primaryColor,
+                    //                       fontSize: 13,
+                    //                       fontWeight: FontWeight.w600),
+                    //                 ),
+                    //               ),
+                    //             ],
+                    //           ),
+                    //         ),
+                    //       ),
+                    //       VerticalDividerFadeDown(),
+                    //       Center(
+                    //         child: SizedBox(
+                    //           height: 135,
+                    //           width: 115,
+                    //           child: Column(
+                    //             children: [
+                    //               SizedBox(
+                    //                 height: 20,
+                    //               ),
+                    //               Image.asset(
+                    //                 'assets/images/list.png',
+                    //                 width: 35,
+                    //                 height: 35,
+                    //               ),
+                    //               Padding(
+                    //                 padding: const EdgeInsets.all(15.0),
+                    //                 child: Text(
+                    //                   TextConstant.NCE,
+                    //                   maxLines: 1,
+                    //                   overflow: TextOverflow.clip,
+                    //                   style: const TextStyle(
+                    //                       color: primaryColor,
+                    //                       fontSize: 13,
+                    //                       fontWeight: FontWeight.w600),
+                    //                 ),
+                    //               ),
+                    //             ],
+                    //           ),
+                    //         ),
+                    //       ),
+                    //       VerticalDividerFadeDown(),
+                    //       Center(
+                    //         child: SizedBox(
+                    //           height: 135,
+                    //           width: 115,
+                    //         ),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
                   ],
                 ),
               )),

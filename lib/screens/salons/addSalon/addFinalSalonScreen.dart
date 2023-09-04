@@ -185,17 +185,18 @@ class _AddFinalSalonScreenState extends State<AddFinalSalonScreen> {
                         ),
                         Container(
                           decoration: BoxDecoration(
-                            boxShadow: const [
-                              BoxShadow(
-                                color: primaryColor,
-                                blurRadius: 12.0, // soften the shadow
-                                spreadRadius: 0.5, //extend the shadow
-                                offset: Offset(
-                                  1.0, // Move to right 5  horizontally
-                                  1.0, // Move to bottom 5 Vertically
-                                ),
-                              )
-                            ],
+                            // boxShadow: const [
+                            //   BoxShadow(
+                            //     color: primaryColor,
+                            //     blurRadius: 12.0, // soften the shadow
+                            //     spreadRadius: 0.5, //extend the shadow
+                            //     offset: Offset(
+                            //       1.0, // Move to right 5  horizontally
+                            //       1.0, // Move to bottom 5 Vertically
+                            //     ),
+                            //   )
+                            // ],
+                            border: Border.all(color: primaryColor),
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(12),
                           ),
@@ -240,17 +241,18 @@ class _AddFinalSalonScreenState extends State<AddFinalSalonScreen> {
                         ),
                         Container(
                           decoration: BoxDecoration(
-                            boxShadow: const [
-                              BoxShadow(
-                                color: primaryColor,
-                                blurRadius: 12.0, // soften the shadow
-                                spreadRadius: 0.5, //extend the shadow
-                                offset: Offset(
-                                  1.0, // Move to right 5  horizontally
-                                  1.0, // Move to bottom 5 Vertically
-                                ),
-                              )
-                            ],
+                            // boxShadow: const [
+                            //   BoxShadow(
+                            //     color: primaryColor,
+                            //     blurRadius: 12.0, // soften the shadow
+                            //     spreadRadius: 0.5, //extend the shadow
+                            //     offset: Offset(
+                            //       1.0, // Move to right 5  horizontally
+                            //       1.0, // Move to bottom 5 Vertically
+                            //     ),
+                            //   )
+                            // ],
+                            border: Border.all(color: primaryColor),
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(12),
                           ),
@@ -294,17 +296,18 @@ class _AddFinalSalonScreenState extends State<AddFinalSalonScreen> {
                         ),
                         Container(
                           decoration: BoxDecoration(
-                            boxShadow: const [
-                              BoxShadow(
-                                color: primaryColor,
-                                blurRadius: 12.0, // soften the shadow
-                                spreadRadius: 0.5, //extend the shadow
-                                offset: Offset(
-                                  1.0, // Move to right 5  horizontally
-                                  1.0, // Move to bottom 5 Vertically
-                                ),
-                              )
-                            ],
+                            // boxShadow: const [
+                            //   BoxShadow(
+                            //     color: primaryColor,
+                            //     blurRadius: 12.0, // soften the shadow
+                            //     spreadRadius: 0.5, //extend the shadow
+                            //     offset: Offset(
+                            //       1.0, // Move to right 5  horizontally
+                            //       1.0, // Move to bottom 5 Vertically
+                            //     ),
+                            //   )
+                            // ],
+                            border: Border.all(color: primaryColor),
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(12),
                           ),
@@ -349,17 +352,18 @@ class _AddFinalSalonScreenState extends State<AddFinalSalonScreen> {
                         ),
                         Container(
                           decoration: BoxDecoration(
-                            boxShadow: const [
-                              BoxShadow(
-                                color: primaryColor,
-                                blurRadius: 12.0, // soften the shadow
-                                spreadRadius: 0.5, //extend the shadow
-                                offset: Offset(
-                                  1.0, // Move to right 5  horizontally
-                                  1.0, // Move to bottom 5 Vertically
-                                ),
-                              )
-                            ],
+                            // boxShadow: const [
+                            //   BoxShadow(
+                            //     color: primaryColor,
+                            //     blurRadius: 12.0, // soften the shadow
+                            //     spreadRadius: 0.5, //extend the shadow
+                            //     offset: Offset(
+                            //       1.0, // Move to right 5  horizontally
+                            //       1.0, // Move to bottom 5 Vertically
+                            //     ),
+                            //   )
+                            // ],
+                            border: Border.all(color: primaryColor),
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(12),
                           ),
@@ -404,17 +408,18 @@ class _AddFinalSalonScreenState extends State<AddFinalSalonScreen> {
                         ),
                         Container(
                           decoration: BoxDecoration(
-                            boxShadow: const [
-                              BoxShadow(
-                                color: primaryColor,
-                                blurRadius: 12.0, // soften the shadow
-                                spreadRadius: 0.5, //extend the shadow
-                                offset: Offset(
-                                  1.0, // Move to right 5  horizontally
-                                  1.0, // Move to bottom 5 Vertically
-                                ),
-                              )
-                            ],
+                            // boxShadow: const [
+                            //   BoxShadow(
+                            //     color: primaryColor,
+                            //     blurRadius: 12.0, // soften the shadow
+                            //     spreadRadius: 0.5, //extend the shadow
+                            //     offset: Offset(
+                            //       1.0, // Move to right 5  horizontally
+                            //       1.0, // Move to bottom 5 Vertically
+                            //     ),
+                            //   )
+                            // ],
+                            border: Border.all(color: primaryColor),
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(12),
                           ),
@@ -459,17 +464,18 @@ class _AddFinalSalonScreenState extends State<AddFinalSalonScreen> {
                         ),
                         Container(
                           decoration: BoxDecoration(
-                            boxShadow: const [
-                              BoxShadow(
-                                color: primaryColor,
-                                blurRadius: 12.0, // soften the shadow
-                                spreadRadius: 0.5, //extend the shadow
-                                offset: Offset(
-                                  1.0, // Move to right 5  horizontally
-                                  1.0, // Move to bottom 5 Vertically
-                                ),
-                              )
-                            ],
+                            // boxShadow: const [
+                            //   BoxShadow(
+                            //     color: primaryColor,
+                            //     blurRadius: 12.0, // soften the shadow
+                            //     spreadRadius: 0.5, //extend the shadow
+                            //     offset: Offset(
+                            //       1.0, // Move to right 5  horizontally
+                            //       1.0, // Move to bottom 5 Vertically
+                            //     ),
+                            //   )
+                            // ],
+                            border: Border.all(color: primaryColor),
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(12),
                           ),
@@ -513,17 +519,18 @@ class _AddFinalSalonScreenState extends State<AddFinalSalonScreen> {
                         ),
                         Container(
                           decoration: BoxDecoration(
-                            boxShadow: const [
-                              BoxShadow(
-                                color: primaryColor,
-                                blurRadius: 12.0, // soften the shadow
-                                spreadRadius: 0.5, //extend the shadow
-                                offset: Offset(
-                                  1.0, // Move to right 5  horizontally
-                                  1.0, // Move to bottom 5 Vertically
-                                ),
-                              )
-                            ],
+                            // boxShadow: const [
+                            //   BoxShadow(
+                            //     color: primaryColor,
+                            //     blurRadius: 12.0, // soften the shadow
+                            //     spreadRadius: 0.5, //extend the shadow
+                            //     offset: Offset(
+                            //       1.0, // Move to right 5  horizontally
+                            //       1.0, // Move to bottom 5 Vertically
+                            //     ),
+                            //   )
+                            // ],
+                            border: Border.all(color: primaryColor),
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(12),
                           ),
@@ -567,17 +574,18 @@ class _AddFinalSalonScreenState extends State<AddFinalSalonScreen> {
                         ),
                         Container(
                           decoration: BoxDecoration(
-                            boxShadow: const [
-                              BoxShadow(
-                                color: primaryColor,
-                                blurRadius: 12.0, // soften the shadow
-                                spreadRadius: 0.5, //extend the shadow
-                                offset: Offset(
-                                  1.0, // Move to right 5  horizontally
-                                  1.0, // Move to bottom 5 Vertically
-                                ),
-                              )
-                            ],
+                            // boxShadow: const [
+                            //   BoxShadow(
+                            //     color: primaryColor,
+                            //     blurRadius: 12.0, // soften the shadow
+                            //     spreadRadius: 0.5, //extend the shadow
+                            //     offset: Offset(
+                            //       1.0, // Move to right 5  horizontally
+                            //       1.0, // Move to bottom 5 Vertically
+                            //     ),
+                            //   )
+                            // ],
+                            border: Border.all(color: primaryColor),
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(12),
                           ),
@@ -623,17 +631,18 @@ class _AddFinalSalonScreenState extends State<AddFinalSalonScreen> {
                           width: MediaQuery.of(context).size.width,
                           padding: EdgeInsets.symmetric(horizontal: 15),
                           decoration: BoxDecoration(
-                            boxShadow: const [
-                              BoxShadow(
-                                color: primaryColor,
-                                blurRadius: 12.0, // soften the shadow
-                                spreadRadius: 0.5, //extend the shadow
-                                offset: Offset(
-                                  1.0, // Move to right 5  horizontally
-                                  1.0, // Move to bottom 5 Vertically
-                                ),
-                              )
-                            ],
+                            // boxShadow: const [
+                            //   BoxShadow(
+                            //     color: primaryColor,
+                            //     blurRadius: 12.0, // soften the shadow
+                            //     spreadRadius: 0.5, //extend the shadow
+                            //     offset: Offset(
+                            //       1.0, // Move to right 5  horizontally
+                            //       1.0, // Move to bottom 5 Vertically
+                            //     ),
+                            //   )
+                            // ],
+                            border: Border.all(color: primaryColor),
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(12),
                           ),
@@ -688,17 +697,18 @@ class _AddFinalSalonScreenState extends State<AddFinalSalonScreen> {
                           width: MediaQuery.of(context).size.width,
                           padding: EdgeInsets.symmetric(horizontal: 15),
                           decoration: BoxDecoration(
-                            boxShadow: const [
-                              BoxShadow(
-                                color: primaryColor,
-                                blurRadius: 12.0, // soften the shadow
-                                spreadRadius: 0.5, //extend the shadow
-                                offset: Offset(
-                                  1.0, // Move to right 5  horizontally
-                                  1.0, // Move to bottom 5 Vertically
-                                ),
-                              )
-                            ],
+                            // boxShadow: const [
+                            //   BoxShadow(
+                            //     color: primaryColor,
+                            //     blurRadius: 12.0, // soften the shadow
+                            //     spreadRadius: 0.5, //extend the shadow
+                            //     offset: Offset(
+                            //       1.0, // Move to right 5  horizontally
+                            //       1.0, // Move to bottom 5 Vertically
+                            //     ),
+                            //   )
+                            // ],
+                            border: Border.all(color: primaryColor),
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(12),
                           ),

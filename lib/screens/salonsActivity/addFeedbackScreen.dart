@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 import '../../constant/colorsConstant.dart';
 import '../../constant/globalFunction.dart';
 import '../../constant/textConstant.dart';
 
-class TourVisitScreen extends StatefulWidget {
-  static const String name = 'TourVisitScreen';
+class AddFeedBackScreen extends StatefulWidget {
+  static const String name = 'takeFeedbackScreen';
 
-  const TourVisitScreen({Key? key}) : super(key: key);
+  const AddFeedBackScreen({Key? key}) : super(key: key);
 
   @override
-  State<TourVisitScreen> createState() => _TourVisitScreenState();
+  State<AddFeedBackScreen> createState() => _AddFeedBackScreenState();
 }
 
-class _TourVisitScreenState extends State<TourVisitScreen> {
+class _AddFeedBackScreenState extends State<AddFeedBackScreen> {
   TextEditingController remarksController = TextEditingController();
 
   @override
@@ -23,16 +24,47 @@ class _TourVisitScreenState extends State<TourVisitScreen> {
         backgroundColor: primaryColor,
         centerTitle: true,
         title: Text(
-          TextConstant.tourVisit,
+          TextConstant.takeFeedback,
           style: const TextStyle(
               color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
         ),
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 25),
           child: Column(
             children: [
+              Container(
+                  width: MediaQuery.of(context).size.width,
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 15.0, vertical: 15),
+                  color: Colors.grey.shade300,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Abc Salon',
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(
+                        height: 3,
+                      ),
+                      Text(
+                        'Sec - 10, Vashi, Navi Mumbai',
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 13,
+                            fontWeight: FontWeight.w500),
+                      ),
+                    ],
+                  )),
+              SizedBox(
+                height: 25,
+              ),
               Align(
                 alignment: Alignment.topLeft,
                 child: Padding(
@@ -137,6 +169,40 @@ class _TourVisitScreenState extends State<TourVisitScreen> {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
                   child: Text(
+                    TextConstant.rating,
+                    style: const TextStyle(
+                        color: primaryColor,
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              RatingBar.builder(
+                initialRating: 0,
+                minRating: 1,
+                direction: Axis.horizontal,
+                allowHalfRating: false,
+                itemCount: 5,
+                itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                itemBuilder: (context, _) => Icon(
+                  Icons.star,
+                  color: primaryColor,
+                ),
+                onRatingUpdate: (rating) {
+                  print(rating);
+                },
+              ),
+              SizedBox(
+                height: 25,
+              ),
+              Align(
+                alignment: Alignment.topLeft,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: Text(
                     TextConstant.takePhoto,
                     style: const TextStyle(
                         color: primaryColor,
@@ -198,7 +264,7 @@ class _TourVisitScreenState extends State<TourVisitScreen> {
                   ),
                 ),
               ),
-              const SizedBox(height: 40),
+              const SizedBox(height: 35),
               SizedBox(
                 width: 200,
                 child: ElevatedButton(

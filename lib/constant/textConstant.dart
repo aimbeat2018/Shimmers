@@ -103,4 +103,18 @@ class TextConstant {
   static String teamRole = "Role & team";
   static String response = "Response";
   static String tourVisit = "Tour Visit";
+  static String selectPurpose = "Select Purpose";
+  static String remarks = "Remarks";
+  static String takePhoto = "Take Photo";
+  static String clickPicture = "Click Picture";
+  static String selectEmployee = "Select Employee";
+  static String selectProduct = "Select Product";
+  static String rating = "Rating";
+  static String modeOfPayment = "Mode of Payment";
+  static String referenceNumber = "Reference Number";
+  static String amount = "Amount";
+  static String chequeNumber = "Cheque Number";
+  static String draftNumber = "Draft Number";
+  static String noteStr = "Note";
+  static String enterNote = "Enter Note";
 }

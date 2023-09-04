@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:shimmers/screens/salonsActivity/collectPaymentScreen.dart';
+import 'package:shimmers/screens/salonsActivity/salonCampaignListScreen.dart';
+import 'package:shimmers/screens/salonsActivity/takeNoteScreen.dart';
 
 import '../../../constant/colorsConstant.dart';
 import '../../../constant/textConstant.dart';
+import '../../salonsActivity/addFeedbackScreen.dart';
 
 class SalonDetailsScreen extends StatefulWidget {
   static const String name = 'salonDetailsScreen';
@@ -141,62 +145,66 @@ class _SalonDetailsScreenState extends State<SalonDetailsScreen> {
                 ],
               ),
             ),
-            Positioned(
-              child: Visibility(
-                visible: isDetailsVisible ? true : false,
-                child: SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.37,
-                  child: Stack(
-                    children: [
-                      Container(
-                        height: MediaQuery.of(context).size.height * 0.34,
-                        color: primaryColor,
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 25, horizontal: 15),
-                        child: Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Column(
-                                  children: [
-                                    Image.asset(
-                                      'assets/images/take_stock.png',
-                                      height: 28,
-                                      width: 28,
-                                    ),
-                                    const SizedBox(
-                                      height: 5,
-                                    ),
-                                    Text(
-                                      TextConstant.updateStock,
-                                      style: const TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 13,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                  ],
-                                ),
-                                Column(
-                                  children: [
-                                    Image.asset(
-                                      'assets/images/take_order.png',
-                                      height: 28,
-                                      width: 28,
-                                    ),
-                                    const SizedBox(
-                                      height: 5,
-                                    ),
-                                    Text(
-                                      TextConstant.takeOrder,
-                                      style: const TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 13,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                  ],
-                                ),
-                                Column(
+            Visibility(
+              visible: isDetailsVisible ? true : false,
+              child: SizedBox(
+                height: MediaQuery.of(context).size.height * 0.37,
+                child: Stack(
+                  children: [
+                    Container(
+                      height: MediaQuery.of(context).size.height * 0.34,
+                      color: primaryColor,
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 25, horizontal: 15),
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                children: [
+                                  Image.asset(
+                                    'assets/images/take_stock.png',
+                                    height: 28,
+                                    width: 28,
+                                  ),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  Text(
+                                    TextConstant.updateStock,
+                                    style: const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                ],
+                              ),
+                              Column(
+                                children: [
+                                  Image.asset(
+                                    'assets/images/take_order.png',
+                                    height: 28,
+                                    width: 28,
+                                  ),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  Text(
+                                    TextConstant.takeOrder,
+                                    style: const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                ],
+                              ),
+                              InkWell(
+                                onTap: () => Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            AddFeedBackScreen())),
+                                child: Column(
                                   children: [
                                     Image.asset(
                                       'assets/images/take_feedback.png',
@@ -214,16 +222,22 @@ class _SalonDetailsScreenState extends State<SalonDetailsScreen> {
                                           fontWeight: FontWeight.w500),
                                     ),
                                   ],
-                                )
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 30,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Column(
+                                ),
+                              )
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 30,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              InkWell(
+                                onTap: () => Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            CollectPaymentScreen())),
+                                child: Column(
                                   children: [
                                     Image.asset(
                                       'assets/images/collect_payment.png',
@@ -242,7 +256,21 @@ class _SalonDetailsScreenState extends State<SalonDetailsScreen> {
                                     ),
                                   ],
                                 ),
-                                Column(
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  showModalBottomSheet(
+                                    isScrollControlled: true,
+                                    context: context,
+                                    builder: (context) => TakeNoteScreen(),
+                                    backgroundColor: Colors.transparent,
+                                  ).then((value) => {
+                                        // setState(() {
+                                        //   selectedLeaveType = value!;
+                                        // })
+                                      });
+                                },
+                                child: Column(
                                   children: [
                                     Image.asset(
                                       'assets/images/take_note.png',
@@ -261,7 +289,13 @@ class _SalonDetailsScreenState extends State<SalonDetailsScreen> {
                                     ),
                                   ],
                                 ),
-                                Column(
+                              ),
+                              InkWell(
+                                onTap: () => Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            SalonCampaignListScreen())),
+                                child: Column(
                                   children: [
                                     Image.asset(
                                       'assets/images/report_campaign.png',
@@ -279,57 +313,57 @@ class _SalonDetailsScreenState extends State<SalonDetailsScreen> {
                                           fontWeight: FontWeight.w500),
                                     ),
                                   ],
-                                )
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 30,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Column(
-                                  children: [
-                                    Image.asset(
-                                      'assets/images/demonstrate.png',
-                                      height: 28,
-                                      width: 28,
-                                    ),
-                                    const SizedBox(
-                                      height: 5,
-                                    ),
-                                    Text(
-                                      TextConstant.demonstrate,
-                                      style: const TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 13,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                  ],
-                                )
-                              ],
-                            ),
-                          ],
+                                ),
+                              )
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 30,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Column(
+                                children: [
+                                  Image.asset(
+                                    'assets/images/demonstrate.png',
+                                    height: 28,
+                                    width: 28,
+                                  ),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  Text(
+                                    TextConstant.demonstrate,
+                                    style: const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: FloatingActionButton(
+                        backgroundColor: Colors.white,
+                        onPressed: () {
+                          setState(() {
+                            isDetailsVisible = !isDetailsVisible;
+                          });
+                        },
+                        child: Icon(
+                          Icons.arrow_upward,
+                          color: primaryColor,
+                          size: 25,
                         ),
                       ),
-                      Align(
-                        alignment: Alignment.bottomCenter,
-                        child: FloatingActionButton(
-                          backgroundColor: Colors.white,
-                          onPressed: () {
-                            setState(() {
-                              isDetailsVisible = !isDetailsVisible;
-                            });
-                          },
-                          child: Icon(
-                            Icons.arrow_upward,
-                            color: primaryColor,
-                            size: 25,
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
+                    )
+                  ],
                 ),
               ),
             ),

@@ -4,17 +4,29 @@ import '../../constant/colorsConstant.dart';
 import '../../constant/globalFunction.dart';
 import '../../constant/textConstant.dart';
 
-class TourVisitScreen extends StatefulWidget {
-  static const String name = 'TourVisitScreen';
+class CollectPaymentScreen extends StatefulWidget {
+  static const String name = 'collectPaymentScreen';
 
-  const TourVisitScreen({Key? key}) : super(key: key);
+  const CollectPaymentScreen({Key? key}) : super(key: key);
 
   @override
-  State<TourVisitScreen> createState() => _TourVisitScreenState();
+  State<CollectPaymentScreen> createState() => _CollectPaymentScreenState();
 }
 
-class _TourVisitScreenState extends State<TourVisitScreen> {
-  TextEditingController remarksController = TextEditingController();
+class _CollectPaymentScreenState extends State<CollectPaymentScreen> {
+  TextEditingController referenceNumberController = TextEditingController();
+  TextEditingController amountController = TextEditingController();
+
+  List<String> modeList = [
+    'Select mode of payment',
+    'Cheque',
+    'Draft',
+    'Cash',
+    'NEFT',
+    'RTGS',
+    'Other'
+  ]; // Option 2
+  String? selectedMode;
 
   @override
   Widget build(BuildContext context) {
@@ -23,22 +35,53 @@ class _TourVisitScreenState extends State<TourVisitScreen> {
         backgroundColor: primaryColor,
         centerTitle: true,
         title: Text(
-          TextConstant.tourVisit,
+          TextConstant.collectPayment,
           style: const TextStyle(
               color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
         ),
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 25),
           child: Column(
             children: [
+              Container(
+                  width: MediaQuery.of(context).size.width,
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 15.0, vertical: 15),
+                  color: Colors.grey.shade300,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Abc Salon',
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(
+                        height: 3,
+                      ),
+                      Text(
+                        'Sec - 10, Vashi, Navi Mumbai',
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 13,
+                            fontWeight: FontWeight.w500),
+                      ),
+                    ],
+                  )),
+              SizedBox(
+                height: 25,
+              ),
               Align(
                 alignment: Alignment.topLeft,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
                   child: Text(
-                    TextConstant.selectPurpose,
+                    TextConstant.modeOfPayment,
                     style: const TextStyle(
                         color: primaryColor,
                         fontSize: 14,
@@ -78,23 +121,22 @@ class _TourVisitScreenState extends State<TourVisitScreen> {
                       borderRadius: BorderRadius.circular(12),
                       border: Border.all(color: primaryColor)),
                   child: Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Row(
-                      children: [
-                        Expanded(
-                            child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                          child: Text(
-                            TextConstant.selectPurpose,
-                            style: const TextStyle(
-                                color: Colors.black, fontSize: 14),
-                          ),
-                        )),
-                        Icon(
-                          Icons.keyboard_arrow_down,
-                          color: Colors.grey.shade700,
-                        )
-                      ],
+                    padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton(
+                          isExpanded: true,
+                          value: selectedMode,
+                          onChanged: (newValue) {
+                            setState(() {
+                              selectedMode = newValue;
+                            });
+                          },
+                          items: modeList.map((location) {
+                            return DropdownMenuItem(
+                              child: new Text(location),
+                              value: location,
+                            );
+                          }).toList()),
                     ),
                   ),
                 ),
@@ -102,12 +144,56 @@ class _TourVisitScreenState extends State<TourVisitScreen> {
               SizedBox(
                 height: 25,
               ),
+              if (selectedMode != 'Cash')
+                Column(
+                  children: [
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: Text(
+                          selectedMode == 'Cheque'
+                              ? TextConstant.chequeNumber
+                              : selectedMode == 'Draft'
+                                  ? TextConstant.draftNumber
+                                  : TextConstant.referenceNumber,
+                          style: const TextStyle(
+                              color: primaryColor,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    TextFormField(
+                      style: const TextStyle(fontSize: 14),
+                      maxLines: 1,
+                      decoration: GlobalFunctions.getInputDecoration(
+                        selectedMode == 'Cheque'
+                            ? TextConstant.chequeNumber
+                            : selectedMode == 'Draft'
+                                ? TextConstant.draftNumber
+                                : TextConstant.referenceNumber,
+                      ),
+                      controller: referenceNumberController,
+                      keyboardType: TextInputType.text,
+                      onSaved: (value) {
+                        referenceNumberController.text = value as String;
+                      },
+                    ),
+                    SizedBox(
+                      height: 25,
+                    ),
+                  ],
+                ),
               Align(
                 alignment: Alignment.topLeft,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
                   child: Text(
-                    TextConstant.remarks,
+                    TextConstant.amount,
                     style: const TextStyle(
                         color: primaryColor,
                         fontSize: 14,
@@ -120,13 +206,13 @@ class _TourVisitScreenState extends State<TourVisitScreen> {
               ),
               TextFormField(
                 style: const TextStyle(fontSize: 14),
-                maxLines: 5,
+                maxLines: 1,
                 decoration:
-                    GlobalFunctions.getInputDecoration(TextConstant.remarks),
-                controller: remarksController,
+                    GlobalFunctions.getInputDecoration(TextConstant.amount),
+                controller: amountController,
                 keyboardType: TextInputType.text,
                 onSaved: (value) {
-                  remarksController.text = value as String;
+                  amountController.text = value as String;
                 },
               ),
               SizedBox(
@@ -198,7 +284,7 @@ class _TourVisitScreenState extends State<TourVisitScreen> {
                   ),
                 ),
               ),
-              const SizedBox(height: 40),
+              const SizedBox(height: 35),
               SizedBox(
                 width: 200,
                 child: ElevatedButton(

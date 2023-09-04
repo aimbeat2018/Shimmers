@@ -1,21 +1,18 @@
 import 'package:flutter/material.dart';
 
 import '../../constant/colorsConstant.dart';
-import '../../constant/globalFunction.dart';
 import '../../constant/textConstant.dart';
 
-class TourVisitScreen extends StatefulWidget {
-  static const String name = 'TourVisitScreen';
+class SetTargetScreen extends StatefulWidget {
+  static const name = '/setTargetScreen';
 
-  const TourVisitScreen({Key? key}) : super(key: key);
+  const SetTargetScreen({Key? key}) : super(key: key);
 
   @override
-  State<TourVisitScreen> createState() => _TourVisitScreenState();
+  State<SetTargetScreen> createState() => _SetTargetScreenState();
 }
 
-class _TourVisitScreenState extends State<TourVisitScreen> {
-  TextEditingController remarksController = TextEditingController();
-
+class _SetTargetScreenState extends State<SetTargetScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,14 +20,14 @@ class _TourVisitScreenState extends State<TourVisitScreen> {
         backgroundColor: primaryColor,
         centerTitle: true,
         title: Text(
-          TextConstant.tourVisit,
+          TextConstant.SetTarget,
           style: const TextStyle(
               color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
         ),
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 40),
           child: Column(
             children: [
               Align(
@@ -38,7 +35,7 @@ class _TourVisitScreenState extends State<TourVisitScreen> {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
                   child: Text(
-                    TextConstant.selectPurpose,
+                    TextConstant.selectEmployee,
                     style: const TextStyle(
                         color: primaryColor,
                         fontSize: 14,
@@ -85,7 +82,7 @@ class _TourVisitScreenState extends State<TourVisitScreen> {
                             child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 8.0),
                           child: Text(
-                            TextConstant.selectPurpose,
+                            TextConstant.selectEmployee,
                             style: const TextStyle(
                                 color: Colors.black, fontSize: 14),
                           ),
@@ -100,44 +97,14 @@ class _TourVisitScreenState extends State<TourVisitScreen> {
                 ),
               ),
               SizedBox(
-                height: 25,
+                height: 35,
               ),
               Align(
                 alignment: Alignment.topLeft,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
                   child: Text(
-                    TextConstant.remarks,
-                    style: const TextStyle(
-                        color: primaryColor,
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              TextFormField(
-                style: const TextStyle(fontSize: 14),
-                maxLines: 5,
-                decoration:
-                    GlobalFunctions.getInputDecoration(TextConstant.remarks),
-                controller: remarksController,
-                keyboardType: TextInputType.text,
-                onSaved: (value) {
-                  remarksController.text = value as String;
-                },
-              ),
-              SizedBox(
-                height: 25,
-              ),
-              Align(
-                alignment: Alignment.topLeft,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: Text(
-                    TextConstant.takePhoto,
+                    TextConstant.selectProduct,
                     style: const TextStyle(
                         color: primaryColor,
                         fontSize: 14,
@@ -184,13 +151,13 @@ class _TourVisitScreenState extends State<TourVisitScreen> {
                             child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 8.0),
                           child: Text(
-                            TextConstant.clickPicture,
+                            TextConstant.selectProduct,
                             style: const TextStyle(
                                 color: Colors.black, fontSize: 14),
                           ),
                         )),
                         Icon(
-                          Icons.camera_alt,
+                          Icons.keyboard_arrow_down,
                           color: Colors.grey.shade700,
                         )
                       ],
