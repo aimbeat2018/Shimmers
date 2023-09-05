@@ -117,4 +117,15 @@ class TextConstant {
   static String draftNumber = "Draft Number";
   static String noteStr = "Note";
   static String enterNote = "Enter Note";
+  static String billingAddress = "Billing Address";
+  static String productList = "Product List";
+  static String add = "Add";
+  static String createOrder = "Create Order";
+  static String suggestedProducts = "Suggested Products of";
+  static String placeOrder = "Place Order";
+  static String summary = "Summary";
+  static String qty = "Qty";
+  static String totalAmount = "Total Amount";
+  static String totalDiscount = "Total Discount";
+  static String totalPayable = "Payable Amount";
 }

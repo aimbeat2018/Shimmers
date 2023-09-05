@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shimmers/screens/salonsActivity/collectPaymentScreen.dart';
 import 'package:shimmers/screens/salonsActivity/salonCampaignListScreen.dart';
 import 'package:shimmers/screens/salonsActivity/takeNoteScreen.dart';
+import 'package:shimmers/screens/salonsActivity/takeOrder/productListScreen.dart';
 
 import '../../../constant/colorsConstant.dart';
 import '../../../constant/textConstant.dart';
@@ -180,24 +181,30 @@ class _SalonDetailsScreenState extends State<SalonDetailsScreen> {
                                   ),
                                 ],
                               ),
-                              Column(
-                                children: [
-                                  Image.asset(
-                                    'assets/images/take_order.png',
-                                    height: 28,
-                                    width: 28,
-                                  ),
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
-                                  Text(
-                                    TextConstant.takeOrder,
-                                    style: const TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 13,
-                                        fontWeight: FontWeight.w500),
-                                  ),
-                                ],
+                              InkWell(
+                                onTap: () => Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            ProductListScreen())),
+                                child: Column(
+                                  children: [
+                                    Image.asset(
+                                      'assets/images/take_order.png',
+                                      height: 28,
+                                      width: 28,
+                                    ),
+                                    const SizedBox(
+                                      height: 5,
+                                    ),
+                                    Text(
+                                      TextConstant.takeOrder,
+                                      style: const TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                  ],
+                                ),
                               ),
                               InkWell(
                                 onTap: () => Navigator.of(context).push(

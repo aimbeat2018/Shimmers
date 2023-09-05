@@ -16,6 +16,7 @@ import 'package:shimmers/screens/salonsActivity/addFeedbackScreen.dart';
 import 'package:shimmers/screens/salonsActivity/collectPaymentScreen.dart';
 import 'package:shimmers/screens/salonsActivity/salonCampaignListScreen.dart';
 import 'package:shimmers/screens/salonsActivity/submitCampaignScreen.dart';
+import 'package:shimmers/screens/salonsActivity/takeOrder/finalOrderScreen.dart';
 import 'package:shimmers/screens/setTarget/setTargetScreen.dart';
 import 'package:shimmers/screens/tourVisit/tourVisitScreen.dart';
 import 'package:shimmers/screens/userAuth/LoginScreen.dart';
@@ -135,6 +136,8 @@ class MyApp extends StatelessWidget {
         return const SalonCampaignListScreen();
       case SubmitCampaignScreen.name:
         return const SubmitCampaignScreen();
+      case FinalOrderScreen.name:
+        return const FinalOrderScreen();
       default:
         return const SizedBox.shrink();
     }

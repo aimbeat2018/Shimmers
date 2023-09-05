@@ -327,7 +327,7 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                 ),
                               ),
                             ),
-                            VerticalDivider(),
+                            VerticalDividerFadeDown(),
                             Center(
                               child: InkWell(
                                 onTap: () => Navigator.of(context).push(
@@ -365,7 +365,7 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                 ),
                               ),
                             ),
-                            VerticalDivider(),
+                            VerticalDividerFadeDown(),
                             Center(
                               child: SizedBox(
                                 height: 135,
