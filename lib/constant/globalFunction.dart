@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'colorsConstant.dart';
@@ -174,6 +175,7 @@ class GlobalFunctions {
   static DateTime getLastDay() {
     return DateTime(kToday.year, kToday.month + 3, kToday.day);
   }
+
 // final kFirstDay = DateTime(kToday.year, kToday.month - 3, kToday.day);
 // final kLastDay = DateTime(kToday.year, kToday.month + 3, kToday.day);
 /*
@@ -245,4 +247,12 @@ class GlobalFunctions {
     DateFormat formatter = DateFormat('dd MMM yyyy hh:mm a');
     return formatter.format(date);
   }*/
+
+  static bool isMobilePhone() {
+    if (!kIsWeb) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

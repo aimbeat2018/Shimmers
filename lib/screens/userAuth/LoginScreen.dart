@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:shimmers/constant/custom_snackbar.dart';
 import 'package:shimmers/constant/textConstant.dart';
 
 import '../../constant/colorsConstant.dart';
 import '../../constant/globalFunction.dart';
-import 'PasswordScreen.dart';
+import '../../constant/route_helper.dart';
+import '../../controllers/authController.dart';
 
 class LoginScreen extends StatefulWidget {
-  static const String name = 'login';
+  // static const String name = '/login';
 
   const LoginScreen({super.key});
 
@@ -15,26 +18,25 @@ class LoginScreen extends StatefulWidget {
 }
 
 class LoginScreenState extends State<LoginScreen> {
-  bool _isLoading = false;
-
   final _mobileOrEmailController = TextEditingController();
-  List<FocusNode> _focusNodes = [
+  final List<FocusNode> _focusNodes = [
     FocusNode(),
   ];
 
   @override
   void initState() {
-    _focusNodes.forEach((node) {
-      node.addListener(() {
-        setState(() {});
-      });
-    });
+    // _focusNodes.forEach((node) {
+    //   node.addListener(() {
+    //     setState(() {});
+    //   });
+    // });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return GetBuilder<AuthController>(builder: (authController) {
+      return Scaffold(
         backgroundColor: Colors.white,
         body: SafeArea(
             child: SingleChildScrollView(
@@ -89,12 +91,11 @@ class LoginScreenState extends State<LoginScreen> {
                       ),
                       controller: _mobileOrEmailController,
                       keyboardType: TextInputType.text,
-                      validator: (input) =>
-                          // !RegExp(r"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
-                          //         .hasMatch(input!)
-                          input.toString() == ""
-                              ? TextConstant.enterMobileNumberEmail
-                              : null,
+                      // validator: (input) =>
+                      //     !RegExp(r"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
+                      //             .hasMatch(input!)
+                      //         ? TextConstant.enterMobileNumberEmail
+                      //         : '',
                       onSaved: (value) {
                         _mobileOrEmailController.text = value as String;
                       },
@@ -106,7 +107,7 @@ class LoginScreenState extends State<LoginScreen> {
               SizedBox(
                 width: 200,
                 // height: 45,
-                child: _isLoading
+                child: authController.isLoading
                     ? const Center(
                         child: CircularProgressIndicator(),
                       )
@@ -131,12 +132,14 @@ class LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                         onPressed: () {
-                          // Navigator.of(context)
-                          //     .push(MaterialPageRoute(
-                          //   builder: (context) =>
-                          //       MainScreen(),
-                          // ));
-                          _submit();
+                          if (_mobileOrEmailController.text.isEmpty) {
+                            showCustomSnackBar(
+                                TextConstant.enterMobileNumberEmail,
+                                isError: true);
+                          } else {
+                            _submit(
+                                _mobileOrEmailController.text, authController);
+                          }
                         },
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -164,11 +167,22 @@ class LoginScreenState extends State<LoginScreen> {
               )
             ],
           ),
-        ))));
+        ))),
+      );
+    });
   }
 
-  void _submit() {
-    Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => PasswordScreen()));
+  void _submit(String? mobile, AuthController authController) {
+    authController.checkEmail(mobile).then((model) async {
+      if (model!.success!) {
+        Get.offNamed(RouteHelper.getPasswordScreenRoute(
+            model.user!.image!, model.user!.email!));
+      } else {
+        showCustomSnackBar('Email or mobile not found');
+      }
+    });
+
+    // Navigator.of(context)
+    //     .push(MaterialPageRoute(builder: (context) => PasswordScreen()));
   }
 }

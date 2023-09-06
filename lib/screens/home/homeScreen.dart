@@ -48,6 +48,14 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             tooltip: 'Notifications',
             onPressed: () {},
           ),
+          IconButton(
+            icon: const Icon(
+              Icons.logout_sharp,
+              color: Colors.white,
+            ),
+            tooltip: 'Logout',
+            onPressed: () {},
+          ),
         ],
       ),
       body: SafeArea(
