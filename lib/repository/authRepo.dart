@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constant/api/api_client.dart';
@@ -26,6 +27,15 @@ class AuthRepo {
   Future<Response> resetPassword({String? phone, String? password}) async {
     return await apiClient.postData(
         AppConstants.resetPassword, {"email": phone, "password": password});
+  }
+
+  Future<Response> getUserProfile({String? phone, String? password}) async {
+    return await apiClient.getData(AppConstants.userProfile);
+  }
+
+  Future<Response> updateUserImage(XFile data) async {
+    return await apiClient.postMultipartData(
+        AppConstants.updateUserImage, {}, [MultipartBody('image', data)]);
   }
 
   Future<String?> _saveDeviceToken() async {

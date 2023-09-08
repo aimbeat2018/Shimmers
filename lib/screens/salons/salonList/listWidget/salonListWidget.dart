@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:shimmers/screens/salons/salonDetails/salonDetailsScreen.dart';
 
 import '../../../../constant/colorsConstant.dart';
-import '../../../../model/scheduleModel.dart';
+import '../../../../model/salonRouteModel.dart';
 
 class SalonListWidget extends StatefulWidget {
-  final ScheduleModel model;
+  final SalonsModel model;
 
   const SalonListWidget({Key? key, required this.model}) : super(key: key);
 
@@ -25,11 +25,17 @@ class _SalonListWidgetState extends State<SalonListWidget> {
         padding: const EdgeInsets.symmetric(vertical: 15.0),
         child: Row(
           children: [
-            Image.asset(
-              'assets/images/distribution.png',
-              height: 50,
-              width: 50,
-            ),
+            widget.model.image == ""
+                ? Image.asset(
+                    'assets/images/avatar.png',
+                    height: 50,
+                    width: 50,
+                  )
+                : Image.network(
+                    widget.model.image!,
+                    height: 50,
+                    width: 50,
+                  ),
             SizedBox(
               width: 10,
             ),
@@ -38,7 +44,7 @@ class _SalonListWidgetState extends State<SalonListWidget> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    widget.model.location!,
+                    widget.model.name!,
                     style: TextStyle(
                         color: primaryColor,
                         fontSize: 14,
@@ -48,7 +54,7 @@ class _SalonListWidgetState extends State<SalonListWidget> {
                     height: 5,
                   ),
                   Text(
-                    widget.model.time!,
+                    widget.model.address!,
                     style: TextStyle(
                         color: Colors.black,
                         fontSize: 10,
@@ -79,7 +85,7 @@ class _SalonListWidgetState extends State<SalonListWidget> {
                         width: 5,
                       ),
                       Text(
-                        '5 Km Away',
+                        '${widget.model.distance!} Away',
                         style: const TextStyle(
                             color: Colors.white,
                             fontSize: 11,

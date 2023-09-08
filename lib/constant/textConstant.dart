@@ -13,6 +13,8 @@ class TextConstant {
   static String NeedHelp = "Need Help?";
   static String log_in = "Log In";
   static String next = "Next";
+  static String punchIn = "Punch In";
+  static String punchOut = "Punch Out";
   static String helloUser = "Hello! User ";
   static String Salon = "Salon";
   static String Distributor = "Distributors";
@@ -40,6 +42,7 @@ class TextConstant {
   static String Email = "Email";
   static String Password = "Password";
   static String Designation = "Designation";
+  static String department = "Department";
   static String Notification = "Notification";
   static String profile = "Profile";
   static String submit = "Submit";

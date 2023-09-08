@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:get/get.dart';
 
 import '../../../constant/colorsConstant.dart';
 import '../../../constant/textConstant.dart';
-import '../../../model/scheduleModel.dart';
+import '../../../controllers/salonController.dart';
+import '../addSalon/addSalonBasicDetailsScreen.dart';
 import 'listWidget/locationSalonsWidget.dart';
 
 class ExistingSalonsScreen extends StatefulWidget {
@@ -13,111 +17,181 @@ class ExistingSalonsScreen extends StatefulWidget {
 }
 
 class _ExistingSalonsScreenState extends State<ExistingSalonsScreen> {
-  List<ScheduleModel> scheduleList = [
-    ScheduleModel(
-        salonName: "Purple - The Family Salon",
-        location: 'Vashi, Navi Mumbai',
-        time: '11:30 AM - 12:30 PM',
-        status: 'completed'),
-    ScheduleModel(
-        salonName: "Purple - The Family Salon",
-        location: 'Vashi, Navi Mumbai',
-        time: '11:30 AM - 12:30 PM',
-        status: 'pending'),
-    ScheduleModel(
-        salonName: "Purple - The Family Salon",
-        location: 'Vashi, Navi Mumbai',
-        time: '11:30 AM - 12:30 PM',
-        status: 'completed'),
-    ScheduleModel(
-        salonName: "Purple - The Family Salon",
-        location: 'Vashi, Navi Mumbai',
-        time: '11:30 AM - 12:30 PM',
-        status: 'completed')
-  ];
   int selectedTile = -1;
+
+  String? _currentAddress;
+  double? lat, longi;
+  Position? _currentPosition;
+
+  Future<bool> _handleLocationPermission() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text(
+              'Location services are disabled. Please enable the services')));
+      return false;
+    }
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      // openAppSettings();
+      // if (permission == LocationPermission.denied) {
+      //   ScaffoldMessenger.of(context).showSnackBar(
+      //       const SnackBar(content: Text('Location permissions are denied')));
+      //   return false;
+      // }
+    }
+    if (permission == LocationPermission.deniedForever) {
+      // ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      //     content: Text(
+      //         'Location permissions are permanently denied, we cannot request permissions.')));
+
+      // setState(() async {
+      permission = await Geolocator.requestPermission();
+      // });
+
+      // openAppSettings();
+
+      // return false;
+    }
+    return true;
+  }
+
+  Future<void> _getCurrentPosition() async {
+    final hasPermission = await _handleLocationPermission();
+
+    if (!hasPermission) return;
+    await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
+        .then((Position position) {
+      setState(() {
+        _currentPosition = position;
+      });
+      _getAddressFromLatLng(_currentPosition!);
+    }).catchError((e) {
+      debugPrint(e!);
+    });
+  }
+
+  Future<void> _getAddressFromLatLng(Position position) async {
+    await placemarkFromCoordinates(
+            _currentPosition!.latitude, _currentPosition!.longitude)
+        .then((List<Placemark> placemarks) {
+      Placemark place = placemarks[0];
+      setState(() {
+        lat = _currentPosition!.latitude;
+        longi = _currentPosition!.longitude;
+        /*, ${place.subAdministrativeArea}*/
+        _currentAddress = ' ${place.locality}, ${place.postalCode}';
+        // locationController.text = _currentAddress!;
+        // isLoaded = true;
+
+        // Get.find<SalonController>().getSalonRouteList(
+        //     latitude: lat.toString(), longitude: longi.toString(), type: "existing");
+
+        Get.find<SalonController>().getSalonRouteList(
+            latitude: "16.69537730",
+            longitude: "74.24120130",
+            type: "existing");
+
+        print(lat.toString() + longi.toString());
+      });
+    }).catchError((e) {
+      debugPrint(e);
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    if (mounted) {
+      Future.delayed(Duration.zero, () async {
+        _getCurrentPosition();
+
+        //     .then((salonRouteModel) async {
+        //   if (salonRouteModel!.salonRouteData != null) {
+        //     model = userProfileModel;
+        //   } else {
+        //     model = ProfileModel();
+        //   }
+        // });
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 15),
-          child: Column(
-            children: [
-              Align(
-                alignment: Alignment.topRight,
-                child: Container(
-                  decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                      color: primaryColor),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        const Icon(
-                          Icons.add_circle_outline,
-                          color: Colors.white,
-                        ),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        Text(
-                          TextConstant.addSalon,
-                          style: const TextStyle(
+    return GetBuilder<SalonController>(builder: (salonController) {
+      return Scaffold(
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 15),
+            child: Column(
+              children: [
+                InkWell(
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) =>
+                            const AddSalonBasicDetailsScreen()));
+                  },
+                  child: Align(
+                    alignment: Alignment.topRight,
+                    child: Container(
+                      decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                          color: primaryColor),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            const Icon(
+                              Icons.add_circle_outline,
                               color: Colors.white,
-                              fontSize: 15,
-                              fontWeight: FontWeight.normal),
-                        )
-                      ],
+                            ),
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            Text(
+                              TextConstant.addSalon,
+                              style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.normal),
+                            )
+                          ],
+                        ),
+                      ),
                     ),
                   ),
                 ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              ListView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: scheduleList.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    // return ExpansionTile(
-                    //   title: Text(scheduleList[index].location!),
-                    //   subtitle: Text(scheduleList[index].time!),
-                    //   initiallyExpanded: index == selectedTile,
-                    //   children: [
-                    //     ListView.builder(
-                    //         physics: const NeverScrollableScrollPhysics(),
-                    //         shrinkWrap: true,
-                    //         itemCount: scheduleList.length,
-                    //         itemBuilder: (BuildContext context, int index) {
-                    //           return Text(scheduleList[index].location!);
-                    //         })
-                    //   ],
-                    //   onExpansionChanged: ((newState) {
-                    //     if (newState)
-                    //       setState(() {
-                    //         selectedTile = index;
-                    //       });
-                    //     else
-                    //       setState(() {
-                    //         selectedTile = -1;
-                    //       });
-                    //   }),
-                    // );
-
-                    return LocationSalonsWidget(
-                      model: scheduleList[index],
-                      position: index,
-                    );
-                  })
-            ],
+                const SizedBox(
+                  height: 10,
+                ),
+                salonController.isLoading
+                    ? const Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : ListView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: salonController
+                            .salonRouteModel!.salonRouteData!.salons!.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return LocationSalonsWidget(
+                            model: salonController.salonRouteModel!
+                                .salonRouteData!.salons![index],
+                            position: index,
+                          );
+                        })
+              ],
+            ),
           ),
         ),
-      ),
-    );
+      );
+    });
   }
 }

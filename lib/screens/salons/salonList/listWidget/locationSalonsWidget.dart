@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:shimmers/screens/salons/salonList/listWidget/salonListWidget.dart';
 
 import '../../../../constant/colorsConstant.dart';
-import '../../../../model/scheduleModel.dart';
+import '../../../../model/salonRouteModel.dart';
 
 class LocationSalonsWidget extends StatefulWidget {
-  final ScheduleModel model;
+  final RouteModel model;
   final int position;
 
   const LocationSalonsWidget(
@@ -51,7 +51,7 @@ class _LocationSalonsWidgetState extends State<LocationSalonsWidget> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        widget.model.location!,
+                        widget.model.cityName!,
                         style: TextStyle(
                             color: isExpanded ? Colors.white : primaryColor,
                             fontSize: 16,
@@ -61,7 +61,9 @@ class _LocationSalonsWidgetState extends State<LocationSalonsWidget> {
                         height: 5,
                       ),
                       Text(
-                        widget.model.time!,
+                        widget.model.distributorName == null
+                            ? "${widget.model.totalSalons!} Salons under"
+                            : "${widget.model.totalSalons!} Salons under ${widget.model.distributorName!}",
                         style: TextStyle(
                             color: isExpanded ? Colors.white70 : primaryColor,
                             fontSize: 13,
@@ -70,20 +72,21 @@ class _LocationSalonsWidgetState extends State<LocationSalonsWidget> {
                     ],
                   ),
                 ),
-                InkWell(
-                  onTap: () {
-                    setState(() {
-                      isExpanded = !isExpanded;
-                    });
-                  },
-                  child: Icon(
-                    isExpanded
-                        ? Icons.keyboard_arrow_up
-                        : Icons.keyboard_arrow_down_outlined,
-                    color: isExpanded ? Colors.white : primaryColor,
-                    size: 28,
-                  ),
-                )
+                if (widget.model.totalSalons != 0)
+                  InkWell(
+                    onTap: () {
+                      setState(() {
+                        isExpanded = !isExpanded;
+                      });
+                    },
+                    child: Icon(
+                      isExpanded
+                          ? Icons.keyboard_arrow_up
+                          : Icons.keyboard_arrow_down_outlined,
+                      color: isExpanded ? Colors.white : primaryColor,
+                      size: 28,
+                    ),
+                  )
               ],
             ),
           ),
@@ -101,9 +104,9 @@ class _LocationSalonsWidgetState extends State<LocationSalonsWidget> {
                 child: ListView.separated(
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-                  itemCount: 5,
+                  itemCount: widget.model.salons!.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return SalonListWidget(model: widget.model);
+                    return SalonListWidget(model: widget.model.salons![index]);
                   },
                   separatorBuilder: (context, index) {
                     return Divider(

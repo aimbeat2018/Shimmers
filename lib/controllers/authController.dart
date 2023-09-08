@@ -1,5 +1,8 @@
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:shimmers/constant/route_helper.dart';
 import 'package:shimmers/model/loginModel.dart';
+import 'package:shimmers/model/profileModel.dart';
 
 import '../model/checkEmailModel.dart';
 import '../repository/authRepo.dart';
@@ -12,6 +15,8 @@ class AuthController extends GetxController implements GetxService {
   CheckEmailModel? responseModel;
 
   LoginModel? loginModel;
+
+  ProfileModel? profileModel;
 
   String? msgReset;
 
@@ -62,6 +67,40 @@ class AuthController extends GetxController implements GetxService {
 
     if (response.statusCode == 200) {
       msgReset = response.bodyString!;
+    } else {
+      msgReset = "";
+    }
+    _isLoading = false;
+    update();
+    return msgReset;
+  }
+
+  Future<ProfileModel?> getUserProfile() async {
+    _isLoading = true;
+    update();
+    Response response = await authRepo.getUserProfile();
+
+    if (response.statusCode == 200) {
+      profileModel = ProfileModel.fromJson(response.body);
+    } else if (response.statusCode == 401) {
+      Get.offAllNamed(RouteHelper.getLoginRoute());
+    } else {
+      profileModel = ProfileModel();
+    }
+    _isLoading = false;
+    update();
+    return profileModel;
+  }
+
+  Future<String?> updateUserImage(XFile data) async {
+    _isLoading = true;
+    update();
+    Response response = await authRepo.updateUserImage(data);
+
+    if (response.statusCode == 200) {
+      msgReset = response.bodyString!;
+    } else if (response.statusCode == 401) {
+      Get.offAllNamed(RouteHelper.getLoginRoute());
     } else {
       msgReset = "";
     }

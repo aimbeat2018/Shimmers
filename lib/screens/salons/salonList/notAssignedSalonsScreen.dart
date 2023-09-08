@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../../../constant/colorsConstant.dart';
 import '../../../constant/textConstant.dart';
 import '../../../model/scheduleModel.dart';
-import 'listWidget/locationSalonsWidget.dart';
 
 class NotAssignedSalonsScreen extends StatefulWidget {
   const NotAssignedSalonsScreen({Key? key}) : super(key: key);
@@ -80,16 +79,16 @@ class _NotAssignedSalonsScreenState extends State<NotAssignedSalonsScreen> {
               const SizedBox(
                 height: 10,
               ),
-              ListView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: scheduleList.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return LocationSalonsWidget(
-                      model: scheduleList[index],
-                      position: index,
-                    );
-                  })
+              // ListView.builder(
+              //     physics: const NeverScrollableScrollPhysics(),
+              //     shrinkWrap: true,
+              //     itemCount: scheduleList.length,
+              //     itemBuilder: (BuildContext context, int index) {
+              //       return LocationSalonsWidget(
+              //         model: scheduleList[index],
+              //         position: index,
+              //       );
+              //     })
             ],
           ),
         ),

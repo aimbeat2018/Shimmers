@@ -4,6 +4,13 @@ class AppConstants {
   static const String checkEmail = 'verify/mobile/email';
   static const String login = 'login';
   static const String resetPassword = 'forget/password';
+  static const String userProfile = 'get/employee/profile';
+  static const String updateUserImage = 'upload/user/image';
+  static const String attendanceStatus = 'get/employee/attendance/status';
+  static const String employeePunchIn = 'employee/clockin';
+  static const String employeePunchOut = 'employee/clockout';
+  static const String attendanceHistory = 'get/employee/attendance/data';
+  static const String salonRouteList = 'get/new/existing/salons';
 
   // Shared Key
   static const String token = 'token';
