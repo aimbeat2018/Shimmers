@@ -18,4 +18,8 @@ class SalonRepo {
       "longitude": longitude,
     });
   }
+
+  Future<Response> getSalonCategory() async {
+    return await apiClient.getData(AppConstants.salonCategory);
+  }
 }

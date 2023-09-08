@@ -11,6 +11,7 @@ class AppConstants {
   static const String employeePunchOut = 'employee/clockout';
   static const String attendanceHistory = 'get/employee/attendance/data';
   static const String salonRouteList = 'get/new/existing/salons';
+  static const String salonCategory = 'get/salon/categories';
 
   // Shared Key
   static const String token = 'token';

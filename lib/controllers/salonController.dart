@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:shimmers/model/salonCategoryModel.dart';
 import 'package:shimmers/model/salonRouteModel.dart';
 import 'package:shimmers/repository/salonRepo.dart';
 
@@ -10,6 +11,8 @@ class SalonController extends GetxController implements GetxService {
   SalonController({required this.salonRepo});
 
   SalonRouteModel? salonRouteModel;
+
+  SalonCategoryModel? salonCategoryModel;
 
   bool? _isLoading = false;
 
@@ -32,5 +35,22 @@ class SalonController extends GetxController implements GetxService {
     _isLoading = false;
     update();
     return salonRouteModel;
+  }
+
+  Future<SalonCategoryModel?> getSalonCategory() async {
+    _isLoading = true;
+    // update();
+    Response response = await salonRepo.getSalonCategory();
+
+    if (response.statusCode == 200) {
+      salonCategoryModel = SalonCategoryModel.fromJson(response.body);
+    } else if (response.statusCode == 401) {
+      Get.offAllNamed(RouteHelper.getLoginRoute());
+    } else {
+      salonCategoryModel = SalonCategoryModel();
+    }
+    _isLoading = false;
+    update();
+    return salonCategoryModel;
   }
 }

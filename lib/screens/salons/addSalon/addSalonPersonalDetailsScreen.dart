@@ -1,4 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:shimmers/constant/custom_snackbar.dart';
 import 'package:shimmers/constant/textConstant.dart';
 import 'package:shimmers/screens/salons/addSalon/addFinalSalonScreen.dart';
 
@@ -22,6 +27,8 @@ class AddSalonPersonalDetailsScreen extends StatefulWidget {
 
 class _AddSalonPersonalDetailsScreenState
     extends State<AddSalonPersonalDetailsScreen> {
+  XFile? _pickedFile;
+
   showBackDialog(BuildContext parentContext) {
     showDialog(
       context: parentContext,
@@ -180,37 +187,45 @@ class _AddSalonPersonalDetailsScreenState
                                     ),
                                   ]))),
                         ),
-                        Stack(
-                          children: [
-                            const Center(
-                              child: CircleAvatar(
-                                radius: 45.0,
-                                backgroundImage:
-                                    ExactAssetImage('assets/images/avatar.png'),
-                                backgroundColor: primaryColor,
+                        InkWell(
+                          onTap: () {
+                            selectImageDialog(context);
+                          },
+                          child: Stack(
+                            children: [
+                              Center(
+                                child: CircleAvatar(
+                                  radius: 45.0,
+                                  backgroundImage: _pickedFile != null
+                                      ? FileImage(File(_pickedFile!.path))
+                                          as ImageProvider
+                                      : ExactAssetImage(
+                                          'assets/images/avatar.png'),
+                                  backgroundColor: primaryColor,
+                                ),
                               ),
-                            ),
-                            Align(
-                              alignment: Alignment.centerRight,
-                              child: Padding(
-                                padding: const EdgeInsets.only(
-                                    right: 125.0, top: 55),
-                                child: Container(
-                                    height: 30,
-                                    width: 30,
-                                    decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: Colors.grey.shade300),
-                                    child: InkWell(
-                                      onTap: () {},
-                                      child: const Icon(
-                                        Icons.camera_alt,
-                                        size: 22,
-                                      ),
-                                    )),
-                              ),
-                            )
-                          ],
+                              Align(
+                                alignment: Alignment.centerRight,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      right: 125.0, top: 55),
+                                  child: Container(
+                                      height: 30,
+                                      width: 30,
+                                      decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: Colors.grey.shade300),
+                                      child: InkWell(
+                                        onTap: () {},
+                                        child: const Icon(
+                                          Icons.camera_alt,
+                                          size: 22,
+                                        ),
+                                      )),
+                                ),
+                              )
+                            ],
+                          ),
                         ),
                         const SizedBox(
                           height: 25,
@@ -404,10 +419,28 @@ class _AddSalonPersonalDetailsScreenState
                                 ),
                               ),
                               onPressed: () {
-                                Navigator.of(context)
-                                    .pushReplacement(MaterialPageRoute(
-                                  builder: (context) => AddFinalSalonScreen(),
-                                ));
+                                if (_pickedFile == null) {
+                                  showCustomSnackBar('Select Salon Image',
+                                      isError: true);
+                                } else if (mobileController.text.length != 10) {
+                                  showCustomSnackBar('Enter mobile number',
+                                      isError: true);
+                                } else if (emailController.text.isEmpty) {
+                                  showCustomSnackBar('Enter email id',
+                                      isError: true);
+                                } else {
+                                  Navigator.of(context)
+                                      .pushReplacement(MaterialPageRoute(
+                                    builder: (context) => AddFinalSalonScreen(
+                                      salonImage: _pickedFile!,
+                                      salonName: widget.salonName,
+                                      categoryName: widget.salonCategory,
+                                      mobileNumber: mobileController.text,
+                                      email: emailController.text,
+                                      gstNumber: gstController.text,
+                                    ),
+                                  ));
+                                }
                               },
                               child: Padding(
                                 padding: const EdgeInsets.all(5.0),
@@ -430,6 +463,158 @@ class _AddSalonPersonalDetailsScreenState
         ),
         onWillPop: () async {
           return showBackDialog(context);
+        });
+  }
+
+  void pickImage() async {
+    _pickedFile = (await ImagePicker().pickImage(source: ImageSource.gallery))!;
+
+    CroppedFile? croppedFile = await ImageCropper().cropImage(
+      sourcePath: _pickedFile!.path,
+      aspectRatioPresets: [
+        // CropAspectRatioPreset.square,
+        // CropAspectRatioPreset.ratio3x2,
+        // CropAspectRatioPreset.original,
+        CropAspectRatioPreset.square,
+        // CropAspectRatioPreset.ratio16x9
+      ],
+      uiSettings: [
+        AndroidUiSettings(
+            toolbarTitle: 'Cropper',
+            toolbarColor: primaryColor,
+            toolbarWidgetColor: Colors.white,
+            hideBottomControls: true,
+            // initAspectRatio: CropAspectRatioPreset.original,
+            lockAspectRatio: true),
+        IOSUiSettings(
+          title: 'Cropper',
+        ),
+      ],
+      compressQuality: 100,
+    );
+
+    _pickedFile = XFile(croppedFile!.path);
+
+    setState(() {});
+    // update();
+  }
+
+  void pickImageCamera() async {
+    _pickedFile = await ImagePicker().pickImage(source: ImageSource.camera);
+
+    CroppedFile? croppedFile = await ImageCropper().cropImage(
+      sourcePath: _pickedFile!.path,
+      aspectRatioPresets: [
+        // CropAspectRatioPreset.square,
+        // CropAspectRatioPreset.ratio3x2,
+        // CropAspectRatioPreset.original,
+        CropAspectRatioPreset.square,
+        // CropAspectRatioPreset.ratio16x9
+      ],
+      uiSettings: [
+        AndroidUiSettings(
+            toolbarTitle: 'Cropper',
+            toolbarColor: primaryColor,
+            toolbarWidgetColor: Colors.white,
+            hideBottomControls: true,
+            // initAspectRatio: CropAspectRatioPreset.original,
+            lockAspectRatio: true),
+        IOSUiSettings(
+          title: 'Cropper',
+        ),
+      ],
+      compressQuality: 100,
+    );
+
+    _pickedFile = XFile(croppedFile!.path);
+
+    setState(() {});
+  }
+
+  void selectImageDialog(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return SimpleDialog(
+            backgroundColor: Colors.white,
+            contentPadding: const EdgeInsets.symmetric(horizontal: 20),
+            titlePadding:
+                const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+            title: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: const <Widget>[
+                Text(
+                  'Select Image',
+                  style: TextStyle(
+                      color: primaryColor,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 15),
+                ),
+                Divider(
+                  thickness: 1,
+                  color: Colors.black26,
+                ),
+              ],
+            ),
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(bottom: 20.0),
+                child: InkWell(
+                  child: Row(
+                    children: const [
+                      Icon(
+                        Icons.camera_alt,
+                        size: 25,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(left: 8.0),
+                        child: Text(
+                          'Camera',
+                          style: TextStyle(
+                              color: primaryColor,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 15),
+                        ),
+                      ),
+                    ],
+                  ),
+                  onTap: () async {
+                    // getImageFromCamera(context, 0);
+                    pickImageCamera();
+                    Navigator.pop(context);
+                  },
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 20.0),
+                child: InkWell(
+                  child: Row(
+                    children: const [
+                      Icon(
+                        Icons.image,
+                        size: 25,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(left: 8.0),
+                        child: Text(
+                          'Gallery',
+                          style: TextStyle(
+                              color: primaryColor,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 15),
+                        ),
+                      ),
+                    ],
+                  ),
+                  onTap: () async {
+                    // getImageFromGallery(context, 0);
+                    pickImage();
+                    Navigator.pop(context);
+                  },
+                ),
+              ),
+            ],
+          );
         });
   }
 }

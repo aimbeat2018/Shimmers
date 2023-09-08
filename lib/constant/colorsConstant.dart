@@ -1,9 +1,6 @@
 // ignore_for_file: constant_identifier_names
 import 'package:flutter/material.dart';
 
-const BASE_URL =
-    'https://jeeconnect.com/jeeconnectadmin/'; // Example: const BASE_URL = 'http://192.168.0.119/academy-demo';
-
 // list of colors that we use in our app
 const kBackgroundColor = Color(0xFFf2f2f2);
 const primaryColor = Color(0xFF1E8ECF);

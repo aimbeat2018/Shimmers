@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../../constant/colorsConstant.dart';
 import '../../../constant/globalFunction.dart';
@@ -6,8 +7,22 @@ import '../../../constant/textConstant.dart';
 
 class AddFinalSalonScreen extends StatefulWidget {
   static const String name = 'addSalonFinalScreen';
+  final XFile salonImage;
+  final String mobileNumber;
+  final String email;
+  final String gstNumber;
+  final String categoryName;
+  final String salonName;
 
-  const AddFinalSalonScreen({Key? key}) : super(key: key);
+  const AddFinalSalonScreen(
+      {Key? key,
+      required this.salonImage,
+      required this.mobileNumber,
+      required this.email,
+      required this.gstNumber,
+      required this.categoryName,
+      required this.salonName})
+      : super(key: key);
 
   @override
   State<AddFinalSalonScreen> createState() => _AddFinalSalonScreenState();
