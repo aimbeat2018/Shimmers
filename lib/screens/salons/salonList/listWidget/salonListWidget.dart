@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:shimmers/screens/salons/salonDetails/salonDetailsScreen.dart';
+import 'package:get/get.dart';
 
 import '../../../../constant/colorsConstant.dart';
+import '../../../../constant/route_helper.dart';
 import '../../../../model/salonRouteModel.dart';
 
 class SalonListWidget extends StatefulWidget {
@@ -18,8 +19,8 @@ class _SalonListWidgetState extends State<SalonListWidget> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => const SalonDetailsScreen()));
+        Get.toNamed(
+            RouteHelper.getSalonDetailsRoute(widget.model.id.toString()));
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 15.0),

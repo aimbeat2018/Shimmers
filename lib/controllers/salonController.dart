@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shimmers/model/employeeRouteListModel.dart';
 import 'package:shimmers/model/salonCategoryModel.dart';
+import 'package:shimmers/model/salonDetailsModel.dart';
 import 'package:shimmers/model/salonRouteModel.dart';
 import 'package:shimmers/repository/salonRepo.dart';
 
@@ -17,6 +18,8 @@ class SalonController extends GetxController implements GetxService {
   SalonCategoryModel? salonCategoryModel;
 
   EmployeeRouteListModel? employeeRouteListModel;
+
+  SalonDetailsModel? salonDetailsModel;
 
   bool? _isLoading = false;
   String? salonAddMessage;
@@ -76,6 +79,23 @@ class SalonController extends GetxController implements GetxService {
     return employeeRouteListModel;
   }
 
+  Future<SalonDetailsModel?> getSalonDetails(String? salonId) async {
+    _isLoading = true;
+    // update();
+    Response response = await salonRepo.getSalonDetails(salonId: salonId);
+
+    if (response.statusCode == 200) {
+      salonDetailsModel = SalonDetailsModel.fromJson(response.body);
+    } else if (response.statusCode == 401) {
+      Get.offAllNamed(RouteHelper.getLoginRoute());
+    } else {
+      salonDetailsModel = SalonDetailsModel();
+    }
+    _isLoading = false;
+    update();
+    return salonDetailsModel;
+  }
+
   Future<String?> addSalon(
       {String? name,
       String? email,
@@ -118,6 +138,24 @@ class SalonController extends GetxController implements GetxService {
         salon_type: salon_type,
         latitude: latitude,
         image: image);
+
+    if (response.statusCode == 200) {
+      salonAddMessage = response.body['message'];
+    } else if (response.statusCode == 401) {
+      Get.offAllNamed(RouteHelper.getLoginRoute());
+    } else {
+      salonAddMessage = "";
+    }
+    _isLoading = false;
+    update();
+    return salonAddMessage;
+  }
+
+  Future<String?> updateSalonType({String? salonId, String? salonType}) async {
+    _isLoading = true;
+    update();
+    Response response =
+        await salonRepo.updateSalonType(salonId: salonId, salonType: salonType);
 
     if (response.statusCode == 200) {
       salonAddMessage = response.body['message'];

@@ -71,4 +71,14 @@ class SalonRepo {
       MultipartBody('image', image!)
     ]);
   }
+
+  Future<Response> getSalonDetails({String? salonId}) async {
+    return await apiClient
+        .postData(AppConstants.viewSalonDetails, {"salon_id": salonId!});
+  }
+
+  Future<Response> updateSalonType({String? salonType, String? salonId}) async {
+    return await apiClient.postData(
+        AppConstants.updateSalonType, {"salon_id": salonId, "type": salonType});
+  }
 }

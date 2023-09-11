@@ -18,7 +18,9 @@ class _DistributorSalonListWidgetState
     return InkWell(
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => const SalonDetailsScreen()));
+            builder: (context) => const SalonDetailsScreen(
+                  salonId: "",
+                )));
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 10),

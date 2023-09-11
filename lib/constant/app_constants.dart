@@ -14,6 +14,8 @@ class AppConstants {
   static const String salonCategory = 'get/salon/categories';
   static const String routeList = 'get/routes/cities/list';
   static const String addSalon = 'add/salon';
+  static const String viewSalonDetails = 'view/salon';
+  static const String updateSalonType = 'update/salon/stage';
 
   // Shared Key
   static const String token = 'token';

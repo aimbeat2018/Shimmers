@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shimmers/screens/home/mainScreen.dart';
+import 'package:shimmers/screens/salons/salonDetails/salonDetailsScreen.dart';
 import 'package:shimmers/screens/userAuth/LoginScreen.dart';
 import 'package:shimmers/screens/userAuth/PasswordScreen.dart';
 
@@ -12,8 +13,7 @@ class RouteHelper {
   static const String passwordScreen = '/passwordScreen';
   static const String mainScreen = '/mainScreen';
   static const String passwordChangedScreen = '/passwordChangedScreen';
-
-  // static String getInitialRoute() => initial;
+  static const String salonDetails = '/salonDetails';
 
   static String getLoginRoute() => login;
 
@@ -25,164 +25,8 @@ class RouteHelper {
   static String getPasswordScreenRoute(String image, String email) =>
       '$passwordScreen?image=$image&email=$email';
 
-  //
-  // static String getLanguageRoute(String page) => '$language?page=$page';
-  //
-  // static String getOnBoardingRoute() => '$onBoarding';
-  //
-  // static String getSignInRoute(String page) => '$signIn?page=$page';
-  //
-  // static String getSignUpRoute() => '$signUp';
-  //
-  // static String getVerificationRoute(
-  //     String number, String token, String page, String pass) {
-  //   return '$verification?page=$page&number=$number&token=$token&pass=$pass';
-  // }
-  //
-  // static String getAccessLocationRoute(String page) =>
-  //     '$accessLocation?page=$page';
-  //
-  // static String getZoneRoute(String page) => '$accessZone?page=$page';
-  //
-  // static String getPickMapRoute(String page, bool canRoute) =>
-  //     '$pickMap?page=$page&route=${canRoute.toString()}';
-  //
-  // static String getInterestRoute() => '$interest';
-  //
-  // static String getMainRoute(String page) => '$main?page=$page';
-  //
-  // static String getForgotPassRoute(
-  //     bool fromSocialLogin, SocialLogInBody socialLogInBody) {
-  //   String _data;
-  //   if (fromSocialLogin) {
-  //     _data = base64Encode(utf8.encode(jsonEncode(socialLogInBody.toJson())));
-  //   }
-  //   return '$forgotPassword?page=${fromSocialLogin ? 'social-login' : 'forgot-password'}&data=${fromSocialLogin ? _data : 'null'}';
-  // }
-  //
-  // static String getResetPasswordRoute(
-  //         String phone, String token, String page) =>
-  //     '$resetPassword?phone=$phone&token=$token&page=$page';
-  //
-  // static String getSliderRoute(
-  //         String image, String image1, String image2, String image3) =>
-  //     '$productImageSlider?image=$image&image1=$image1&image2=$image2&image3=$image3';
-  //
-  // static String getSearchRoute() => '$search';
-  //
-  // static String getRestaurantRoute(int id) => '$restaurant?id=$id';
-  //
-  // static String getOrderDetailsRoute(int orderID) {
-  //   return '$orderDetails?id=$orderID';
-  // }
-  //
-  // static String getProfileRoute() => '$profile';
-  //
-  // static String getUpdateProfileRoute() => '$updateProfile';
-  //
-  // static String getCouponRoute() => '$coupon';
-  //
-  // static String getNotificationRoute() => '$notification';
-  //
-  // static String getMapRoute(AddressModel addressModel, String page) {
-  //   List<int> _encoded = utf8.encode(jsonEncode(addressModel.toJson()));
-  //   String _data = base64Encode(_encoded);
-  //   return '$map?address=$_data&page=$page';
-  // }
-  //
-  // static String getAddressRoute(bool fromAddress) =>
-  //     '$address?page=${fromAddress ? 'address' : 'check_out'}';
-  //
-  // static String getMedicineRequestRoute() => '$medicineRequest';
-  //
-  // static String getRestBookingRoute() => '$restaurantBooking';
-  //
-  // static String getUploadPrescriptionRoute(String vendorId) =>
-  //     '$uploadPrescription?vendorId=$vendorId';
-  //
-  // static String getRestaurantDiningRoute(String vendorId) =>
-  //     '$restaurantDining?vendorId=$vendorId';
-  //
-  // //TODO:
-  // static String getOrderSuccessRoute(
-  //         String orderID, String status, double amount) =>
-  //     '$orderSuccess?id=$orderID&status=$status&amount=$amount';
-  //
-  // static String getPaymentRoute(String id, int user, double amount) =>
-  //     '$payment?id=$id&user=$user&amount=$amount';
-  //
-  // static String getWalletPaymentRoute(String id, int user, double amount) =>
-  //     '$walletPayment?id=$id&user=$user&amount=$amount';
-  //
-  // static String getCheckoutRoute(String page) => '$checkout?page=$page';
-  //
-  // static String getOrderTrackingRoute(int id) => '$orderTracking?id=$id';
-  //
-  // static String getBasicCampaignRoute(BasicCampaignModel basicCampaignModel) {
-  //   String _data =
-  //       base64Encode(utf8.encode(jsonEncode(basicCampaignModel.toJson())));
-  //   return '$basicCampaign?data=$_data';
-  // }
-  //
-  // static String getHtmlRoute(String page) => '$html?page=$page';
-  //
-  // static String getCategoryRoute() => '$categories';
-  //
-  // static String getCategoryProductRoute(int id, String name) {
-  //   List<int> _encoded = utf8.encode(name);
-  //   String _data = base64Encode(_encoded);
-  //   return '$categoryProduct?id=$id&name=$_data';
-  // }
-  //
-  // static String getCategoryProductLadiesWareRoute(int id, String name) {
-  //   List<int> _encoded = utf8.encode(name);
-  //   String _data = base64Encode(_encoded);
-  //   return '$categoryProductLadiesWare?id=$id&name=$_data';
-  // }
-  //
-  // static String getPopularFoodRoute(bool isPopular) =>
-  //     '$popularFoods?page=${isPopular ? 'popular' : 'reviewed'}';
-  //
-  // static String getItemCampaignRoute() => '$itemCampaign';
-  //
-  // static String getSupportRoute() => '$support';
-  //
-  // static String getReviewRoute() => '$rateReview';
-  //
-  // static String getFavRoute() => '$favourite';
-  //
-  // static String getUpdateRoute(bool isUpdate) =>
-  //     '$update?update=${isUpdate.toString()}';
-  //
-  // static String getCartRoute() => '$cart';
-  //
-  // static String getAddAddressRoute(bool fromCheckout) =>
-  //     '$addAddress?page=${fromCheckout ? 'checkout' : 'address'}';
-  //
-  // static String getEditAddressRoute(AddressModel address) {
-  //   String _data = base64Url.encode(utf8.encode(jsonEncode(address.toJson())));
-  //   return '$editAddress?data=$_data';
-  // }
-  //
-  // static String getRestaurantReviewRoute(int restaurantID) =>
-  //     '$restaurantReview?id=$restaurantID';
-  //
-  // static String getAllRestaurantRoute(String page) =>
-  //     '$allRestaurants?page=$page';
-  //
-  // static String getWalletRoute(bool fromWallet) =>
-  //     '$wallet?page=${fromWallet ? 'wallet' : 'loyalty_points'}';
-  //
-  // static String getWalletRechargeRoute(bool fromWallet) =>
-  //     '$walletRecharge?page=${fromWallet ? 'wallet' : 'loyalty_points'}';
-  //
-  // static String getWalletHistoryRoute(bool fromWallet) =>
-  //     '$walletHistory?page=${fromWallet ? 'wallet' : 'loyalty_points'}';
-  //
-  // static String getPackageDetailsRoute(String amount) =>
-  //     '$packageDetails?id=$amount';
-  //
-  // static String getBuyNowPage(String amount) => '$buyNowPage?amount=$amount';
+  static String getSalonDetailsRoute(String salonId) =>
+      '$salonDetails?salonId=$salonId';
 
   static List<GetPage> routes = [
     GetPage(name: login, page: () => getRoute(const LoginScreen())),
@@ -197,6 +41,9 @@ class RouteHelper {
               image: Get.parameters['image'],
               email: Get.parameters['email'],
             )),
+    GetPage(
+        name: salonDetails,
+        page: () => SalonDetailsScreen(salonId: Get.parameters['salonId']!)),
     // GetPage(
     //     name: language,
     //     page: () =>
