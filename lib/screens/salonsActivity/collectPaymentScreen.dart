@@ -6,8 +6,16 @@ import '../../constant/textConstant.dart';
 
 class CollectPaymentScreen extends StatefulWidget {
   static const String name = 'collectPaymentScreen';
+  final String salonId;
+  final String salonName;
+  final String salonAddress;
 
-  const CollectPaymentScreen({Key? key}) : super(key: key);
+  const CollectPaymentScreen(
+      {Key? key,
+      required this.salonId,
+      required this.salonName,
+      required this.salonAddress})
+      : super(key: key);
 
   @override
   State<CollectPaymentScreen> createState() => _CollectPaymentScreenState();
@@ -55,7 +63,7 @@ class _CollectPaymentScreenState extends State<CollectPaymentScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Abc Salon',
+                        widget.salonName,
                         style: TextStyle(
                             color: Colors.black,
                             fontSize: 16,
@@ -65,7 +73,7 @@ class _CollectPaymentScreenState extends State<CollectPaymentScreen> {
                         height: 3,
                       ),
                       Text(
-                        'Sec - 10, Vashi, Navi Mumbai',
+                        widget.salonAddress,
                         style: TextStyle(
                             color: Colors.black,
                             fontSize: 13,

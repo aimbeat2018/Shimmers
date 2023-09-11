@@ -168,4 +168,22 @@ class SalonController extends GetxController implements GetxService {
     update();
     return salonAddMessage;
   }
+
+  Future<String?> takeSalonNote({String? salonId, String? note}) async {
+    _isLoading = true;
+    update();
+    Response response =
+        await salonRepo.takeSalonNote(salonId: salonId, note: note);
+
+    if (response.statusCode == 200) {
+      salonAddMessage = response.body['message'];
+    } else if (response.statusCode == 401) {
+      Get.offAllNamed(RouteHelper.getLoginRoute());
+    } else {
+      salonAddMessage = "";
+    }
+    _isLoading = false;
+    update();
+    return salonAddMessage;
+  }
 }

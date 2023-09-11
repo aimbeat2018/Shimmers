@@ -16,6 +16,7 @@ class AppConstants {
   static const String addSalon = 'add/salon';
   static const String viewSalonDetails = 'view/salon';
   static const String updateSalonType = 'update/salon/stage';
+  static const String takeNotes = 'take/salon/notes';
 
   // Shared Key
   static const String token = 'token';

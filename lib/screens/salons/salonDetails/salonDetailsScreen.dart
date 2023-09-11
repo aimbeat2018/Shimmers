@@ -286,7 +286,18 @@ class _SalonDetailsScreenState extends State<SalonDetailsScreen> {
                                         onTap: () => Navigator.of(context).push(
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    const CollectPaymentScreen())),
+                                                    CollectPaymentScreen(
+                                                      salonId: widget.salonId,
+                                                      salonName: salonController
+                                                          .salonDetailsModel!
+                                                          .data!
+                                                          .name!,
+                                                      salonAddress:
+                                                          salonController
+                                                              .salonDetailsModel!
+                                                              .data!
+                                                              .address!,
+                                                    ))),
                                         child: Column(
                                           children: [
                                             Image.asset(
@@ -313,12 +324,16 @@ class _SalonDetailsScreenState extends State<SalonDetailsScreen> {
                                             isScrollControlled: true,
                                             context: context,
                                             builder: (context) =>
-                                                const TakeNoteScreen(),
+                                                TakeNoteScreen(
+                                              salonId: widget.salonId,
+                                            ),
                                             backgroundColor: Colors.transparent,
                                           ).then((value) => {
-                                                // setState(() {
-                                                //   selectedLeaveType = value!;
-                                                // })
+                                                setState(() {
+                                                  salonController
+                                                      .getSalonDetails(
+                                                          widget.salonId);
+                                                })
                                               });
                                         },
                                         child: Column(
@@ -514,6 +529,13 @@ class _SalonDetailsScreenState extends State<SalonDetailsScreen> {
                                   const SizedBox(
                                     height: 5,
                                   ),
+                                  Text(
+                                    TextConstant.recentNotesMsg,
+                                    style: const TextStyle(
+                                        color: Colors.grey,
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.normal),
+                                  ),
                                   ListView.separated(
                                     physics: NeverScrollableScrollPhysics(),
                                     shrinkWrap: true,
@@ -564,13 +586,6 @@ class _SalonDetailsScreenState extends State<SalonDetailsScreen> {
                                     separatorBuilder: (context, index) {
                                       return Divider();
                                     },
-                                  ),
-                                  Text(
-                                    TextConstant.recentNotesMsg,
-                                    style: const TextStyle(
-                                        color: Colors.grey,
-                                        fontSize: 13,
-                                        fontWeight: FontWeight.normal),
                                   ),
                                 ],
                               ))

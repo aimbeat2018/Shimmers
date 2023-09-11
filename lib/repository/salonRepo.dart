@@ -81,4 +81,9 @@ class SalonRepo {
     return await apiClient.postData(
         AppConstants.updateSalonType, {"salon_id": salonId, "type": salonType});
   }
+
+  Future<Response> takeSalonNote({String? note, String? salonId}) async {
+    return await apiClient
+        .postData(AppConstants.takeNotes, {"salon_id": salonId, "note": note});
+  }
 }
