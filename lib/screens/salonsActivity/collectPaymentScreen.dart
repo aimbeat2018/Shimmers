@@ -100,52 +100,28 @@ class _CollectPaymentScreenState extends State<CollectPaymentScreen> {
               const SizedBox(
                 height: 15,
               ),
-              InkWell(
-                onTap: () {
-                  // showModalBottomSheet(
-                  //   context: context,
-                  //   builder: (context) => LeaveTypeSheet(),
-                  //   backgroundColor: Colors.transparent,
-                  // ).then((value) => {
-                  //   setState(() {
-                  //     selectedLeaveType = value!;
-                  //   })
-                  // });
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                      // boxShadow: const [
-                      //   BoxShadow(
-                      //     color: primaryColor,
-                      //     blurRadius: 12.0, // soften the shadow
-                      //     spreadRadius: 0.5, //extend the shadow
-                      //     offset: Offset(
-                      //       1.0, // Move to right 5  horizontally
-                      //       1.0, // Move to bottom 5 Vertically
-                      //     ),
-                      //   )
-                      // ],
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: primaryColor)),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                    child: DropdownButtonHideUnderline(
-                      child: DropdownButton(
-                          isExpanded: true,
-                          value: selectedMode,
-                          onChanged: (newValue) {
-                            setState(() {
-                              selectedMode = newValue;
-                            });
-                          },
-                          items: modeList.map((location) {
-                            return DropdownMenuItem(
-                              child: new Text(location),
-                              value: location,
-                            );
-                          }).toList()),
-                    ),
+              Container(
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(color: primaryColor)),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                  child: DropdownButtonHideUnderline(
+                    child: DropdownButton(
+                        isExpanded: true,
+                        value: selectedMode,
+                        onChanged: (modeValue) {
+                          setState(() {
+                            selectedMode = modeValue;
+                          });
+                        },
+                        items: modeList.map((modeValue) {
+                          return DropdownMenuItem(
+                            child: Text(modeValue),
+                            value: modeValue,
+                          );
+                        }).toList()),
                   ),
                 ),
               ),
