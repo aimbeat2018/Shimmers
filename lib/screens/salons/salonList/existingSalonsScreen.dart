@@ -171,7 +171,8 @@ class _ExistingSalonsScreenState extends State<ExistingSalonsScreen> {
                 const SizedBox(
                   height: 10,
                 ),
-                salonController.isLoading
+                salonController.isLoading ||
+                        salonController.salonRouteModel == null
                     ? const Center(
                         child: CircularProgressIndicator(),
                       )

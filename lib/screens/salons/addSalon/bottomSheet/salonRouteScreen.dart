@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shimmers/model/salonCategoryModel.dart';
+import 'package:shimmers/model/employeeRouteListModel.dart';
 
 import '../../../../constant/colorsConstant.dart';
 import '../../../../constant/textConstant.dart';
 import '../../../../controllers/salonController.dart';
 
-class SalonCatgeoryScreen extends StatefulWidget {
-  const SalonCatgeoryScreen({Key? key}) : super(key: key);
+class SalonRouteScreen extends StatefulWidget {
+  const SalonRouteScreen({Key? key}) : super(key: key);
 
   @override
-  State<SalonCatgeoryScreen> createState() => _SalonCatgeoryScreenState();
+  State<SalonRouteScreen> createState() => _SalonRouteScreenState();
 }
 
-class _SalonCatgeoryScreenState extends State<SalonCatgeoryScreen> {
+class _SalonRouteScreenState extends State<SalonRouteScreen> {
   @override
   void initState() {
     super.initState();
 
-    Get.find<SalonController>().getSalonCategory();
+    Get.find<SalonController>().getEmpRouteList();
   }
 
   @override
@@ -28,7 +28,7 @@ class _SalonCatgeoryScreenState extends State<SalonCatgeoryScreen> {
         body: Padding(
           padding: const EdgeInsets.all(15.0),
           child: salonController.isLoading ||
-                  salonController.salonCategoryModel == null
+                  salonController.employeeRouteListModel == null
               ? Center(
                   child: CircularProgressIndicator(),
                 )
@@ -39,7 +39,7 @@ class _SalonCatgeoryScreenState extends State<SalonCatgeoryScreen> {
                       children: [
                         Expanded(
                           child: Text(
-                            TextConstant.salonCategory,
+                            TextConstant.route,
                             style: const TextStyle(
                                 color: Colors.black,
                                 fontSize: 15,
@@ -49,7 +49,7 @@ class _SalonCatgeoryScreenState extends State<SalonCatgeoryScreen> {
                         InkWell(
                           onTap: () {
                             // Navigator.of(context).pop();
-                            Navigator.pop(context, SalonCategoryModel());
+                            Navigator.pop(context, EmpRouteModel());
                           },
                           child: Icon(
                             Icons.close,
@@ -65,7 +65,7 @@ class _SalonCatgeoryScreenState extends State<SalonCatgeoryScreen> {
                       physics: AlwaysScrollableScrollPhysics(),
                       shrinkWrap: true,
                       itemCount:
-                          salonController.salonCategoryModel!.data!.length,
+                          salonController.employeeRouteListModel!.data!.length,
                       itemBuilder: (BuildContext context, int index) {
                         return Padding(
                           padding: const EdgeInsets.symmetric(
@@ -81,7 +81,8 @@ class _SalonCatgeoryScreenState extends State<SalonCatgeoryScreen> {
                                     onTap: () {
                                       Navigator.pop(
                                           context,
-                                          salonController.salonCategoryModel!
+                                          salonController
+                                              .employeeRouteListModel!
                                               .data![index]);
                                     },
                                     child: Column(
@@ -91,8 +92,10 @@ class _SalonCatgeoryScreenState extends State<SalonCatgeoryScreen> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          salonController.salonCategoryModel!
-                                              .data![index].categoryName!,
+                                          salonController
+                                              .employeeRouteListModel!
+                                              .data![index]
+                                              .name!,
                                           style: const TextStyle(
                                               color: primaryColor,
                                               fontSize: 16,

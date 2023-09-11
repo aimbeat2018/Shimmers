@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shimmers/constant/custom_snackbar.dart';
+import 'package:shimmers/model/employeeRouteListModel.dart';
+import 'package:shimmers/screens/salons/addSalon/bottomSheet/salonRouteScreen.dart';
 
 import '../../../constant/colorsConstant.dart';
 import '../../../constant/globalFunction.dart';
 import '../../../constant/textConstant.dart';
+import '../../../controllers/salonController.dart';
 
 class AddFinalSalonScreen extends StatefulWidget {
   static const String name = 'addSalonFinalScreen';
@@ -64,740 +71,1004 @@ class _AddFinalSalonScreenState extends State<AddFinalSalonScreen> {
   TextEditingController stateController = TextEditingController();
   TextEditingController cityController = TextEditingController();
   TextEditingController contactPersonNameController = TextEditingController();
-  TextEditingController contactPersonNumberController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
   List<String> _locations = ['New', 'Existing']; // Option 2
   String? _selectedLocation; // Option 2
+  String? _currentAddress,
+      country,
+      city,
+      state,
+      pincode,
+      salonRouteId = "",
+      salonRoute = "";
+  double? lat, longi;
+  Position? _currentPosition;
+
+  Future<bool> _handleLocationPermission() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text(
+              'Location services are disabled. Please enable the services')));
+      return false;
+    }
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      // openAppSettings();
+      // if (permission == LocationPermission.denied) {
+      //   ScaffoldMessenger.of(context).showSnackBar(
+      //       const SnackBar(content: Text('Location permissions are denied')));
+      //   return false;
+      // }
+    }
+    if (permission == LocationPermission.deniedForever) {
+      // ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      //     content: Text(
+      //         'Location permissions are permanently denied, we cannot request permissions.')));
+
+      // setState(() async {
+      permission = await Geolocator.requestPermission();
+      // });
+
+      // openAppSettings();
+
+      // return false;
+    }
+    return true;
+  }
+
+  Future<void> _getCurrentPosition() async {
+    final hasPermission = await _handleLocationPermission();
+
+    if (!hasPermission) return;
+    await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
+        .then((Position position) {
+      setState(() {
+        _currentPosition = position;
+      });
+      _getAddressFromLatLng(_currentPosition!);
+    }).catchError((e) {
+      debugPrint(e!);
+    });
+  }
+
+  Future<void> _getAddressFromLatLng(Position position) async {
+    await placemarkFromCoordinates(
+            _currentPosition!.latitude, _currentPosition!.longitude)
+        .then((List<Placemark> placemarks) {
+      Placemark place = placemarks[0];
+      setState(() {
+        lat = _currentPosition!.latitude;
+        longi = _currentPosition!.longitude;
+        /*, ${place.subAdministrativeArea}*/
+        _currentAddress =
+            ' ${place.street}, ${place.subLocality}, ${place.locality}';
+
+        pincode = place.postalCode;
+        country = place.country;
+        state = place.subLocality;
+
+        pincodeController.text = pincode!;
+        countryController.text = country!;
+        stateController.text = state!;
+
+        // locationController.text = _currentAddress!;
+        // isLoaded = true;
+
+        // Get.find<SalonController>().getSalonRouteList(
+        //     latitude: lat.toString(), longitude: longi.toString(), type: "existing");
+
+        print(lat.toString() + longi.toString());
+      });
+    }).catchError((e) {
+      debugPrint(e);
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    if (mounted) {
+      Future.delayed(Duration.zero, () async {
+        _getCurrentPosition();
+
+        Get.find<SalonController>().getEmpRouteList();
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-        child: Scaffold(
-          appBar: AppBar(
-            backgroundColor: primaryColor,
-            centerTitle: true,
-            title: Text(
-              TextConstant.addSalon,
-              style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold),
+    return GetBuilder<SalonController>(builder: (salonController) {
+      return WillPopScope(
+          child: Scaffold(
+            appBar: AppBar(
+              backgroundColor: primaryColor,
+              centerTitle: true,
+              title: Text(
+                TextConstant.addSalon,
+                style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold),
+              ),
             ),
-          ),
-          body: SingleChildScrollView(
-            child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 25.0, horizontal: 15),
-              child: Column(
-                children: [
-                  Align(
-                    alignment: Alignment.center,
-                    child: SizedBox(
-                      width: 200.0,
-                      child: Row(
+            body: SingleChildScrollView(
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 25.0, horizontal: 15),
+                child: Column(
+                  children: [
+                    Align(
+                      alignment: Alignment.center,
+                      child: SizedBox(
+                        width: 200.0,
+                        child: Row(
+                          children: [
+                            const Stack(
+                              alignment: Alignment.center,
+                              children: [
+                                Icon(
+                                  Icons.circle,
+                                  color: primaryColor,
+                                  size: 24.0,
+                                ),
+                                Text(
+                                  '1',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.white,
+                                  ),
+                                )
+                              ],
+                            ),
+                            SizedBox(
+                              width: 50.0,
+                              child: Divider(
+                                color: Colors.grey.shade300,
+                                thickness: 1.5,
+                              ),
+                            ),
+                            const Stack(
+                              alignment: Alignment.center,
+                              children: [
+                                Icon(
+                                  Icons.circle,
+                                  color: primaryColor,
+                                  size: 24.0,
+                                ),
+                                Text(
+                                  '2',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.white,
+                                  ),
+                                )
+                              ],
+                            ),
+                            SizedBox(
+                              width: 50.0,
+                              child: Divider(
+                                color: Colors.grey.shade300,
+                                thickness: 1.5,
+                              ),
+                            ),
+                            const Stack(
+                              alignment: Alignment.center,
+                              children: [
+                                Icon(
+                                  Icons.circle,
+                                  color: primaryColor,
+                                  size: 24.0,
+                                ),
+                                Text(
+                                  '3',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.white,
+                                  ),
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                      child: Column(
                         children: [
-                          const Stack(
-                            alignment: Alignment.center,
-                            children: [
-                              Icon(
-                                Icons.circle,
-                                color: primaryColor,
-                                size: 24.0,
-                              ),
-                              Text(
-                                '1',
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.white,
-                                ),
-                              )
-                            ],
+                          const SizedBox(
+                            height: 50,
                           ),
-                          SizedBox(
-                            width: 50.0,
-                            child: Divider(
-                              color: Colors.grey.shade300,
-                              thickness: 1.5,
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 8.0),
+                                child: RichText(
+                                    text: TextSpan(
+                                        style: const TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500),
+                                        children: <TextSpan>[
+                                      TextSpan(
+                                        text: TextConstant.pincode,
+                                      ),
+                                      TextSpan(
+                                        text: ' *',
+                                        style: const TextStyle(
+                                            color: Colors.red,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                    ]))),
+                          ),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                              // boxShadow: const [
+                              //   BoxShadow(
+                              //     color: primaryColor,
+                              //     blurRadius: 12.0, // soften the shadow
+                              //     spreadRadius: 0.5, //extend the shadow
+                              //     offset: Offset(
+                              //       1.0, // Move to right 5  horizontally
+                              //       1.0, // Move to bottom 5 Vertically
+                              //     ),
+                              //   )
+                              // ],
+                              border: Border.all(color: primaryColor),
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: TextFormField(
+                              style: const TextStyle(fontSize: 14),
+                              enabled: false,
+                              decoration:
+                                  GlobalFunctions.getInputDecorationWhite(""),
+                              controller: pincodeController,
+                              keyboardType: TextInputType.number,
                             ),
                           ),
-                          const Stack(
-                            alignment: Alignment.center,
-                            children: [
-                              Icon(
-                                Icons.circle,
-                                color: primaryColor,
-                                size: 24.0,
-                              ),
-                              Text(
-                                '2',
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.white,
-                                ),
-                              )
-                            ],
+                          const SizedBox(
+                            height: 15,
                           ),
-                          SizedBox(
-                            width: 50.0,
-                            child: Divider(
-                              color: Colors.grey.shade300,
-                              thickness: 1.5,
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 8.0),
+                                child: RichText(
+                                    text: TextSpan(
+                                        style: const TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500),
+                                        children: <TextSpan>[
+                                      TextSpan(
+                                        text: TextConstant.companyAddress,
+                                      ),
+                                      TextSpan(
+                                        text: ' *',
+                                        style: const TextStyle(
+                                            color: Colors.red,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                    ]))),
+                          ),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                              // boxShadow: const [
+                              //   BoxShadow(
+                              //     color: primaryColor,
+                              //     blurRadius: 12.0, // soften the shadow
+                              //     spreadRadius: 0.5, //extend the shadow
+                              //     offset: Offset(
+                              //       1.0, // Move to right 5  horizontally
+                              //       1.0, // Move to bottom 5 Vertically
+                              //     ),
+                              //   )
+                              // ],
+                              border: Border.all(color: primaryColor),
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: TextFormField(
+                              style: const TextStyle(fontSize: 14),
+                              decoration:
+                                  GlobalFunctions.getInputDecorationWhite(""),
+                              controller: companyAddressController,
+                              keyboardType: TextInputType.text,
                             ),
                           ),
-                          const Stack(
-                            alignment: Alignment.center,
-                            children: [
-                              Icon(
-                                Icons.circle,
-                                color: primaryColor,
-                                size: 24.0,
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 8.0),
+                                child: RichText(
+                                    text: TextSpan(
+                                        style: const TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500),
+                                        children: <TextSpan>[
+                                      TextSpan(
+                                        text: TextConstant.country,
+                                      ),
+                                      TextSpan(
+                                        text: ' *',
+                                        style: const TextStyle(
+                                            color: Colors.red,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                    ]))),
+                          ),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                              // boxShadow: const [
+                              //   BoxShadow(
+                              //     color: primaryColor,
+                              //     blurRadius: 12.0, // soften the shadow
+                              //     spreadRadius: 0.5, //extend the shadow
+                              //     offset: Offset(
+                              //       1.0, // Move to right 5  horizontally
+                              //       1.0, // Move to bottom 5 Vertically
+                              //     ),
+                              //   )
+                              // ],
+                              border: Border.all(color: primaryColor),
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: TextFormField(
+                              style: const TextStyle(fontSize: 14),
+                              enabled: false,
+                              decoration:
+                                  GlobalFunctions.getInputDecorationWhite(""),
+                              controller: countryController,
+                              keyboardType: TextInputType.text,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 8.0),
+                                child: RichText(
+                                    text: TextSpan(
+                                        style: const TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500),
+                                        children: <TextSpan>[
+                                      TextSpan(
+                                        text: TextConstant.state,
+                                      ),
+                                      TextSpan(
+                                        text: ' *',
+                                        style: const TextStyle(
+                                            color: Colors.red,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                    ]))),
+                          ),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                              // boxShadow: const [
+                              //   BoxShadow(
+                              //     color: primaryColor,
+                              //     blurRadius: 12.0, // soften the shadow
+                              //     spreadRadius: 0.5, //extend the shadow
+                              //     offset: Offset(
+                              //       1.0, // Move to right 5  horizontally
+                              //       1.0, // Move to bottom 5 Vertically
+                              //     ),
+                              //   )
+                              // ],
+                              border: Border.all(color: primaryColor),
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: TextFormField(
+                              style: const TextStyle(fontSize: 14),
+                              enabled: true,
+                              decoration:
+                                  GlobalFunctions.getInputDecorationWhite(""),
+                              controller: stateController,
+                              keyboardType: TextInputType.text,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 8.0),
+                                child: RichText(
+                                    text: TextSpan(
+                                        style: const TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500),
+                                        children: <TextSpan>[
+                                      TextSpan(
+                                        text: TextConstant.city,
+                                      ),
+                                      TextSpan(
+                                        text: ' *',
+                                        style: const TextStyle(
+                                            color: Colors.red,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                    ]))),
+                          ),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                              // boxShadow: const [
+                              //   BoxShadow(
+                              //     color: primaryColor,
+                              //     blurRadius: 12.0, // soften the shadow
+                              //     spreadRadius: 0.5, //extend the shadow
+                              //     offset: Offset(
+                              //       1.0, // Move to right 5  horizontally
+                              //       1.0, // Move to bottom 5 Vertically
+                              //     ),
+                              //   )
+                              // ],
+                              border: Border.all(color: primaryColor),
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: TextFormField(
+                              style: const TextStyle(fontSize: 14),
+                              enabled: true,
+                              decoration:
+                                  GlobalFunctions.getInputDecorationWhite(""),
+                              controller: cityController,
+                              keyboardType: TextInputType.text,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 8.0),
+                                child: RichText(
+                                    text: TextSpan(
+                                        style: const TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500),
+                                        children: <TextSpan>[
+                                      TextSpan(
+                                        text: TextConstant.shippingAddress,
+                                      ),
+                                      TextSpan(
+                                        text: ' *',
+                                        style: const TextStyle(
+                                            color: Colors.red,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                    ]))),
+                          ),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                              // boxShadow: const [
+                              //   BoxShadow(
+                              //     color: primaryColor,
+                              //     blurRadius: 12.0, // soften the shadow
+                              //     spreadRadius: 0.5, //extend the shadow
+                              //     offset: Offset(
+                              //       1.0, // Move to right 5  horizontally
+                              //       1.0, // Move to bottom 5 Vertically
+                              //     ),
+                              //   )
+                              // ],
+                              border: Border.all(color: primaryColor),
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: TextFormField(
+                              style: const TextStyle(fontSize: 14),
+                              decoration:
+                                  GlobalFunctions.getInputDecorationWhite(""),
+                              controller: shippingAddressController,
+                              keyboardType: TextInputType.text,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 8.0),
+                                child: RichText(
+                                    text: TextSpan(
+                                        style: const TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500),
+                                        children: <TextSpan>[
+                                      TextSpan(
+                                        text: TextConstant.contactPersonName,
+                                      ),
+                                      TextSpan(
+                                        text: ' *',
+                                        style: const TextStyle(
+                                            color: Colors.red,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                    ]))),
+                          ),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                              // boxShadow: const [
+                              //   BoxShadow(
+                              //     color: primaryColor,
+                              //     blurRadius: 12.0, // soften the shadow
+                              //     spreadRadius: 0.5, //extend the shadow
+                              //     offset: Offset(
+                              //       1.0, // Move to right 5  horizontally
+                              //       1.0, // Move to bottom 5 Vertically
+                              //     ),
+                              //   )
+                              // ],
+                              border: Border.all(color: primaryColor),
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: TextFormField(
+                              style: const TextStyle(fontSize: 14),
+                              decoration:
+                                  GlobalFunctions.getInputDecorationWhite(""),
+                              controller: contactPersonNameController,
+                              keyboardType: TextInputType.text,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 8.0),
+                                child: RichText(
+                                    text: TextSpan(
+                                        style: const TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500),
+                                        children: <TextSpan>[
+                                      TextSpan(
+                                        text: TextConstant.contactPersonNumber,
+                                      ),
+                                      TextSpan(
+                                        text: ' *',
+                                        style: const TextStyle(
+                                            color: Colors.red,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                    ]))),
+                          ),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                              // boxShadow: const [
+                              //   BoxShadow(
+                              //     color: primaryColor,
+                              //     blurRadius: 12.0, // soften the shadow
+                              //     spreadRadius: 0.5, //extend the shadow
+                              //     offset: Offset(
+                              //       1.0, // Move to right 5  horizontally
+                              //       1.0, // Move to bottom 5 Vertically
+                              //     ),
+                              //   )
+                              // ],
+                              border: Border.all(color: primaryColor),
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: TextFormField(
+                              style: const TextStyle(fontSize: 14),
+                              decoration:
+                                  GlobalFunctions.getInputDecorationWhite(""),
+                              controller: contactPersonMobileController,
+                              keyboardType: TextInputType.number,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 8.0),
+                                child: RichText(
+                                    text: TextSpan(
+                                        style: const TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500),
+                                        children: <TextSpan>[
+                                      TextSpan(
+                                        text: TextConstant.Password,
+                                      ),
+                                      TextSpan(
+                                        text: ' *',
+                                        style: const TextStyle(
+                                            color: Colors.red,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                    ]))),
+                          ),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                              // boxShadow: const [
+                              //   BoxShadow(
+                              //     color: primaryColor,
+                              //     blurRadius: 12.0, // soften the shadow
+                              //     spreadRadius: 0.5, //extend the shadow
+                              //     offset: Offset(
+                              //       1.0, // Move to right 5  horizontally
+                              //       1.0, // Move to bottom 5 Vertically
+                              //     ),
+                              //   )
+                              // ],
+                              border: Border.all(color: primaryColor),
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: TextFormField(
+                              obscureText: true,
+                              style: const TextStyle(fontSize: 14),
+                              decoration:
+                                  GlobalFunctions.getInputDecorationWhite(""),
+                              controller: passwordController,
+                              keyboardType: TextInputType.text,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 8.0),
+                                child: RichText(
+                                    text: TextSpan(
+                                        style: const TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500),
+                                        children: <TextSpan>[
+                                      TextSpan(
+                                        text: TextConstant.salonType,
+                                      ),
+                                      TextSpan(
+                                        text: ' *',
+                                        style: const TextStyle(
+                                            color: Colors.red,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                    ]))),
+                          ),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          Container(
+                            width: MediaQuery.of(context).size.width,
+                            padding: EdgeInsets.symmetric(horizontal: 15),
+                            decoration: BoxDecoration(
+                              // boxShadow: const [
+                              //   BoxShadow(
+                              //     color: primaryColor,
+                              //     blurRadius: 12.0, // soften the shadow
+                              //     spreadRadius: 0.5, //extend the shadow
+                              //     offset: Offset(
+                              //       1.0, // Move to right 5  horizontally
+                              //       1.0, // Move to bottom 5 Vertically
+                              //     ),
+                              //   )
+                              // ],
+                              border: Border.all(color: primaryColor),
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: DropdownButtonHideUnderline(
+                              child: DropdownButton(
+                                  isExpanded: true,
+                                  value: _selectedLocation,
+                                  onChanged: (newValue) {
+                                    setState(() {
+                                      _selectedLocation = newValue;
+                                    });
+                                  },
+                                  items: _locations.map((location) {
+                                    return DropdownMenuItem(
+                                      child: new Text(location),
+                                      value: location,
+                                    );
+                                  }).toList()),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 8.0),
+                                child: RichText(
+                                    text: TextSpan(
+                                        style: const TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500),
+                                        children: <TextSpan>[
+                                      TextSpan(
+                                        text: TextConstant.route,
+                                      ),
+                                      TextSpan(
+                                        text: ' *',
+                                        style: const TextStyle(
+                                            color: Colors.red,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                    ]))),
+                          ),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          InkWell(
+                            onTap: () {
+                              showModalBottomSheet(
+                                context: context,
+                                builder: (context) => const SalonRouteScreen(),
+                                backgroundColor: Colors.transparent,
+                              ).then((empRouteModel) => {
+                                    setState(() {
+                                      EmpRouteModel model = empRouteModel;
+                                      salonRouteId = model.id.toString();
+                                      salonRoute = model.name;
+                                    })
+                                  });
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                // boxShadow: const [
+                                //   BoxShadow(
+                                //     color: primaryColor,
+                                //     blurRadius: 12.0, // soften the shadow
+                                //     spreadRadius: 0.5, //extend the shadow
+                                //     offset: Offset(
+                                //       1.0, // Move to right 5  horizontally
+                                //       1.0, // Move to bottom 5 Vertically
+                                //     ),
+                                //   )
+                                // ],
+                                border: Border.all(color: primaryColor),
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(12),
                               ),
-                              Text(
-                                '3',
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.white,
+                              child: Padding(
+                                padding: const EdgeInsets.all(12.0),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                        child: Padding(
+                                      padding:
+                                          EdgeInsets.symmetric(horizontal: 8.0),
+                                      child: Text(
+                                        salonRoute == null ? "" : salonRoute!,
+                                        style: TextStyle(
+                                            color: Colors.black, fontSize: 14),
+                                      ),
+                                    )),
+                                    Icon(
+                                      Icons.keyboard_arrow_down,
+                                      color: Colors.grey.shade900,
+                                    )
+                                  ],
                                 ),
-                              )
-                            ],
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 30),
+                          SizedBox(
+                            width: 200,
+                            // height: 45,
+                            child: salonController.isLoading
+                                ? const Center(
+                                    child: CircularProgressIndicator(),
+                                  )
+                                : ElevatedButton(
+                                    style: ButtonStyle(
+                                      backgroundColor:
+                                          MaterialStateProperty.all<Color>(
+                                              primaryColor),
+                                      foregroundColor:
+                                          MaterialStateProperty.all<Color>(
+                                              primaryColor),
+                                      textStyle:
+                                          MaterialStateProperty.all<TextStyle>(
+                                        const TextStyle(fontSize: 16),
+                                      ),
+                                      padding:
+                                          MaterialStateProperty.all<EdgeInsets>(
+                                        const EdgeInsets.symmetric(
+                                            horizontal: 16, vertical: 8),
+                                      ),
+                                      shape: MaterialStateProperty.all<
+                                          RoundedRectangleBorder>(
+                                        RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                      ),
+                                    ),
+                                    onPressed: () {
+                                      if (pincodeController.text.isEmpty) {
+                                        showCustomSnackBar('Enter pincode',
+                                            isError: true);
+                                      } else if (companyAddressController
+                                          .text.isEmpty) {
+                                        showCustomSnackBar(
+                                            'Enter Company Address',
+                                            isError: true);
+                                      } else if (countryController
+                                          .text.isEmpty) {
+                                        showCustomSnackBar('Enter Country',
+                                            isError: true);
+                                      } else if (stateController.text.isEmpty) {
+                                        showCustomSnackBar('Enter State',
+                                            isError: true);
+                                      } else if (cityController.text.isEmpty) {
+                                        showCustomSnackBar('Enter City',
+                                            isError: true);
+                                      } else if (shippingAddressController
+                                          .text.isEmpty) {
+                                        showCustomSnackBar(
+                                            'Enter Shipping Address',
+                                            isError: true);
+                                      } else if (contactPersonNameController
+                                          .text.isEmpty) {
+                                        showCustomSnackBar(
+                                            'Enter Contact Person Name',
+                                            isError: true);
+                                      } else if (contactPersonMobileController
+                                              .text.length !=
+                                          10) {
+                                        showCustomSnackBar(
+                                            'Enter Contact Person Mobile Number',
+                                            isError: true);
+                                      } else if (passwordController
+                                          .text.isEmpty) {
+                                        showCustomSnackBar('Enter Password',
+                                            isError: true);
+                                      } else if (_selectedLocation == '') {
+                                        showCustomSnackBar('Select Salon Type',
+                                            isError: true);
+                                      } else if (salonRouteId == "") {
+                                        showCustomSnackBar('Select Route',
+                                            isError: true);
+                                      } else {
+                                        addSalon(salonController);
+                                      }
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(5.0),
+                                      child: Text(
+                                        TextConstant.submit.toUpperCase(),
+                                        style: const TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                    )),
                           ),
                         ],
                       ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                    child: Column(
-                      children: [
-                        const SizedBox(
-                          height: 50,
-                        ),
-                        Align(
-                          alignment: Alignment.topLeft,
-                          child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 8.0),
-                              child: RichText(
-                                  text: TextSpan(
-                                      style: const TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w500),
-                                      children: <TextSpan>[
-                                    TextSpan(
-                                      text: TextConstant.pincode,
-                                    ),
-                                    TextSpan(
-                                      text: ' *',
-                                      style: const TextStyle(
-                                          color: Colors.red,
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                  ]))),
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        Container(
-                          decoration: BoxDecoration(
-                            // boxShadow: const [
-                            //   BoxShadow(
-                            //     color: primaryColor,
-                            //     blurRadius: 12.0, // soften the shadow
-                            //     spreadRadius: 0.5, //extend the shadow
-                            //     offset: Offset(
-                            //       1.0, // Move to right 5  horizontally
-                            //       1.0, // Move to bottom 5 Vertically
-                            //     ),
-                            //   )
-                            // ],
-                            border: Border.all(color: primaryColor),
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: TextFormField(
-                            style: const TextStyle(fontSize: 14),
-                            enabled: false,
-                            decoration:
-                                GlobalFunctions.getInputDecorationWhite(""),
-                            controller: pincodeController,
-                            keyboardType: TextInputType.number,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        Align(
-                          alignment: Alignment.topLeft,
-                          child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 8.0),
-                              child: RichText(
-                                  text: TextSpan(
-                                      style: const TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w500),
-                                      children: <TextSpan>[
-                                    TextSpan(
-                                      text: TextConstant.companyAddress,
-                                    ),
-                                    TextSpan(
-                                      text: ' *',
-                                      style: const TextStyle(
-                                          color: Colors.red,
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                  ]))),
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        Container(
-                          decoration: BoxDecoration(
-                            // boxShadow: const [
-                            //   BoxShadow(
-                            //     color: primaryColor,
-                            //     blurRadius: 12.0, // soften the shadow
-                            //     spreadRadius: 0.5, //extend the shadow
-                            //     offset: Offset(
-                            //       1.0, // Move to right 5  horizontally
-                            //       1.0, // Move to bottom 5 Vertically
-                            //     ),
-                            //   )
-                            // ],
-                            border: Border.all(color: primaryColor),
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: TextFormField(
-                            style: const TextStyle(fontSize: 14),
-                            decoration:
-                                GlobalFunctions.getInputDecorationWhite(""),
-                            controller: companyAddressController,
-                            keyboardType: TextInputType.text,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        Align(
-                          alignment: Alignment.topLeft,
-                          child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 8.0),
-                              child: RichText(
-                                  text: TextSpan(
-                                      style: const TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w500),
-                                      children: <TextSpan>[
-                                    TextSpan(
-                                      text: TextConstant.country,
-                                    ),
-                                    TextSpan(
-                                      text: ' *',
-                                      style: const TextStyle(
-                                          color: Colors.red,
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                  ]))),
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        Container(
-                          decoration: BoxDecoration(
-                            // boxShadow: const [
-                            //   BoxShadow(
-                            //     color: primaryColor,
-                            //     blurRadius: 12.0, // soften the shadow
-                            //     spreadRadius: 0.5, //extend the shadow
-                            //     offset: Offset(
-                            //       1.0, // Move to right 5  horizontally
-                            //       1.0, // Move to bottom 5 Vertically
-                            //     ),
-                            //   )
-                            // ],
-                            border: Border.all(color: primaryColor),
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: TextFormField(
-                            style: const TextStyle(fontSize: 14),
-                            enabled: false,
-                            decoration:
-                                GlobalFunctions.getInputDecorationWhite(""),
-                            controller: countryController,
-                            keyboardType: TextInputType.text,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        Align(
-                          alignment: Alignment.topLeft,
-                          child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 8.0),
-                              child: RichText(
-                                  text: TextSpan(
-                                      style: const TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w500),
-                                      children: <TextSpan>[
-                                    TextSpan(
-                                      text: TextConstant.state,
-                                    ),
-                                    TextSpan(
-                                      text: ' *',
-                                      style: const TextStyle(
-                                          color: Colors.red,
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                  ]))),
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        Container(
-                          decoration: BoxDecoration(
-                            // boxShadow: const [
-                            //   BoxShadow(
-                            //     color: primaryColor,
-                            //     blurRadius: 12.0, // soften the shadow
-                            //     spreadRadius: 0.5, //extend the shadow
-                            //     offset: Offset(
-                            //       1.0, // Move to right 5  horizontally
-                            //       1.0, // Move to bottom 5 Vertically
-                            //     ),
-                            //   )
-                            // ],
-                            border: Border.all(color: primaryColor),
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: TextFormField(
-                            style: const TextStyle(fontSize: 14),
-                            enabled: false,
-                            decoration:
-                                GlobalFunctions.getInputDecorationWhite(""),
-                            controller: stateController,
-                            keyboardType: TextInputType.text,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        Align(
-                          alignment: Alignment.topLeft,
-                          child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 8.0),
-                              child: RichText(
-                                  text: TextSpan(
-                                      style: const TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w500),
-                                      children: <TextSpan>[
-                                    TextSpan(
-                                      text: TextConstant.city,
-                                    ),
-                                    TextSpan(
-                                      text: ' *',
-                                      style: const TextStyle(
-                                          color: Colors.red,
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                  ]))),
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        Container(
-                          decoration: BoxDecoration(
-                            // boxShadow: const [
-                            //   BoxShadow(
-                            //     color: primaryColor,
-                            //     blurRadius: 12.0, // soften the shadow
-                            //     spreadRadius: 0.5, //extend the shadow
-                            //     offset: Offset(
-                            //       1.0, // Move to right 5  horizontally
-                            //       1.0, // Move to bottom 5 Vertically
-                            //     ),
-                            //   )
-                            // ],
-                            border: Border.all(color: primaryColor),
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: TextFormField(
-                            style: const TextStyle(fontSize: 14),
-                            enabled: false,
-                            decoration:
-                                GlobalFunctions.getInputDecorationWhite(""),
-                            controller: cityController,
-                            keyboardType: TextInputType.text,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        Align(
-                          alignment: Alignment.topLeft,
-                          child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 8.0),
-                              child: RichText(
-                                  text: TextSpan(
-                                      style: const TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w500),
-                                      children: <TextSpan>[
-                                    TextSpan(
-                                      text: TextConstant.shippingAddress,
-                                    ),
-                                    TextSpan(
-                                      text: ' *',
-                                      style: const TextStyle(
-                                          color: Colors.red,
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                  ]))),
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        Container(
-                          decoration: BoxDecoration(
-                            // boxShadow: const [
-                            //   BoxShadow(
-                            //     color: primaryColor,
-                            //     blurRadius: 12.0, // soften the shadow
-                            //     spreadRadius: 0.5, //extend the shadow
-                            //     offset: Offset(
-                            //       1.0, // Move to right 5  horizontally
-                            //       1.0, // Move to bottom 5 Vertically
-                            //     ),
-                            //   )
-                            // ],
-                            border: Border.all(color: primaryColor),
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: TextFormField(
-                            style: const TextStyle(fontSize: 14),
-                            decoration:
-                                GlobalFunctions.getInputDecorationWhite(""),
-                            controller: shippingAddressController,
-                            keyboardType: TextInputType.text,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        Align(
-                          alignment: Alignment.topLeft,
-                          child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 8.0),
-                              child: RichText(
-                                  text: TextSpan(
-                                      style: const TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w500),
-                                      children: <TextSpan>[
-                                    TextSpan(
-                                      text: TextConstant.contactPersonName,
-                                    ),
-                                    TextSpan(
-                                      text: ' *',
-                                      style: const TextStyle(
-                                          color: Colors.red,
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                  ]))),
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        Container(
-                          decoration: BoxDecoration(
-                            // boxShadow: const [
-                            //   BoxShadow(
-                            //     color: primaryColor,
-                            //     blurRadius: 12.0, // soften the shadow
-                            //     spreadRadius: 0.5, //extend the shadow
-                            //     offset: Offset(
-                            //       1.0, // Move to right 5  horizontally
-                            //       1.0, // Move to bottom 5 Vertically
-                            //     ),
-                            //   )
-                            // ],
-                            border: Border.all(color: primaryColor),
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: TextFormField(
-                            style: const TextStyle(fontSize: 14),
-                            decoration:
-                                GlobalFunctions.getInputDecorationWhite(""),
-                            controller: contactPersonNameController,
-                            keyboardType: TextInputType.text,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        Align(
-                          alignment: Alignment.topLeft,
-                          child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 8.0),
-                              child: RichText(
-                                  text: TextSpan(
-                                      style: const TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w500),
-                                      children: <TextSpan>[
-                                    TextSpan(
-                                      text: TextConstant.contactPersonNumber,
-                                    ),
-                                    TextSpan(
-                                      text: ' *',
-                                      style: const TextStyle(
-                                          color: Colors.red,
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                  ]))),
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        Container(
-                          decoration: BoxDecoration(
-                            // boxShadow: const [
-                            //   BoxShadow(
-                            //     color: primaryColor,
-                            //     blurRadius: 12.0, // soften the shadow
-                            //     spreadRadius: 0.5, //extend the shadow
-                            //     offset: Offset(
-                            //       1.0, // Move to right 5  horizontally
-                            //       1.0, // Move to bottom 5 Vertically
-                            //     ),
-                            //   )
-                            // ],
-                            border: Border.all(color: primaryColor),
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: TextFormField(
-                            style: const TextStyle(fontSize: 14),
-                            decoration:
-                                GlobalFunctions.getInputDecorationWhite(""),
-                            controller: contactPersonMobileController,
-                            keyboardType: TextInputType.number,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        Align(
-                          alignment: Alignment.topLeft,
-                          child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 8.0),
-                              child: RichText(
-                                  text: TextSpan(
-                                      style: const TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w500),
-                                      children: <TextSpan>[
-                                    TextSpan(
-                                      text: TextConstant.salonType,
-                                    ),
-                                    TextSpan(
-                                      text: ' *',
-                                      style: const TextStyle(
-                                          color: Colors.red,
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                  ]))),
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        Container(
-                          width: MediaQuery.of(context).size.width,
-                          padding: EdgeInsets.symmetric(horizontal: 15),
-                          decoration: BoxDecoration(
-                            // boxShadow: const [
-                            //   BoxShadow(
-                            //     color: primaryColor,
-                            //     blurRadius: 12.0, // soften the shadow
-                            //     spreadRadius: 0.5, //extend the shadow
-                            //     offset: Offset(
-                            //       1.0, // Move to right 5  horizontally
-                            //       1.0, // Move to bottom 5 Vertically
-                            //     ),
-                            //   )
-                            // ],
-                            border: Border.all(color: primaryColor),
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: DropdownButtonHideUnderline(
-                            child: DropdownButton(
-                                isExpanded: true,
-                                value: _selectedLocation,
-                                onChanged: (newValue) {
-                                  setState(() {
-                                    _selectedLocation = newValue;
-                                  });
-                                },
-                                items: _locations.map((location) {
-                                  return DropdownMenuItem(
-                                    child: new Text(location),
-                                    value: location,
-                                  );
-                                }).toList()),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        Align(
-                          alignment: Alignment.topLeft,
-                          child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 8.0),
-                              child: RichText(
-                                  text: TextSpan(
-                                      style: const TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w500),
-                                      children: <TextSpan>[
-                                    TextSpan(
-                                      text: TextConstant.route,
-                                    ),
-                                    TextSpan(
-                                      text: ' *',
-                                      style: const TextStyle(
-                                          color: Colors.red,
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                  ]))),
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        Container(
-                          width: MediaQuery.of(context).size.width,
-                          padding: EdgeInsets.symmetric(horizontal: 15),
-                          decoration: BoxDecoration(
-                            // boxShadow: const [
-                            //   BoxShadow(
-                            //     color: primaryColor,
-                            //     blurRadius: 12.0, // soften the shadow
-                            //     spreadRadius: 0.5, //extend the shadow
-                            //     offset: Offset(
-                            //       1.0, // Move to right 5  horizontally
-                            //       1.0, // Move to bottom 5 Vertically
-                            //     ),
-                            //   )
-                            // ],
-                            border: Border.all(color: primaryColor),
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: DropdownButtonHideUnderline(
-                            child: DropdownButton(
-                                isExpanded: true,
-                                value: _selectedLocation,
-                                onChanged: (newValue) {
-                                  setState(() {
-                                    _selectedLocation = newValue;
-                                  });
-                                },
-                                items: _locations.map((location) {
-                                  return DropdownMenuItem(
-                                    child: new Text(location),
-                                    value: location,
-                                  );
-                                }).toList()),
-                          ),
-                        ),
-                        const SizedBox(height: 30),
-                        SizedBox(
-                          width: 200,
-                          // height: 45,
-                          child: ElevatedButton(
-                              style: ButtonStyle(
-                                backgroundColor:
-                                    MaterialStateProperty.all<Color>(
-                                        primaryColor),
-                                foregroundColor:
-                                    MaterialStateProperty.all<Color>(
-                                        primaryColor),
-                                textStyle: MaterialStateProperty.all<TextStyle>(
-                                  const TextStyle(fontSize: 16),
-                                ),
-                                padding: MaterialStateProperty.all<EdgeInsets>(
-                                  const EdgeInsets.symmetric(
-                                      horizontal: 16, vertical: 8),
-                                ),
-                                shape: MaterialStateProperty.all<
-                                    RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                ),
-                              ),
-                              onPressed: () {
-                                // Navigator.of(context)
-                                //     .push(MaterialPageRoute(
-                                //   builder: (context) =>
-                                //       MainScreen(),
-                                // ));
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.all(5.0),
-                                child: Text(
-                                  TextConstant.submit.toUpperCase(),
-                                  style: const TextStyle(
-                                      fontSize: 14,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w500),
-                                ),
-                              )),
-                        ),
-                      ],
-                    ),
-                  )
-                ],
+                    )
+                  ],
+                ),
               ),
             ),
           ),
-        ),
-        onWillPop: () async {
-          return showBackDialog(context);
-        });
+          onWillPop: () async {
+            return showBackDialog(context);
+          });
+    });
+  }
+
+  Future<void> addSalon(SalonController salonController) async {
+    salonController
+        .addSalon(
+            name: widget.salonName,
+            password: passwordController.text,
+            email: widget.email,
+            location_id: salonRouteId,
+            mobile: widget.mobileNumber,
+            sub_category_id: widget.categoryName,
+            gst_number: widget.gstNumber,
+            country: countryController.text,
+            shipping_address: shippingAddressController.text,
+            postal_code: pincodeController.text,
+            state: stateController.text,
+            city: cityController.text,
+            number: contactPersonMobileController.text,
+            owner_name: TextConstant.contactPersonName,
+            salon_type: _selectedLocation,
+            latitude: lat.toString(),
+            longitude: longi.toString(),
+            address: companyAddressController.text,
+            image: widget.salonImage)
+        .then((message) async {
+      if (message == 'Salon added successfully') {
+        showCustomSnackBar(message!);
+        Navigator.pop(context);
+      } else {
+        showCustomSnackBar(message!);
+      }
+    });
   }
 }

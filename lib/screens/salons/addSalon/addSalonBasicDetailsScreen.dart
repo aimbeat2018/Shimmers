@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shimmers/constant/custom_snackbar.dart';
 import 'package:shimmers/constant/textConstant.dart';
+import 'package:shimmers/model/salonCategoryModel.dart';
 import 'package:shimmers/screens/salons/addSalon/addSalonPersonalDetailsScreen.dart';
 import 'package:shimmers/screens/salons/addSalon/bottomSheet/salonCatgeoryScreen.dart';
 
@@ -48,7 +50,7 @@ class _AddSalonBasicDetailsScreenState
   }
 
   TextEditingController salonNameController = TextEditingController();
-  String salonCategory = '';
+  String salonCategory = '', salonId = '';
 
   @override
   void initState() {
@@ -190,7 +192,9 @@ class _AddSalonBasicDetailsScreenState
                                 backgroundColor: Colors.transparent,
                               ).then((value) => {
                                     setState(() {
-                                      salonCategory = value!;
+                                      SalonCategoryData model = value;
+                                      salonCategory = model.categoryName!;
+                                      salonId = model.id!.toString();
                                     })
                                   });
                             },
@@ -220,7 +224,9 @@ class _AddSalonBasicDetailsScreenState
                                       padding:
                                           EdgeInsets.symmetric(horizontal: 8.0),
                                       child: Text(
-                                        salonCategory,
+                                        salonCategory == ''
+                                            ? ""
+                                            : salonCategory,
                                         style: TextStyle(
                                             color: Colors.black, fontSize: 14),
                                       ),
@@ -321,14 +327,19 @@ class _AddSalonBasicDetailsScreenState
                                   ),
                                 ),
                                 onPressed: () {
-                                  Navigator.of(context)
-                                      .pushReplacement(MaterialPageRoute(
-                                    builder: (context) =>
-                                        AddSalonPersonalDetailsScreen(
-                                            salonCategory: salonCategory,
-                                            salonName:
-                                                salonNameController.text),
-                                  ));
+                                  if (salonNameController.text.isEmpty) {
+                                    showCustomSnackBar('Enter salon name',
+                                        isError: true);
+                                  } else {
+                                    Navigator.of(context)
+                                        .pushReplacement(MaterialPageRoute(
+                                      builder: (context) =>
+                                          AddSalonPersonalDetailsScreen(
+                                              salonCategory: salonId,
+                                              salonName:
+                                                  salonNameController.text),
+                                    ));
+                                  }
                                 },
                                 child: Padding(
                                   padding: const EdgeInsets.all(5.0),
