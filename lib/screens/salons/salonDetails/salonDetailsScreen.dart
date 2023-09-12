@@ -227,7 +227,10 @@ class _SalonDetailsScreenState extends State<SalonDetailsScreen> {
                                         onTap: () => Navigator.of(context).push(
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    const ProductListScreen())),
+                                                    ProductListScreen(
+                                                      model: salonController
+                                                          .salonDetailsModel!,
+                                                    ))),
                                         child: Column(
                                           children: [
                                             Image.asset(

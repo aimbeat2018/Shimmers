@@ -28,6 +28,14 @@ class SalonRepo {
     return await apiClient.getData(AppConstants.routeList);
   }
 
+  Future<Response> getUnitType() async {
+    return await apiClient.getData(AppConstants.getUnitType);
+  }
+
+  Future<Response> getProducts() async {
+    return await apiClient.getData(AppConstants.getProducts);
+  }
+
   Future<Response> addSalon(
       {String? name,
       String? email,
@@ -85,5 +93,21 @@ class SalonRepo {
   Future<Response> takeSalonNote({String? note, String? salonId}) async {
     return await apiClient
         .postData(AppConstants.takeNotes, {"salon_id": salonId, "note": note});
+  }
+
+  Future<Response> collectPayment(
+      {String? paymentMode,
+      String? salonId,
+      String? referenceNumber,
+      String? amount,
+      XFile? image}) async {
+    return await apiClient.postMultipartData(AppConstants.collectPayment, {
+      "salon_id": salonId!,
+      "payment_mode": paymentMode!,
+      "reference_number": referenceNumber!,
+      "amount": amount!,
+    }, [
+      MultipartBody('image', image!)
+    ]);
   }
 }

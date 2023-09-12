@@ -2,9 +2,14 @@ import 'package:flutter/material.dart';
 
 import '../../../constant/colorsConstant.dart';
 import '../../../constant/textConstant.dart';
+import '../../../model/productModel.dart';
 
 class SuggestedProductListScreen extends StatefulWidget {
-  const SuggestedProductListScreen({Key? key}) : super(key: key);
+  final List<SuggestedProducts> suggestedProductsList;
+
+  const SuggestedProductListScreen(
+      {Key? key, required this.suggestedProductsList})
+      : super(key: key);
 
   @override
   State<SuggestedProductListScreen> createState() =>
@@ -48,7 +53,7 @@ class _SuggestedProductListScreenState
             ListView.builder(
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
-              itemCount: 5,
+              itemCount: widget.suggestedProductsList.length,
               itemBuilder: (BuildContext context, int index) {
                 return Container(
                   color: kBackgroundColor,
@@ -57,12 +62,13 @@ class _SuggestedProductListScreenState
                   margin: const EdgeInsets.symmetric(vertical: 10),
                   child: Row(
                     children: [
-                      Image.asset(
-                        'assets/images/work.png',
-                        height: 70,
-                        width: 70,
-                        fit: BoxFit.cover,
-                      ),
+                      if (widget.suggestedProductsList[index].imageUrl != "")
+                        Image.network(
+                          widget.suggestedProductsList[index].imageUrl!,
+                          height: 70,
+                          width: 70,
+                          fit: BoxFit.cover,
+                        ),
                       const SizedBox(
                         width: 15,
                       ),
@@ -71,8 +77,8 @@ class _SuggestedProductListScreenState
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
-                            'FLORACTIVE MARROCO CONDITIONER 1000 ML',
+                          Text(
+                            widget.suggestedProductsList[index].name!,
                             style: TextStyle(
                                 color: primaryColor,
                                 fontSize: 14,
@@ -81,8 +87,8 @@ class _SuggestedProductListScreenState
                           const SizedBox(
                             height: 5,
                           ),
-                          const Text(
-                            '₹ 2700.00',
+                          Text(
+                            '₹ ${widget.suggestedProductsList[index].price!}',
                             textAlign: TextAlign.start,
                             style: TextStyle(
                                 color: Colors.black,

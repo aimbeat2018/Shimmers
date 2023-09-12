@@ -17,10 +17,14 @@ class AppConstants {
   static const String viewSalonDetails = 'view/salon';
   static const String updateSalonType = 'update/salon/stage';
   static const String takeNotes = 'take/salon/notes';
+  static const String collectPayment = 'collect/payment';
+  static const String getUnitType = 'get/units';
+  static const String getProducts = 'get/products';
 
   // Shared Key
   static const String token = 'token';
   static const String topic = 'topic';
   static const String userId = 'userId';
   static const String userRole = 'userRole';
+  static const String CART_LIST = 'cart_list';
 }

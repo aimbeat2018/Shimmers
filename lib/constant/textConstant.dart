@@ -132,4 +132,6 @@ class TextConstant {
   static String totalDiscount = "Total Discount";
   static String totalPayable = "Payable Amount";
   static String resetPassword = "Reset Password";
+  static String unitType = "Unit Type";
+  static String clientNote = "Client Note";
 }

@@ -1,9 +1,11 @@
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shimmers/model/employeeRouteListModel.dart';
+import 'package:shimmers/model/productModel.dart';
 import 'package:shimmers/model/salonCategoryModel.dart';
 import 'package:shimmers/model/salonDetailsModel.dart';
 import 'package:shimmers/model/salonRouteModel.dart';
+import 'package:shimmers/model/unitTypeModel.dart';
 import 'package:shimmers/repository/salonRepo.dart';
 
 import '../constant/route_helper.dart';
@@ -18,6 +20,10 @@ class SalonController extends GetxController implements GetxService {
   SalonCategoryModel? salonCategoryModel;
 
   EmployeeRouteListModel? employeeRouteListModel;
+
+  UnitTypeModel? unitTypeModel;
+
+  ProductModel? productModel;
 
   SalonDetailsModel? salonDetailsModel;
 
@@ -77,6 +83,40 @@ class SalonController extends GetxController implements GetxService {
     _isLoading = false;
     update();
     return employeeRouteListModel;
+  }
+
+  Future<UnitTypeModel?> getUnitType() async {
+    _isLoading = true;
+    // update();
+    Response response = await salonRepo.getUnitType();
+
+    if (response.statusCode == 200) {
+      unitTypeModel = UnitTypeModel.fromJson(response.body);
+    } else if (response.statusCode == 401) {
+      Get.offAllNamed(RouteHelper.getLoginRoute());
+    } else {
+      unitTypeModel = UnitTypeModel();
+    }
+    _isLoading = false;
+    update();
+    return unitTypeModel;
+  }
+
+  Future<ProductModel?> getProducts() async {
+    _isLoading = true;
+    // update();
+    Response response = await salonRepo.getProducts();
+
+    if (response.statusCode == 200) {
+      productModel = ProductModel.fromJson(response.body);
+    } else if (response.statusCode == 401) {
+      Get.offAllNamed(RouteHelper.getLoginRoute());
+    } else {
+      productModel = ProductModel();
+    }
+    _isLoading = false;
+    update();
+    return productModel;
   }
 
   Future<SalonDetailsModel?> getSalonDetails(String? salonId) async {
@@ -174,6 +214,33 @@ class SalonController extends GetxController implements GetxService {
     update();
     Response response =
         await salonRepo.takeSalonNote(salonId: salonId, note: note);
+
+    if (response.statusCode == 200) {
+      salonAddMessage = response.body['message'];
+    } else if (response.statusCode == 401) {
+      Get.offAllNamed(RouteHelper.getLoginRoute());
+    } else {
+      salonAddMessage = "";
+    }
+    _isLoading = false;
+    update();
+    return salonAddMessage;
+  }
+
+  Future<String?> collectPayment(
+      {String? paymentMode,
+      String? salonId,
+      String? referenceNumber,
+      String? amount,
+      XFile? image}) async {
+    _isLoading = true;
+    update();
+    Response response = await salonRepo.collectPayment(
+        paymentMode: paymentMode,
+        salonId: salonId,
+        referenceNumber: referenceNumber,
+        amount: amount,
+        image: image);
 
     if (response.statusCode == 200) {
       salonAddMessage = response.body['message'];
