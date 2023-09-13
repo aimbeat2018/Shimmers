@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:get/get_connect/http/src/response/response.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shimmers/model/placeOrderModel.dart';
 
 import '../constant/api/api_client.dart';
 import '../constant/app_constants.dart';
@@ -109,5 +112,10 @@ class SalonRepo {
     }, [
       MultipartBody('image', image!)
     ]);
+  }
+
+  Future<Response> placeOrder(PlaceOrderModel? model) async {
+    return await apiClient.postBodyData(
+        AppConstants.placeOrder, jsonEncode(model!.toJson()));
   }
 }

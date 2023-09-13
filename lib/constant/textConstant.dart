@@ -71,6 +71,8 @@ class TextConstant {
       "Are you sure? This will remove the added information.";
   static String backDescription =
       "Going back will delete the information added. you will have to add the Salon again.";
+  static String backDescription1 =
+      "Going back will delete the information added. you will have to add the Details again.";
   static String salonCategory = "Salon Category";
   static String salonName = "Salon Name";
   static String salonImage = "Salon Image";
@@ -128,8 +130,10 @@ class TextConstant {
   static String placeOrder = "Place Order";
   static String summary = "Summary";
   static String qty = "Qty";
+  static String discount = "Discount";
+  static String discountType = "Discount Type";
   static String totalAmount = "Total Amount";
-  static String totalDiscount = "Total Discount";
+  static String totalDiscount = "After Discount Amount";
   static String totalPayable = "Payable Amount";
   static String resetPassword = "Reset Password";
   static String unitType = "Unit Type";

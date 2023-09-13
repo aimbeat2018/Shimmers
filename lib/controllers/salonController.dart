@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shimmers/model/employeeRouteListModel.dart';
+import 'package:shimmers/model/placeOrderModel.dart';
 import 'package:shimmers/model/productModel.dart';
 import 'package:shimmers/model/salonCategoryModel.dart';
 import 'package:shimmers/model/salonDetailsModel.dart';
@@ -9,6 +10,8 @@ import 'package:shimmers/model/unitTypeModel.dart';
 import 'package:shimmers/repository/salonRepo.dart';
 
 import '../constant/route_helper.dart';
+import '../model/cartModel.dart';
+import 'cartController.dart';
 
 class SalonController extends GetxController implements GetxService {
   final SalonRepo salonRepo;
@@ -31,6 +34,14 @@ class SalonController extends GetxController implements GetxService {
   String? salonAddMessage;
 
   bool get isLoading => _isLoading!;
+
+  int? _quantity = 1;
+
+  int? _cartIndex = -1;
+
+  int? get quantity => _quantity;
+
+  int? get cartIndex => _cartIndex;
 
   Future<SalonRouteModel?> getSalonRouteList(
       {String? latitude, String? longitude, String? type}) async {
@@ -252,5 +263,49 @@ class SalonController extends GetxController implements GetxService {
     _isLoading = false;
     update();
     return salonAddMessage;
+  }
+
+  Future<String?> placeOrder(PlaceOrderModel? model) async {
+    _isLoading = true;
+    update();
+    Response response = await salonRepo.placeOrder(model);
+
+    if (response.statusCode == 200) {
+      salonAddMessage = response.body['message'];
+    } else if (response.statusCode == 401) {
+      Get.offAllNamed(RouteHelper.getLoginRoute());
+    } else {
+      salonAddMessage = "";
+    }
+    _isLoading = false;
+    update();
+    return salonAddMessage;
+  }
+
+  void initData(ProductData? product, CartModel? cart) {
+    if (cart != null) {
+      _quantity = cart.quantity;
+    } else {
+      _quantity = 1;
+      setExistInCart(product, notify: false);
+    }
+  }
+
+  int? setExistInCart(ProductData? product, {bool notify = true}) {
+    _cartIndex =
+        Get.find<CartController>().isExistInCart(product!.id, false, -1);
+    if (_cartIndex != -1) {
+      _quantity = Get.find<CartController>().cartList![_cartIndex!].quantity;
+    }
+    return _cartIndex;
+  }
+
+  void setQuantity(bool isIncrement) {
+    if (isIncrement) {
+      _quantity = _quantity! + 1;
+    } else {
+      _quantity = _quantity! - 1;
+    }
+    update();
   }
 }

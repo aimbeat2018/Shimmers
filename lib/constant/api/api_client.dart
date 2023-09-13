@@ -59,6 +59,31 @@ class ApiClient extends GetxService {
     }
   }
 
+  Future<Response> postBodyData(String uri, dynamic body,
+      {Map<String, String>? headers}) async {
+    try {
+      debugPrint('====> API Call: $uri\nHeader: $_mainHeaders');
+      debugPrint('====> API Body: $body');
+      if (sharedPreferences.getString(AppConstants.token) == null) {
+        token = "";
+      } else {
+        token = sharedPreferences.getString(AppConstants.token)!;
+      }
+
+      Http.Response _response = await Http.post(
+        Uri.parse(appBaseUrl + uri),
+        body: body,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token'
+        },
+      ).timeout(Duration(seconds: timeoutInSeconds));
+      return handleResponse(_response, uri);
+    } catch (e) {
+      return Response(statusCode: 1, statusText: noInternetMessage);
+    }
+  }
+
   Future<Response> postData(String uri, dynamic body,
       {Map<String, String>? headers}) async {
     try {

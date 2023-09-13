@@ -29,6 +29,7 @@ class ProductData {
   int? unitId;
   int? brandId;
   int? categoryId;
+  int? quantity = 0;
   String? taxName;
   String? taxRatePercent;
   List<SuggestedProducts>? suggestedProducts;
@@ -105,6 +106,7 @@ class SuggestedProducts {
   int? unitId;
   int? brandId;
   int? categoryId;
+  int? quantity = 0;
   String? totalAmount;
   String? imageUrl;
   String? downloadFileUrl;

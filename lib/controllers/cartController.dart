@@ -15,16 +15,15 @@ class CartController extends GetxController implements GetxService {
 
   List<CartModel> toResponseList(List<dynamic> data) {
     List<CartModel> value = <CartModel>[];
-    data.forEach((element) {
+    for (var element in data) {
       value.add(CartModel.fromJson(element));
-    });
+    }
     return value ?? List<CartModel>.empty();
   }
 
   void getCartData() {
     _cartList = [];
-    List model = cartRepo.getCartList();
-    _cartList!.addAll(toResponseList(model));
+    _cartList!.addAll(cartRepo.getCartList() as Iterable<CartModel>);
   }
 
   void addToCart(CartModel? cartModel, int? index) {

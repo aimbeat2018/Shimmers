@@ -20,6 +20,7 @@ class AppConstants {
   static const String collectPayment = 'collect/payment';
   static const String getUnitType = 'get/units';
   static const String getProducts = 'get/products';
+  static const String placeOrder = 'place/order';
 
   // Shared Key
   static const String token = 'token';

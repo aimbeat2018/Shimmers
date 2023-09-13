@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shimmers/constant/custom_snackbar.dart';
 import 'package:shimmers/controllers/cartController.dart';
 import 'package:shimmers/model/salonDetailsModel.dart';
 import 'package:shimmers/model/unitTypeModel.dart';
@@ -11,6 +12,7 @@ import '../../../constant/colorsConstant.dart';
 import '../../../constant/globalFunction.dart';
 import '../../../constant/textConstant.dart';
 import '../../../controllers/salonController.dart';
+import '../../../model/cartModel.dart';
 
 class ProductListScreen extends StatefulWidget {
   final SalonDetailsModel model;
@@ -24,21 +26,50 @@ class ProductListScreen extends StatefulWidget {
 class _ProductListScreenState extends State<ProductListScreen> {
   TextEditingController shippingAddressController = TextEditingController();
   TextEditingController clientNoteController = TextEditingController();
-  String? unitTypeId, unitType;
+  String? unitTypeId = "", unitType = "";
+
+  late List<CartModel> _cartList;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-
+    _cartList = [];
     Get.find<SalonController>().getProducts();
+  }
+
+  showBackDialog(BuildContext parentContext) {
+    showDialog(
+      context: parentContext,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(TextConstant.backTitle),
+          content: Text(TextConstant.backDescription1),
+          actions: [
+            TextButton(
+              child: Text(TextConstant.cancel),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+            TextButton(
+              child: Text(TextConstant.yes),
+              onPressed: () {
+                Navigator.pop(context);
+                Navigator.pop(parentContext);
+              },
+            )
+          ],
+        );
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     shippingAddressController.text = widget.model.data!.shippingAddress!;
 
-    return GetBuilder<CartController>(builder: (cartController) {
+    return WillPopScope(
+        child: GetBuilder<CartController>(builder: (cartController) {
       return GetBuilder<SalonController>(builder: (salonController) {
         return Scaffold(
           appBar: AppBar(
@@ -237,7 +268,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
                                 height: 10,
                               ),
                               Text(
-                                "${TextConstant.clientNote} :",
+                                TextConstant.clientNote,
                                 style: const TextStyle(
                                     color: Colors.black,
                                     fontSize: 14,
@@ -338,61 +369,278 @@ class _ProductListScreenState extends State<ProductListScreen> {
                                                 fontSize: 16,
                                                 fontWeight: FontWeight.w600),
                                           ),
-                                          Align(
-                                            alignment: Alignment.bottomRight,
-                                            child: InkWell(
-                                              onTap: () {
-                                                showModalBottomSheet(
-                                                        context: context,
-                                                        useSafeArea: true,
-                                                        builder: (context) =>
-                                                            SuggestedProductListScreen(
-                                                                suggestedProductsList:
+                                          salonController.productModel!
+                                                      .data![index].quantity ==
+                                                  0
+                                              ? Align(
+                                                  alignment:
+                                                      Alignment.bottomRight,
+                                                  child: InkWell(
+                                                    onTap: () {
+                                                      setState(() {
+                                                        salonController
+                                                            .productModel!
+                                                            .data![index]
+                                                            .quantity = 1;
+                                                      });
+
+                                                      CartModel _cartModel = CartModel(
+                                                          productId:
+                                                              salonController
+                                                                  .productModel!
+                                                                  .data![index]
+                                                                  .id,
+                                                          image: salonController
+                                                              .productModel!
+                                                              .data![index]
+                                                              .imageUrl,
+                                                          itemName:
+                                                              salonController
+                                                                  .productModel!
+                                                                  .data![index]
+                                                                  .name,
+                                                          quantity:
+                                                              salonController
+                                                                  .productModel!
+                                                                  .data![index]
+                                                                  .quantity,
+                                                          amountWithQty: int.parse(
+                                                              salonController
+                                                                  .productModel!
+                                                                  .data![index]
+                                                                  .price!),
+                                                          discountValue: 0,
+                                                          discountType: "",
+                                                          amount: int.parse(
+                                                              salonController
+                                                                  .productModel!
+                                                                  .data![index]
+                                                                  .price!),
+                                                          afterDiscountAmount:
+                                                              0,
+                                                          itemSummary: "");
+
+                                                      _cartList.add(_cartModel);
+
+                                                      if (salonController
+                                                          .productModel!
+                                                          .data![index]
+                                                          .suggestedProducts!
+                                                          .isNotEmpty) {
+                                                        showModalBottomSheet(
+                                                                context:
+                                                                    context,
+                                                                useSafeArea:
+                                                                    true,
+                                                                builder:
+                                                                    (context) =>
+                                                                        SuggestedProductListScreen(
+                                                                          suggestedProductsList: salonController
+                                                                              .productModel!
+                                                                              .data![index]
+                                                                              .suggestedProducts!,
+                                                                          cartList:
+                                                                              _cartList,
+                                                                        ),
+                                                                backgroundColor:
+                                                                    Colors
+                                                                        .white,
+                                                                isScrollControlled:
+                                                                    true)
+                                                            .then((value) => {
+                                                                  setState(() {
+                                                                    _cartList =
+                                                                        value;
+                                                                  })
+                                                                });
+                                                      }
+                                                    },
+                                                    child: Align(
+                                                      alignment:
+                                                          Alignment.topRight,
+                                                      child: Container(
+                                                        decoration: const BoxDecoration(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            5)),
+                                                            color:
+                                                                primaryColor),
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .symmetric(
+                                                                  vertical: 8.0,
+                                                                  horizontal:
+                                                                      35),
+                                                          child: Text(
+                                                            TextConstant.add
+                                                                .toUpperCase(),
+                                                            style: const TextStyle(
+                                                                color: Colors
+                                                                    .white,
+                                                                fontSize: 15,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                )
+                                              : Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.end,
+                                                  children: [
+                                                    InkWell(
+                                                      onTap: () {
+                                                        setState(() {
+                                                          if (_cartList
+                                                              .isNotEmpty) {
+                                                            for (var cartModel
+                                                                in _cartList) {
+                                                              if (cartModel
+                                                                      .productId ==
+                                                                  salonController
+                                                                      .productModel!
+                                                                      .data![
+                                                                          index]
+                                                                      .id) {
+                                                                if (salonController
+                                                                        .productModel!
+                                                                        .data![
+                                                                            index]
+                                                                        .quantity! ==
+                                                                    1) {
+                                                                  _cartList.remove(
+                                                                      cartModel);
+                                                                  salonController
+                                                                      .productModel!
+                                                                      .data![
+                                                                          index]
+                                                                      .quantity = 0;
+                                                                } else {
+                                                                  salonController
+                                                                          .productModel!
+                                                                          .data![
+                                                                              index]
+                                                                          .quantity! -
+                                                                      1;
+
+                                                                  cartModel.quantity = salonController
+                                                                      .productModel!
+                                                                      .data![
+                                                                          index]
+                                                                      .quantity!;
+                                                                }
+                                                              }
+                                                            }
+                                                          }
+                                                        });
+                                                      },
+                                                      child: Container(
+                                                        height: 22,
+                                                        width: 22,
+                                                        margin: EdgeInsets
+                                                            .symmetric(
+                                                                horizontal: 10),
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          shape:
+                                                              BoxShape.circle,
+                                                          border: Border.all(
+                                                              width: 1,
+                                                              color:
+                                                                  primaryColor),
+                                                          color: primaryColor,
+                                                        ),
+                                                        alignment:
+                                                            Alignment.center,
+                                                        child: Icon(
+                                                          Icons.remove,
+                                                          size: 15,
+                                                          color: Colors.white,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                        salonController
+                                                            .productModel!
+                                                            .data![index]
+                                                            .quantity!
+                                                            .toString(),
+                                                        style: const TextStyle(
+                                                            fontSize: 16,
+                                                            color: Colors.black,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w500)),
+                                                    InkWell(
+                                                      onTap: () {
+                                                        setState(() {
+                                                          if (_cartList
+                                                              .isNotEmpty) {
+                                                            for (var cartModel
+                                                                in _cartList) {
+                                                              if (cartModel
+                                                                      .productId ==
+                                                                  salonController
+                                                                      .productModel!
+                                                                      .data![
+                                                                          index]
+                                                                      .id) {
+                                                                salonController
+                                                                    .productModel!
+                                                                    .data![
+                                                                        index]
+                                                                    .quantity = salonController
+                                                                        .productModel!
+                                                                        .data![
+                                                                            index]
+                                                                        .quantity! +
+                                                                    1;
+
+                                                                cartModel
+                                                                        .quantity =
                                                                     salonController
                                                                         .productModel!
                                                                         .data![
                                                                             index]
-                                                                        .suggestedProducts!),
-                                                        backgroundColor:
-                                                            Colors.white,
-                                                        isScrollControlled:
-                                                            true)
-                                                    .then((value) => {
-                                                          setState(() {
-                                                            // selectedLeaveType = value!;
-                                                          })
+                                                                        .quantity!;
+                                                              }
+                                                            }
+                                                          }
                                                         });
-                                              },
-                                              child: Align(
-                                                alignment: Alignment.topRight,
-                                                child: Container(
-                                                  decoration:
-                                                      const BoxDecoration(
-                                                          borderRadius:
-                                                              BorderRadius.all(
-                                                                  Radius
-                                                                      .circular(
-                                                                          5)),
-                                                          color: primaryColor),
-                                                  child: Padding(
-                                                    padding: const EdgeInsets
-                                                        .symmetric(
-                                                        vertical: 8.0,
-                                                        horizontal: 35),
-                                                    child: Text(
-                                                      TextConstant.add
-                                                          .toUpperCase(),
-                                                      style: const TextStyle(
+                                                      },
+                                                      child: Container(
+                                                        height: 22,
+                                                        width: 22,
+                                                        margin: EdgeInsets
+                                                            .symmetric(
+                                                                horizontal: 10),
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          shape:
+                                                              BoxShape.circle,
+                                                          border: Border.all(
+                                                              width: 1,
+                                                              color:
+                                                                  primaryColor),
+                                                          color: primaryColor,
+                                                        ),
+                                                        alignment:
+                                                            Alignment.center,
+                                                        child: Icon(
+                                                          Icons.add,
+                                                          size: 15,
                                                           color: Colors.white,
-                                                          fontSize: 15,
-                                                          fontWeight:
-                                                              FontWeight.w500),
+                                                        ),
+                                                      ),
                                                     ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          )
+                                                  ],
+                                                )
                                         ],
                                       ))
                                     ],
@@ -435,9 +683,29 @@ class _ProductListScreenState extends State<ProductListScreen> {
                           ),
                         ),
                         onPressed: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => FinalOrderScreen(),
-                          ));
+                          if (shippingAddressController.text.isEmpty) {
+                            showCustomSnackBar("Enter Shipping Address",
+                                isError: true);
+                          } else if (unitTypeId == "") {
+                            showCustomSnackBar("Select Unit Type",
+                                isError: true);
+                          } else if (_cartList.isEmpty) {
+                            showCustomSnackBar("Select at least one item ",
+                                isError: true);
+                          } else {
+                            Navigator.of(context)
+                                .pushReplacement(MaterialPageRoute(
+                              builder: (context) => FinalOrderScreen(
+                                salonId: widget.model.data!.id.toString(),
+                                salonName: widget.model.data!.name!,
+                                shippingAddress: shippingAddressController.text,
+                                address: widget.model.data!.address!,
+                                unitTypeId: unitTypeId.toString(),
+                                note: clientNoteController.text,
+                                cartList: _cartList,
+                              ),
+                            ));
+                          }
                         },
                         child: Padding(
                           padding: const EdgeInsets.all(5.0),
@@ -456,6 +724,8 @@ class _ProductListScreenState extends State<ProductListScreen> {
           ),
         );
       });
+    }), onWillPop: () async {
+      return showBackDialog(context);
     });
   }
 }

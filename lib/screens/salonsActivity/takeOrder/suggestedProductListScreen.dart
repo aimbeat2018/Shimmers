@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 
 import '../../../constant/colorsConstant.dart';
 import '../../../constant/textConstant.dart';
+import '../../../model/cartModel.dart';
 import '../../../model/productModel.dart';
 
 class SuggestedProductListScreen extends StatefulWidget {
   final List<SuggestedProducts> suggestedProductsList;
+  final List<CartModel> cartList;
 
   const SuggestedProductListScreen(
-      {Key? key, required this.suggestedProductsList})
+      {Key? key, required this.suggestedProductsList, required this.cartList})
       : super(key: key);
 
   @override
@@ -34,7 +36,7 @@ class _SuggestedProductListScreenState
                 children: [
                   IconButton(
                       onPressed: () {
-                        Navigator.pop(context);
+                        Navigator.pop(context, widget.cartList);
                       },
                       icon: Icon(Icons.close)),
                   Align(
@@ -45,6 +47,30 @@ class _SuggestedProductListScreenState
                           color: Colors.black,
                           fontSize: 16,
                           fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      setState(() {
+                        Navigator.pop(context, widget.cartList);
+                      });
+                    },
+                    child: Container(
+                      margin: EdgeInsets.symmetric(horizontal: 10),
+                      decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(5)),
+                          color: primaryColor),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 8.0, horizontal: 35),
+                        child: Text(
+                          TextConstant.submit.toUpperCase(),
+                          style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 15,
+                              fontWeight: FontWeight.w500),
+                        ),
+                      ),
                     ),
                   ),
                 ],
@@ -100,60 +126,198 @@ class _SuggestedProductListScreenState
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
-                                if (!isAddClick)
-                                  InkWell(
-                                    onTap: () {
-                                      setState(() {
-                                        isAddClick = true;
-                                      });
-                                    },
-                                    child: Align(
-                                      alignment: Alignment.topRight,
-                                      child: Container(
-                                        decoration: const BoxDecoration(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(5)),
-                                            color: primaryColor),
-                                        child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 8.0, horizontal: 35),
-                                          child: Text(
-                                            TextConstant.add.toUpperCase(),
-                                            style: const TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.w500),
+                                widget.suggestedProductsList[index].quantity ==
+                                        0
+                                    ? InkWell(
+                                        onTap: () {
+                                          setState(() {
+                                            widget.suggestedProductsList[index]
+                                                .quantity = 1;
+                                          });
+
+                                          CartModel _cartModel = CartModel(
+                                              productId: widget
+                                                  .suggestedProductsList[index]
+                                                  .id,
+                                              image: widget
+                                                  .suggestedProductsList[index]
+                                                  .imageUrl,
+                                              itemName: widget
+                                                  .suggestedProductsList[index]
+                                                  .name,
+                                              quantity: widget
+                                                  .suggestedProductsList[index]
+                                                  .quantity,
+                                              amountWithQty: int.parse(widget
+                                                  .suggestedProductsList[index]
+                                                  .price!),
+                                              discountValue: 0,
+                                              discountType: "",
+                                              amount: int.parse(widget
+                                                  .suggestedProductsList[index]
+                                                  .price!),
+                                              afterDiscountAmount: 0,
+                                              itemSummary: "");
+
+                                          widget.cartList.add(_cartModel);
+                                        },
+                                        child: Align(
+                                          alignment: Alignment.topRight,
+                                          child: Container(
+                                            decoration: const BoxDecoration(
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(5)),
+                                                color: primaryColor),
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 8.0,
+                                                      horizontal: 35),
+                                              child: Text(
+                                                TextConstant.add.toUpperCase(),
+                                                style: const TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 15,
+                                                    fontWeight:
+                                                        FontWeight.w500),
+                                              ),
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                    ),
-                                  ),
-                                if (isAddClick)
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 8.0),
-                                    child: Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        Icon(Icons.add_circle_outline),
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 10.0),
-                                          child: Text(
-                                            '1',
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.w600),
-                                          ),
+                                      )
+                                    : Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 8.0),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            InkWell(
+                                              onTap: () {
+                                                setState(() {
+                                                  if (widget
+                                                      .cartList.isNotEmpty) {
+                                                    for (var cartModel
+                                                        in widget.cartList) {
+                                                      if (cartModel.productId ==
+                                                          widget
+                                                              .suggestedProductsList[
+                                                                  index]
+                                                              .id) {
+                                                        if (widget
+                                                                .suggestedProductsList[
+                                                                    index]
+                                                                .quantity! ==
+                                                            1) {
+                                                          widget.cartList
+                                                              .remove(
+                                                                  cartModel);
+                                                          widget
+                                                              .suggestedProductsList[
+                                                                  index]
+                                                              .quantity = 0;
+                                                        } else {
+                                                          widget
+                                                                  .suggestedProductsList[
+                                                                      index]
+                                                                  .quantity! -
+                                                              1;
+
+                                                          cartModel.quantity =
+                                                              widget
+                                                                  .suggestedProductsList[
+                                                                      index]
+                                                                  .quantity!;
+                                                        }
+                                                      }
+                                                    }
+                                                  }
+                                                });
+                                              },
+                                              child: Container(
+                                                height: 22,
+                                                width: 22,
+                                                margin: EdgeInsets.symmetric(
+                                                    horizontal: 10),
+                                                decoration: BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                  border: Border.all(
+                                                      width: 1,
+                                                      color: primaryColor),
+                                                  color: primaryColor,
+                                                ),
+                                                alignment: Alignment.center,
+                                                child: Icon(
+                                                  Icons.remove,
+                                                  size: 15,
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                            ),
+                                            Text(
+                                                widget
+                                                    .suggestedProductsList[
+                                                        index]
+                                                    .quantity!
+                                                    .toString(),
+                                                style: const TextStyle(
+                                                    fontSize: 16,
+                                                    color: Colors.black,
+                                                    fontWeight:
+                                                        FontWeight.w500)),
+                                            InkWell(
+                                              onTap: () {
+                                                setState(() {
+                                                  if (widget
+                                                      .cartList.isNotEmpty) {
+                                                    for (var cartModel
+                                                        in widget.cartList) {
+                                                      if (cartModel.productId ==
+                                                          widget
+                                                              .suggestedProductsList[
+                                                                  index]
+                                                              .id) {
+                                                        widget
+                                                            .suggestedProductsList[
+                                                                index]
+                                                            .quantity = widget
+                                                                .suggestedProductsList[
+                                                                    index]
+                                                                .quantity! +
+                                                            1;
+
+                                                        cartModel.quantity = widget
+                                                            .suggestedProductsList[
+                                                                index]
+                                                            .quantity!;
+                                                      }
+                                                    }
+                                                  }
+                                                });
+                                              },
+                                              child: Container(
+                                                height: 22,
+                                                width: 22,
+                                                margin: EdgeInsets.symmetric(
+                                                    horizontal: 10),
+                                                decoration: BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                  border: Border.all(
+                                                      width: 1,
+                                                      color: primaryColor),
+                                                  color: primaryColor,
+                                                ),
+                                                alignment: Alignment.center,
+                                                child: Icon(
+                                                  Icons.add,
+                                                  size: 15,
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
                                         ),
-                                        Icon(Icons.remove_circle_outline),
-                                      ],
-                                    ),
-                                  )
+                                      )
                               ],
                             ),
                           )
