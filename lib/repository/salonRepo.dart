@@ -23,6 +23,10 @@ class SalonRepo {
     });
   }
 
+  Future<Response> getFeedbackPurpose() async {
+    return await apiClient.getData(AppConstants.getFeedbackPurpose);
+  }
+
   Future<Response> getSalonCategory() async {
     return await apiClient.getData(AppConstants.salonCategory);
   }
@@ -109,6 +113,26 @@ class SalonRepo {
       "payment_mode": paymentMode!,
       "reference_number": referenceNumber!,
       "amount": amount!,
+    }, [
+      MultipartBody('image', image!)
+    ]);
+  }
+
+  Future<Response> addFeedback(
+      {String? feedbackTypeId,
+      String? salonId,
+      String? rating,
+      String? remark,
+      String? latitude,
+      String? longitude,
+      XFile? image}) async {
+    return await apiClient.postMultipartData(AppConstants.addFeedback, {
+      "salon_id": salonId!,
+      "feedback_type_id": feedbackTypeId!,
+      "rating": rating!,
+      "remark": remark!,
+      "latitude": latitude!,
+      "longitude": longitude!,
     }, [
       MultipartBody('image', image!)
     ]);

@@ -21,6 +21,8 @@ class AppConstants {
   static const String getUnitType = 'get/units';
   static const String getProducts = 'get/products';
   static const String placeOrder = 'place/order';
+  static const String getFeedbackPurpose = 'get/feedbacks/list';
+  static const String addFeedback = 'store/feedback';
 
   // Shared Key
   static const String token = 'token';

@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shimmers/model/employeeRouteListModel.dart';
+import 'package:shimmers/model/feedBackPurposeModel.dart';
 import 'package:shimmers/model/placeOrderModel.dart';
 import 'package:shimmers/model/productModel.dart';
 import 'package:shimmers/model/salonCategoryModel.dart';
@@ -21,6 +22,8 @@ class SalonController extends GetxController implements GetxService {
   SalonRouteModel? salonRouteModel;
 
   SalonCategoryModel? salonCategoryModel;
+
+  FeedBackPurposeModel? feedBackPurposeModel;
 
   EmployeeRouteListModel? employeeRouteListModel;
 
@@ -77,6 +80,23 @@ class SalonController extends GetxController implements GetxService {
     _isLoading = false;
     update();
     return salonCategoryModel;
+  }
+
+  Future<FeedBackPurposeModel?> getFeedbackPurpose() async {
+    _isLoading = true;
+    // update();
+    Response response = await salonRepo.getFeedbackPurpose();
+
+    if (response.statusCode == 200) {
+      feedBackPurposeModel = FeedBackPurposeModel.fromJson(response.body);
+    } else if (response.statusCode == 401) {
+      Get.offAllNamed(RouteHelper.getLoginRoute());
+    } else {
+      feedBackPurposeModel = FeedBackPurposeModel();
+    }
+    _isLoading = false;
+    update();
+    return feedBackPurposeModel;
   }
 
   Future<EmployeeRouteListModel?> getEmpRouteList() async {
@@ -251,6 +271,37 @@ class SalonController extends GetxController implements GetxService {
         salonId: salonId,
         referenceNumber: referenceNumber,
         amount: amount,
+        image: image);
+
+    if (response.statusCode == 200) {
+      salonAddMessage = response.body['message'];
+    } else if (response.statusCode == 401) {
+      Get.offAllNamed(RouteHelper.getLoginRoute());
+    } else {
+      salonAddMessage = "";
+    }
+    _isLoading = false;
+    update();
+    return salonAddMessage;
+  }
+
+  Future<String?> addFeedback(
+      {String? feedbackTypeId,
+      String? salonId,
+      String? rating,
+      String? remark,
+      String? latitude,
+      String? longitude,
+      XFile? image}) async {
+    _isLoading = true;
+    update();
+    Response response = await salonRepo.addFeedback(
+        feedbackTypeId: feedbackTypeId,
+        salonId: salonId,
+        rating: rating,
+        remark: remark,
+        latitude: latitude,
+        longitude: longitude,
         image: image);
 
     if (response.statusCode == 200) {

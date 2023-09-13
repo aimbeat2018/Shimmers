@@ -255,7 +255,18 @@ class _SalonDetailsScreenState extends State<SalonDetailsScreen> {
                                         onTap: () => Navigator.of(context).push(
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    const AddFeedBackScreen())),
+                                                    AddFeedBackScreen(
+                                                      salonId: widget.salonId,
+                                                      salonName: salonController
+                                                          .salonDetailsModel!
+                                                          .data!
+                                                          .name!,
+                                                      salonAddress:
+                                                          salonController
+                                                              .salonDetailsModel!
+                                                              .data!
+                                                              .address!,
+                                                    ))),
                                         child: Column(
                                           children: [
                                             Image.asset(
