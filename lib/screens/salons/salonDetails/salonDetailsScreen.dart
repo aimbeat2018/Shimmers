@@ -211,7 +211,8 @@ class _SalonDetailsScreenState extends State<SalonDetailsScreen> {
                                                 builder: (context) =>
                                                     DemoListScreen(
                                                       model: salonController
-                                                          .salonDetailsModel!,
+                                                          .salonDetailsModel!
+                                                          .data!,
                                                     ))),
                                         child: Column(
                                           children: [

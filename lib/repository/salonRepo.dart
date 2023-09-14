@@ -107,6 +107,11 @@ class SalonRepo {
         AppConstants.updateSalonType, {"salon_id": salonId, "type": salonType});
   }
 
+  Future<Response> getDemoList({String? salonId}) async {
+    return await apiClient
+        .postData(AppConstants.getDemoList, {"salon_id": salonId});
+  }
+
   Future<Response> takeSalonNote({String? note, String? salonId}) async {
     return await apiClient
         .postData(AppConstants.takeNotes, {"salon_id": salonId, "note": note});
@@ -157,5 +162,18 @@ class SalonRepo {
     // print(jsonEncode(model!.toJson()));
     return await apiClient.postBodyData(
         AppConstants.storeCampaignResponse, jsonEncode(model!.toJson()));
+  }
+
+  Future<Response> addDemoRequest(
+      {String? date,
+      String? time,
+      String? requirement,
+      String? salonId}) async {
+    return await apiClient.postData(AppConstants.addDemoRequest, {
+      "salon_id": salonId,
+      "date": date,
+      "time": time,
+      "requirement": requirement
+    });
   }
 }

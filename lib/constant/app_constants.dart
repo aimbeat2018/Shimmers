@@ -26,6 +26,8 @@ class AppConstants {
   static const String getCampaignsList = 'get/campaigns/list';
   static const String getCampaignsQuestionList = 'get/campaign/questions/list';
   static const String storeCampaignResponse = 'store/campaign/answers';
+  static const String getDemoList = 'get/demo/list';
+  static const String addDemoRequest = 'send/demo/request';
 
   // Shared Key
   static const String token = 'token';

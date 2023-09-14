@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shimmers/model/campaignListModel.dart';
 import 'package:shimmers/model/campaignQuestionListModel.dart';
+import 'package:shimmers/model/demoListModel.dart';
 import 'package:shimmers/model/employeeRouteListModel.dart';
 import 'package:shimmers/model/feedBackPurposeModel.dart';
 import 'package:shimmers/model/placeOrderModel.dart';
@@ -31,6 +32,8 @@ class SalonController extends GetxController implements GetxService {
   EmployeeRouteListModel? employeeRouteListModel;
 
   CampaignListModel? campaignListModel;
+
+  DemoListModel? demoListModel;
 
   CampaignQuestionListModel? campaignQuestionListModel;
 
@@ -172,6 +175,23 @@ class SalonController extends GetxController implements GetxService {
     _isLoading = false;
     update();
     return campaignListModel;
+  }
+
+  Future<DemoListModel?> getDemoList(String? salonId) async {
+    _isLoading = true;
+    // update();
+    Response response = await salonRepo.getDemoList(salonId: salonId);
+
+    if (response.statusCode == 200) {
+      demoListModel = DemoListModel.fromJson(response.body);
+    } else if (response.statusCode == 401) {
+      Get.offAllNamed(RouteHelper.getLoginRoute());
+    } else {
+      demoListModel = DemoListModel();
+    }
+    _isLoading = false;
+    update();
+    return demoListModel;
   }
 
   Future<CampaignQuestionListModel?> getCampaignQuestionList(
@@ -381,6 +401,28 @@ class SalonController extends GetxController implements GetxService {
     _isLoading = true;
     update();
     Response response = await salonRepo.submitCampaignData(model);
+
+    if (response.statusCode == 200) {
+      salonAddMessage = response.body['message'];
+    } else if (response.statusCode == 401) {
+      Get.offAllNamed(RouteHelper.getLoginRoute());
+    } else {
+      salonAddMessage = "";
+    }
+    _isLoading = false;
+    update();
+    return salonAddMessage;
+  }
+
+  Future<String?> addDemoRequest(
+      {String? salonId,
+      String? date,
+      String? time,
+      String? requirement}) async {
+    _isLoading = true;
+    update();
+    Response response = await salonRepo.addDemoRequest(
+        salonId: salonId, date: date, time: time, requirement: requirement);
 
     if (response.statusCode == 200) {
       salonAddMessage = response.body['message'];

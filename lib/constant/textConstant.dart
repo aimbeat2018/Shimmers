@@ -125,6 +125,7 @@ class TextConstant {
   static String billingAddress = "Billing Address";
   static String productList = "Product List";
   static String add = "Add";
+  static String addRequest = "Add Request";
   static String createOrder = "Create Order";
   static String suggestedProducts = "Suggested Products of";
   static String placeOrder = "Place Order";
@@ -138,4 +139,7 @@ class TextConstant {
   static String resetPassword = "Reset Password";
   static String unitType = "Unit Type";
   static String clientNote = "Client Note";
+  static String requirement = "Requirement";
+  static String selectDate = "Select date";
+  static String selectTime = "Select time";
 }

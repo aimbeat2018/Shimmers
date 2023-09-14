@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shimmers/screens/home/mainScreen.dart';
 import 'package:shimmers/screens/salons/salonDetails/salonDetailsScreen.dart';
+import 'package:shimmers/screens/salonsActivity/demo/addDemoScreen.dart';
 import 'package:shimmers/screens/userAuth/LoginScreen.dart';
 import 'package:shimmers/screens/userAuth/PasswordScreen.dart';
 
@@ -14,6 +15,7 @@ class RouteHelper {
   static const String mainScreen = '/mainScreen';
   static const String passwordChangedScreen = '/passwordChangedScreen';
   static const String salonDetails = '/salonDetails';
+  static const String addDemoRequest = '/addDemoRequest';
 
   static String getLoginRoute() => login;
 
@@ -27,6 +29,9 @@ class RouteHelper {
 
   static String getSalonDetailsRoute(String salonId) =>
       '$salonDetails?salonId=$salonId';
+
+  static String getDemoRequestRoute(String salonId) =>
+      '$addDemoRequest?salonId=$salonId';
 
   static List<GetPage> routes = [
     GetPage(name: login, page: () => getRoute(const LoginScreen())),
@@ -44,6 +49,9 @@ class RouteHelper {
     GetPage(
         name: salonDetails,
         page: () => SalonDetailsScreen(salonId: Get.parameters['salonId']!)),
+    GetPage(
+        name: addDemoRequest,
+        page: () => AddDemoScreen(salonId: Get.parameters['salonId']!)),
     // GetPage(
     //     name: language,
     //     page: () =>
