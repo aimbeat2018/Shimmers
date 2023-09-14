@@ -9,6 +9,7 @@ import 'package:shimmers/screens/setTarget/setTargetScreen.dart';
 import 'package:shimmers/screens/tourVisit/tourVisitScreen.dart';
 
 import '../../constant/colorsConstant.dart';
+import '../../constant/route_helper.dart';
 import '../../constant/textConstant.dart';
 import '../../controllers/authController.dart';
 
@@ -120,7 +121,67 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 color: Colors.white,
               ),
               tooltip: 'Logout',
-              onPressed: () {},
+              onPressed: () {
+                showDialog(
+                    builder: (ctxt) {
+                      return AlertDialog(
+                        title: const Text('Logout'),
+                        content: const Text('Do you Really want to logout?'),
+                        actions: [
+                          // The "Yes" button
+                          TextButton(
+                              onPressed: () {
+                                // Remove the box
+                                setState(() {
+                                  // _isShown = false;
+                                });
+
+                                // Close the dialog
+                                Navigator.of(context).pop();
+                              },
+                              child: const Text('Cancel')),
+                          TextButton(
+                              onPressed: () {
+                                // Close the dialog
+                                Navigator.of(context).pop();
+                                authController.clearSharedData();
+
+                                Get.offAllNamed(RouteHelper.getLoginRoute());
+                              },
+                              child: const Text('Logout'))
+                        ],
+                      );
+                      // return AlertDialog(
+                      //     title: Text("Logout"),
+                      //     content: Column(
+                      //       children: [
+                      //         Text("Do you Really want to logout?"),
+                      //         Row(
+                      //           mainAxisAlignment:
+                      //               MainAxisAlignment.spaceAround,
+                      //           children: [
+                      //             TextButton(
+                      //               child: Text("Cancel"),
+                      //               onPressed: () {
+                      //                 Navigator.pop(context);
+                      //               },
+                      //             ),
+                      //             TextButton(
+                      //               child: Text("Logout"),
+                      //               onPressed: () {
+                      //                 authController.clearSharedData();
+                      //
+                      //                 Get.offAllNamed(
+                      //                     RouteHelper.getLoginRoute());
+                      //               },
+                      //             )
+                      //           ],
+                      //         ),
+                      //       ],
+                      //     ));
+                    },
+                    context: context);
+              },
             ),
           ],
         ),
