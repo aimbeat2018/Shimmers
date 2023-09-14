@@ -23,6 +23,9 @@ class AppConstants {
   static const String placeOrder = 'place/order';
   static const String getFeedbackPurpose = 'get/feedbacks/list';
   static const String addFeedback = 'store/feedback';
+  static const String getCampaignsList = 'get/campaigns/list';
+  static const String getCampaignsQuestionList = 'get/campaign/questions/list';
+  static const String storeCampaignResponse = 'store/campaign/answers';
 
   // Shared Key
   static const String token = 'token';

@@ -4,6 +4,7 @@ import 'package:get/get_connect/http/src/response/response.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shimmers/model/placeOrderModel.dart';
+import 'package:shimmers/model/submitCampaignRequestmodel.dart';
 
 import '../constant/api/api_client.dart';
 import '../constant/app_constants.dart';
@@ -41,6 +42,15 @@ class SalonRepo {
 
   Future<Response> getProducts() async {
     return await apiClient.getData(AppConstants.getProducts);
+  }
+
+  Future<Response> getCampaignList() async {
+    return await apiClient.getData(AppConstants.getCampaignsList);
+  }
+
+  Future<Response> getCampaignQuestionList({String? campaignId}) async {
+    return await apiClient.postData(
+        AppConstants.getCampaignsQuestionList, {"campaign_id": campaignId});
   }
 
   Future<Response> addSalon(
@@ -141,5 +151,11 @@ class SalonRepo {
   Future<Response> placeOrder(PlaceOrderModel? model) async {
     return await apiClient.postBodyData(
         AppConstants.placeOrder, jsonEncode(model!.toJson()));
+  }
+
+  Future<Response> submitCampaignData(SubmitCampaignRequestModel? model) async {
+    // print(jsonEncode(model!.toJson()));
+    return await apiClient.postBodyData(
+        AppConstants.storeCampaignResponse, jsonEncode(model!.toJson()));
   }
 }

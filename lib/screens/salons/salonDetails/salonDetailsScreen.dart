@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shimmers/screens/salons/addSalon/bottomSheet/salonTypeScreen.dart';
 import 'package:shimmers/screens/salonsActivity/collectPaymentScreen.dart';
+import 'package:shimmers/screens/salonsActivity/demo/demoListScreen.dart';
 import 'package:shimmers/screens/salonsActivity/salonCampaignListScreen.dart';
 import 'package:shimmers/screens/salonsActivity/takeNoteScreen.dart';
 import 'package:shimmers/screens/salonsActivity/takeOrder/productListScreen.dart';
@@ -190,11 +191,11 @@ class _SalonDetailsScreenState extends State<SalonDetailsScreen> {
                     Visibility(
                       visible: isDetailsVisible ? true : false,
                       child: SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.37,
+                        height: MediaQuery.of(context).size.height * 0.34,
                         child: Stack(
                           children: [
                             Container(
-                              height: MediaQuery.of(context).size.height * 0.34,
+                              height: MediaQuery.of(context).size.height * 0.30,
                               color: primaryColor,
                               padding: const EdgeInsets.symmetric(
                                   vertical: 25, horizontal: 15),
@@ -204,24 +205,33 @@ class _SalonDetailsScreenState extends State<SalonDetailsScreen> {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Column(
-                                        children: [
-                                          Image.asset(
-                                            'assets/images/take_stock.png',
-                                            height: 28,
-                                            width: 28,
-                                          ),
-                                          const SizedBox(
-                                            height: 5,
-                                          ),
-                                          Text(
-                                            TextConstant.updateStock,
-                                            style: const TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 13,
-                                                fontWeight: FontWeight.w500),
-                                          ),
-                                        ],
+                                      InkWell(
+                                        onTap: () => Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    DemoListScreen(
+                                                      model: salonController
+                                                          .salonDetailsModel!,
+                                                    ))),
+                                        child: Column(
+                                          children: [
+                                            Image.asset(
+                                              'assets/images/demonstrate.png',
+                                              height: 28,
+                                              width: 28,
+                                            ),
+                                            const SizedBox(
+                                              height: 5,
+                                            ),
+                                            Text(
+                                              TextConstant.demonstrate,
+                                              style: const TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 13,
+                                                  fontWeight: FontWeight.w500),
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                       InkWell(
                                         onTap: () => Navigator.of(context).push(
@@ -374,7 +384,10 @@ class _SalonDetailsScreenState extends State<SalonDetailsScreen> {
                                         onTap: () => Navigator.of(context).push(
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    const SalonCampaignListScreen())),
+                                                    SalonCampaignListScreen(
+                                                      salonId: int.parse(
+                                                          widget.salonId),
+                                                    ))),
                                         child: Column(
                                           children: [
                                             Image.asset(
@@ -400,30 +413,30 @@ class _SalonDetailsScreenState extends State<SalonDetailsScreen> {
                                   const SizedBox(
                                     height: 30,
                                   ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Column(
-                                        children: [
-                                          Image.asset(
-                                            'assets/images/demonstrate.png',
-                                            height: 28,
-                                            width: 28,
-                                          ),
-                                          const SizedBox(
-                                            height: 5,
-                                          ),
-                                          Text(
-                                            TextConstant.demonstrate,
-                                            style: const TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 13,
-                                                fontWeight: FontWeight.w500),
-                                          ),
-                                        ],
-                                      )
-                                    ],
-                                  ),
+                                  // Row(
+                                  //   mainAxisAlignment: MainAxisAlignment.center,
+                                  //   children: [
+                                  //     Column(
+                                  //       children: [
+                                  //         Image.asset(
+                                  //           'assets/images/take_stock.png',
+                                  //           height: 28,
+                                  //           width: 28,
+                                  //         ),
+                                  //         const SizedBox(
+                                  //           height: 5,
+                                  //         ),
+                                  //         Text(
+                                  //           TextConstant.updateStock,
+                                  //           style: const TextStyle(
+                                  //               color: Colors.white,
+                                  //               fontSize: 13,
+                                  //               fontWeight: FontWeight.w500),
+                                  //         ),
+                                  //       ],
+                                  //     ),
+                                  //   ],
+                                  // ),
                                 ],
                               ),
                             ),

@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shimmers/model/campaignListModel.dart';
+import 'package:shimmers/model/campaignQuestionListModel.dart';
 import 'package:shimmers/model/employeeRouteListModel.dart';
 import 'package:shimmers/model/feedBackPurposeModel.dart';
 import 'package:shimmers/model/placeOrderModel.dart';
@@ -7,6 +9,7 @@ import 'package:shimmers/model/productModel.dart';
 import 'package:shimmers/model/salonCategoryModel.dart';
 import 'package:shimmers/model/salonDetailsModel.dart';
 import 'package:shimmers/model/salonRouteModel.dart';
+import 'package:shimmers/model/submitCampaignRequestmodel.dart';
 import 'package:shimmers/model/unitTypeModel.dart';
 import 'package:shimmers/repository/salonRepo.dart';
 
@@ -26,6 +29,10 @@ class SalonController extends GetxController implements GetxService {
   FeedBackPurposeModel? feedBackPurposeModel;
 
   EmployeeRouteListModel? employeeRouteListModel;
+
+  CampaignListModel? campaignListModel;
+
+  CampaignQuestionListModel? campaignQuestionListModel;
 
   UnitTypeModel? unitTypeModel;
 
@@ -148,6 +155,43 @@ class SalonController extends GetxController implements GetxService {
     _isLoading = false;
     update();
     return productModel;
+  }
+
+  Future<CampaignListModel?> getCampaignList() async {
+    _isLoading = true;
+    // update();
+    Response response = await salonRepo.getCampaignList();
+
+    if (response.statusCode == 200) {
+      campaignListModel = CampaignListModel.fromJson(response.body);
+    } else if (response.statusCode == 401) {
+      Get.offAllNamed(RouteHelper.getLoginRoute());
+    } else {
+      campaignListModel = CampaignListModel();
+    }
+    _isLoading = false;
+    update();
+    return campaignListModel;
+  }
+
+  Future<CampaignQuestionListModel?> getCampaignQuestionList(
+      {String? campaignId}) async {
+    _isLoading = true;
+    // update();
+    Response response =
+        await salonRepo.getCampaignQuestionList(campaignId: campaignId);
+
+    if (response.statusCode == 200) {
+      campaignQuestionListModel =
+          CampaignQuestionListModel.fromJson(response.body);
+    } else if (response.statusCode == 401) {
+      Get.offAllNamed(RouteHelper.getLoginRoute());
+    } else {
+      campaignQuestionListModel = CampaignQuestionListModel();
+    }
+    _isLoading = false;
+    update();
+    return campaignQuestionListModel;
   }
 
   Future<SalonDetailsModel?> getSalonDetails(String? salonId) async {
@@ -320,6 +364,23 @@ class SalonController extends GetxController implements GetxService {
     _isLoading = true;
     update();
     Response response = await salonRepo.placeOrder(model);
+
+    if (response.statusCode == 200) {
+      salonAddMessage = response.body['message'];
+    } else if (response.statusCode == 401) {
+      Get.offAllNamed(RouteHelper.getLoginRoute());
+    } else {
+      salonAddMessage = "";
+    }
+    _isLoading = false;
+    update();
+    return salonAddMessage;
+  }
+
+  Future<String?> submitCampaignData(SubmitCampaignRequestModel? model) async {
+    _isLoading = true;
+    update();
+    Response response = await salonRepo.submitCampaignData(model);
 
     if (response.statusCode == 200) {
       salonAddMessage = response.body['message'];
