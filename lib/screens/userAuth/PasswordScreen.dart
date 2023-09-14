@@ -52,7 +52,7 @@ class PasswordScreenState extends State<PasswordScreen> {
               children: [
                 Padding(
                   padding: const EdgeInsets.only(top: 40.0, bottom: 20),
-                  child: widget.image!.isEmpty
+                  child: widget.image! == ""
                       ? Image.asset(
                           'assets/images/user_blue.png',
                           height: 120,
