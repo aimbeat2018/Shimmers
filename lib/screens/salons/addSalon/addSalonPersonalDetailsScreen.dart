@@ -189,7 +189,7 @@ class _AddSalonPersonalDetailsScreenState
                         ),
                         InkWell(
                           onTap: () {
-                            selectImageDialog(context);
+                            pickImageCamera();
                           },
                           child: Stack(
                             children: [
@@ -199,7 +199,7 @@ class _AddSalonPersonalDetailsScreenState
                                   backgroundImage: _pickedFile != null
                                       ? FileImage(File(_pickedFile!.path))
                                           as ImageProvider
-                                      : ExactAssetImage(
+                                      : const ExactAssetImage(
                                           'assets/images/avatar.png'),
                                   backgroundColor: primaryColor,
                                 ),

@@ -83,7 +83,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     InkWell(
-                      onTap: () => selectImageDialog(context),
+                      onTap: () => pickImageCamera(),
                       child: Stack(
                         children: [
                           Center(

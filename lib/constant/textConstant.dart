@@ -26,7 +26,7 @@ class TextConstant {
   static String ReportTourVisit = "Report Tour Visit";
   static String Scheme = "Scheme";
   static String SetTarget = "Set Target";
-  static String NCE = "NCE";
+  static String NCE = "NCA";
   static String Home = "Home";
   static String MySchedule = "My Schedule";
   static String Attendance = "Attendance";
