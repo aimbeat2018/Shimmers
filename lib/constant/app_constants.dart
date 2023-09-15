@@ -31,6 +31,8 @@ class AppConstants {
   static const String getLeaveTypeList = 'get/leave/types';
   static const String applyForLeave = 'apply/leave';
   static const String getLeaveList = 'get/employee/leaves';
+  static const String getDistributorList = 'get/distributor/list';
+  static const String getDistributorSalonList = 'get/distributor/salons/list';
 
   // Shared Key
   static const String token = 'token';

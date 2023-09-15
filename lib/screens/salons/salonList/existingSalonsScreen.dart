@@ -66,9 +66,11 @@ class _ExistingSalonsScreenState extends State<ExistingSalonsScreen> {
     if (!hasPermission) return;
     await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
         .then((Position position) {
-      setState(() {
-        _currentPosition = position;
-      });
+      if (mounted) {
+        setState(() {
+          _currentPosition = position;
+        });
+      }
       _getAddressFromLatLng(_currentPosition!);
     }).catchError((e) {
       debugPrint(e!);
@@ -80,24 +82,28 @@ class _ExistingSalonsScreenState extends State<ExistingSalonsScreen> {
             _currentPosition!.latitude, _currentPosition!.longitude)
         .then((List<Placemark> placemarks) {
       Placemark place = placemarks[0];
-      setState(() {
-        lat = _currentPosition!.latitude;
-        longi = _currentPosition!.longitude;
-        /*, ${place.subAdministrativeArea}*/
-        _currentAddress = ' ${place.locality}, ${place.postalCode}';
-        // locationController.text = _currentAddress!;
-        // isLoaded = true;
+      if (mounted) {
+        setState(() {
+          lat = _currentPosition!.latitude;
+          longi = _currentPosition!.longitude;
+          /*, ${place.subAdministrativeArea}*/
+          _currentAddress = ' ${place.locality}, ${place.postalCode}';
+          // locationController.text = _currentAddress!;
+          // isLoaded = true;
 
-        // Get.find<SalonController>().getSalonRouteList(
-        //     latitude: lat.toString(), longitude: longi.toString(), type: "existing");
+          Get.find<SalonController>().getSalonRouteList(
+              latitude: lat.toString(),
+              longitude: longi.toString(),
+              type: "existing");
 
-        Get.find<SalonController>().getSalonRouteList(
-            latitude: "16.69537730",
-            longitude: "74.24120130",
-            type: "existing");
+          // Get.find<SalonController>().getSalonRouteList(
+          //     latitude: "16.69537730",
+          //     longitude: "74.24120130",
+          //     type: "existing");
 
-        print(lat.toString() + longi.toString());
-      });
+          print(lat.toString() + longi.toString());
+        });
+      }
     }).catchError((e) {
       debugPrint(e);
     });

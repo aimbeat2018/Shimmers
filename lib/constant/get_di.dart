@@ -2,9 +2,11 @@ import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shimmers/controllers/attendanceController.dart';
 import 'package:shimmers/controllers/cartController.dart';
+import 'package:shimmers/controllers/distributorController.dart';
 import 'package:shimmers/controllers/salonController.dart';
 import 'package:shimmers/repository/attendanceRepo.dart';
 import 'package:shimmers/repository/cartRepo.dart';
+import 'package:shimmers/repository/distributorRepo.dart';
 import 'package:shimmers/repository/salonRepo.dart';
 
 import '../controllers/authController.dart';
@@ -28,10 +30,14 @@ Future<void> init() async {
   Get.lazyPut(
       () => SalonRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
   Get.lazyPut(() => CartRepo(sharedPreferences: Get.find()));
+  Get.lazyPut(() =>
+      DistributorRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
+  Get.lazyPut(() => CartRepo(sharedPreferences: Get.find()));
 
   // Controller
   Get.lazyPut(() => AuthController(authRepo: Get.find()));
   Get.lazyPut(() => AttendanceController(attendanceRepo: Get.find()));
   Get.lazyPut(() => SalonController(salonRepo: Get.find()));
   Get.lazyPut(() => CartController(cartRepo: Get.find()));
+  Get.lazyPut(() => DistributorController(distributorRepo: Get.find()));
 }

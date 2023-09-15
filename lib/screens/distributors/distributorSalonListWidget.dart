@@ -2,9 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:shimmers/screens/salons/salonDetails/salonDetailsScreen.dart';
 
 import '../../../../constant/colorsConstant.dart';
+import '../../model/distributorSalonListModel.dart';
 
 class DistributorSalonListWidget extends StatefulWidget {
-  const DistributorSalonListWidget({Key? key}) : super(key: key);
+  final Salons model;
+
+  const DistributorSalonListWidget({Key? key, required this.model})
+      : super(key: key);
 
   @override
   State<DistributorSalonListWidget> createState() =>
@@ -18,26 +22,25 @@ class _DistributorSalonListWidgetState
     return InkWell(
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => const SalonDetailsScreen(
-                  salonId: "",
+            builder: (context) => SalonDetailsScreen(
+                  salonId: widget.model.id!.toString(),
                 )));
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 10),
         child: Row(
           children: [
-            Center(
-              child: SizedBox(
-                height: 60,
-                width: 60,
-                child: CircleAvatar(
-                  backgroundColor: Colors.transparent,
-                  foregroundImage: AssetImage(
-                    'assets/images/distribution.png',
+            widget.model.image == ""
+                ? Image.asset(
+                    'assets/images/avatar.png',
+                    height: 50,
+                    width: 50,
+                  )
+                : Image.network(
+                    widget.model.image!,
+                    height: 50,
+                    width: 50,
                   ),
-                ),
-              ),
-            ),
             SizedBox(
               width: 10,
             ),
@@ -46,7 +49,7 @@ class _DistributorSalonListWidgetState
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'ABC Salon',
+                    widget.model.name!,
                     style: TextStyle(
                         color: primaryColor,
                         fontSize: 14,
@@ -56,7 +59,7 @@ class _DistributorSalonListWidgetState
                     height: 5,
                   ),
                   Text(
-                    'Vashi, Navi Mumbai',
+                    widget.model.address!,
                     style: TextStyle(
                         color: Colors.black,
                         fontSize: 10,
@@ -83,7 +86,7 @@ class _DistributorSalonListWidgetState
                       width: 5,
                     ),
                     Text(
-                      '5 Km Away',
+                      '${widget.model.distance!} Away',
                       style: const TextStyle(
                           color: Colors.grey,
                           fontSize: 11,

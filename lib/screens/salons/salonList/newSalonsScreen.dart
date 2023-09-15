@@ -91,11 +91,15 @@ class _NewSalonsScreenState extends State<NewSalonsScreen> {
           // locationController.text = _currentAddress!;
           // isLoaded = true;
 
-          // Get.find<SalonController>().getSalonRouteList(
-          //     latitude: lat.toString(), longitude: longi.toString(), type: "new");
-
           Get.find<SalonController>().getSalonRouteList(
-              latitude: "16.69537730", longitude: "74.24120130", type: "new");
+              latitude: lat.toString(),
+              longitude: longi.toString(),
+              type: "new");
+
+          // Get.find<SalonController>().getSalonRouteList(
+          //     latitude: "16.69537730",
+          //     longitude: "74.24120130",
+          //     type: "existing");
 
           print(lat.toString() + longi.toString());
         });

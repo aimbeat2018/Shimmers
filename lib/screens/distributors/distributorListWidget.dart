@@ -2,9 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:shimmers/screens/distributors/distributorWiseSalonScreen.dart';
 
 import '../../../../constant/colorsConstant.dart';
+import '../../model/distributorListModel.dart';
 
 class DistributorListWidget extends StatefulWidget {
-  const DistributorListWidget({Key? key}) : super(key: key);
+  final DistributorData model;
+
+  const DistributorListWidget({Key? key, required this.model})
+      : super(key: key);
 
   @override
   State<DistributorListWidget> createState() => _DistributorListWidgetState();
@@ -16,25 +20,27 @@ class _DistributorListWidgetState extends State<DistributorListWidget> {
     return InkWell(
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => const DistributorWiseSalonScreen(
-                distributorName: 'ABC Technology')));
+            builder: (context) => DistributorWiseSalonScreen(
+                  distributorName: widget.model.name!,
+                  id: widget.model.id!.toString(),
+                )));
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 10),
         child: Row(
           children: [
-            Center(
-              child: SizedBox(
-                height: 60,
-                width: 60,
-                child: CircleAvatar(
-                  backgroundColor: Colors.transparent,
-                  foregroundImage: AssetImage(
-                    'assets/images/distribution.png',
-                  ),
-                ),
-              ),
-            ),
+            // Center(
+            //   child: SizedBox(
+            //     height: 60,
+            //     width: 60,
+            //     child: CircleAvatar(
+            //       backgroundColor: Colors.transparent,
+            //       foregroundImage: AssetImage(
+            //         'assets/images/distribution.png',
+            //       ),
+            //     ),
+            //   ),
+            // ),
             SizedBox(
               width: 10,
             ),
@@ -43,7 +49,7 @@ class _DistributorListWidgetState extends State<DistributorListWidget> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'ABC Technology',
+                    widget.model.name!,
                     style: TextStyle(
                         color: primaryColor,
                         fontSize: 14,
@@ -53,7 +59,7 @@ class _DistributorListWidgetState extends State<DistributorListWidget> {
                     height: 5,
                   ),
                   Text(
-                    'Vashi, Navi Mumbai',
+                    widget.model.address!,
                     style: TextStyle(
                         color: Colors.black,
                         fontSize: 10,
@@ -62,34 +68,34 @@ class _DistributorListWidgetState extends State<DistributorListWidget> {
                 ],
               ),
             ),
-            Align(
-              alignment: Alignment.bottomRight,
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 5.0, vertical: 8),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    const Icon(
-                      Icons.location_on,
-                      color: Colors.grey,
-                      size: 13,
-                    ),
-                    const SizedBox(
-                      width: 5,
-                    ),
-                    Text(
-                      '5 Km Away',
-                      style: const TextStyle(
-                          color: Colors.grey,
-                          fontSize: 11,
-                          fontWeight: FontWeight.normal),
-                    )
-                  ],
-                ),
-              ),
-            ),
+            // Align(
+            //   alignment: Alignment.bottomRight,
+            //   child: Padding(
+            //     padding:
+            //         const EdgeInsets.symmetric(horizontal: 5.0, vertical: 8),
+            //     child: Row(
+            //       mainAxisSize: MainAxisSize.min,
+            //       mainAxisAlignment: MainAxisAlignment.end,
+            //       children: [
+            //         const Icon(
+            //           Icons.location_on,
+            //           color: Colors.grey,
+            //           size: 13,
+            //         ),
+            //         const SizedBox(
+            //           width: 5,
+            //         ),
+            //         Text(
+            //           '5 Km Away',
+            //           style: const TextStyle(
+            //               color: Colors.grey,
+            //               fontSize: 11,
+            //               fontWeight: FontWeight.normal),
+            //         )
+            //       ],
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       ),
