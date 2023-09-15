@@ -14,6 +14,14 @@ class AttendanceRepo {
     return await apiClient.getData(AppConstants.attendanceStatus);
   }
 
+  Future<Response> getLeaveList() async {
+    return await apiClient.getData(AppConstants.getLeaveList);
+  }
+
+  Future<Response> getLeaveTypeList() async {
+    return await apiClient.getData(AppConstants.getLeaveTypeList);
+  }
+
   Future<Response> employeePunchIn(
       {String? lat,
       String? long,
@@ -39,6 +47,21 @@ class AttendanceRepo {
     return await apiClient.postData(AppConstants.attendanceHistory, {
       "month": month.toString(),
       "year": year.toString(),
+    });
+  }
+
+  Future<Response> applyForLeave(
+      {String? fromDate,
+      String? toDate,
+      String? reason,
+      String? leaveType,
+      String? duration}) async {
+    return await apiClient.postData(AppConstants.applyForLeave, {
+      "from_date": fromDate,
+      "to_date": toDate,
+      "reason": reason,
+      "leave_type": leaveType,
+      "duration": duration,
     });
   }
 }

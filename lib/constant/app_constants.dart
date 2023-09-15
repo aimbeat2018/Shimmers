@@ -28,6 +28,9 @@ class AppConstants {
   static const String storeCampaignResponse = 'store/campaign/answers';
   static const String getDemoList = 'get/demo/list';
   static const String addDemoRequest = 'send/demo/request';
+  static const String getLeaveTypeList = 'get/leave/types';
+  static const String applyForLeave = 'apply/leave';
+  static const String getLeaveList = 'get/employee/leaves';
 
   // Shared Key
   static const String token = 'token';

@@ -142,4 +142,5 @@ class TextConstant {
   static String requirement = "Requirement";
   static String selectDate = "Select date";
   static String selectTime = "Select time";
+  static String reason = "Leave Reason";
 }

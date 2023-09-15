@@ -1,9 +1,11 @@
 import 'package:get/get.dart';
 import 'package:shimmers/model/attendanceHistoryModel.dart';
 import 'package:shimmers/model/attendanceStatusModel.dart';
+import 'package:shimmers/model/leaveListModel.dart';
 import 'package:shimmers/repository/attendanceRepo.dart';
 
 import '../constant/route_helper.dart';
+import '../model/leaveTypeModel.dart';
 
 class AttendanceController extends GetxController implements GetxService {
   final AttendanceRepo attendanceRepo;
@@ -13,6 +15,10 @@ class AttendanceController extends GetxController implements GetxService {
   AttendanceHistoryModel? attendanceHistoryModel;
 
   AttendanceStatusModel? attendanceStatusModel;
+
+  LeaveListModel? leaveListModel;
+
+  LeaveTypeModel? leaveTypeModel;
 
   String? punchInMsg;
 
@@ -37,6 +43,40 @@ class AttendanceController extends GetxController implements GetxService {
     _isLoading = false;
     update();
     return attendanceHistoryModel;
+  }
+
+  Future<LeaveTypeModel?> getLeaveTypeList() async {
+    _isLoading = true;
+    // update();
+    Response response = await attendanceRepo.getLeaveTypeList();
+
+    if (response.statusCode == 200) {
+      leaveTypeModel = LeaveTypeModel.fromJson(response.body);
+    } else if (response.statusCode == 401) {
+      Get.offAllNamed(RouteHelper.getLoginRoute());
+    } else {
+      leaveTypeModel = LeaveTypeModel();
+    }
+    _isLoading = false;
+    update();
+    return leaveTypeModel;
+  }
+
+  Future<LeaveListModel?> getLeaveList() async {
+    _isLoading = true;
+    // update();
+    Response response = await attendanceRepo.getLeaveList();
+
+    if (response.statusCode == 200) {
+      leaveListModel = LeaveListModel.fromJson(response.body);
+    } else if (response.statusCode == 401) {
+      Get.offAllNamed(RouteHelper.getLoginRoute());
+    } else {
+      leaveListModel = LeaveListModel();
+    }
+    _isLoading = false;
+    update();
+    return leaveListModel;
   }
 
   Future<AttendanceStatusModel?> getAttendanceStatus() async {
@@ -101,6 +141,33 @@ class AttendanceController extends GetxController implements GetxService {
       punchInMsg = "";
     }
 
+    _isLoading = false;
+    update();
+    return punchInMsg;
+  }
+
+  Future<String?> applyForLeave(
+      {String? fromDate,
+      String? toDate,
+      String? reason,
+      String? leaveType,
+      String? duration}) async {
+    _isLoading = true;
+    update();
+    Response response = await attendanceRepo.applyForLeave(
+        fromDate: fromDate,
+        toDate: toDate,
+        reason: reason,
+        leaveType: leaveType,
+        duration: duration);
+
+    if (response.statusCode == 200) {
+      punchInMsg = response.body['message'];
+    } else if (response.statusCode == 401) {
+      Get.offAllNamed(RouteHelper.getLoginRoute());
+    } else {
+      punchInMsg = "";
+    }
     _isLoading = false;
     update();
     return punchInMsg;
