@@ -294,8 +294,9 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                               child: InkWell(
                                 onTap: () {
                                   Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (context) =>
-                                          CampaignsListScreen()));
+                                      builder: (context) => CampaignsListScreen(
+                                            empId: "",
+                                          )));
                                 },
                                 child: SizedBox(
                                   height: 135,

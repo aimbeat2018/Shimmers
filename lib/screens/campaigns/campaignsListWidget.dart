@@ -3,9 +3,12 @@ import 'package:shimmers/constant/colorsConstant.dart';
 import 'package:shimmers/screens/campaigns/campaignsResponseScreen.dart';
 
 import '../../constant/textConstant.dart';
+import '../../model/campaignListModel.dart';
 
 class CampaignsListWidget extends StatefulWidget {
-  const CampaignsListWidget({Key? key}) : super(key: key);
+  final CampaignListData model;
+
+  const CampaignsListWidget({Key? key, required this.model}) : super(key: key);
 
   @override
   State<CampaignsListWidget> createState() => _CampaignsListWidgetState();
@@ -27,11 +30,33 @@ class _CampaignsListWidgetState extends State<CampaignsListWidget> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'ABC Technology',
+                widget.model.name!,
                 style: TextStyle(
                     color: primaryColor,
                     fontSize: 16,
                     fontWeight: FontWeight.bold),
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'From: ${widget.model.startDate}',
+                    style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500),
+                  ),
+                  Text(
+                    'To: ${widget.model.endDate}',
+                    style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500),
+                  ),
+                ],
               ),
               SizedBox(
                 height: 10,
@@ -39,7 +64,9 @@ class _CampaignsListWidgetState extends State<CampaignsListWidget> {
               InkWell(
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const CampaignsResponseScreen()));
+                      builder: (context) => CampaignsResponseScreen(
+                            model: widget.model,
+                          )));
                 },
                 child: Align(
                   alignment: Alignment.topRight,

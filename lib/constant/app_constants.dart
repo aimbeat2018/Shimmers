@@ -33,6 +33,8 @@ class AppConstants {
   static const String getLeaveList = 'get/employee/leaves';
   static const String getDistributorList = 'get/distributor/list';
   static const String getDistributorSalonList = 'get/distributor/salons/list';
+  static const String getEmployeeCampaignList = 'get/employee/campaign/list';
+  static const String getEmployeeCampaignResponse = 'get/campaign/answers/list';
 
   // Shared Key
   static const String token = 'token';

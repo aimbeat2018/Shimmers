@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shimmers/screens/noDataFound/noDataFoundScreen.dart';
 import 'package:shimmers/screens/salonsActivity/campaignsSalonListWidget.dart';
 
 import '../../constant/colorsConstant.dart';
@@ -69,9 +70,13 @@ class _SalonCampaignListScreenState extends State<SalonCampaignListScreen> {
                 // ),
                 salonController.isLoading &&
                         salonController.campaignListModel == null
-                    ? const Center(
-                        child: CircularProgressIndicator(),
-                      )
+                    ? salonController.campaignListModel!.data!.isEmpty
+                        ? Center(
+                            child: NoDataFoundScreen(),
+                          )
+                        : const Center(
+                            child: CircularProgressIndicator(),
+                          )
                     : ListView.builder(
                         physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
