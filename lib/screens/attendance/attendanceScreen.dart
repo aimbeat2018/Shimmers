@@ -44,9 +44,17 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
     if (mounted) {
       Future.delayed(Duration.zero, () async {
         getAttendanceHistory(month, year);
+        getStatus();
 
         _getCurrentPosition();
       });
+    }
+  }
+
+  Future<void> getStatus() async {
+    statusModel = await Get.find<AttendanceController>().getAttendanceStatus();
+    if (mounted) {
+      setState(() {});
     }
   }
 
@@ -93,9 +101,11 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
     if (!hasPermission) return;
     await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
         .then((Position position) {
-      setState(() {
-        _currentPosition = position;
-      });
+      _currentPosition = position;
+      if (mounted) {
+        setState(() {});
+      }
+      // setState(() {});
       _getAddressFromLatLng(_currentPosition!);
     }).catchError((e) {
       debugPrint(e!);
@@ -112,16 +122,17 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
             _currentPosition!.latitude, _currentPosition!.longitude)
         .then((List<Placemark> placemarks) {
       Placemark place = placemarks[0];
-      setState(() {
-        lat = _currentPosition!.latitude;
-        longi = _currentPosition!.longitude;
-        /*, ${place.subAdministrativeArea}*/
-        _currentAddress = ' ${place.locality}, ${place.postalCode}';
-        // locationController.text = _currentAddress!;
-        // isLoaded = true;
+      lat = _currentPosition!.latitude;
+      longi = _currentPosition!.longitude;
+      /*, ${place.subAdministrativeArea}*/
+      _currentAddress = ' ${place.locality}, ${place.postalCode}';
+      // locationController.text = _currentAddress!;
+      // isLoaded = true;
 
-        print(lat.toString() + longi.toString());
-      });
+      print(lat.toString() + longi.toString());
+      if (mounted) {
+        setState(() {});
+      }
     }).catchError((e) {
       debugPrint(e);
     });
@@ -137,11 +148,6 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
         total_absents = attendanceHistoryModel.history!.totalAbsents;
 
         eventList.addAll(attendanceHistoryModel.history!.summary!);
-
-        setState(() async {
-          statusModel =
-              await Get.find<AttendanceController>().getAttendanceStatus();
-        });
       } else {}
     });
   }
@@ -192,12 +198,13 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                 long: longi.toString(),
                                 id: statusModel!.data!.id.toString(),
                                 address: _currentAddress)
-                            .then((value) {
+                            .then((value) async {
                           if (value == 'Clocked out successfully') {
-                            setState(() async {
-                              statusModel =
-                                  await Get.find<AttendanceController>()
-                                      .getAttendanceStatus();
+                            // statusModel = await Get.find<AttendanceController>()
+                            //     .getAttendanceStatus();
+
+                            setState(() {
+                              statusModel!.status = 'punch-in';
                             });
                           }
                         });
@@ -211,10 +218,11 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                 address: _currentAddress)
                             .then((value) async {
                           if (value == 'Clocked in successfully') {
-                            setState(() async {
-                              statusModel =
-                                  await Get.find<AttendanceController>()
-                                      .getAttendanceStatus();
+                            // statusModel = await Get.find<AttendanceController>()
+                            //     .getAttendanceStatus();
+
+                            setState(() {
+                              statusModel!.status = 'punch-out';
                             });
                           }
                         });
@@ -227,11 +235,13 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                               workingFrom: 'office',
                               workFromType: 'office',
                               address: _currentAddress)
-                          .then((value) {
+                          .then((value) async {
                         if (value == 'Clocked in successfully') {
-                          setState(() async {
-                            statusModel = await Get.find<AttendanceController>()
-                                .getAttendanceStatus();
+                          // statusModel = await Get.find<AttendanceController>()
+                          //     .getAttendanceStatus();
+
+                          setState(() {
+                            statusModel!.status = 'punch-out';
                           });
                         }
                       });

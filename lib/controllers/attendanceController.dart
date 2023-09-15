@@ -73,7 +73,7 @@ class AttendanceController extends GetxController implements GetxService {
         address: address);
 
     if (response.statusCode == 200) {
-      punchInMsg = response.body.toString();
+      punchInMsg = response.body['message'];
     } else if (response.statusCode == 401) {
       Get.offAllNamed(RouteHelper.getLoginRoute());
     } else {
@@ -94,7 +94,7 @@ class AttendanceController extends GetxController implements GetxService {
         lat: lat, long: long, id: id, address: address);
 
     if (response.statusCode == 200) {
-      punchInMsg = response.body.toString();
+      punchInMsg = response.body['message'];
     } else if (response.statusCode == 401) {
       Get.offAllNamed(RouteHelper.getLoginRoute());
     } else {
