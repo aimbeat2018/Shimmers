@@ -26,7 +26,6 @@ Future<void> init() async {
       appBaseUrl: AppConstants.baseUrl, sharedPreferences: Get.find()));
 
   // Repository
-
   Get.lazyPut(
       () => AuthRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
   Get.lazyPut(() =>

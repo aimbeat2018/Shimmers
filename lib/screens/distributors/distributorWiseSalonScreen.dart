@@ -132,15 +132,15 @@ class _DistributorWiseSalonScreenState
           padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 25),
           child: distributorController.isLoading &&
                   distributorController.distributorSalonListModel == null
-              ? Center(
+              ? const Center(
                   child: CircularProgressIndicator(),
                 )
-              : distributorController.distributorSalonListModel!.data == null ||
+              : distributorController.distributorSalonListModel == null ||
                       distributorController
                           .distributorSalonListModel!.data!.isEmpty
-                  ? Center(child: NoDataFoundScreen())
+                  ? const Center(child: NoDataFoundScreen())
                   : ListView.separated(
-                      physics: const NeverScrollableScrollPhysics(),
+                      physics: const AlwaysScrollableScrollPhysics(),
                       shrinkWrap: true,
                       itemCount: distributorController
                           .distributorSalonListModel!.data![0].salons!.length,

@@ -33,7 +33,7 @@ class UserProfile {
   int? designationId;
   String? joiningDate;
   String? dateOfBirth;
-  String? reportingTo;
+  int? reportingTo;
   String? employmentType;
   String? maritalStatus;
   String? designationName;
