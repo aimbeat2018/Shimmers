@@ -120,9 +120,11 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 title: Text(
                   authController.isLoading
                       ? 'Hello!'
-                      : model == null && model!.userProfile == null
+                      : model == null
                           ? 'Hello!'
-                          : 'Hello! ${model!.userProfile!.name!}',
+                          : model!.userProfile == null
+                              ? 'Hello!'
+                              : 'Hello! ${model!.userProfile!.name!}',
                   style: const TextStyle(
                       color: Colors.white,
                       fontSize: 16,

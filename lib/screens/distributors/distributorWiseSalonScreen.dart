@@ -1,10 +1,16 @@
+import 'dart:async';
+
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:shimmers/screens/distributors/distributorSalonListWidget.dart';
 
+import '../../constant/app_constants.dart';
 import '../../constant/colorsConstant.dart';
+import '../../constant/internetConnectivity.dart';
+import '../../constant/no_internet_screen.dart';
 import '../../controllers/distributorController.dart';
 import '../noDataFound/noDataFoundScreen.dart';
 
@@ -27,6 +33,9 @@ class _DistributorWiseSalonScreenState
   String? _currentAddress;
   double? lat, longi;
   Position? _currentPosition;
+  String _connectionStatus = 'unKnown';
+  final Connectivity _connectivity = Connectivity();
+  late StreamSubscription<ConnectivityResult> _connectivitySubscription;
 
   Future<bool> _handleLocationPermission() async {
     bool serviceEnabled;
@@ -108,6 +117,16 @@ class _DistributorWiseSalonScreenState
   @override
   void initState() {
     super.initState();
+    CheckInternet.initConnectivity().then((value) => setState(() {
+          _connectionStatus = value;
+        }));
+    _connectivitySubscription =
+        _connectivity.onConnectivityChanged.listen((ConnectivityResult result) {
+      CheckInternet.updateConnectionStatus(result).then((value) => setState(() {
+            _connectionStatus = value;
+          }));
+    });
+
     if (mounted) {
       Future.delayed(Duration.zero, () async {
         _getCurrentPosition();
@@ -117,48 +136,58 @@ class _DistributorWiseSalonScreenState
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<DistributorController>(builder: (distributorController) {
-      return Scaffold(
-        appBar: AppBar(
-          backgroundColor: primaryColor,
-          centerTitle: true,
-          title: Text(
-            widget.distributorName,
-            style: const TextStyle(
-                color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
-          ),
-        ),
-        body: distributorController.isLoading &&
-                distributorController.distributorSalonListModel == null
-            ? const Center(
-                child: CircularProgressIndicator(),
-              )
-            : distributorController.distributorSalonListModel!.data == null ||
-                    distributorController
-                        .distributorSalonListModel!.data!.isEmpty
-                ? Center(
-                    child: SizedBox(
-                        height: MediaQuery.of(context).size.height,
-                        width: MediaQuery.of(context).size.width,
-                        child: const NoDataFoundScreen()))
-                : ListView.separated(
-                    physics: const AlwaysScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: distributorController
-                        .distributorSalonListModel!.data![0].salons!.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return DistributorSalonListWidget(
-                        model: distributorController
-                            .distributorSalonListModel!.data![0].salons![index],
-                      );
-                    },
-                    separatorBuilder: (context, index) {
-                      return Divider(
-                        color: primaryColor.withOpacity(0.5),
-                      );
-                    },
-                  ),
-      );
-    });
+    return _connectionStatus == AppConstants.connectivityCheck
+        ? const NoInternetScreen()
+        : GetBuilder<DistributorController>(builder: (distributorController) {
+            return Scaffold(
+              appBar: AppBar(
+                backgroundColor: primaryColor,
+                centerTitle: true,
+                title: Text(
+                  widget.distributorName,
+                  style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+              body: distributorController.isLoading &&
+                      distributorController.distributorSalonListModel == null
+                  ? const Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : distributorController.distributorSalonListModel!.data ==
+                              null ||
+                          distributorController
+                              .distributorSalonListModel!.data!.isEmpty
+                      ? Center(
+                          child: SizedBox(
+                              height: MediaQuery.of(context).size.height,
+                              width: MediaQuery.of(context).size.width,
+                              child: const NoDataFoundScreen()))
+                      : ListView.separated(
+                          physics: const AlwaysScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: distributorController
+                              .distributorSalonListModel!
+                              .data![0]
+                              .salons!
+                              .length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return DistributorSalonListWidget(
+                              model: distributorController
+                                  .distributorSalonListModel!
+                                  .data![0]
+                                  .salons![index],
+                            );
+                          },
+                          separatorBuilder: (context, index) {
+                            return Divider(
+                              color: primaryColor.withOpacity(0.5),
+                            );
+                          },
+                        ),
+            );
+          });
   }
 }
