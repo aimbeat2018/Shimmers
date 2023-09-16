@@ -136,7 +136,7 @@ class _SetProductTargetScreenState extends State<SetProductTargetScreen> {
                       const SizedBox(
                         height: 20,
                       ),
-                      targetController.isLoading && model == null
+                      targetController.isLoading || model == null
                           ? const Center(child: CircularProgressIndicator())
                           : model!.data == null
                               ? const Center(
@@ -181,7 +181,7 @@ class _SetProductTargetScreenState extends State<SetProductTargetScreen> {
                               vertical: 15.0, horizontal: 20),
                           child: SizedBox(
                             width: MediaQuery.of(context).size.width,
-                            child: targetController.isLoading
+                            child: targetController.isTargetLoading
                                 ? Center(
                                     child: CircularProgressIndicator(),
                                   )

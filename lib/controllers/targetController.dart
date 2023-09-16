@@ -11,8 +11,11 @@ class TargetController extends GetxController implements GetxService {
   TargetController({required this.targetRepo});
 
   bool? _isLoading = false;
+  bool? _isTargetLoading = false;
 
   bool get isLoading => _isLoading!;
+
+  bool get isTargetLoading => _isTargetLoading!;
 
   EmployeeListModel? employeeListModel;
 
