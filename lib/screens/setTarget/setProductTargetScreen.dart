@@ -4,37 +4,39 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shimmers/constant/app_constants.dart';
-import 'package:shimmers/controllers/targetController.dart';
-import 'package:shimmers/screens/setTarget/employeeListWidget.dart';
+import 'package:shimmers/screens/setTarget/setProductListWidget.dart';
 
+import '../../constant/app_constants.dart';
 import '../../constant/colorsConstant.dart';
 import '../../constant/internetConnectivity.dart';
 import '../../constant/no_internet_screen.dart';
 import '../../constant/textConstant.dart';
+import '../../controllers/targetController.dart';
 import '../../model/employeeListModel.dart';
+import '../../model/productModel.dart';
 import '../noDataFound/noDataFoundScreen.dart';
 
-class SetTargetScreen extends StatefulWidget {
-  static const name = '/setTargetScreen';
+class SetProductTargetScreen extends StatefulWidget {
+  final Members membersModel;
 
-  const SetTargetScreen({Key? key}) : super(key: key);
+  const SetProductTargetScreen({Key? key, required this.membersModel})
+      : super(key: key);
 
   @override
-  State<SetTargetScreen> createState() => _SetTargetScreenState();
+  State<SetProductTargetScreen> createState() => _SetProductTargetScreenState();
 }
 
-class _SetTargetScreenState extends State<SetTargetScreen> {
+class _SetProductTargetScreenState extends State<SetProductTargetScreen> {
   TextEditingController searchController = TextEditingController();
   String _connectionStatus = 'unKnown';
   final Connectivity _connectivity = Connectivity();
   late StreamSubscription<ConnectivityResult> _connectivitySubscription;
 
-  EmployeeListModel? model;
+  ProductModel? model;
 
-  List<Members>? _searchResult;
+  List<ProductData>? _searchResult;
 
-  List<Members>? _userDetails;
+  List<ProductData>? _productData;
 
   @override
   void initState() {
@@ -50,15 +52,14 @@ class _SetTargetScreenState extends State<SetTargetScreen> {
           }));
     });
 
-    getEmployeeList();
+    getProductList();
   }
 
-  Future<void> getEmployeeList() async {
-    _userDetails = [];
+  Future<void> getProductList() async {
+    _productData = [];
     _searchResult = [];
-    model = await Get.find<TargetController>().getEmployeeList();
-    _userDetails = model!.data!.members!;
-    // _searchResult = model!.data!.members!;
+    model = await Get.find<TargetController>().getProducts();
+    _productData = model!.data!;
 
     if (mounted) {
       setState(() {});
@@ -68,20 +69,15 @@ class _SetTargetScreenState extends State<SetTargetScreen> {
   onSearchTextChanged(String text) async {
     _searchResult!.clear();
     if (text.isEmpty) {
-      // _searchResult = _userDetails;
       setState(() {});
       return;
     }
 
-    for (var members in _userDetails!) {
-      if (members.name!.contains(text)) {
-        _searchResult!.add(members);
+    for (var product in _productData!) {
+      if (product.name!.toLowerCase().contains(text)) {
+        _searchResult!.add(product);
       }
     }
-    // for (var userDetail in _userDetails) {
-    //   _searchResult.add(userDetail);
-    // }
-
     setState(() {});
   }
 
@@ -142,7 +138,7 @@ class _SetTargetScreenState extends State<SetTargetScreen> {
                       ),
                       targetController.isLoading && model == null
                           ? const Center(child: CircularProgressIndicator())
-                          : model!.data!.members == null
+                          : model!.data == null
                               ? const Center(
                                   child: NoDataFoundScreen(),
                                 )
@@ -155,8 +151,8 @@ class _SetTargetScreenState extends State<SetTargetScreen> {
                                       itemCount: _searchResult!.length,
                                       itemBuilder:
                                           (BuildContext context, int index) {
-                                        return EmployeeListWidget(
-                                          membersModel: _searchResult![index],
+                                        return SetProductListWidget(
+                                          productData: _searchResult![index],
                                         );
                                       },
                                       separatorBuilder: (context, index) {
@@ -167,17 +163,67 @@ class _SetTargetScreenState extends State<SetTargetScreen> {
                                       physics:
                                           const NeverScrollableScrollPhysics(),
                                       shrinkWrap: true,
-                                      itemCount: _userDetails!.length,
+                                      itemCount: _productData!.length,
                                       itemBuilder:
                                           (BuildContext context, int index) {
-                                        return EmployeeListWidget(
-                                          membersModel: _userDetails![index],
+                                        return SetProductListWidget(
+                                          productData: _productData![index],
                                         );
                                       },
                                       separatorBuilder: (context, index) {
                                         return const Divider();
                                       },
                                     ),
+                      Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 15.0, horizontal: 20),
+                          child: SizedBox(
+                            width: MediaQuery.of(context).size.width,
+                            child: targetController.isLoading
+                                ? Center(
+                                    child: CircularProgressIndicator(),
+                                  )
+                                : ElevatedButton(
+                                    style: ButtonStyle(
+                                      backgroundColor:
+                                          MaterialStateProperty.all<Color>(
+                                              primaryColor),
+                                      foregroundColor:
+                                          MaterialStateProperty.all<Color>(
+                                              primaryColor),
+                                      textStyle:
+                                          MaterialStateProperty.all<TextStyle>(
+                                        const TextStyle(fontSize: 16),
+                                      ),
+                                      padding:
+                                          MaterialStateProperty.all<EdgeInsets>(
+                                        const EdgeInsets.symmetric(
+                                            horizontal: 16, vertical: 8),
+                                      ),
+                                      shape: MaterialStateProperty.all<
+                                          RoundedRectangleBorder>(
+                                        RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                      ),
+                                    ),
+                                    onPressed: () {},
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(5.0),
+                                      child: Text(
+                                        TextConstant.SetTarget.toUpperCase(),
+                                        style: const TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                    )),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),

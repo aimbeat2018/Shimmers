@@ -143,6 +143,7 @@ class TextConstant {
   static String selectDate = "Select date";
   static String selectTime = "Select time";
   static String reason = "Leave Reason";
+  static String target = "Target";
 
 /* "deviceLocationIsOff": "Device location is off",
   "deviceLocationIsOffSubTitle": "Please enable device location to ensure accurate address and easy delivery",

@@ -16,13 +16,7 @@ class TargetRepo {
     return await apiClient.getData(AppConstants.getEmployeeList);
   }
 
-  Future<Response> getDistributorSalonList({
-    String? latitude,
-    String? longitude,
-  }) async {
-    return await apiClient.postData(
-      AppConstants.getDistributorSalonList,
-      {"latitude": latitude, "longitude": longitude},
-    );
+  Future<Response> getProducts() async {
+    return await apiClient.getData(AppConstants.getProducts);
   }
 }

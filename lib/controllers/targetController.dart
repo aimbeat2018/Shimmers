@@ -1,9 +1,9 @@
 import 'package:get/get.dart';
-import 'package:shimmers/model/distributorSalonListModel.dart';
 import 'package:shimmers/model/employeeListModel.dart';
 import 'package:shimmers/repository/TagetRepo.dart';
 
 import '../constant/route_helper.dart';
+import '../model/productModel.dart';
 
 class TargetController extends GetxController implements GetxService {
   final TargetRepo targetRepo;
@@ -16,7 +16,7 @@ class TargetController extends GetxController implements GetxService {
 
   EmployeeListModel? employeeListModel;
 
-  DistributorSalonListModel? distributorSalonListModel;
+  ProductModel? productModel;
 
   Future<EmployeeListModel?> getEmployeeList() async {
     _isLoading = true;
@@ -35,26 +35,20 @@ class TargetController extends GetxController implements GetxService {
     return employeeListModel;
   }
 
-//
-// Future<DistributorSalonListModel?> getDistributorSalonList({
-//   String? latitude,
-//   String? longitude,
-// }) async {
-//   _isLoading = true;
-//   // update();
-//   Response response = await distributorRepo.getDistributorSalonList(
-//       latitude: latitude, longitude: longitude);
-//
-//   if (response.statusCode == 200) {
-//     distributorSalonListModel =
-//         DistributorSalonListModel.fromJson(response.body);
-//   } else if (response.statusCode == 401) {
-//     Get.offAllNamed(RouteHelper.getLoginRoute());
-//   } else {
-//     distributorSalonListModel = DistributorSalonListModel();
-//   }
-//   _isLoading = false;
-//   update();
-//   return distributorSalonListModel;
-// }
+  Future<ProductModel?> getProducts() async {
+    _isLoading = true;
+    // update();
+    Response response = await targetRepo.getProducts();
+
+    if (response.statusCode == 200) {
+      productModel = ProductModel.fromJson(response.body);
+    } else if (response.statusCode == 401) {
+      Get.offAllNamed(RouteHelper.getLoginRoute());
+    } else {
+      productModel = ProductModel();
+    }
+    _isLoading = false;
+    update();
+    return productModel;
+  }
 }

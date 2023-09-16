@@ -37,6 +37,7 @@ class ProductData {
   String? imageUrl;
   String? downloadFileUrl;
   String? tax;
+  int? target = 0;
 
   ProductData(
       {this.id,
