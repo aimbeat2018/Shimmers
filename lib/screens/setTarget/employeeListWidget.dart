@@ -25,7 +25,7 @@ class _EmployeeListWidgetState extends State<EmployeeListWidget> {
                 )));
       },
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 15.0),
+        padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 10),
         child: Row(
           children: [
             widget.membersModel.imageUrl == ""
