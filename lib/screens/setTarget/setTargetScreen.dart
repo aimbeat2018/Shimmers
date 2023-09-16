@@ -17,8 +17,9 @@ import '../noDataFound/noDataFoundScreen.dart';
 
 class SetTargetScreen extends StatefulWidget {
   static const name = '/setTargetScreen';
+  final String from;
 
-  const SetTargetScreen({Key? key}) : super(key: key);
+  const SetTargetScreen({Key? key, required this.from}) : super(key: key);
 
   @override
   State<SetTargetScreen> createState() => _SetTargetScreenState();
@@ -95,7 +96,9 @@ class _SetTargetScreenState extends State<SetTargetScreen> {
                 backgroundColor: primaryColor,
                 centerTitle: true,
                 title: Text(
-                  TextConstant.SetTarget,
+                  widget.from == "target"
+                      ? TextConstant.SetTarget
+                      : TextConstant.Team,
                   style: const TextStyle(
                       color: Colors.white,
                       fontSize: 16,
@@ -157,6 +160,7 @@ class _SetTargetScreenState extends State<SetTargetScreen> {
                                           (BuildContext context, int index) {
                                         return EmployeeListWidget(
                                           membersModel: _searchResult![index],
+                                          from: widget.from,
                                         );
                                       },
                                       separatorBuilder: (context, index) {
@@ -172,6 +176,7 @@ class _SetTargetScreenState extends State<SetTargetScreen> {
                                           (BuildContext context, int index) {
                                         return EmployeeListWidget(
                                           membersModel: _userDetails![index],
+                                          from: widget.from,
                                         );
                                       },
                                       separatorBuilder: (context, index) {

@@ -6,8 +6,10 @@ import '../../model/employeeListModel.dart';
 
 class EmployeeListWidget extends StatefulWidget {
   final Members membersModel;
+  final String from;
 
-  const EmployeeListWidget({Key? key, required this.membersModel})
+  const EmployeeListWidget(
+      {Key? key, required this.membersModel, required this.from})
       : super(key: key);
 
   @override
@@ -19,10 +21,12 @@ class _EmployeeListWidgetState extends State<EmployeeListWidget> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => SetProductTargetScreen(
-                  membersModel: widget.membersModel,
-                )));
+        if (widget.from == "target") {
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => SetProductTargetScreen(
+                    membersModel: widget.membersModel,
+                  )));
+        }
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 10),

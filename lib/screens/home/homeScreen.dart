@@ -381,7 +381,9 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                       onTap: () => Navigator.of(context).push(
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  SetTargetScreen())),
+                                                  const SetTargetScreen(
+                                                    from: "target",
+                                                  ))),
                                       child: SizedBox(
                                         height: 135,
                                         width: 115,
@@ -492,31 +494,40 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                     child: SizedBox(
                                       height: 135,
                                       width: 115,
-                                      child: Column(
-                                        children: [
-                                          SizedBox(
-                                            height: 20,
-                                          ),
-                                          Image.asset(
-                                            'assets/images/partners.png',
-                                            width: 35,
-                                            height: 35,
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.all(15.0),
-                                            child: Text(
-                                              TextConstant.Team,
-                                              maxLines: 2,
-                                              textAlign: TextAlign.center,
-                                              overflow: TextOverflow.clip,
-                                              style: const TextStyle(
-                                                color: primaryColor,
-                                                fontSize: 13,
-                                                fontWeight: FontWeight.w600,
+                                      child: InkWell(
+                                        onTap: () => Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const SetTargetScreen(
+                                                      from: "team",
+                                                    ))),
+                                        child: Column(
+                                          children: [
+                                            SizedBox(
+                                              height: 20,
+                                            ),
+                                            Image.asset(
+                                              'assets/images/partners.png',
+                                              width: 35,
+                                              height: 35,
+                                            ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(15.0),
+                                              child: Text(
+                                                TextConstant.Team,
+                                                maxLines: 2,
+                                                textAlign: TextAlign.center,
+                                                overflow: TextOverflow.clip,
+                                                style: const TextStyle(
+                                                  color: primaryColor,
+                                                  fontSize: 13,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),
