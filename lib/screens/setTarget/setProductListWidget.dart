@@ -34,7 +34,7 @@ class _EmployeeListWidgetState extends State<SetProductListWidget> {
                   width: 50,
                 ),
           const SizedBox(
-            width: 15,
+            width: 25,
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,

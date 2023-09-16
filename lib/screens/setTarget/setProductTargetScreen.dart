@@ -174,6 +174,9 @@ class _SetProductTargetScreenState extends State<SetProductTargetScreen> {
                                         return const Divider();
                                       },
                                     ),
+                      SizedBox(
+                        height: 20,
+                      ),
                       Align(
                         alignment: Alignment.bottomCenter,
                         child: Padding(
