@@ -12,8 +12,8 @@ class TargetRepo {
 
   TargetRepo({required this.apiClient, required this.sharedPreferences});
 
-  Future<Response> getDistributorList() async {
-    return await apiClient.getData(AppConstants.getDistributorList);
+  Future<Response> getEmployeeList() async {
+    return await apiClient.getData(AppConstants.getEmployeeList);
   }
 
   Future<Response> getDistributorSalonList({

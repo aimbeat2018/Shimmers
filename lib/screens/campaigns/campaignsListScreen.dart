@@ -45,58 +45,29 @@ class _CampaignsListScreenState extends State<CampaignsListScreen> {
                 color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
           ),
         ),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 25),
-            child: Column(
-              children: [
-                // TextFormField(
-                //   style: const TextStyle(fontSize: 14),
-                //   decoration: const InputDecoration(
-                //       enabledBorder: OutlineInputBorder(
-                //         borderRadius: BorderRadius.all(Radius.circular(12.0)),
-                //         borderSide: BorderSide(color: primaryColor, width: 1),
-                //       ),
-                //       focusedBorder: OutlineInputBorder(
-                //         borderRadius: BorderRadius.all(Radius.circular(12.0)),
-                //         borderSide: BorderSide(color: primaryColor, width: 1),
-                //       ),
-                //       contentPadding:
-                //           EdgeInsets.symmetric(vertical: 15, horizontal: 15),
-                //       suffixIcon: Icon(
-                //         CupertinoIcons.search,
-                //         size: 28,
-                //       )),
-                //   keyboardType: TextInputType.text,
-                // ),
-                // SizedBox(
-                //   height: 30,
-                // ),
-                campaignController.isLoading &&
-                        campaignController.campaignListModel == null
-                    ? const Center(
-                        child: CircularProgressIndicator(),
-                      )
-                    : campaignController.campaignListModel!.data!.isEmpty
-                        ? Center(
-                            child: NoDataFoundScreen(),
-                          )
-                        : ListView.builder(
-                            physics: const NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            itemCount: campaignController
-                                .campaignListModel!.data!.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return CampaignsListWidget(
-                                model: campaignController
-                                    .campaignListModel!.data![index],
-                              );
-                            },
-                          ),
-              ],
-            ),
-          ),
-        ),
+        body: campaignController.isLoading &&
+                campaignController.campaignListModel == null
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : campaignController.campaignListModel!.data == null
+                ? Center(
+                    child: SizedBox(
+                        height: MediaQuery.of(context).size.height,
+                        width: MediaQuery.of(context).size.width,
+                        child: const NoDataFoundScreen()))
+                : ListView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount:
+                        campaignController.campaignListModel!.data!.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return CampaignsListWidget(
+                        model:
+                            campaignController.campaignListModel!.data![index],
+                      );
+                    },
+                  ),
       );
     });
   }

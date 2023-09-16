@@ -143,4 +143,9 @@ class TextConstant {
   static String selectDate = "Select date";
   static String selectTime = "Select time";
   static String reason = "Leave Reason";
+
+/* "deviceLocationIsOff": "Device location is off",
+  "deviceLocationIsOffSubTitle": "Please enable device location to ensure accurate address and easy delivery",
+  "deviceLocationOffSubTitle": "Please enable location permission to access data go to setting to turn on location permission",
+  "deviceLocationOffPermission": "eRestro collects location data to enable location tracking when the app is open or in use.",*/
 }

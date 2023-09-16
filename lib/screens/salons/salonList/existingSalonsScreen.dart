@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import '../../../constant/colorsConstant.dart';
 import '../../../constant/textConstant.dart';
 import '../../../controllers/salonController.dart';
+import '../../noDataFound/noDataFoundScreen.dart';
 import '../addSalon/addSalonBasicDetailsScreen.dart';
 import 'listWidget/locationSalonsWidget.dart';
 
@@ -179,21 +180,32 @@ class _ExistingSalonsScreenState extends State<ExistingSalonsScreen> {
                 ),
                 salonController.isLoading ||
                         salonController.salonRouteModel == null
-                    ? const Center(
-                        child: CircularProgressIndicator(),
+                    ? SizedBox(
+                        height: MediaQuery.of(context).size.height / 1.5,
+                        width: MediaQuery.of(context).size.width,
+                        child: const Center(
+                          child: CircularProgressIndicator(),
+                        ),
                       )
-                    : ListView.builder(
-                        physics: const NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount: salonController
-                            .salonRouteModel!.salonRouteData!.salons!.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return LocationSalonsWidget(
-                            model: salonController.salonRouteModel!
-                                .salonRouteData!.salons![index],
-                            position: index,
-                          );
-                        })
+                    : salonController.salonRouteModel!.salonRouteData == null
+                        ? Center(
+                            child: SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height / 1.5,
+                                width: MediaQuery.of(context).size.width,
+                                child: const NoDataFoundScreen()))
+                        : ListView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: salonController.salonRouteModel!
+                                .salonRouteData!.salons!.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return LocationSalonsWidget(
+                                model: salonController.salonRouteModel!
+                                    .salonRouteData!.salons![index],
+                                position: index,
+                              );
+                            })
               ],
             ),
           ),

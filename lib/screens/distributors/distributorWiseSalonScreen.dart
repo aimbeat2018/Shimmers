@@ -128,37 +128,36 @@ class _DistributorWiseSalonScreenState
                 color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
           ),
         ),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 25),
-          child: distributorController.isLoading &&
-                  distributorController.distributorSalonListModel == null
-              ? const Center(
-                  child: CircularProgressIndicator(),
-                )
-              : distributorController.distributorSalonListModel == null ||
-                      distributorController
-                          .distributorSalonListModel!.data!.isEmpty
-                  ? const Center(child: NoDataFoundScreen())
-                  : ListView.separated(
-                      physics: const AlwaysScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: distributorController
-                          .distributorSalonListModel!.data![0].salons!.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return DistributorSalonListWidget(
-                          model: distributorController
-                              .distributorSalonListModel!
-                              .data![0]
-                              .salons![index],
-                        );
-                      },
-                      separatorBuilder: (context, index) {
-                        return Divider(
-                          color: primaryColor.withOpacity(0.5),
-                        );
-                      },
-                    ),
-        ),
+        body: distributorController.isLoading &&
+                distributorController.distributorSalonListModel == null
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : distributorController.distributorSalonListModel!.data == null ||
+                    distributorController
+                        .distributorSalonListModel!.data!.isEmpty
+                ? Center(
+                    child: SizedBox(
+                        height: MediaQuery.of(context).size.height,
+                        width: MediaQuery.of(context).size.width,
+                        child: const NoDataFoundScreen()))
+                : ListView.separated(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: distributorController
+                        .distributorSalonListModel!.data![0].salons!.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return DistributorSalonListWidget(
+                        model: distributorController
+                            .distributorSalonListModel!.data![0].salons![index],
+                      );
+                    },
+                    separatorBuilder: (context, index) {
+                      return Divider(
+                        color: primaryColor.withOpacity(0.5),
+                      );
+                    },
+                  ),
       );
     });
   }
