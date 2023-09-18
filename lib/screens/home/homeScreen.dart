@@ -8,6 +8,7 @@ import 'package:shimmers/model/profileModel.dart';
 import 'package:shimmers/screens/campaigns/campaignsListScreen.dart';
 import 'package:shimmers/screens/distributors/distributorsScreen.dart';
 import 'package:shimmers/screens/salons/salonList/salonListScreen.dart';
+import 'package:shimmers/screens/scoreCard/scoreCardScreen.dart';
 import 'package:shimmers/screens/setTarget/setTargetScreen.dart';
 import 'package:shimmers/screens/tourVisit/tourVisitScreen.dart';
 
@@ -454,30 +455,40 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                     child: SizedBox(
                                       height: 135,
                                       width: 115,
-                                      child: Column(
-                                        children: [
-                                          SizedBox(
-                                            height: 20,
-                                          ),
-                                          Image.asset(
-                                            'assets/images/student-grades.png',
-                                            width: 35,
-                                            height: 35,
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.all(15.0),
-                                            child: Text(
-                                              TextConstant.ScoreCardAnalytics,
-                                              maxLines: 2,
-                                              textAlign: TextAlign.center,
-                                              overflow: TextOverflow.clip,
-                                              style: const TextStyle(
-                                                  color: primaryColor,
-                                                  fontSize: 13,
-                                                  fontWeight: FontWeight.w600),
+                                      child: InkWell(
+                                        onTap: () => Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const ScoreCardScreen(
+                                                      from: "home",
+                                                    ))),
+                                        child: Column(
+                                          children: [
+                                            SizedBox(
+                                              height: 20,
                                             ),
-                                          ),
-                                        ],
+                                            Image.asset(
+                                              'assets/images/student-grades.png',
+                                              width: 35,
+                                              height: 35,
+                                            ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(15.0),
+                                              child: Text(
+                                                TextConstant.ScoreCardAnalytics,
+                                                maxLines: 2,
+                                                textAlign: TextAlign.center,
+                                                overflow: TextOverflow.clip,
+                                                style: const TextStyle(
+                                                    color: primaryColor,
+                                                    fontSize: 13,
+                                                    fontWeight:
+                                                        FontWeight.w600),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),
