@@ -176,4 +176,16 @@ class SalonRepo {
       "requirement": requirement
     });
   }
+  Future<Response> salonWisePunchIn(
+      {String? salonid,
+        String? lat,
+        String? long,
+        String? address}) async {
+    return await apiClient.postData(AppConstants.salonwiseLogin, {
+      "salon_id": salonid,
+      "lat":lat,
+      "long": long,
+      "address": address
+    });
+  }
 }

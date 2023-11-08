@@ -45,6 +45,7 @@ class SalonDetails {
   List<SalonNotes>? salonNotes;
   int? scheduledCalls;
   String? imageUrl;
+  int? is_clockin;
 
   SalonDetails(
       {this.id,
@@ -74,7 +75,8 @@ class SalonDetails {
       this.subCategoryName,
       this.salonNotes,
       this.scheduledCalls,
-      this.imageUrl});
+      this.imageUrl,
+      this.is_clockin});
 
   SalonDetails.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -110,6 +112,7 @@ class SalonDetails {
     }
     scheduledCalls = json['scheduled_calls'];
     imageUrl = json['image_url'];
+    is_clockin = json['is_clockin'];
   }
 
   Map<String, dynamic> toJson() {
@@ -144,6 +147,7 @@ class SalonDetails {
     }
     data['scheduled_calls'] = scheduledCalls;
     data['image_url'] = imageUrl;
+    data['is_clockin'] = is_clockin;
     return data;
   }
 }

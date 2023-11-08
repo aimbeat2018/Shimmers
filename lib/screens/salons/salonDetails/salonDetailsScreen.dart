@@ -17,6 +17,10 @@ import '../../../constant/no_internet_screen.dart';
 import '../../../constant/textConstant.dart';
 import '../../../controllers/salonController.dart';
 import '../../salonsActivity/addFeedbackScreen.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
+import '../../constant/custom_snackbar.dart';
+
 
 class SalonDetailsScreen extends StatefulWidget {
   static const String name = 'salonDetailsScreen';
@@ -34,6 +38,9 @@ class _SalonDetailsScreenState extends State<SalonDetailsScreen> {
   String _connectionStatus = 'unKnown';
   final Connectivity _connectivity = Connectivity();
   late StreamSubscription<ConnectivityResult> _connectivitySubscription;
+  Position? _currentPosition;
+  String? _currentAddress;
+  double? lat, longi;
 
   @override
   void initState() {
@@ -51,8 +58,84 @@ class _SalonDetailsScreenState extends State<SalonDetailsScreen> {
     if (mounted) {
       Future.delayed(Duration.zero, () async {
         Get.find<SalonController>().getSalonDetails(widget.salonId);
+        _getCurrentPosition();
       });
     }
+  }
+
+  Future<void> _getCurrentPosition() async {
+    final hasPermission = await _handleLocationPermission();
+
+    if (!hasPermission) return;
+    await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
+        .then((Position position) {
+      _currentPosition = position;
+      if (mounted) {
+        setState(() {});
+      }
+      // setState(() {});
+      _getAddressFromLatLng(_currentPosition!);
+    }).catchError((e) {
+      debugPrint(e!);
+    });
+  }
+
+  Future<bool> _handleLocationPermission() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text(
+              'Location services are disabled. Please enable the services')));
+      return false;
+    }
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      // openAppSettings();
+      // if (permission == LocationPermission.denied) {
+      //   ScaffoldMessenger.of(context).showSnackBar(
+      //       const SnackBar(content: Text('Location permissions are denied')));
+      //   return false;
+      // }
+    }
+    if (permission == LocationPermission.deniedForever) {
+      // ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      //     content: Text(
+      //         'Location permissions are permanently denied, we cannot request permissions.')));
+
+      // setState(() async {
+      permission = await Geolocator.requestPermission();
+      // });
+
+      // openAppSettings();
+
+      // return false;
+    }
+    return true;
+  }
+
+  Future<void> _getAddressFromLatLng(Position position) async {
+    await placemarkFromCoordinates(
+            _currentPosition!.latitude, _currentPosition!.longitude)
+        .then((List<Placemark> placemarks) {
+      Placemark place = placemarks[0];
+      lat = _currentPosition!.latitude;
+      longi = _currentPosition!.longitude;
+      /*, ${place.subAdministrativeArea}*/
+      _currentAddress = ' ${place.locality}, ${place.postalCode}';
+      // locationController.text = _currentAddress!;
+      // isLoaded = true;
+
+      print(lat.toString() + longi.toString());
+      if (mounted) {
+        setState(() {});
+      }
+    }).catchError((e) {
+      debugPrint(e);
+    });
   }
 
   @override
@@ -64,7 +147,6 @@ class _SalonDetailsScreenState extends State<SalonDetailsScreen> {
               backgroundColor: kBackgroundColor,
               appBar: AppBar(
                 backgroundColor: primaryColor,
-                centerTitle: true,
                 title: Text(
                   TextConstant.Salon,
                   style: const TextStyle(
@@ -72,6 +154,81 @@ class _SalonDetailsScreenState extends State<SalonDetailsScreen> {
                       fontSize: 16,
                       fontWeight: FontWeight.bold),
                 ),
+                actions: [
+                  Center(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10.0, vertical: 10),
+                      child: InkWell(
+                        onTap: () {
+                          if (salonController.salonDetailsModel != null) {
+                            if (salonController
+                                    .salonDetailsModel!.data!.is_clockin ==
+                                1) {
+                              Get.find<SalonController>()
+                                  .salonwiseLogin(
+                                      salonid: widget.salonId,
+                                      lat: lat.toString(),
+                                      long: longi.toString(),
+                                      address: _currentAddress)
+                                  .then((value) async {
+                                if (value == 'Clock-out successfully.') {
+                                  setState(() {
+                                    salonController.salonDetailsModel!.data!
+                                        .is_clockin = 0;
+                                  });
+                                }
+                              });
+                            } else {
+                              Get.find<SalonController>()
+                                  .salonwiseLogin(
+                                      salonid: widget.salonId,
+                                      lat: lat.toString(),
+                                      long: longi.toString(),
+                                      address: _currentAddress)
+                                  .then((value) async {
+                                if (value == 'Clock-in successfully.') {
+                                  setState(() {
+                                    salonController.salonDetailsModel!.data!
+                                        .is_clockin = 1;
+                                  });
+                                }
+                              });
+                            }
+                          } else {
+                            Get.find<SalonController>()
+                                .salonwiseLogin(
+                                    salonid: widget.salonId,
+                                    lat: lat.toString(),
+                                    long: longi.toString(),
+                                    address: _currentAddress)
+                                .then((value) async {
+                              if (value == 'Clock-in successfully.') {
+                                setState(() {
+                                  salonController
+                                      .salonDetailsModel!.data!.is_clockin = 1;
+                                });
+                              }
+                            });
+                          }
+                        },
+                        child: Text(
+                          salonController.salonDetailsModel == null
+                              ? TextConstant.punchIn
+                              : salonController.salonDetailsModel!.data!
+                                          .is_clockin ==
+                                      1
+                                  ? TextConstant.punchOut
+                                  : TextConstant.punchIn,
+                          style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
               body: salonController.isLoading ||
                       salonController.salonDetailsModel == null
@@ -242,14 +399,22 @@ class _SalonDetailsScreenState extends State<SalonDetailsScreen> {
                                               MainAxisAlignment.spaceBetween,
                                           children: [
                                             InkWell(
-                                              onTap: () => Navigator.of(context)
-                                                  .push(MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          DemoListScreen(
-                                                            model: salonController
-                                                                .salonDetailsModel!
-                                                                .data!,
-                                                          ))),
+                                              onTap: salonController
+                                                      .salonDetailsModel!.data!.is_clockin ==
+                                                  0
+                                                      ? showCustomSnackBar(
+                                                          "Please Punch In First",
+                                                          isError: true)
+                                                      : () => Navigator.of(
+                                                              context)
+                                                          .push(
+                                                              MaterialPageRoute(
+                                                                  builder:
+                                                                      (context) =>
+                                                                          DemoListScreen(
+                                                                            model:
+                                                                                salonController.salonDetailsModel!.data!,
+                                                                          ))),
                                               child: Column(
                                                 children: [
                                                   Image.asset(

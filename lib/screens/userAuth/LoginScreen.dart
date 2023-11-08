@@ -192,7 +192,6 @@ class LoginScreenState extends State<LoginScreen> {
             );
           });
   }
-
   void _submit(String? mobile, AuthController authController) {
     authController.checkEmail(mobile).then((model) async {
       if (model!.success!) {
@@ -206,4 +205,5 @@ class LoginScreenState extends State<LoginScreen> {
     // Navigator.of(context)
     //     .push(MaterialPageRoute(builder: (context) => PasswordScreen()));
   }
+
 }

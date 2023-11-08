@@ -56,6 +56,8 @@ class SalonController extends GetxController implements GetxService {
 
   int? get cartIndex => _cartIndex;
 
+  String? punchInMsg;
+
   Future<SalonRouteModel?> getSalonRouteList(
       {String? latitude, String? longitude, String? type}) async {
     _isLoading = true;
@@ -461,5 +463,31 @@ class SalonController extends GetxController implements GetxService {
       _quantity = _quantity! - 1;
     }
     update();
+  }
+  Future<String?> salonwiseLogin(
+      { String? salonid,
+        String? lat,
+        String? long,
+        String? address}) async {
+    _isLoading = true;
+    update();
+
+    Response response = await salonRepo.salonWisePunchIn(
+        salonid:salonid,
+        lat: lat,
+        long: long,
+        address: address);
+
+    if (response.statusCode == 200) {
+      punchInMsg = response.body['message'];
+    } else if (response.statusCode == 401) {
+      Get.offAllNamed(RouteHelper.getLoginRoute());
+    } else {
+      punchInMsg = "";
+    }
+
+    _isLoading = false;
+    update();
+    return punchInMsg;
   }
 }
