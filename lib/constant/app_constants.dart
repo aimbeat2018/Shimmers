@@ -37,6 +37,8 @@ class AppConstants {
   static const String getEmployeeCampaignResponse = 'get/campaign/answers/list';
   static const String getEmployeeList = 'get/employee/team/members';
   static const String salonwiseLogin='salonwise/login';
+  static const String gettourrequestlist='get/tour/request/list';
+
 
   // Shared Key
   static const String token = 'token';

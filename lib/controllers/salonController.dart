@@ -469,7 +469,7 @@ class SalonController extends GetxController implements GetxService {
         String? lat,
         String? long,
         String? address}) async {
-    _isLoading = true;
+    _isLoading = false;//made it false to avoid loading
     update();
 
     Response response = await salonRepo.salonWisePunchIn(

@@ -49,7 +49,7 @@ class AuthController extends GetxController implements GetxService {
     if (response.statusCode == 200) {
       loginModel = LoginModel.fromJson(response.body);
       authRepo.saveUserToken(loginModel!.token!);
-      authRepo.saveUserRole(loginModel!.roleId!.toString());
+      authRepo.saveUserRole(loginModel!.roleName!.toString());
       authRepo.saveUserId(loginModel!.userId!.toString());
     } else {
       loginModel = LoginModel();
@@ -116,7 +116,9 @@ class AuthController extends GetxController implements GetxService {
   String getUserId() {
     return authRepo.getUserId();
   }
-
+  String getUserRole(){
+    return authRepo.getUserRole();
+  }
   bool clearSharedData() {
     return authRepo.clearSharedData();
   }

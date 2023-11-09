@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:shimmers/constant/custom_snackbar.dart';
 import 'package:shimmers/model/profileModel.dart';
 import 'package:shimmers/screens/campaigns/campaignsListScreen.dart';
 import 'package:shimmers/screens/distributors/distributorsScreen.dart';
@@ -25,13 +26,14 @@ class HomeScreen extends StatefulWidget {
 class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   ProfileModel? model;
   String username = 'Guest';
+  String userRole = '';
 
   @override
   void initState() {
     super.initState();
     _handleLocationPermission();
     // _getCurrentPosition();
-
+    userRole = Get.find<AuthController>().getUserRole();
     // _checkGps();
     if (mounted) {
       Future.delayed(Duration.zero, () async {
@@ -216,8 +218,16 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             Center(
                               child: InkWell(
                                 onTap: () {
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (context) => SalonListScreen()));
+                                  if (userRole == 'TRF Executive') {
+                                    showCustomSnackBar(
+                                        'You dont have the permission to use this module',
+                                        isError: true);
+                                  } else {
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                SalonListScreen()));
+                                  }
                                 },
                                 child: SizedBox(
                                   height: 135,
@@ -254,9 +264,16 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             Center(
                               child: InkWell(
                                 onTap: () {
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (context) =>
-                                          DistributorsScreen()));
+                                  if (userRole == 'TRF Executive') {
+                                    showCustomSnackBar(
+                                        'You dont have the permission to use this module',
+                                        isError: true);
+                                  } else {
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                DistributorsScreen()));
+                                  }
                                 },
                                 child: SizedBox(
                                   height: 135,
@@ -293,9 +310,16 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             Center(
                               child: InkWell(
                                 onTap: () {
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (context) =>
-                                          CampaignsListScreen()));
+                                  if (userRole == 'TRF Executive') {
+                                    showCustomSnackBar(
+                                        'You dont have the permission to use this module',
+                                        isError: true);
+                                  } else {
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                CampaignsListScreen()));
+                                  }
                                 },
                                 child: SizedBox(
                                   height: 135,
@@ -338,10 +362,20 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                           children: [
                             Center(
                               child: InkWell(
-                                onTap: () => Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            SetTargetScreen(from: 'target',))),
+                                onTap: () {
+                                  if (userRole == 'TRF Executive') {
+                                    showCustomSnackBar(
+                                        'You dont have the permission to use this module',
+                                        isError: true);
+                                  } else {
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                SetTargetScreen(
+                                                  from: 'target',
+                                                )));
+                                  }
+                                },
                                 child: SizedBox(
                                   height: 135,
                                   width: 115,
@@ -375,65 +409,93 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             ),
                             VerticalDivider(),
                             Center(
-                              child: SizedBox(
-                                height: 135,
-                                width: 115,
-                                child: Column(
-                                  children: [
-                                    SizedBox(
-                                      height: 20,
-                                    ),
-                                    Image.asset(
-                                      'assets/images/mobile.png',
-                                      width: 35,
-                                      height: 35,
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(15.0),
-                                      child: Text(
-                                        TextConstant.Activity,
-                                        maxLines: 2,
-                                        textAlign: TextAlign.center,
-                                        overflow: TextOverflow.clip,
-                                        style: const TextStyle(
-                                            color: primaryColor,
-                                            fontSize: 13,
-                                            fontWeight: FontWeight.w600),
+                              child: InkWell(
+                                onTap: (){
+                                  if (userRole == 'TRF Executive') {
+                                    showCustomSnackBar(
+                                        'You dont have the permission to use this module',
+                                        isError: true);
+                                  } else {
+                                    //Call activity screen here
+                                    /*Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                SetTargetScreen(
+                                                  from: 'target',
+                                                )));*/
+                                  }
+                              },
+                                child: SizedBox(
+                                  height: 135,
+                                  width: 115,
+                                  child: Column(
+                                    children: [
+                                      SizedBox(
+                                        height: 20,
                                       ),
-                                    ),
-                                  ],
+                                      Image.asset(
+                                        'assets/images/mobile.png',
+                                        width: 35,
+                                        height: 35,
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(15.0),
+                                        child: Text(
+                                          TextConstant.Activity,
+                                          maxLines: 2,
+                                          textAlign: TextAlign.center,
+                                          overflow: TextOverflow.clip,
+                                          style: const TextStyle(
+                                              color: primaryColor,
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.w600),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
                             VerticalDivider(),
                             Center(
-                              child: SizedBox(
-                                height: 135,
-                                width: 115,
-                                child: Column(
-                                  children: [
-                                    SizedBox(
-                                      height: 20,
-                                    ),
-                                    Image.asset(
-                                      'assets/images/student-grades.png',
-                                      width: 35,
-                                      height: 35,
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(15.0),
-                                      child: Text(
-                                        TextConstant.ScoreCardAnalytics,
-                                        maxLines: 2,
-                                        textAlign: TextAlign.center,
-                                        overflow: TextOverflow.clip,
-                                        style: const TextStyle(
-                                            color: primaryColor,
-                                            fontSize: 13,
-                                            fontWeight: FontWeight.w600),
+                              child: InkWell(
+                                onTap: (){
+                                  if (userRole == 'TRF Executive') {
+                                    showCustomSnackBar(
+                                        'You dont have the permission to use this module',
+                                        isError: true);
+                                  } else {
+                                   //Go score page
+                                  }
+                                },
+                                child: SizedBox(
+                                  height: 135,
+                                  width: 115,
+                                  child: Column(
+                                    children: [
+                                      SizedBox(
+                                        height: 20,
                                       ),
-                                    ),
-                                  ],
+                                      Image.asset(
+                                        'assets/images/student-grades.png',
+                                        width: 35,
+                                        height: 35,
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(15.0),
+                                        child: Text(
+                                          TextConstant.ScoreCardAnalytics,
+                                          maxLines: 2,
+                                          textAlign: TextAlign.center,
+                                          overflow: TextOverflow.clip,
+                                          style: const TextStyle(
+                                              color: primaryColor,
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.w600),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
@@ -446,34 +508,45 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Center(
-                              child: SizedBox(
-                                height: 135,
-                                width: 115,
-                                child: Column(
-                                  children: [
-                                    SizedBox(
-                                      height: 20,
-                                    ),
-                                    Image.asset(
-                                      'assets/images/partners.png',
-                                      width: 35,
-                                      height: 35,
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(15.0),
-                                      child: Text(
-                                        TextConstant.Team,
-                                        maxLines: 2,
-                                        textAlign: TextAlign.center,
-                                        overflow: TextOverflow.clip,
-                                        style: const TextStyle(
-                                          color: primaryColor,
-                                          fontSize: 13,
-                                          fontWeight: FontWeight.w600,
+                              child: InkWell(
+                                onTap: (){
+                                  if (userRole == 'TRF Executive') {
+                                    showCustomSnackBar(
+                                        'You dont have the permission to use this module',
+                                        isError: true);
+                                  } else {
+                                    //Go team page
+                                  }
+                                },
+                                child: SizedBox(
+                                  height: 135,
+                                  width: 115,
+                                  child: Column(
+                                    children: [
+                                      SizedBox(
+                                        height: 20,
+                                      ),
+                                      Image.asset(
+                                        'assets/images/partners.png',
+                                        width: 35,
+                                        height: 35,
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(15.0),
+                                        child: Text(
+                                          TextConstant.Team,
+                                          maxLines: 2,
+                                          textAlign: TextAlign.center,
+                                          overflow: TextOverflow.clip,
+                                          style: const TextStyle(
+                                            color: primaryColor,
+                                            fontSize: 13,
+                                            fontWeight: FontWeight.w600,
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
@@ -483,7 +556,7 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                 onTap: () => Navigator.of(context).push(
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            TourVisitScreen())),
+                                            TourListScreen())),
                                 child: SizedBox(
                                   height: 135,
                                   width: 115,
@@ -517,32 +590,43 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             ),
                             VerticalDividerFadeDown(),
                             Center(
-                              child: SizedBox(
-                                height: 135,
-                                width: 115,
-                                child: Column(
-                                  children: [
-                                    SizedBox(
-                                      height: 20,
-                                    ),
-                                    Image.asset(
-                                      'assets/images/list.png',
-                                      width: 35,
-                                      height: 35,
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(15.0),
-                                      child: Text(
-                                        TextConstant.NCE,
-                                        maxLines: 1,
-                                        overflow: TextOverflow.clip,
-                                        style: const TextStyle(
-                                            color: primaryColor,
-                                            fontSize: 13,
-                                            fontWeight: FontWeight.w600),
+                              child: InkWell(
+                                onTap: (){
+                                  if (userRole == 'TRF Executive') {
+                                    showCustomSnackBar(
+                                        'You dont have the permission to use this module',
+                                        isError: true);
+                                  } else {
+                                    //Go nca page
+                                  }
+                                },
+                                child: SizedBox(
+                                  height: 135,
+                                  width: 115,
+                                  child: Column(
+                                    children: [
+                                      SizedBox(
+                                        height: 20,
                                       ),
-                                    ),
-                                  ],
+                                      Image.asset(
+                                        'assets/images/list.png',
+                                        width: 35,
+                                        height: 35,
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(15.0),
+                                        child: Text(
+                                          TextConstant.NCE,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.clip,
+                                          style: const TextStyle(
+                                              color: primaryColor,
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.w600),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),

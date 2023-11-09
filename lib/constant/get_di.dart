@@ -14,7 +14,9 @@ import 'package:shimmers/repository/distributorRepo.dart';
 import 'package:shimmers/repository/salonRepo.dart';
 
 import '../controllers/authController.dart';
+import '../controllers/tourController.dart';
 import '../repository/authRepo.dart';
+import '../repository/tourRepo.dart';
 import 'api/api_client.dart';
 import 'app_constants.dart';
 
@@ -40,6 +42,8 @@ Future<void> init() async {
   Get.lazyPut(
       () => TargetRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
   Get.lazyPut(() => CartRepo(sharedPreferences: Get.find()));
+  Get.lazyPut(() => TourRepo(apiClient: Get.find(),sharedPreferences: Get.find()));
+
 
   // Controller
   Get.lazyPut(() => AuthController(authRepo: Get.find()));
@@ -49,4 +53,6 @@ Future<void> init() async {
   Get.lazyPut(() => DistributorController(distributorRepo: Get.find()));
   Get.lazyPut(() => CampaignController(campaignRepo: Get.find()));
   Get.lazyPut(() => TargetController(targetRepo: Get.find()));
+  Get.lazyPut(() => TourController(tourRepo: Get.find()));
+
 }

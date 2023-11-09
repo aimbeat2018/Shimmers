@@ -12,6 +12,7 @@ import 'package:shimmers/screens/salonsActivity/takeOrder/productListScreen.dart
 
 import '../../../constant/app_constants.dart';
 import '../../../constant/colorsConstant.dart';
+import '../../../constant/custom_snackbar.dart';
 import '../../../constant/internetConnectivity.dart';
 import '../../../constant/no_internet_screen.dart';
 import '../../../constant/textConstant.dart';
@@ -19,8 +20,6 @@ import '../../../controllers/salonController.dart';
 import '../../salonsActivity/addFeedbackScreen.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
-import '../../constant/custom_snackbar.dart';
-
 
 class SalonDetailsScreen extends StatefulWidget {
   static const String name = 'salonDetailsScreen';
@@ -147,12 +146,30 @@ class _SalonDetailsScreenState extends State<SalonDetailsScreen> {
               backgroundColor: kBackgroundColor,
               appBar: AppBar(
                 backgroundColor: primaryColor,
+                automaticallyImplyLeading: false,
                 title: Text(
                   TextConstant.Salon,
                   style: const TextStyle(
                       color: Colors.white,
                       fontSize: 16,
                       fontWeight: FontWeight.bold),
+                ),
+                leading: InkWell(
+                  onTap: (){
+                    if (salonController
+                        .salonDetailsModel!
+                        .data!
+                        .is_clockin ==
+                        1) {
+                      showCustomSnackBar(
+                          "Please Punch Out To Go Back",
+                          isError: true);
+                    }
+                    else{
+                      Navigator.pop(context);
+                    }
+                  },
+                    child: Icon(Icons.arrow_back)
                 ),
                 actions: [
                   Center(
@@ -399,22 +416,26 @@ class _SalonDetailsScreenState extends State<SalonDetailsScreen> {
                                               MainAxisAlignment.spaceBetween,
                                           children: [
                                             InkWell(
-                                              onTap: salonController
-                                                      .salonDetailsModel!.data!.is_clockin ==
-                                                  0
-                                                      ? showCustomSnackBar(
-                                                          "Please Punch In First",
-                                                          isError: true)
-                                                      : () => Navigator.of(
-                                                              context)
-                                                          .push(
-                                                              MaterialPageRoute(
-                                                                  builder:
-                                                                      (context) =>
-                                                                          DemoListScreen(
-                                                                            model:
-                                                                                salonController.salonDetailsModel!.data!,
-                                                                          ))),
+                                              onTap: () {
+                                                if (salonController
+                                                        .salonDetailsModel!
+                                                        .data!
+                                                        .is_clockin ==
+                                                    0) {
+                                                  showCustomSnackBar(
+                                                      "Please Punch In First",
+                                                      isError: true);
+                                                } else {
+                                                  Navigator.of(context).push(
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              DemoListScreen(
+                                                                model: salonController
+                                                                    .salonDetailsModel!
+                                                                    .data!,
+                                                              )));
+                                                }
+                                              },
                                               child: Column(
                                                 children: [
                                                   Image.asset(
@@ -437,13 +458,25 @@ class _SalonDetailsScreenState extends State<SalonDetailsScreen> {
                                               ),
                                             ),
                                             InkWell(
-                                              onTap: () => Navigator.of(context)
-                                                  .push(MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          ProductListScreen(
-                                                            model: salonController
-                                                                .salonDetailsModel!,
-                                                          ))),
+                                              onTap: () {
+                                                if (salonController
+                                                        .salonDetailsModel!
+                                                        .data!
+                                                        .is_clockin ==
+                                                    0) {
+                                                  showCustomSnackBar(
+                                                      "Please Punch In First",
+                                                      isError: true);
+                                                } else {
+                                                  Navigator.of(context).push(
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              ProductListScreen(
+                                                                model: salonController
+                                                                    .salonDetailsModel!,
+                                                              )));
+                                                }
+                                              },
                                               child: Column(
                                                 children: [
                                                   Image.asset(
@@ -466,23 +499,35 @@ class _SalonDetailsScreenState extends State<SalonDetailsScreen> {
                                               ),
                                             ),
                                             InkWell(
-                                              onTap: () => Navigator.of(context)
-                                                  .push(MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          AddFeedBackScreen(
-                                                            salonId:
-                                                                widget.salonId,
-                                                            salonName:
-                                                                salonController
-                                                                    .salonDetailsModel!
-                                                                    .data!
-                                                                    .name!,
-                                                            salonAddress:
-                                                                salonController
-                                                                    .salonDetailsModel!
-                                                                    .data!
-                                                                    .address!,
-                                                          ))),
+                                              onTap: () {
+                                                if (salonController
+                                                        .salonDetailsModel!
+                                                        .data!
+                                                        .is_clockin ==
+                                                    0) {
+                                                  showCustomSnackBar(
+                                                      "Please Punch In First",
+                                                      isError: true);
+                                                } else {
+                                                  Navigator.of(context).push(
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              AddFeedBackScreen(
+                                                                salonId: widget
+                                                                    .salonId,
+                                                                salonName:
+                                                                    salonController
+                                                                        .salonDetailsModel!
+                                                                        .data!
+                                                                        .name!,
+                                                                salonAddress:
+                                                                    salonController
+                                                                        .salonDetailsModel!
+                                                                        .data!
+                                                                        .address!,
+                                                              )));
+                                                }
+                                              },
                                               child: Column(
                                                 children: [
                                                   Image.asset(
@@ -514,23 +559,35 @@ class _SalonDetailsScreenState extends State<SalonDetailsScreen> {
                                               MainAxisAlignment.spaceBetween,
                                           children: [
                                             InkWell(
-                                              onTap: () => Navigator.of(context)
-                                                  .push(MaterialPageRoute(
+                                              onTap: () {
+                                                if (salonController
+                                                    .salonDetailsModel!
+                                                    .data!
+                                                    .is_clockin ==
+                                                    0) {
+                                                  showCustomSnackBar(
+                                                      "Please Punch In First",
+                                                      isError: true);
+                                                } else {
+                                                  Navigator.of(context)
+                                                      .push(MaterialPageRoute(
                                                       builder: (context) =>
                                                           CollectPaymentScreen(
                                                             salonId:
-                                                                widget.salonId,
+                                                            widget.salonId,
                                                             salonName:
-                                                                salonController
-                                                                    .salonDetailsModel!
-                                                                    .data!
-                                                                    .name!,
+                                                            salonController
+                                                                .salonDetailsModel!
+                                                                .data!
+                                                                .name!,
                                                             salonAddress:
-                                                                salonController
-                                                                    .salonDetailsModel!
-                                                                    .data!
-                                                                    .address!,
-                                                          ))),
+                                                            salonController
+                                                                .salonDetailsModel!
+                                                                .data!
+                                                                .address!,
+                                                          )));
+                                                }
+                                              },
                                               child: Column(
                                                 children: [
                                                   Image.asset(
@@ -554,23 +611,34 @@ class _SalonDetailsScreenState extends State<SalonDetailsScreen> {
                                             ),
                                             InkWell(
                                               onTap: () {
-                                                showModalBottomSheet(
-                                                  isScrollControlled: true,
-                                                  context: context,
-                                                  builder: (context) =>
-                                                      TakeNoteScreen(
-                                                    salonId: widget.salonId,
-                                                  ),
-                                                  backgroundColor:
-                                                      Colors.transparent,
-                                                ).then((value) => {
-                                                      setState(() {
-                                                        salonController
-                                                            .getSalonDetails(
-                                                                widget.salonId);
-                                                      })
-                                                    });
+                                                if (salonController
+                                                    .salonDetailsModel!
+                                                    .data!
+                                                    .is_clockin ==
+                                                    0) {
+                                                  showCustomSnackBar(
+                                                      "Please Punch In First",
+                                                      isError: true);
+                                                } else {
+                                                  showModalBottomSheet(
+                                                    isScrollControlled: true,
+                                                    context: context,
+                                                    builder: (context) =>
+                                                        TakeNoteScreen(
+                                                          salonId: widget.salonId,
+                                                        ),
+                                                    backgroundColor:
+                                                    Colors.transparent,
+                                                  ).then((value) => {
+                                                    setState(() {
+                                                      salonController
+                                                          .getSalonDetails(
+                                                          widget.salonId);
+                                                    })
+                                                  });
+                                                }
                                               },
+
                                               child: Column(
                                                 children: [
                                                   Image.asset(
@@ -593,13 +661,25 @@ class _SalonDetailsScreenState extends State<SalonDetailsScreen> {
                                               ),
                                             ),
                                             InkWell(
-                                              onTap: () => Navigator.of(context)
-                                                  .push(MaterialPageRoute(
+                                              onTap: () {
+                                                if (salonController
+                                                    .salonDetailsModel!
+                                                    .data!
+                                                    .is_clockin ==
+                                                    0) {
+                                                  showCustomSnackBar(
+                                                      "Please Punch In First",
+                                                      isError: true);
+                                                } else {
+                                                  Navigator.of(context)
+                                                      .push(MaterialPageRoute(
                                                       builder: (context) =>
                                                           SalonCampaignListScreen(
                                                             salonId: int.parse(
                                                                 widget.salonId),
-                                                          ))),
+                                                          )));
+                                                }
+                                              },
                                               child: Column(
                                                 children: [
                                                   Image.asset(
