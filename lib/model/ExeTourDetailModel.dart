@@ -30,14 +30,14 @@ class ExecutiveTourModel {
   String? date;
   String? time;
   int? amount;
-  Null? bda;
+  String? bda;
   int? userId;
   int? roleId;
-  Null? acceptedBy;
-  Null? description;
+  String? acceptedBy;
+  String? description;
   int? status;
-  Null? remark;
-  Null? attachment;
+  String? remark;
+  String? attachment;
   int? createdBy;
 
   ExecutiveTourModel(

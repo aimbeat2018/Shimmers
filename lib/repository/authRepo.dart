@@ -62,6 +62,10 @@ class AuthRepo {
     return await sharedPreferences.setString(AppConstants.userRole, role);
   }
 
+  Future<bool> saveRoleId(String roleid) async{
+    return await sharedPreferences.setString(AppConstants.roleId, roleid);
+  }
+
   Future<bool> saveUserId(String userId) async {
     return await sharedPreferences.setString(AppConstants.userId, userId);
   }
@@ -77,7 +81,9 @@ class AuthRepo {
   String getUserId() {
     return sharedPreferences.getString(AppConstants.userId) ?? "";
   }
-
+  String getRoleId() {
+    return sharedPreferences.getString(AppConstants.roleId) ?? "";
+  }
   bool isLoggedIn() {
     return sharedPreferences.containsKey(AppConstants.token);
   }

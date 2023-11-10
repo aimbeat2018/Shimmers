@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shimmers/controllers/tourController.dart';
 import 'package:shimmers/screens/tourVisit/TourListWidget.dart';
+import 'package:shimmers/screens/tourVisit/tourVisitScreen.dart';
 
 import '../../constant/app_constants.dart';
 import '../../constant/colorsConstant.dart';
@@ -42,6 +43,8 @@ class _TourListScreen extends State<TourListScreen>{
         });
     if (mounted) {
       Get.find<TourController>().getTourRequestList();
+
+
     }
 
     }
@@ -56,7 +59,7 @@ class _TourListScreen extends State<TourListScreen>{
           backgroundColor: primaryColor,
           centerTitle: true,
           title: Text(
-            TextConstant.Campaigns,
+            TextConstant.TourRequestList,
             style: const TextStyle(
                 color: Colors.white,
                 fontSize: 16,
@@ -75,7 +78,7 @@ class _TourListScreen extends State<TourListScreen>{
                 width: MediaQuery.of(context).size.width,
                 child: const NoDataFoundScreen()))
             : ListView.builder(
-          physics: const NeverScrollableScrollPhysics(),
+         // physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           itemCount: tourController
               .exeTourDetailModel!.data!.length,
@@ -86,6 +89,24 @@ class _TourListScreen extends State<TourListScreen>{
             );
           },
         ),
+
+        floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+        floatingActionButton: Padding(
+          padding: const EdgeInsets.only(bottom: 15.0),
+          child: FloatingActionButton(
+            // isExtended: true,
+            child: Icon(Icons.add),
+            backgroundColor: primaryColor,
+            onPressed: () {
+              Navigator.of(context).push(
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          TourVisitScreen()));
+
+            },
+          ),
+        ),
+
       );
     });
   }

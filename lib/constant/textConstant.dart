@@ -24,6 +24,8 @@ class TextConstant {
   static String ScoreCardAnalytics = "Score Card &\nAnalytics";
   static String Team = "Team";
   static String ReportTourVisit = "Report Tour Visit";
+  static String TourRequestList = "Tour Request List";
+
   static String Scheme = "Scheme";
   static String SetTarget = "Set Target";
   static String NCE = "NCA";
@@ -108,7 +110,11 @@ class TextConstant {
   static String teamRole = "Role & team";
   static String response = "Response";
   static String tourVisit = "Tour Visit";
+  static String addtourVisit = "Add Tour Visit";
+
   static String selectPurpose = "Select Purpose";
+  static String purpose = "Purpose";
+
   static String remarks = "Remarks";
   static String takePhoto = "Take Photo";
   static String clickPicture = "Click Picture";

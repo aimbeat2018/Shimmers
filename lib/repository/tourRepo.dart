@@ -1,5 +1,6 @@
 import 'package:get/get_connect/http/src/response/response.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shimmers/model/TourRequestModel.dart';
 
 import '../constant/api/api_client.dart';
 import '../constant/app_constants.dart';
@@ -12,5 +13,9 @@ class TourRepo {
 
   Future<Response> getTourRequestList() async {
     return await apiClient.getData(AppConstants.gettourrequestlist);
+  }
+
+  Future<Response> storeTourRequest(TourRequestModel? tourRequestModel) async {
+    return await apiClient.postData(AppConstants.storetourrequest,tourRequestModel);
   }
 }

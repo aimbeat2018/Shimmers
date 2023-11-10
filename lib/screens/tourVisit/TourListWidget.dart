@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shimmers/constant/colorsConstant.dart';
 import 'package:shimmers/model/ExeTourDetailModel.dart';
 import 'package:shimmers/screens/campaigns/campaignsResponseScreen.dart';
+import 'package:shimmers/screens/tourVisit/tourVisitScreen.dart';
 
 import '../../constant/textConstant.dart';
 import '../../model/campaignListModel.dart';
@@ -19,7 +20,7 @@ class _TourListWidgetState extends State<TourListWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 5.0),
       child: Card(
         elevation: 5,
         shadowColor: primaryColor,
@@ -31,7 +32,7 @@ class _TourListWidgetState extends State<TourListWidget> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                widget.model.area!,
+                'Area: ${widget.model.area!}',
                 style: TextStyle(
                     color: primaryColor,
                     fontSize: 16,
@@ -44,14 +45,14 @@ class _TourListWidgetState extends State<TourListWidget> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'From: ${widget.model.date}',
+                    'Date: ${widget.model.date!}',
                     style: TextStyle(
                         color: Colors.grey,
                         fontSize: 14,
                         fontWeight: FontWeight.w500),
                   ),
                   Text(
-                    'To: ${widget.model.date}',
+                    'Time: ${widget.model.time!}',
                     style: TextStyle(
                         color: Colors.grey,
                         fontSize: 14,
@@ -60,14 +61,37 @@ class _TourListWidgetState extends State<TourListWidget> {
                 ],
               ),
               SizedBox(
-                height: 10,
+                height: 5,
+              ),
+              Text(
+               'Amount: ${widget.model.amount!.toString()}',
+                style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500),
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              Text(
+                widget.model.remark == null || widget.model.remark == '' ? 'No Any Remark' : 'Remark: ${widget.model.remark}',
+                // 'Remark: ${widget.model.remark ??'vff':widget.model.remark}',
+                style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500),
+              ),
+              SizedBox(
+                height: 5,
               ),
               InkWell(
                 onTap: () {
-                 /* Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => CampaignsResponseScreen(
-                        model: widget.model,
-                      )));*/
+                  if( widget.model.status! == 0)
+                    {
+                       Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => TourVisitScreen()));
+                    }
+
                 },
                 child: Align(
                   alignment: Alignment.topRight,
@@ -78,7 +102,11 @@ class _TourListWidgetState extends State<TourListWidget> {
                     child: Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: Text(
-                        TextConstant.viewResponse,
+                        widget.model.status! == 0
+                            ? 'Pending'
+                            : widget.model.status! == 1
+                                ? 'Approved'
+                                : 'Rejected',
                         style: const TextStyle(
                             color: Colors.white,
                             fontSize: 13,

@@ -51,6 +51,7 @@ class AuthController extends GetxController implements GetxService {
       authRepo.saveUserToken(loginModel!.token!);
       authRepo.saveUserRole(loginModel!.roleName!.toString());
       authRepo.saveUserId(loginModel!.userId!.toString());
+      authRepo.saveRoleId(loginModel!.roleId!.toString());
     } else {
       loginModel = LoginModel();
     }
@@ -118,6 +119,9 @@ class AuthController extends GetxController implements GetxService {
   }
   String getUserRole(){
     return authRepo.getUserRole();
+  }
+  String getRoleId(){
+    return authRepo.getRoleId();
   }
   bool clearSharedData() {
     return authRepo.clearSharedData();

@@ -7,6 +7,7 @@ import 'package:shimmers/screens/campaigns/campaignsListScreen.dart';
 import 'package:shimmers/screens/distributors/distributorsScreen.dart';
 import 'package:shimmers/screens/salons/salonList/salonListScreen.dart';
 import 'package:shimmers/screens/setTarget/setTargetScreen.dart';
+import 'package:shimmers/screens/tourVisit/tourListScreen.dart';
 import 'package:shimmers/screens/tourVisit/tourVisitScreen.dart';
 
 import '../../constant/colorsConstant.dart';

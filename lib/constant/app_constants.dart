@@ -38,6 +38,8 @@ class AppConstants {
   static const String getEmployeeList = 'get/employee/team/members';
   static const String salonwiseLogin='salonwise/login';
   static const String gettourrequestlist='get/tour/request/list';
+  static const String storetourrequest='store/tour/request';
+
 
 
   // Shared Key
@@ -45,6 +47,7 @@ class AppConstants {
   static const String topic = 'topic';
   static const String userId = 'userId';
   static const String userRole = 'userRole';
+  static const String roleId = 'roleId';
   static const String CART_LIST = 'cart_list';
 
   static String connectivityCheck = "ConnectivityResult.none";
