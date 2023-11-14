@@ -42,8 +42,8 @@ Future<void> init() async {
   Get.lazyPut(
       () => TargetRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
   Get.lazyPut(() => CartRepo(sharedPreferences: Get.find()));
-  Get.lazyPut(() => TourRepo(apiClient: Get.find(),sharedPreferences: Get.find()));
-
+  Get.lazyPut(
+      () => TourRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
 
   // Controller
   Get.lazyPut(() => AuthController(authRepo: Get.find()));
@@ -54,5 +54,4 @@ Future<void> init() async {
   Get.lazyPut(() => CampaignController(campaignRepo: Get.find()));
   Get.lazyPut(() => TargetController(targetRepo: Get.find()));
   Get.lazyPut(() => TourController(tourRepo: Get.find()));
-
 }

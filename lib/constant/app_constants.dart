@@ -39,6 +39,10 @@ class AppConstants {
   static const String salonwiseLogin='salonwise/login';
   static const String gettourrequestlist='get/tour/request/list';
   static const String storetourrequest='store/tour/request';
+  static const String deletetourrequest='delete/tour/request';
+  static const String gettourdetailsbyid='executive/request/by/id';
+
+
 
 
 
