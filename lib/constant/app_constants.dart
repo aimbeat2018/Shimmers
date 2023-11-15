@@ -41,8 +41,8 @@ class AppConstants {
   static const String storetourrequest='store/tour/request';
   static const String deletetourrequest='delete/tour/request';
   static const String gettourdetailsbyid='executive/request/by/id';
-
-
+  static const String storetourdvisitdetails='store/tourvisit/details';
+  static const String getExecutiveTourRequestList ='get/executive/request/list';
 
 
 

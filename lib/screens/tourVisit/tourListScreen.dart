@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shimmers/controllers/tourController.dart';
 import 'package:shimmers/screens/tourVisit/TourListWidget.dart';
+import 'package:shimmers/screens/tourVisit/tourVisitDetails.dart';
 import 'package:shimmers/screens/tourVisit/tourVisitScreen.dart';
 
 import '../../constant/app_constants.dart';
@@ -127,6 +128,19 @@ class _TourListScreen extends State<TourListScreen>{
                                 },
                                 child: Icon(
                                   Icons.delete,
+                                  color: primaryColor,
+                                ),
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              InkWell(
+                                onTap: (){
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => TourVisitDetails(
+                                          tour_requestid: tourController.exeTourDetailModel!.data![index].id!.toString())));                                },
+                                child: Icon(
+                                  Icons.file_copy_outlined,
                                   color: primaryColor,
                                 ),
                               )

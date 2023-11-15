@@ -53,18 +53,26 @@ class TourController extends GetxController implements GetxService {
 
   Future<String?> submitTourRequest(
       {String? area,
-        String? date,
-        String? time,
-        String? amount,
-        String? userid,
-        String? roleid,
-        String? remark,
-        String? purpose,
+      String? date,
+      String? time,
+      String? amount,
+      String? userid,
+      String? roleid,
+      String? remark,
+      String? purpose,
       String? tourid}) async {
     _isLoading = true;
     update();
     Response response = await tourRepo.storeTourRequest(
-        area: area, date: date, time: time, amount: amount,userid: userid,roleid: roleid,remark: remark,purpose: purpose,tourid: tourid);
+        area: area,
+        date: date,
+        time: time,
+        amount: amount,
+        userid: userid,
+        roleid: roleid,
+        remark: remark,
+        purpose: purpose,
+        tourid: tourid);
 
     if (response.statusCode == 200) {
       tourAddMessage = response.body['message'];
@@ -78,6 +86,38 @@ class TourController extends GetxController implements GetxService {
     return tourAddMessage;
   }
 
+  Future<String?> submitTourVisitDetails(
+      {String? tour_visitid,
+      String? area,
+      String? date,
+      String? time,
+      String? role,
+      String? name,
+      String? contact,
+      String? description}) async {
+    _isLoading = true;
+    update();
+    Response response = await tourRepo.storeTourVisitDetails(
+        tour_visitid: tour_visitid,
+        area: area,
+        date: date,
+        time: time,
+        role: role,
+        name: name,
+        contact: contact,
+        description: description);
+
+    if (response.statusCode == 200) {
+      tourAddMessage = response.body['message'];
+    } else if (response.statusCode == 401) {
+      Get.offAllNamed(RouteHelper.getLoginRoute());
+    } else {
+      tourAddMessage = "";
+    }
+    _isLoading = false;
+    update();
+    return tourAddMessage;
+  }
 
   Future<String?> deleteTourRequest({String? tour_reqid}) async {
     //  _isLoading = false;//made it false to avoid loading
@@ -98,26 +138,23 @@ class TourController extends GetxController implements GetxService {
     update();
     return tourAddMessage;
   }
+
   Future<TourDetailsByIdModel?> getTourDetailsByid({String? tour_reqid}) async {
-     _isLoading = true;//made it false to avoid loading
+    _isLoading = true; //made it false to avoid loading
     update();
 
-    Response response =
-    await tourRepo.getTourDetailsByID(tour_id: tour_reqid);
+    Response response = await tourRepo.getTourDetailsByID(tour_id: tour_reqid);
 
     if (response.statusCode == 200) {
-      tourDetailsByIdModel=TourDetailsByIdModel.fromJson(response.body);
+      tourDetailsByIdModel = TourDetailsByIdModel.fromJson(response.body);
     } else if (response.statusCode == 401) {
       Get.offAllNamed(RouteHelper.getLoginRoute());
     } else {
       tourDetailsByIdModel = TourDetailsByIdModel();
     }
 
-     _isLoading = false;
+    _isLoading = false;
     update();
     return tourDetailsByIdModel;
   }
-
-
-
 }

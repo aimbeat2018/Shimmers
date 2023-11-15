@@ -23,9 +23,17 @@ class TourRepo {
   }*/
 
   Future<Response> storeTourRequest(
-      {String? area, String? date, String? time, String? amount, String? userid, String? roleid, String? remark, String? purpose, String? tourid}) async {
-    return await apiClient.postData(
-        AppConstants.storetourrequest, {"area":area,
+      {String? area,
+      String? date,
+      String? time,
+      String? amount,
+      String? userid,
+      String? roleid,
+      String? remark,
+      String? purpose,
+      String? tourid}) async {
+    return await apiClient.postData(AppConstants.storetourrequest, {
+      "area": area,
       "date": date,
       "time": time,
       "amount": amount,
@@ -33,7 +41,28 @@ class TourRepo {
       "role_id": roleid,
       "remark": remark,
       "purpose": purpose,
-      "tour_req_id":tourid
+      "tour_req_id": tourid
+    });
+  }
+
+  Future<Response> storeTourVisitDetails(
+      {String? tour_visitid,
+      String? area,
+      String? date,
+      String? time,
+      String? role,
+      String? name,
+      String? contact,
+      String? description}) async {
+    return await apiClient.postData(AppConstants.storetourdvisitdetails, {
+      "tour_visit_id": tour_visitid,
+      "area": area,
+      "date": date,
+      "time": time,
+      "role": role,
+      "name": name,
+      "contact": contact,
+      "description": description
     });
   }
 
@@ -43,7 +72,12 @@ class TourRepo {
   }
 
   Future<Response> getTourDetailsByID({String? tour_id}) async {
+    return await apiClient
+        .postData(AppConstants.gettourdetailsbyid, {"tour_req_id": tour_id});
+  }
+
+  Future<Response> getExecutiveTourRequestList({String? executive_id}) async {
     return await apiClient.postData(
-        AppConstants.gettourdetailsbyid, {"tour_req_id": tour_id});
+        AppConstants.getExecutiveTourRequestList, {"user_id": executive_id});
   }
 }
