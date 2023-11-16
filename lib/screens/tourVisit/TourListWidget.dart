@@ -50,7 +50,7 @@ class _TourListWidgetState extends State<TourListWidget> {
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => TourVisitScreen(
-                                tour_requestid: widget.model!.id!)));
+                                tour_requestid: widget.model!.id!.toString())));
                       },
                       child: Icon(
                         Icons.edit,

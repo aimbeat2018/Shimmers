@@ -9,6 +9,7 @@ import 'package:shimmers/screens/salons/salonList/salonListScreen.dart';
 import 'package:shimmers/screens/setTarget/setTargetScreen.dart';
 import 'package:shimmers/screens/tourVisit/tourListScreen.dart';
 import 'package:shimmers/screens/tourVisit/tourVisitScreen.dart';
+import 'package:shimmers/screens/tourVisit/trfExecutiveList.dart';
 
 import '../../constant/colorsConstant.dart';
 import '../../constant/route_helper.dart';
@@ -411,7 +412,7 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             VerticalDivider(),
                             Center(
                               child: InkWell(
-                                onTap: (){
+                                onTap: () {
                                   if (userRole == 'TRF Executive') {
                                     showCustomSnackBar(
                                         'You dont have the permission to use this module',
@@ -425,7 +426,7 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                                   from: 'target',
                                                 )));*/
                                   }
-                              },
+                                },
                                 child: SizedBox(
                                   height: 135,
                                   width: 115,
@@ -460,13 +461,13 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             VerticalDivider(),
                             Center(
                               child: InkWell(
-                                onTap: (){
+                                onTap: () {
                                   if (userRole == 'TRF Executive') {
                                     showCustomSnackBar(
                                         'You dont have the permission to use this module',
                                         isError: true);
                                   } else {
-                                   //Go score page
+                                    //Go score page
                                   }
                                 },
                                 child: SizedBox(
@@ -510,7 +511,7 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                           children: [
                             Center(
                               child: InkWell(
-                                onTap: (){
+                                onTap: () {
                                   if (userRole == 'TRF Executive') {
                                     showCustomSnackBar(
                                         'You dont have the permission to use this module',
@@ -554,10 +555,22 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             VerticalDividerFadeDown(),
                             Center(
                               child: InkWell(
-                                onTap: () => Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            TourListScreen())),
+                                onTap: () {
+                                  if (userRole == 'TRF Executive') {
+                                    //TRF Executive Flow
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                TourListScreen()));
+                                  } else if(userRole=='TRF Manager') {
+                                    //TRF Manager Flow
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                TRFExecutiveListScreen()));
+
+                                  }
+                                },
                                 child: SizedBox(
                                   height: 135,
                                   width: 115,
@@ -592,7 +605,7 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             VerticalDividerFadeDown(),
                             Center(
                               child: InkWell(
-                                onTap: (){
+                                onTap: () {
                                   if (userRole == 'TRF Executive') {
                                     showCustomSnackBar(
                                         'You dont have the permission to use this module',

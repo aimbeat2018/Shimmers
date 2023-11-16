@@ -1,15 +1,19 @@
 import 'package:get/get.dart';
 import 'package:shimmers/model/ExeTourDetailModel.dart';
 import 'package:shimmers/model/TourRequestModel.dart';
+import 'package:shimmers/model/tourRequestListmodel.dart';
 import 'package:shimmers/model/tourdetailsByIdModel.dart';
 import 'package:shimmers/repository/tourRepo.dart';
 
 import '../constant/route_helper.dart';
+import '../model/TRFExecutiveProfile.dart';
 
 class TourController extends GetxController implements GetxService {
   final TourRepo tourRepo;
   ExeTourDetailModel? exeTourDetailModel;
   TourDetailsByIdModel? tourDetailsByIdModel;
+  TRFExecutiveProfile? trfExecutiveProfile;
+  TourRequestListModel? tourRequestListModel;
   bool? _isLoading = false;
 
   String? tourAddMessage;
@@ -33,6 +37,19 @@ class TourController extends GetxController implements GetxService {
     _isLoading = false;
     update();
     return exeTourDetailModel;
+  }
+
+  Future<TRFExecutiveProfile?> getExecutivesList() async {
+    _isLoading = true;
+    Response response = await tourRepo.getTrfExecutivesList();
+    if (response.statusCode == 200) {
+      trfExecutiveProfile = TRFExecutiveProfile.fromJson(response.body);
+    } else {
+      trfExecutiveProfile = TRFExecutiveProfile();
+    }
+    _isLoading = false;
+    update();
+    return trfExecutiveProfile;
   }
 
 /*  Future<String?> submitTourRequest({TourRequestModel? model}) async {
@@ -137,6 +154,25 @@ class TourController extends GetxController implements GetxService {
     // _isLoading = false;
     update();
     return tourAddMessage;
+  }
+
+  Future<TourRequestListModel?> getExecutivesTourRequestList({String? exe_id}) async {
+    _isLoading = true;
+    update();
+
+    Response response =
+        await tourRepo.getExecutiveTourRequestList(executive_id: exe_id);
+
+    if (response.statusCode == 200) {
+      tourRequestListModel = TourRequestListModel.fromJson(response.body);
+    } else if (response.statusCode == 401) {
+      Get.offAllNamed(RouteHelper.getLoginRoute());
+    } else {
+      tourRequestListModel = TourRequestListModel();
+    }
+    _isLoading = false;
+    update();
+    return tourRequestListModel;
   }
 
   Future<TourDetailsByIdModel?> getTourDetailsByid({String? tour_reqid}) async {

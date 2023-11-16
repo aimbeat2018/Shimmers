@@ -14,10 +14,10 @@ import '../../constant/internetConnectivity.dart';
 import '../../constant/textConstant.dart';
 
 class TourVisitDetails extends StatefulWidget {
-  String tour_requestid='';
+  final String tour_requestid;
 
 
-  TourVisitDetails({Key? key, required this.tour_requestid}) : super(key: key);
+  const TourVisitDetails({Key? key, required this.tour_requestid}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {

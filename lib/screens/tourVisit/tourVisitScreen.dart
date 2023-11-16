@@ -21,9 +21,9 @@ import '../../model/tourdetailsByIdModel.dart';
 
 class TourVisitScreen extends StatefulWidget {
   static String name = 'TourVisitScreen';
-  int tour_requestid = 0;
+  final String tour_requestid;
 
-  TourVisitScreen({Key? key, required this.tour_requestid}) : super(key: key);
+  const TourVisitScreen({Key? key, required this.tour_requestid}) : super(key: key);
 
   @override
   State<TourVisitScreen> createState() => _TourVisitScreenState();
@@ -54,7 +54,7 @@ class _TourVisitScreenState extends State<TourVisitScreen> {
             _connectionStatus = value;
           }));
     });
-    if (widget.tour_requestid! != 0) {
+    if (widget.tour_requestid! != '0') {
       if (_connectionStatus != AppConstants.connectivityCheck) {
         if (mounted) {
           Future.delayed(Duration.zero, () async {
@@ -376,20 +376,29 @@ class _TourVisitScreenState extends State<TourVisitScreen> {
                               ),
                             ),
                             onPressed: () {
-                              if (selectedDate == null) {
+                              if (purposeController.text.isEmpty) {
+                                showCustomSnackBar('Enter Purpose',
+                                    isError: false);
+                              }
+                              else if (areaController.text.isEmpty) {
+                                showCustomSnackBar('Enter Area',
+                                    isError: false);
+                              }else if (amountController.text.isEmpty) {
+                                showCustomSnackBar('Enter Amount',
+                                    isError: false);
+                              }
+                              else if (selectedDate == null) {
                                 showCustomSnackBar(TextConstant.selectDate,
                                     isError: false);
                               } else if (selectedTime == null) {
                                 showCustomSnackBar(TextConstant.selectTime,
                                     isError: false);
-                              } else if (areaController.text.isEmpty) {
-                                showCustomSnackBar('Enter Area',
+                              } else if (remarksController.text.isEmpty) {
+                                showCustomSnackBar('Enter Remark',
                                     isError: false);
-                              } else if (amountController.text.isEmpty) {
-                                showCustomSnackBar('Enter Amount',
-                                    isError: false);
-                              } else {
-                                if (widget.tour_requestid == 0) {
+                              }
+                               else {
+                                if (widget.tour_requestid == '0') {
                                  /* TourRequestModel tourRequestModel =
                                       TourRequestModel();
                                   tourRequestModel.purpose =

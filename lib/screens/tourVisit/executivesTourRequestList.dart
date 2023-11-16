@@ -4,29 +4,28 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shimmers/controllers/tourController.dart';
-import 'package:shimmers/screens/tourVisit/TourListWidget.dart';
-import 'package:shimmers/screens/tourVisit/tourVisitDetails.dart';
-import 'package:shimmers/screens/tourVisit/tourVisitScreen.dart';
 
 import '../../constant/app_constants.dart';
 import '../../constant/colorsConstant.dart';
-import '../../constant/custom_snackbar.dart';
 import '../../constant/internetConnectivity.dart';
 import '../../constant/no_internet_screen.dart';
 import '../../constant/route_helper.dart';
 import '../../constant/textConstant.dart';
-import '../campaigns/campaignsListWidget.dart';
+import '../../controllers/tourController.dart';
 import '../noDataFound/noDataFoundScreen.dart';
 
-class TourListScreen extends StatefulWidget {
+class ExecutivesTourRequestList extends StatefulWidget {
+  String? excutive_id;
+
+  ExecutivesTourRequestList({this.excutive_id});
+
   @override
   State<StatefulWidget> createState() {
-    return _TourListScreen();
+    return _ExecutivesTourRequestList();
   }
 }
 
-class _TourListScreen extends State<TourListScreen> {
+class _ExecutivesTourRequestList extends State<ExecutivesTourRequestList> {
   String _connectionStatus = 'unKnown';
   final Connectivity _connectivity = Connectivity();
   late StreamSubscription<ConnectivityResult> _connectivitySubscription;
@@ -44,7 +43,7 @@ class _TourListScreen extends State<TourListScreen> {
           }));
     });
     if (mounted) {
-      Get.find<TourController>().getTourRequestList();
+      Get.find<TourController>().getExecutivesTourRequestList(exe_id: '22');
     }
   }
 
@@ -58,7 +57,7 @@ class _TourListScreen extends State<TourListScreen> {
                 backgroundColor: primaryColor,
                 centerTitle: true,
                 title: Text(
-                  TextConstant.TourRequestList,
+                  'Executives Tour Request List',
                   style: const TextStyle(
                       color: Colors.white,
                       fontSize: 16,
@@ -66,11 +65,11 @@ class _TourListScreen extends State<TourListScreen> {
                 ),
               ),
               body: tourController.isLoading &&
-                      tourController.exeTourDetailModel == null
+                      tourController.tourRequestListModel == null
                   ? const Center(
                       child: CircularProgressIndicator(),
                     )
-                  : tourController.exeTourDetailModel!.data == null
+                  : tourController.tourRequestListModel!.tourRequestList == null
                       ? Center(
                           child: SizedBox(
                               height: MediaQuery.of(context).size.height,
@@ -81,8 +80,8 @@ class _TourListScreen extends State<TourListScreen> {
                           child: ListView.builder(
                             // physics: const NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
-                            itemCount:
-                                tourController.exeTourDetailModel!.data!.length,
+                            itemCount: tourController
+                                .tourRequestListModel!.tourRequestList!.length,
                             itemBuilder: (BuildContext context, int index) {
                               return Padding(
                                 padding: const EdgeInsets.symmetric(
@@ -104,7 +103,7 @@ class _TourListScreen extends State<TourListScreen> {
                                           children: [
                                             Expanded(
                                               child: Text(
-                                                'Area: ${tourController.exeTourDetailModel!.data![index].area!}',
+                                                'Area: ${tourController.tourRequestListModel!.tourRequestList![index].area!}',
                                                 style: TextStyle(
                                                     color: primaryColor,
                                                     fontSize: 16,
@@ -112,16 +111,19 @@ class _TourListScreen extends State<TourListScreen> {
                                                         FontWeight.bold),
                                               ),
                                             ),
-                                            tourController.exeTourDetailModel!
-                                                        .data![index].status! ==
+                                            tourController
+                                                        .tourRequestListModel!
+                                                        .tourRequestList![index]
+                                                        .status! ==
                                                     0
                                                 ? InkWell(
                                                     onTap: () {
                                                       Get.toNamed(RouteHelper
                                                           .getaddTourRequestRoute(
                                                               tourController
-                                                                  .exeTourDetailModel!
-                                                                  .data![index]
+                                                                  .tourRequestListModel!
+                                                                  .tourRequestList![
+                                                                      index]
                                                                   .id!
                                                                   .toString()));
 
@@ -143,19 +145,21 @@ class _TourListScreen extends State<TourListScreen> {
                                             SizedBox(
                                               width: 10,
                                             ),
-                                            tourController.exeTourDetailModel!
-                                                        .data![index].status! ==
+                                            tourController
+                                                        .tourRequestListModel!
+                                                        .tourRequestList![index]
+                                                        .status! ==
                                                     0
                                                 ? InkWell(
                                                     onTap: () {
-                                                      deleteTourRequest(
-                                                          tourController
-                                                              .exeTourDetailModel!
-                                                              .data![index]
-                                                              .id
-                                                              .toString(),
-                                                          tourController,
-                                                          index);
+                                                      /*deleteTourRequest(
+                                    tourController
+                                        .exeTourDetailModel!
+                                        .data![index]
+                                        .id
+                                        .toString(),
+                                    tourController,
+                                    index);*/
                                                     },
                                                     child: Icon(
                                                       Icons.delete,
@@ -166,16 +170,19 @@ class _TourListScreen extends State<TourListScreen> {
                                             SizedBox(
                                               width: 10,
                                             ),
-                                            tourController.exeTourDetailModel!
-                                                        .data![index].status! ==
+                                            tourController
+                                                        .tourRequestListModel!
+                                                        .tourRequestList![index]
+                                                        .status! ==
                                                     1
                                                 ? InkWell(
                                                     onTap: () {
                                                       Get.toNamed(RouteHelper
                                                           .getaddTourVisitDetails(
                                                               tourController
-                                                                  .exeTourDetailModel!
-                                                                  .data![index]
+                                                                  .tourRequestListModel!
+                                                                  .tourRequestList![
+                                                                      index]
                                                                   .id!
                                                                   .toString()));
                                                       /* Navigator.of(context).push(MaterialPageRoute(
@@ -198,14 +205,14 @@ class _TourListScreen extends State<TourListScreen> {
                                               MainAxisAlignment.spaceBetween,
                                           children: [
                                             Text(
-                                              'Date: ${tourController.exeTourDetailModel!.data![index].date!}',
+                                              'Date: ${tourController.tourRequestListModel!.tourRequestList![index].date!}',
                                               style: TextStyle(
                                                   color: Colors.grey,
                                                   fontSize: 14,
                                                   fontWeight: FontWeight.w500),
                                             ),
                                             Text(
-                                              'Time: ${tourController.exeTourDetailModel!.data![index].time!}',
+                                              'Time: ${tourController.tourRequestListModel!.tourRequestList![index].time!}',
                                               style: TextStyle(
                                                   color: Colors.grey,
                                                   fontSize: 14,
@@ -217,7 +224,7 @@ class _TourListScreen extends State<TourListScreen> {
                                           height: 5,
                                         ),
                                         Text(
-                                          'Amount: ${tourController.exeTourDetailModel!.data![index].amount!.toString()}',
+                                          'Amount: ${tourController.tourRequestListModel!.tourRequestList![index].amount!.toString()}',
                                           style: TextStyle(
                                               color: Colors.grey,
                                               fontSize: 14,
@@ -227,7 +234,7 @@ class _TourListScreen extends State<TourListScreen> {
                                           height: 5,
                                         ),
                                         Text(
-                                          'Status: ${tourController.exeTourDetailModel!.data![index].status! == 0 ? 'Pending' : tourController.exeTourDetailModel!.data![index].status! == 1 ? 'Approved' : 'Rejected'}',
+                                          'Status: ${tourController.tourRequestListModel!.tourRequestList![index].status! == 0 ? 'Pending' : tourController.tourRequestListModel!.tourRequestList![index].status! == 1 ? 'Approved' : 'Rejected'}',
                                           style: TextStyle(
                                               color: Colors.grey,
                                               fontSize: 14,
@@ -237,18 +244,18 @@ class _TourListScreen extends State<TourListScreen> {
                                           height: 5,
                                         ),
                                         tourController
-                                                        .exeTourDetailModel!
-                                                        .data![index]
+                                                        .tourRequestListModel!
+                                                        .tourRequestList![index]
                                                         .executiveRemark ==
                                                     null ||
                                                 tourController
-                                                        .exeTourDetailModel!
-                                                        .data![index]
+                                                        .tourRequestListModel!
+                                                        .tourRequestList![index]
                                                         .executiveRemark ==
                                                     ''
                                             ? SizedBox()
                                             : Text(
-                                                'Executive Remark: ${tourController.exeTourDetailModel!.data![index].executiveRemark!}',
+                                                'Executive Remark: ${tourController.tourRequestListModel!.tourRequestList![index].executiveRemark!}',
                                                 // 'Remark: ${widget.model.remark ??'vff':widget.model.remark}',
                                                 style: TextStyle(
                                                     color: Colors.grey,
@@ -256,12 +263,14 @@ class _TourListScreen extends State<TourListScreen> {
                                                     fontWeight:
                                                         FontWeight.w500),
                                               ),
-                                        tourController.exeTourDetailModel!
-                                                        .data![index].remark ==
+                                        tourController
+                                                        .tourRequestListModel!
+                                                        .tourRequestList![index]
+                                                        .remark ==
                                                     null ||
                                                 tourController
-                                                        .exeTourDetailModel!
-                                                        .data![index]
+                                                        .tourRequestListModel!
+                                                        .tourRequestList![index]
                                                         .remark ==
                                                     ''
                                             ? SizedBox()
@@ -269,7 +278,7 @@ class _TourListScreen extends State<TourListScreen> {
                                                 padding: const EdgeInsets.only(
                                                     top: 5.0),
                                                 child: Text(
-                                                  'Manager Remark: ${tourController.exeTourDetailModel!.data![index].remark}',
+                                                  'Manager Remark: ${tourController.tourRequestListModel!.tourRequestList![index].remark}',
                                                   // 'Remark: ${widget.model.remark ??'vff':widget.model.remark}',
                                                   style: TextStyle(
                                                       color: Colors.grey,
@@ -291,37 +300,7 @@ class _TourListScreen extends State<TourListScreen> {
                             },
                           ),
                         ),
-              floatingActionButtonLocation:
-                  FloatingActionButtonLocation.endDocked,
-              floatingActionButton: Padding(
-                padding: const EdgeInsets.only(bottom: 15.0),
-                child: FloatingActionButton(
-                  // isExtended: true,
-                  child: Icon(Icons.add),
-                  backgroundColor: primaryColor,
-                  onPressed: () {
-                    Get.toNamed(RouteHelper.getaddTourRequestRoute('0'));
-                    /*Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => TourVisitScreen(tour_requestid: 0)));*/
-                  },
-                ),
-              ),
             );
           });
-  }
-
-  void deleteTourRequest(String? id, TourController tourController, int index) {
-    Get.find<TourController>()
-        .deleteTourRequest(tour_reqid: id)
-        .then((message) async {
-      if (message == 'Tour Request deleted successfully') {
-        showCustomSnackBar(message!, isError: false);
-        setState(() {
-          tourController.exeTourDetailModel!.data!.removeAt(index);
-        });
-      } else {
-        showCustomSnackBar(message!);
-      }
-    });
   }
 }

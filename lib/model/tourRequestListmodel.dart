@@ -1,15 +1,15 @@
-class ExeTourDetailModel {
+class TourRequestListModel {
   String? message;
-  List<ExecutiveTourModel>? data;
+  List<TourRequestDetails>? tourRequestList;
 
-  ExeTourDetailModel({this.message, this.data});
+  TourRequestListModel({this.message, this.tourRequestList});
 
-  ExeTourDetailModel.fromJson(Map<String, dynamic> json) {
+  TourRequestListModel.fromJson(Map<String, dynamic> json) {
     message = json['message'];
     if (json['data'] != null) {
-      data = <ExecutiveTourModel>[];
+      tourRequestList = <TourRequestDetails>[];
       json['data'].forEach((v) {
-        data!.add(new ExecutiveTourModel.fromJson(v));
+        tourRequestList!.add(new TourRequestDetails.fromJson(v));
       });
     }
   }
@@ -17,14 +17,14 @@ class ExeTourDetailModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['message'] = this.message;
-    if (this.data != null) {
-      data['data'] = this.data!.map((v) => v.toJson()).toList();
+    if (this.tourRequestList != null) {
+      data['data'] = this.tourRequestList!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
-class ExecutiveTourModel {
+class TourRequestDetails {
   int? id;
   String? area;
   String? date;
@@ -42,25 +42,25 @@ class ExecutiveTourModel {
   String? attachment;
   int? createdBy;
 
-  ExecutiveTourModel(
+  TourRequestDetails(
       {this.id,
-        this.area,
-        this.date,
-        this.time,
-        this.amount,
-        this.purpose,
-        this.executiveRemark,
-        this.bda,
-        this.userId,
-        this.roleId,
-        this.acceptedBy,
-        this.description,
-        this.status,
-        this.remark,
-        this.attachment,
-        this.createdBy});
+      this.area,
+      this.date,
+      this.time,
+      this.amount,
+      this.purpose,
+      this.executiveRemark,
+      this.bda,
+      this.userId,
+      this.roleId,
+      this.acceptedBy,
+      this.description,
+      this.status,
+      this.remark,
+      this.attachment,
+      this.createdBy});
 
-  ExecutiveTourModel.fromJson(Map<String, dynamic> json) {
+  TourRequestDetails.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     area = json['area'];
     date = json['date'];

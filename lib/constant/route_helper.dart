@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:shimmers/screens/home/mainScreen.dart';
 import 'package:shimmers/screens/salons/salonDetails/salonDetailsScreen.dart';
 import 'package:shimmers/screens/salonsActivity/demo/addDemoScreen.dart';
+import 'package:shimmers/screens/tourVisit/tourVisitDetails.dart';
+import 'package:shimmers/screens/tourVisit/tourVisitScreen.dart';
 import 'package:shimmers/screens/userAuth/LoginScreen.dart';
 import 'package:shimmers/screens/userAuth/PasswordScreen.dart';
 
@@ -16,6 +18,8 @@ class RouteHelper {
   static const String passwordChangedScreen = '/passwordChangedScreen';
   static const String salonDetails = '/salonDetails';
   static const String addDemoRequest = '/addDemoRequest';
+  static const String addTourRequest = '/addTourRequest';
+  static const String addTourVisitDetails= '/addTourVisitDetails';
 
   static String getLoginRoute() => login;
 
@@ -32,6 +36,14 @@ class RouteHelper {
 
   static String getDemoRequestRoute(String salonId) =>
       '$addDemoRequest?salonId=$salonId';
+
+  static String getaddTourRequestRoute(String tour_requestid) =>
+      '$addTourRequest?tour_requestid=$tour_requestid';
+
+  static String getaddTourVisitDetails(String tour_requestid)=>
+        '$addTourVisitDetails?tour_requestid=$tour_requestid';
+
+
 
   static List<GetPage> routes = [
     GetPage(name: login, page: () => getRoute(const LoginScreen())),
@@ -52,6 +64,14 @@ class RouteHelper {
     GetPage(
         name: addDemoRequest,
         page: () => AddDemoScreen(salonId: Get.parameters['salonId']!)),
+    GetPage(
+        name: addTourRequest,
+        page: () =>
+            TourVisitScreen(tour_requestid: Get.parameters['tour_requestid']!)),
+    GetPage(name: addTourVisitDetails, page: ()=>TourVisitDetails(tour_requestid: Get.parameters['tour_requestid']!)),
+
+
+
     // GetPage(
     //     name: language,
     //     page: () =>

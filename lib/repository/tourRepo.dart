@@ -16,6 +16,9 @@ class TourRepo {
   Future<Response> getTourRequestList() async {
     return await apiClient.getData(AppConstants.gettourrequestlist);
   }
+  Future<Response> getTrfExecutivesList() async{
+    return await apiClient.getData(AppConstants.getAllTrfExecutiveList);
+}
 
   /* Future<Response> storeTourRequest({TourRequestModel? tourRequestModel}) async {
     return await apiClient.postData(
