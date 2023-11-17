@@ -44,18 +44,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
       if (!authController.isLoading) {
         empNameController.text =
             authController.profileModel!.userProfile!.name!;
-        empAddressController.text =
+        _mobileController.text =
+        authController.profileModel!.userProfile!.mobile!;
+        _emailController.text =
+        authController.profileModel!.userProfile!.email!;
+
+       /* empAddressController.text =
             authController.profileModel!.userProfile!.address!;
         dobController.text =
             authController.profileModel!.userProfile!.dateOfBirth!;
-        _mobileController.text =
-            authController.profileModel!.userProfile!.mobile!;
-        _emailController.text =
-            authController.profileModel!.userProfile!.email!;
         _designationController.text =
             authController.profileModel!.userProfile!.designationName!;
         _departmentController.text =
-            authController.profileModel!.userProfile!.departmentName!;
+            authController.profileModel!.userProfile!.departmentName!;*/
 
         profileImage = authController.profileModel!.userProfile!.imageUrl!;
       }

@@ -23,7 +23,8 @@ class TourVisitScreen extends StatefulWidget {
   static String name = 'TourVisitScreen';
   final String tour_requestid;
 
-  const TourVisitScreen({Key? key, required this.tour_requestid}) : super(key: key);
+  const TourVisitScreen({Key? key, required this.tour_requestid})
+      : super(key: key);
 
   @override
   State<TourVisitScreen> createState() => _TourVisitScreenState();
@@ -355,51 +356,56 @@ class _TourVisitScreenState extends State<TourVisitScreen> {
                       const SizedBox(height: 40),
                       SizedBox(
                         width: 200,
-                        child: ElevatedButton(
-                            style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all<Color>(
-                                  primaryColor),
-                              foregroundColor: MaterialStateProperty.all<Color>(
-                                  primaryColor),
-                              textStyle: MaterialStateProperty.all<TextStyle>(
-                                const TextStyle(fontSize: 16),
-                              ),
-                              padding: MaterialStateProperty.all<EdgeInsets>(
-                                const EdgeInsets.symmetric(
-                                    horizontal: 16, vertical: 8),
-                              ),
-                              shape: MaterialStateProperty.all<
-                                  RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10),
+                        child: tourController.isLoading
+                            ? Center(
+                                child: CircularProgressIndicator(),
+                              )
+                            : ElevatedButton(
+                                style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.all<Color>(
+                                          primaryColor),
+                                  foregroundColor:
+                                      MaterialStateProperty.all<Color>(
+                                          primaryColor),
+                                  textStyle:
+                                      MaterialStateProperty.all<TextStyle>(
+                                    const TextStyle(fontSize: 16),
+                                  ),
+                                  padding:
+                                      MaterialStateProperty.all<EdgeInsets>(
+                                    const EdgeInsets.symmetric(
+                                        horizontal: 16, vertical: 8),
+                                  ),
+                                  shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
-                            onPressed: () {
-                              if (purposeController.text.isEmpty) {
-                                showCustomSnackBar('Enter Purpose',
-                                    isError: false);
-                              }
-                              else if (areaController.text.isEmpty) {
-                                showCustomSnackBar('Enter Area',
-                                    isError: false);
-                              }else if (amountController.text.isEmpty) {
-                                showCustomSnackBar('Enter Amount',
-                                    isError: false);
-                              }
-                              else if (selectedDate == null) {
-                                showCustomSnackBar(TextConstant.selectDate,
-                                    isError: false);
-                              } else if (selectedTime == null) {
-                                showCustomSnackBar(TextConstant.selectTime,
-                                    isError: false);
-                              } else if (remarksController.text.isEmpty) {
-                                showCustomSnackBar('Enter Remark',
-                                    isError: false);
-                              }
-                               else {
-                                if (widget.tour_requestid == '0') {
-                                 /* TourRequestModel tourRequestModel =
+                                onPressed: () {
+                                  if (purposeController.text.isEmpty) {
+                                    showCustomSnackBar('Enter Purpose',
+                                        isError: false);
+                                  } else if (areaController.text.isEmpty) {
+                                    showCustomSnackBar('Enter Area',
+                                        isError: false);
+                                  } else if (amountController.text.isEmpty) {
+                                    showCustomSnackBar('Enter Amount',
+                                        isError: false);
+                                  } else if (selectedDate == null) {
+                                    showCustomSnackBar(TextConstant.selectDate,
+                                        isError: false);
+                                  } else if (selectedTime == null) {
+                                    showCustomSnackBar(TextConstant.selectTime,
+                                        isError: false);
+                                  } else if (remarksController.text.isEmpty) {
+                                    showCustomSnackBar('Enter Remark',
+                                        isError: false);
+                                  } else {
+                                    if (widget.tour_requestid == '0') {
+                                      /* TourRequestModel tourRequestModel =
                                       TourRequestModel();
                                   tourRequestModel.purpose =
                                       purposeController.text;
@@ -414,11 +420,11 @@ class _TourVisitScreenState extends State<TourVisitScreen> {
                                   tourRequestModel.roleId = int.parse(
                                       Get.find<AuthController>().getRoleId());
                                   tourRequestModel.tourReqId = "";*/
-                                  String tourReqid="";
+                                      String tourReqid = "";
 
-                                  addTourRequest(tourController,tourReqid);
-                                } else {
-                                 /* TourRequestModel tourRequestModel =
+                                      addTourRequest(tourController, tourReqid);
+                                    } else {
+                                      /* TourRequestModel tourRequestModel =
                                       TourRequestModel();
                                   tourRequestModel.purpose =
                                       purposeController.text;
@@ -436,20 +442,21 @@ class _TourVisitScreenState extends State<TourVisitScreen> {
                                   tourRequestModel.tourReqId =
                                       widget.tour_requestid.toString();*/
 
-                                  addTourRequest(tourController,widget.tour_requestid.toString());
-                                }
-                              }
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.all(5.0),
-                              child: Text(
-                                TextConstant.submit.toUpperCase(),
-                                style: const TextStyle(
-                                    fontSize: 14,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w500),
-                              ),
-                            )),
+                                      addTourRequest(tourController,
+                                          widget.tour_requestid.toString());
+                                    }
+                                  }
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.all(5.0),
+                                  child: Text(
+                                    TextConstant.submit.toUpperCase(),
+                                    style: const TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                )),
                       ),
                     ],
                   ),
@@ -472,8 +479,7 @@ class _TourVisitScreenState extends State<TourVisitScreen> {
 
   }*/
   Future<void> addTourRequest(
-    TourController tourController,String tourid
-  ) async {
+      TourController tourController, String tourid) async {
     tourController
         .submitTourRequest(
             area: areaController.text,
@@ -488,8 +494,8 @@ class _TourVisitScreenState extends State<TourVisitScreen> {
         .then((message) async {
       if (message == 'Request submitted successfully.') {
         showCustomSnackBar(message!, isError: false);
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => TourListScreen()));
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => TourListScreen()));
       } else {
         showCustomSnackBar(message!);
       }

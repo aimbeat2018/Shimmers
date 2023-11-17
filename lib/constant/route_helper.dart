@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:shimmers/screens/home/mainScreen.dart';
 import 'package:shimmers/screens/salons/salonDetails/salonDetailsScreen.dart';
 import 'package:shimmers/screens/salonsActivity/demo/addDemoScreen.dart';
+import 'package:shimmers/screens/tourVisit/executiveTourReqDetails.dart';
 import 'package:shimmers/screens/tourVisit/tourVisitDetails.dart';
 import 'package:shimmers/screens/tourVisit/tourVisitScreen.dart';
 import 'package:shimmers/screens/userAuth/LoginScreen.dart';
@@ -19,7 +20,9 @@ class RouteHelper {
   static const String salonDetails = '/salonDetails';
   static const String addDemoRequest = '/addDemoRequest';
   static const String addTourRequest = '/addTourRequest';
-  static const String addTourVisitDetails= '/addTourVisitDetails';
+  static const String addTourVisitDetails = '/addTourVisitDetails';
+  static const String executiveTourRequestDetails =
+      '/executiveTourRequestDetails';
 
   static String getLoginRoute() => login;
 
@@ -40,10 +43,11 @@ class RouteHelper {
   static String getaddTourRequestRoute(String tour_requestid) =>
       '$addTourRequest?tour_requestid=$tour_requestid';
 
-  static String getaddTourVisitDetails(String tour_requestid)=>
-        '$addTourVisitDetails?tour_requestid=$tour_requestid';
+  static String getaddTourVisitDetails(String tour_requestid) =>
+      '$addTourVisitDetails?tour_requestid=$tour_requestid';
 
-
+  static String getexecutiveTourRequestDetails(String tour_requestid) =>
+      '$executiveTourRequestDetails?tour_requestid=$tour_requestid';
 
   static List<GetPage> routes = [
     GetPage(name: login, page: () => getRoute(const LoginScreen())),
@@ -68,9 +72,15 @@ class RouteHelper {
         name: addTourRequest,
         page: () =>
             TourVisitScreen(tour_requestid: Get.parameters['tour_requestid']!)),
-    GetPage(name: addTourVisitDetails, page: ()=>TourVisitDetails(tour_requestid: Get.parameters['tour_requestid']!)),
-
-
+    GetPage(
+        name: addTourVisitDetails,
+        page: () => TourVisitDetails(
+            tour_requestid: Get.parameters['tour_requestid']!)),
+    GetPage(
+        name: executiveTourRequestDetails,
+        page: () => ExecutiveTourRequestDetails(
+              tour_requestid: Get.parameters['tour_requestid']!,
+            )),
 
     // GetPage(
     //     name: language,

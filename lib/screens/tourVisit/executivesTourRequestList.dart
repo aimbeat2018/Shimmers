@@ -43,7 +43,9 @@ class _ExecutivesTourRequestList extends State<ExecutivesTourRequestList> {
           }));
     });
     if (mounted) {
-      Get.find<TourController>().getExecutivesTourRequestList(exe_id: '22');
+     // Get.find<CampaignController>().getEmployeeCampaignList(userId);
+
+      Get.find<TourController>().getExecutivesTourRequestList(exe_id: '22');//pass the executives ID here
     }
   }
 
@@ -119,7 +121,7 @@ class _ExecutivesTourRequestList extends State<ExecutivesTourRequestList> {
                                                 ? InkWell(
                                                     onTap: () {
                                                       Get.toNamed(RouteHelper
-                                                          .getaddTourRequestRoute(
+                                                          .getexecutiveTourRequestDetails(
                                                               tourController
                                                                   .tourRequestListModel!
                                                                   .tourRequestList![
@@ -145,21 +147,14 @@ class _ExecutivesTourRequestList extends State<ExecutivesTourRequestList> {
                                             SizedBox(
                                               width: 10,
                                             ),
-                                            tourController
+                                           /* tourController
                                                         .tourRequestListModel!
                                                         .tourRequestList![index]
                                                         .status! ==
                                                     0
                                                 ? InkWell(
                                                     onTap: () {
-                                                      /*deleteTourRequest(
-                                    tourController
-                                        .exeTourDetailModel!
-                                        .data![index]
-                                        .id
-                                        .toString(),
-                                    tourController,
-                                    index);*/
+
                                                     },
                                                     child: Icon(
                                                       Icons.delete,
@@ -169,8 +164,8 @@ class _ExecutivesTourRequestList extends State<ExecutivesTourRequestList> {
                                                 : SizedBox(),
                                             SizedBox(
                                               width: 10,
-                                            ),
-                                            tourController
+                                            ),*/
+                                          /*  tourController
                                                         .tourRequestListModel!
                                                         .tourRequestList![index]
                                                         .status! ==
@@ -185,16 +180,16 @@ class _ExecutivesTourRequestList extends State<ExecutivesTourRequestList> {
                                                                       index]
                                                                   .id!
                                                                   .toString()));
-                                                      /* Navigator.of(context).push(MaterialPageRoute(
+                                                      *//* Navigator.of(context).push(MaterialPageRoute(
                                       builder: (context) => TourVisitDetails(
-                                          tour_requestid: tourController.exeTourDetailModel!.data![index].id!.toString())));*/
+                                          tour_requestid: tourController.exeTourDetailModel!.data![index].id!.toString())));*//*
                                                     },
                                                     child: Icon(
                                                       Icons.file_copy_outlined,
                                                       color: primaryColor,
                                                     ),
                                                   )
-                                                : SizedBox()
+                                                : SizedBox()*/
                                           ],
                                         ),
                                         SizedBox(

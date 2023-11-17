@@ -78,7 +78,7 @@ class AuthController extends GetxController implements GetxService {
 
   Future<ProfileModel?> getUserProfile() async {
     _isLoading = true;
-    update();
+  //  update();
     Response response = await authRepo.getUserProfile();
 
     if (response.statusCode == 200) {

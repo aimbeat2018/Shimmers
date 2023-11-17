@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:shimmers/model/ExeTourDetailModel.dart';
 import 'package:shimmers/model/TourRequestModel.dart';
 import 'package:shimmers/model/tourRequestListmodel.dart';
@@ -156,9 +157,10 @@ class TourController extends GetxController implements GetxService {
     return tourAddMessage;
   }
 
-  Future<TourRequestListModel?> getExecutivesTourRequestList({String? exe_id}) async {
+  Future<TourRequestListModel?> getExecutivesTourRequestList(
+      {String? exe_id}) async {
     _isLoading = true;
-    update();
+    //update();
 
     Response response =
         await tourRepo.getExecutiveTourRequestList(executive_id: exe_id);
@@ -177,7 +179,7 @@ class TourController extends GetxController implements GetxService {
 
   Future<TourDetailsByIdModel?> getTourDetailsByid({String? tour_reqid}) async {
     _isLoading = true; //made it false to avoid loading
-    update();
+    //  update();
 
     Response response = await tourRepo.getTourDetailsByID(tour_id: tour_reqid);
 
@@ -192,5 +194,30 @@ class TourController extends GetxController implements GetxService {
     _isLoading = false;
     update();
     return tourDetailsByIdModel;
+  }
+
+  Future<String?> updateTourDetails(
+      {String? tour_req_id,
+      String? status,
+      String? remark,
+      XFile? attachment}) async {
+    _isLoading = true;
+    update();
+
+    Response response = await tourRepo.updateTourRequestStatus(
+        tour_req_id: tour_req_id,
+        status: status,
+        remark: remark,
+        attachment: attachment);
+    if (response.statusCode == 200) {
+      tourAddMessage = response.body['message']; //Data submitted successfully.
+    } else if (response.statusCode == 401) {
+      Get.offAllNamed(RouteHelper.getLoginRoute());
+    } else {
+      tourAddMessage = '';
+    }
+    _isLoading = false;
+    update();
+    return tourAddMessage;
   }
 }
