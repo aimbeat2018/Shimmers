@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -38,7 +39,6 @@ class _ExecutiveTourRequestDetails extends State<ExecutiveTourRequestDetails> {
   List<String> statusList = ['Select Status', 'Approve', 'Reject'];
   String? selectedStatus = 'Select Status';
   XFile? _pickedFile;
-
 
   @override
   void initState() {
@@ -100,7 +100,8 @@ class _ExecutiveTourRequestDetails extends State<ExecutiveTourRequestDetails> {
               ),
               body: tourController.isLoading && tourDetailsByIdModel == null
                   ? const Center(child: CircularProgressIndicator())
-                  : tourDetailsByIdModel!.data! == null
+                  : tourDetailsByIdModel!.data == null ||
+                          tourDetailsByIdModel!.data!.isEmpty
                       ? Center(
                           child: SizedBox(
                               height: MediaQuery.of(context).size.height,
@@ -295,7 +296,7 @@ class _ExecutiveTourRequestDetails extends State<ExecutiveTourRequestDetails> {
                                     ),
                                   ),
                                 ),
-                                SizedBox(
+                               /* SizedBox(
                                   height: 15,
                                 ),
                                 Align(
@@ -317,29 +318,32 @@ class _ExecutiveTourRequestDetails extends State<ExecutiveTourRequestDetails> {
                                 ),
                                 InkWell(
                                   onTap: () {
-                                    pickImageCamera();
+                                    // pickImageCamera();
+                                    selectImageDialog(context);
                                   },
                                   child: Container(
                                     decoration: BoxDecoration(
                                         color: Colors.white,
                                         borderRadius: BorderRadius.circular(12),
-                                        border: Border.all(color: primaryColor)),
+                                        border:
+                                            Border.all(color: primaryColor)),
                                     child: Padding(
                                       padding: const EdgeInsets.all(12.0),
                                       child: Row(
                                         children: [
                                           Expanded(
                                               child: Padding(
-                                                padding: const EdgeInsets.symmetric(
-                                                    horizontal: 8.0),
-                                                child: Text(
-                                                  _pickedFile == null
-                                                      ? TextConstant.clickPicture
-                                                      : _pickedFile!.name,
-                                                  style: const TextStyle(
-                                                      color: Colors.black, fontSize: 14),
-                                                ),
-                                              )),
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 8.0),
+                                            child: Text(
+                                              _pickedFile == null
+                                                  ? TextConstant.clickPicture
+                                                  : _pickedFile!.name,
+                                              style: const TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 14),
+                                            ),
+                                          )),
                                           Icon(
                                             Icons.camera_alt,
                                             color: Colors.grey.shade700,
@@ -348,7 +352,7 @@ class _ExecutiveTourRequestDetails extends State<ExecutiveTourRequestDetails> {
                                       ),
                                     ),
                                   ),
-                                ),
+                                ),*/
                                 SizedBox(
                                   height: 15,
                                 ),
@@ -423,16 +427,29 @@ class _ExecutiveTourRequestDetails extends State<ExecutiveTourRequestDetails> {
                                               showCustomSnackBar(
                                                   "Select Status",
                                                   isError: false);
-                                            }else if (_pickedFile == null) {
+                                            }/* else if (_pickedFile == null) {
                                               showCustomSnackBar(
                                                   TextConstant.clickPicture,
                                                   isError: false);
-                                            } else if (remarksController
+                                            } */else if (remarksController
                                                 .text.isEmpty) {
                                               showCustomSnackBar('Enter Remark',
                                                   isError: false);
                                             } else {
-
+                                              String status='';
+                                              status=selectedStatus=='Approve'?'1':'2';
+                                              /*if(selectedStatus=='Approve')
+                                                {
+                                                  selectedStatus="1";
+                                                }
+                                              else{
+                                                selectedStatus="0";
+                                              }*/
+                                              updateTourRequest(
+                                                  tourController,
+                                                  widget.tour_requestid,
+                                                  status,
+                                                  remarksController.text);
                                             }
                                           },
                                           child: Padding(
@@ -453,6 +470,7 @@ class _ExecutiveTourRequestDetails extends State<ExecutiveTourRequestDetails> {
             );
           });
   }
+
   void pickImageCamera() async {
     _pickedFile = await ImagePicker().pickImage(source: ImageSource.camera);
 
@@ -484,4 +502,161 @@ class _ExecutiveTourRequestDetails extends State<ExecutiveTourRequestDetails> {
     setState(() {});
   }
 
+  void selectImageDialog(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return SimpleDialog(
+            backgroundColor: Colors.white,
+            contentPadding: const EdgeInsets.symmetric(horizontal: 20),
+            titlePadding:
+                const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+            title: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: const <Widget>[
+                Text(
+                  'Select Image',
+                  style: TextStyle(
+                      color: primaryColor,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 15),
+                ),
+                Divider(
+                  thickness: 1,
+                  color: Colors.black26,
+                ),
+              ],
+            ),
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(bottom: 20.0),
+                child: InkWell(
+                  child: Row(
+                    children: const [
+                      Icon(
+                        Icons.camera_alt,
+                        size: 25,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(left: 8.0),
+                        child: Text(
+                          'Camera',
+                          style: TextStyle(
+                              color: primaryColor,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 15),
+                        ),
+                      ),
+                    ],
+                  ),
+                  onTap: () async {
+                    // getImageFromCamera(context, 0);
+                    pickImageCamera();
+                    Navigator.pop(context);
+                  },
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 20.0),
+                child: InkWell(
+                  child: Row(
+                    children: const [
+                      Icon(
+                        Icons.image,
+                        size: 25,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(left: 8.0),
+                        child: Text(
+                          'Pick Image Or PDF',
+                          style: TextStyle(
+                              color: primaryColor,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 15),
+                        ),
+                      ),
+                    ],
+                  ),
+                  onTap: () async {
+                    // getImageFromGallery(context, 0);
+                    // pickImage();
+                    openFiles();
+
+                    Navigator.pop(context);
+                  },
+                ),
+              ),
+            ],
+          );
+        });
+  }
+
+  void openFiles() async {
+    FilePickerResult? resultFile = await FilePicker.platform.pickFiles();
+    if (resultFile != null) {
+      PlatformFile file = resultFile.files.first;
+      _pickedFile = XFile(file!.path!);
+      print(file.name);
+      print(file.path);
+      setState(() {});
+    } else {
+      //not picket any file
+    }
+  }
+
+  void pickImage() async {
+    _pickedFile = (await ImagePicker().pickImage(source: ImageSource.gallery))!;
+
+    CroppedFile? croppedFile = await ImageCropper().cropImage(
+      sourcePath: _pickedFile!.path,
+      aspectRatioPresets: [
+        // CropAspectRatioPreset.square,
+        // CropAspectRatioPreset.ratio3x2,
+        // CropAspectRatioPreset.original,
+        CropAspectRatioPreset.square,
+        // CropAspectRatioPreset.ratio16x9
+      ],
+      uiSettings: [
+        AndroidUiSettings(
+            toolbarTitle: 'Cropper',
+            toolbarColor: primaryColor,
+            toolbarWidgetColor: Colors.white,
+            hideBottomControls: true,
+            // initAspectRatio: CropAspectRatioPreset.original,
+            lockAspectRatio: true),
+        IOSUiSettings(
+          title: 'Cropper',
+        ),
+      ],
+      compressQuality: 100,
+    );
+
+    _pickedFile = XFile(croppedFile!.path);
+    // Get.find<AuthController>().updateUserImage(_pickedFile!);
+    // imageList.insert(index, imageFile);
+
+    setState(() {});
+    // update();
+  }
+
+  void updateTourRequest(TourController tourController, String tour_requestid,
+      String? selectedStatus, String text) {
+    tourController
+        .updateTourDetails(
+            tour_req_id: tour_requestid,
+            status: selectedStatus,
+            remark: text)
+        .then((message) {
+          if(message=='Data submitted successfully.')
+            {
+              showCustomSnackBar(message!, isError: false);
+              Navigator.pop(context);
+            }
+          else{
+            showCustomSnackBar(message!);
+          }
+
+
+    });
+  }
 }

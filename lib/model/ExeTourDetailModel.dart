@@ -35,7 +35,7 @@ class ExecutiveTourModel {
   String? bda;
   int? userId;
   int? roleId;
-  String? acceptedBy;
+  int? acceptedBy;
   String? description;
   int? status;
   String? remark;

@@ -122,7 +122,7 @@ class _TRFExecutiveListScreen extends State {
                           ? const Center(
                               child: CircularProgressIndicator(),
                             )
-                          : tourController.trfExecutiveProfile!.data == null
+                          : tourController.trfExecutiveProfile!.data == null || tourController.trfExecutiveProfile!.data!.isEmpty
                               ? Center(
                                   child: SizedBox(
                                       height:
@@ -302,7 +302,7 @@ class _TRFExecutiveListScreen extends State {
     }
 
     for (var members in _executiveDetails!) {
-      if (members.name!.contains(text)) {
+      if (members.name!.toLowerCase().contains(text)) {
         _searchResult!.add(members);
       }
     }

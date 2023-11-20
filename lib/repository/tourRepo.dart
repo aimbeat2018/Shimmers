@@ -89,13 +89,24 @@ class TourRepo {
   Future<Response> updateTourRequestStatus(
       {String? tour_req_id,
       String? status,
-      String? remark,
-      XFile? attachment}) async {
+      String? remark}) async {
     return await apiClient.postData(AppConstants.updateTourRequest, {
       "tour_req_id": tour_req_id,
       "status": status,
       "remark": remark,
-      "attachment": attachment
     });
+
+  }
+
+  Future<Response> updateTourRequestByHeadOfficer(
+      {String? tour_req_id,
+        String? remark,
+        XFile? attachment}) async {
+    return await apiClient.postMultipartData(AppConstants.updateTourReqByOfficer, {
+      "tour_req_id": tour_req_id!,
+      "office_remark": remark!,
+    }, [
+      MultipartBody('attachment', attachment!)
+    ]);
   }
 }

@@ -42,9 +42,11 @@ class AppConstants {
   static const String deletetourrequest='delete/tour/request';
   static const String gettourdetailsbyid='executive/request/by/id';
   static const String storetourdvisitdetails='store/tourvisit/details';
-  static const String getAllTrfExecutiveList='get/employees/list';//Change api name as per trf manager's executive list
+  static const String getAllTrfExecutiveList='get/executive/list';
   static const String getExecutiveTourRequestList ='get/executive/request/list';
   static const String updateTourRequest ='update/tour/request';
+  static const String updateTourReqByOfficer ='update/tour/request/byheadofficer';
+  static const String getApprovedTourRequestList ='get/approved/tour/request/list';
 
 
 

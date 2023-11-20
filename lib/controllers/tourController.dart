@@ -200,13 +200,36 @@ class TourController extends GetxController implements GetxService {
       {String? tour_req_id,
       String? status,
       String? remark,
-      XFile? attachment}) async {
+     }) async {
     _isLoading = true;
     update();
 
     Response response = await tourRepo.updateTourRequestStatus(
         tour_req_id: tour_req_id,
         status: status,
+        remark: remark,
+    );
+    if (response.statusCode == 200) {
+      tourAddMessage = response.body['message']; //Data submitted successfully.
+    } else if (response.statusCode == 401) {
+      Get.offAllNamed(RouteHelper.getLoginRoute());
+    } else {
+      tourAddMessage = '';
+    }
+    _isLoading = false;
+    update();
+    return tourAddMessage;
+  }
+
+  Future<String?> updateTourDetailsbyHeadOffice(
+      {String? tour_req_id,
+        String? remark,
+        XFile? attachment}) async {
+    _isLoading = true;
+    update();
+
+    Response response = await tourRepo.updateTourRequestByHeadOfficer(
+        tour_req_id: tour_req_id,
         remark: remark,
         attachment: attachment);
     if (response.statusCode == 200) {
@@ -220,4 +243,6 @@ class TourController extends GetxController implements GetxService {
     update();
     return tourAddMessage;
   }
+
+
 }

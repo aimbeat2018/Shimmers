@@ -43,9 +43,10 @@ class _ExecutivesTourRequestList extends State<ExecutivesTourRequestList> {
           }));
     });
     if (mounted) {
-     // Get.find<CampaignController>().getEmployeeCampaignList(userId);
+      // Get.find<CampaignController>().getEmployeeCampaignList(userId);
 
-      Get.find<TourController>().getExecutivesTourRequestList(exe_id: '22');//pass the executives ID here
+      Get.find<TourController>().getExecutivesTourRequestList(
+          exe_id: widget.excutive_id); //pass the executives ID here
     }
   }
 
@@ -71,7 +72,10 @@ class _ExecutivesTourRequestList extends State<ExecutivesTourRequestList> {
                   ? const Center(
                       child: CircularProgressIndicator(),
                     )
-                  : tourController.tourRequestListModel!.tourRequestList == null
+                  : tourController.tourRequestListModel!.tourRequestList ==
+                              null ||
+                          tourController
+                              .tourRequestListModel!.tourRequestList!.isEmpty
                       ? Center(
                           child: SizedBox(
                               height: MediaQuery.of(context).size.height,
@@ -121,13 +125,22 @@ class _ExecutivesTourRequestList extends State<ExecutivesTourRequestList> {
                                                 ? InkWell(
                                                     onTap: () {
                                                       Get.toNamed(RouteHelper
-                                                          .getexecutiveTourRequestDetails(
-                                                              tourController
-                                                                  .tourRequestListModel!
-                                                                  .tourRequestList![
-                                                                      index]
-                                                                  .id!
-                                                                  .toString()));
+                                                              .getexecutiveTourRequestDetails(
+                                                                  tourController
+                                                                      .tourRequestListModel!
+                                                                      .tourRequestList![
+                                                                          index]
+                                                                      .id!
+                                                                      .toString()))!
+                                                          .then((value) {
+                                                        setState(() {
+                                                          Get.find<
+                                                                  TourController>()
+                                                              .getExecutivesTourRequestList(
+                                                                  exe_id: widget
+                                                                      .excutive_id);
+                                                        });
+                                                      });
 
                                                       /*Navigator.of(context).push(MaterialPageRoute(
                                                           builder: (context) => TourVisitScreen(
@@ -147,7 +160,7 @@ class _ExecutivesTourRequestList extends State<ExecutivesTourRequestList> {
                                             SizedBox(
                                               width: 10,
                                             ),
-                                           /* tourController
+                                            /* tourController
                                                         .tourRequestListModel!
                                                         .tourRequestList![index]
                                                         .status! ==
@@ -165,7 +178,7 @@ class _ExecutivesTourRequestList extends State<ExecutivesTourRequestList> {
                                             SizedBox(
                                               width: 10,
                                             ),*/
-                                          /*  tourController
+                                            /*  tourController
                                                         .tourRequestListModel!
                                                         .tourRequestList![index]
                                                         .status! ==
@@ -180,9 +193,9 @@ class _ExecutivesTourRequestList extends State<ExecutivesTourRequestList> {
                                                                       index]
                                                                   .id!
                                                                   .toString()));
-                                                      *//* Navigator.of(context).push(MaterialPageRoute(
+                                                      */ /* Navigator.of(context).push(MaterialPageRoute(
                                       builder: (context) => TourVisitDetails(
-                                          tour_requestid: tourController.exeTourDetailModel!.data![index].id!.toString())));*//*
+                                          tour_requestid: tourController.exeTourDetailModel!.data![index].id!.toString())));*/ /*
                                                     },
                                                     child: Icon(
                                                       Icons.file_copy_outlined,
