@@ -8,13 +8,17 @@ import 'package:shimmers/repository/tourRepo.dart';
 
 import '../constant/route_helper.dart';
 import '../model/TRFExecutiveProfile.dart';
+import '../model/headOfficeRequestList.dart';
+import '../model/tourVisitModel.dart';
 
 class TourController extends GetxController implements GetxService {
   final TourRepo tourRepo;
   ExeTourDetailModel? exeTourDetailModel;
+  HeadOfficeRequestList? headOfficeRequestList;
   TourDetailsByIdModel? tourDetailsByIdModel;
   TRFExecutiveProfile? trfExecutiveProfile;
   TourRequestListModel? tourRequestListModel;
+  TourVisitModel? tourVisitModel;
   bool? _isLoading = false;
 
   String? tourAddMessage;
@@ -40,11 +44,30 @@ class TourController extends GetxController implements GetxService {
     return exeTourDetailModel;
   }
 
+  Future<HeadOfficeRequestList?> getHeadOfficeToursList() async {
+    _isLoading = true;
+    // update();
+    Response response = await tourRepo.getApprovedHeadOfficeList();
+
+    if (response.statusCode == 200) {
+      headOfficeRequestList = HeadOfficeRequestList.fromJson(response.body);
+    } else if (response.statusCode == 401) {
+      Get.offAllNamed(RouteHelper.getLoginRoute());
+    } else {
+      headOfficeRequestList = HeadOfficeRequestList();
+    }
+    _isLoading = false;
+    update();
+    return headOfficeRequestList;
+  }
+
   Future<TRFExecutiveProfile?> getExecutivesList() async {
     _isLoading = true;
     Response response = await tourRepo.getTrfExecutivesList();
     if (response.statusCode == 200) {
       trfExecutiveProfile = TRFExecutiveProfile.fromJson(response.body);
+    } else if (response.statusCode == 401) {
+      Get.offAllNamed(RouteHelper.getLoginRoute());
     } else {
       trfExecutiveProfile = TRFExecutiveProfile();
     }
@@ -196,18 +219,35 @@ class TourController extends GetxController implements GetxService {
     return tourDetailsByIdModel;
   }
 
-  Future<String?> updateTourDetails(
-      {String? tour_req_id,
-      String? status,
-      String? remark,
-     }) async {
+  Future<TourVisitModel?> getTourVisitDetails({String? tour_reqid}) async {
+    _isLoading = true;
+    update();
+    Response response =
+        await tourRepo.getVisitedTourList(tour_requestid: tour_reqid);
+    if (response.statusCode == 200) {
+      tourVisitModel = TourVisitModel.fromJson(response.body);
+    } else if (response.statusCode == 401) {
+      Get.offAllNamed(RouteHelper.getLoginRoute());
+    } else {
+      tourVisitModel = TourVisitModel();
+    }
+    _isLoading = false;
+    update();
+    return tourVisitModel;
+  }
+
+  Future<String?> updateTourDetails({
+    String? tour_req_id,
+    String? status,
+    String? remark,
+  }) async {
     _isLoading = true;
     update();
 
     Response response = await tourRepo.updateTourRequestStatus(
-        tour_req_id: tour_req_id,
-        status: status,
-        remark: remark,
+      tour_req_id: tour_req_id,
+      status: status,
+      remark: remark,
     );
     if (response.statusCode == 200) {
       tourAddMessage = response.body['message']; //Data submitted successfully.
@@ -222,16 +262,12 @@ class TourController extends GetxController implements GetxService {
   }
 
   Future<String?> updateTourDetailsbyHeadOffice(
-      {String? tour_req_id,
-        String? remark,
-        XFile? attachment}) async {
+      {String? tour_req_id, String? remark, XFile? attachment}) async {
     _isLoading = true;
     update();
 
     Response response = await tourRepo.updateTourRequestByHeadOfficer(
-        tour_req_id: tour_req_id,
-        remark: remark,
-        attachment: attachment);
+        tour_req_id: tour_req_id, remark: remark, attachment: attachment);
     if (response.statusCode == 200) {
       tourAddMessage = response.body['message']; //Data submitted successfully.
     } else if (response.statusCode == 401) {
@@ -243,6 +279,4 @@ class TourController extends GetxController implements GetxService {
     update();
     return tourAddMessage;
   }
-
-
 }

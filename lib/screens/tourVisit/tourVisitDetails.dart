@@ -423,8 +423,9 @@ class _TourVisitDetails extends State<TourVisitDetails> {
             contact: contactController.text,
             description: descriController.text)
         .then((message) async {
-      if (message == 'Request submitted successfully.') {
+      if (message == 'Tour Visit Details submitted successfully.') {
         showCustomSnackBar(message!, isError: false);
+        Navigator.pop(context);
         /* Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => TourListScreen()));*/
       } else {

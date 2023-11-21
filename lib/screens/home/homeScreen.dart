@@ -7,6 +7,7 @@ import 'package:shimmers/screens/campaigns/campaignsListScreen.dart';
 import 'package:shimmers/screens/distributors/distributorsScreen.dart';
 import 'package:shimmers/screens/salons/salonList/salonListScreen.dart';
 import 'package:shimmers/screens/setTarget/setTargetScreen.dart';
+import 'package:shimmers/screens/tourVisit/headOfficerTourRequests.dart';
 import 'package:shimmers/screens/tourVisit/tourListScreen.dart';
 import 'package:shimmers/screens/tourVisit/tourVisitScreen.dart';
 import 'package:shimmers/screens/tourVisit/trfExecutiveList.dart';
@@ -220,7 +221,7 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             Center(
                               child: InkWell(
                                 onTap: () {
-                                  if (userRole == 'TRF Executive') {
+                                  if (userRole == 'TRF Executive'||userRole=='TRF Manager') {
                                     showCustomSnackBar(
                                         'You dont have the permission to use this module',
                                         isError: true);
@@ -266,7 +267,7 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             Center(
                               child: InkWell(
                                 onTap: () {
-                                  if (userRole == 'TRF Executive') {
+                                  if (userRole == 'TRF Executive'||userRole=='TRF Manager') {
                                     showCustomSnackBar(
                                         'You dont have the permission to use this module',
                                         isError: true);
@@ -312,7 +313,7 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             Center(
                               child: InkWell(
                                 onTap: () {
-                                  if (userRole == 'TRF Executive') {
+                                  if (userRole == 'TRF Executive'||userRole=='TRF Manager') {
                                     showCustomSnackBar(
                                         'You dont have the permission to use this module',
                                         isError: true);
@@ -365,7 +366,7 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             Center(
                               child: InkWell(
                                 onTap: () {
-                                  if (userRole == 'TRF Executive') {
+                                  if (userRole == 'TRF Executive'||userRole=='TRF Manager') {
                                     showCustomSnackBar(
                                         'You dont have the permission to use this module',
                                         isError: true);
@@ -413,7 +414,7 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             Center(
                               child: InkWell(
                                 onTap: () {
-                                  if (userRole == 'TRF Executive') {
+                                  if (userRole == 'TRF Executive'||userRole=='TRF Manager') {
                                     showCustomSnackBar(
                                         'You dont have the permission to use this module',
                                         isError: true);
@@ -462,7 +463,7 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             Center(
                               child: InkWell(
                                 onTap: () {
-                                  if (userRole == 'TRF Executive') {
+                                  if (userRole == 'TRF Executive'||userRole=='TRF Manager') {
                                     showCustomSnackBar(
                                         'You dont have the permission to use this module',
                                         isError: true);
@@ -512,7 +513,7 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             Center(
                               child: InkWell(
                                 onTap: () {
-                                  if (userRole == 'TRF Executive') {
+                                  if (userRole == 'TRF Executive'||userRole=='TRF Manager') {
                                     showCustomSnackBar(
                                         'You dont have the permission to use this module',
                                         isError: true);
@@ -570,6 +571,14 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                                 TRFExecutiveListScreen()));
 
                                   }
+                                  else if(userRole=='Head Officer') {
+                                    //Head Officer Flow
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                HeadOfficerTourRequests()));
+
+                                  }
                                 },
                                 child: SizedBox(
                                   height: 135,
@@ -606,7 +615,7 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             Center(
                               child: InkWell(
                                 onTap: () {
-                                  if (userRole == 'TRF Executive') {
+                                  if (userRole == 'TRF Executive'||userRole=='TRF Manager') {
                                     showCustomSnackBar(
                                         'You dont have the permission to use this module',
                                         isError: true);

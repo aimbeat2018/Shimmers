@@ -47,6 +47,7 @@ class AppConstants {
   static const String updateTourRequest ='update/tour/request';
   static const String updateTourReqByOfficer ='update/tour/request/byheadofficer';
   static const String getApprovedTourRequestList ='get/approved/tour/request/list';
+  static const String getTourVisitDetailsById ='get/tour/details/by/reqid';
 
 
 

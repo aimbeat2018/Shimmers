@@ -1,15 +1,15 @@
-class ExeTourDetailModel {
+class HeadOfficeRequestList {
   String? message;
-  List<ExecutiveTourModel>? data;
+  List<Data>? data;
 
-  ExeTourDetailModel({this.message, this.data});
+  HeadOfficeRequestList({this.message, this.data});
 
-  ExeTourDetailModel.fromJson(Map<String, dynamic> json) {
+  HeadOfficeRequestList.fromJson(Map<String, dynamic> json) {
     message = json['message'];
     if (json['data'] != null) {
-      data = <ExecutiveTourModel>[];
+      data = <Data>[];
       json['data'].forEach((v) {
-        data!.add(new ExecutiveTourModel.fromJson(v));
+        data!.add(new Data.fromJson(v));
       });
     }
   }
@@ -24,7 +24,7 @@ class ExeTourDetailModel {
   }
 }
 
-class ExecutiveTourModel {
+class Data {
   int? id;
   String? area;
   String? date;
@@ -32,19 +32,19 @@ class ExecutiveTourModel {
   int? amount;
   String? purpose;
   String? executiveRemark;
-  String? officeRemark;
-  String? bda;
+  Null? officeRemark;
+  Null? bda;
   int? userId;
   int? roleId;
   int? acceptedBy;
-  String? description;
+  Null? description;
   int? status;
   String? remark;
   String? attachment;
   int? isVisited;
   int? createdBy;
 
-  ExecutiveTourModel(
+  Data(
       {this.id,
         this.area,
         this.date,
@@ -64,7 +64,7 @@ class ExecutiveTourModel {
         this.isVisited,
         this.createdBy});
 
-  ExecutiveTourModel.fromJson(Map<String, dynamic> json) {
+  Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     area = json['area'];
     date = json['date'];

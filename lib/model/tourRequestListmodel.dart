@@ -32,6 +32,7 @@ class TourRequestDetails {
   int? amount;
   String? purpose;
   String? executiveRemark;
+  String? officeRemark;
   String? bda;
   int? userId;
   int? roleId;
@@ -40,25 +41,28 @@ class TourRequestDetails {
   int? status;
   String? remark;
   String? attachment;
+  int? isVisited;
   int? createdBy;
 
   TourRequestDetails(
       {this.id,
-      this.area,
-      this.date,
-      this.time,
-      this.amount,
-      this.purpose,
-      this.executiveRemark,
-      this.bda,
-      this.userId,
-      this.roleId,
-      this.acceptedBy,
-      this.description,
-      this.status,
-      this.remark,
-      this.attachment,
-      this.createdBy});
+        this.area,
+        this.date,
+        this.time,
+        this.amount,
+        this.purpose,
+        this.executiveRemark,
+        this.officeRemark,
+        this.bda,
+        this.userId,
+        this.roleId,
+        this.acceptedBy,
+        this.description,
+        this.status,
+        this.remark,
+        this.attachment,
+        this.isVisited,
+        this.createdBy});
 
   TourRequestDetails.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -68,6 +72,7 @@ class TourRequestDetails {
     amount = json['amount'];
     purpose = json['purpose'];
     executiveRemark = json['executive_remark'];
+    officeRemark = json['office_remark'];
     bda = json['bda'];
     userId = json['user_id'];
     roleId = json['role_id'];
@@ -76,6 +81,7 @@ class TourRequestDetails {
     status = json['status'];
     remark = json['remark'];
     attachment = json['attachment'];
+    isVisited = json['is_visited'];
     createdBy = json['created_by'];
   }
 
@@ -88,6 +94,7 @@ class TourRequestDetails {
     data['amount'] = this.amount;
     data['purpose'] = this.purpose;
     data['executive_remark'] = this.executiveRemark;
+    data['office_remark'] = this.officeRemark;
     data['bda'] = this.bda;
     data['user_id'] = this.userId;
     data['role_id'] = this.roleId;
@@ -96,6 +103,7 @@ class TourRequestDetails {
     data['status'] = this.status;
     data['remark'] = this.remark;
     data['attachment'] = this.attachment;
+    data['is_visited'] = this.isVisited;
     data['created_by'] = this.createdBy;
     return data;
   }

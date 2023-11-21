@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:shimmers/screens/home/mainScreen.dart';
 import 'package:shimmers/screens/salons/salonDetails/salonDetailsScreen.dart';
 import 'package:shimmers/screens/salonsActivity/demo/addDemoScreen.dart';
+import 'package:shimmers/screens/tourVisit/UpdateTourHeadOffice.dart';
+import 'package:shimmers/screens/tourVisit/ViewSalonVisitDetails.dart';
 import 'package:shimmers/screens/tourVisit/executiveTourReqDetails.dart';
 import 'package:shimmers/screens/tourVisit/tourVisitDetails.dart';
 import 'package:shimmers/screens/tourVisit/tourVisitScreen.dart';
@@ -23,6 +25,8 @@ class RouteHelper {
   static const String addTourVisitDetails = '/addTourVisitDetails';
   static const String executiveTourRequestDetails =
       '/executiveTourRequestDetails';
+  static const String updateTourByHeadOffice = '/updateTourByHeadOffice';
+  static const String viewSalonVisitDetails = '/viewSalonVisitDetails';
 
   static String getLoginRoute() => login;
 
@@ -48,6 +52,12 @@ class RouteHelper {
 
   static String getexecutiveTourRequestDetails(String tour_requestid) =>
       '$executiveTourRequestDetails?tour_requestid=$tour_requestid';
+
+  static String updateTourdetailsByHeadOffice(String tour_requestid) =>
+      '$updateTourByHeadOffice?tour_requestid=$tour_requestid';
+
+  static String viewSalonVisitDetailsRoute(String tour_requestid)=>
+  '$viewSalonVisitDetails?tour_requestid=$tour_requestid';
 
   static List<GetPage> routes = [
     GetPage(name: login, page: () => getRoute(const LoginScreen())),
@@ -81,6 +91,15 @@ class RouteHelper {
         page: () => ExecutiveTourRequestDetails(
               tour_requestid: Get.parameters['tour_requestid']!,
             )),
+    GetPage(
+        name: updateTourByHeadOffice,
+        page: () => UpdateTourHeadOffice(
+              tour_requestid: Get.parameters['tour_requestid']!,
+            )),
+    GetPage(
+        name: viewSalonVisitDetails,
+        page: () => ViewSalonVisitDetails(
+            tour_requestid: Get.parameters['tour_requestid']!)),
 
     // GetPage(
     //     name: language,

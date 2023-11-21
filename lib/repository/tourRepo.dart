@@ -18,6 +18,10 @@ class TourRepo {
     return await apiClient.getData(AppConstants.gettourrequestlist);
   }
 
+  Future<Response> getApprovedHeadOfficeList() async {
+    return await apiClient.getData(AppConstants.getApprovedTourRequestList);
+  }
+
   Future<Response> getTrfExecutivesList() async {
     return await apiClient.getData(AppConstants.getAllTrfExecutiveList);
   }
@@ -79,6 +83,11 @@ class TourRepo {
   Future<Response> getTourDetailsByID({String? tour_id}) async {
     return await apiClient
         .postData(AppConstants.gettourdetailsbyid, {"tour_req_id": tour_id});
+  }
+  Future<Response> getVisitedTourList({String? tour_requestid}) async{
+    return await apiClient.postData(AppConstants.getTourVisitDetailsById,{
+      'tour_req_id':tour_requestid
+    });
   }
 
   Future<Response> getExecutiveTourRequestList({String? executive_id}) async {

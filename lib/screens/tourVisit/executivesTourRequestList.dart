@@ -160,49 +160,28 @@ class _ExecutivesTourRequestList extends State<ExecutivesTourRequestList> {
                                             SizedBox(
                                               width: 10,
                                             ),
-                                            /* tourController
+                                            tourController.tourRequestListModel!
+                                                .tourRequestList![index].isVisited! ==
+                                                1
+                                                ? InkWell(
+                                              onTap: () {
+                                                Get.toNamed(RouteHelper
+                                                    .viewSalonVisitDetailsRoute(
+                                                    tourController
                                                         .tourRequestListModel!
                                                         .tourRequestList![index]
-                                                        .status! ==
-                                                    0
-                                                ? InkWell(
-                                                    onTap: () {
-
-                                                    },
-                                                    child: Icon(
-                                                      Icons.delete,
-                                                      color: primaryColor,
-                                                    ),
-                                                  )
-                                                : SizedBox(),
-                                            SizedBox(
-                                              width: 10,
-                                            ),*/
-                                            /*  tourController
-                                                        .tourRequestListModel!
-                                                        .tourRequestList![index]
-                                                        .status! ==
-                                                    1
-                                                ? InkWell(
-                                                    onTap: () {
-                                                      Get.toNamed(RouteHelper
-                                                          .getaddTourVisitDetails(
-                                                              tourController
-                                                                  .tourRequestListModel!
-                                                                  .tourRequestList![
-                                                                      index]
-                                                                  .id!
-                                                                  .toString()));
-                                                      */ /* Navigator.of(context).push(MaterialPageRoute(
+                                                        .id!
+                                                        .toString()));
+                                                /* Navigator.of(context).push(MaterialPageRoute(
                                       builder: (context) => TourVisitDetails(
-                                          tour_requestid: tourController.exeTourDetailModel!.data![index].id!.toString())));*/ /*
-                                                    },
-                                                    child: Icon(
-                                                      Icons.file_copy_outlined,
-                                                      color: primaryColor,
-                                                    ),
-                                                  )
-                                                : SizedBox()*/
+                                          tour_requestid: tourController.exeTourDetailModel!.data![index].id!.toString())));*/
+                                              },
+                                              child:Icon(
+                                                Icons.remove_red_eye,
+                                                color: primaryColor,
+                                              ),
+                                            )
+                                                : SizedBox(),
                                           ],
                                         ),
                                         SizedBox(
