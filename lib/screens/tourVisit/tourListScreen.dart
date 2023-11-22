@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shimmers/controllers/tourController.dart';
 import 'package:shimmers/screens/tourVisit/TourListWidget.dart';
+import 'package:shimmers/screens/tourVisit/ticketPdfScreen.dart';
+import 'package:shimmers/screens/tourVisit/tourImageScreen.dart';
 import 'package:shimmers/screens/tourVisit/tourVisitDetails.dart';
 import 'package:shimmers/screens/tourVisit/tourVisitScreen.dart';
 
@@ -18,6 +20,8 @@ import '../../constant/route_helper.dart';
 import '../../constant/textConstant.dart';
 import '../campaigns/campaignsListWidget.dart';
 import '../noDataFound/noDataFoundScreen.dart';
+import 'package:path/path.dart' as p;
+
 
 class TourListScreen extends StatefulWidget {
   @override
@@ -166,22 +170,30 @@ class _TourListScreen extends State<TourListScreen> {
                                             SizedBox(
                                               width: 10,
                                             ),
-                                            tourController.exeTourDetailModel!
-                                                        .data![index].status! ==
-                                                    1 && tourController.exeTourDetailModel!
-                                                .data![index].isVisited! ==
-                                                0
+                                            tourController
+                                                            .exeTourDetailModel!
+                                                            .data![index]
+                                                            .status! ==
+                                                        1 &&
+                                                    tourController
+                                                            .exeTourDetailModel!
+                                                            .data![index]
+                                                            .isVisited! ==
+                                                        0
                                                 ? InkWell(
                                                     onTap: () {
                                                       Get.toNamed(RouteHelper
-                                                          .getaddTourVisitDetails(
-                                                              tourController
-                                                                  .exeTourDetailModel!
-                                                                  .data![index]
-                                                                  .id!
-                                                                  .toString()))?.then((value){
-                                                        Get.find<TourController>().getTourRequestList();
-
+                                                              .getaddTourVisitDetails(
+                                                                  tourController
+                                                                      .exeTourDetailModel!
+                                                                      .data![
+                                                                          index]
+                                                                      .id!
+                                                                      .toString()))
+                                                          ?.then((value) {
+                                                        Get.find<
+                                                                TourController>()
+                                                            .getTourRequestList();
                                                       });
                                                       /* Navigator.of(context).push(MaterialPageRoute(
                                       builder: (context) => TourVisitDetails(
@@ -196,8 +208,10 @@ class _TourListScreen extends State<TourListScreen> {
                                             SizedBox(
                                               width: 10,
                                             ),
-                                            tourController.exeTourDetailModel!
-                                                        .data![index].isVisited! ==
+                                            tourController
+                                                        .exeTourDetailModel!
+                                                        .data![index]
+                                                        .isVisited! ==
                                                     1
                                                 ? InkWell(
                                                     onTap: () {
@@ -212,7 +226,7 @@ class _TourListScreen extends State<TourListScreen> {
                                       builder: (context) => TourVisitDetails(
                                           tour_requestid: tourController.exeTourDetailModel!.data![index].id!.toString())));*/
                                                     },
-                                                    child:Icon(
+                                                    child: Icon(
                                                       Icons.remove_red_eye,
                                                       color: primaryColor,
                                                     ),
@@ -268,18 +282,53 @@ class _TourListScreen extends State<TourListScreen> {
                                                             .attachment ==
                                                         ''
                                                 ? SizedBox()
-                                                : Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            top: 5.0),
-                                                    child: Text(
-                                                      'View Ticket',
-                                                      // 'Remark: ${widget.model.remark ??'vff':widget.model.remark}',
-                                                      style: TextStyle(
-                                                          color: primaryColor,
-                                                          fontSize: 14,
-                                                          fontWeight:
-                                                              FontWeight.w500),
+                                                : InkWell(
+                                                    onTap: () {
+                                                      final extension = p.extension(tourController
+                                                          .exeTourDetailModel!
+                                                          .data![
+                                                      index]
+                                                          .attachment!);
+                                                      if(extension=='.pdf')
+                                                        {
+                                                          Navigator.push(
+                                                              context,
+                                                              MaterialPageRoute(
+                                                                  builder: (context) => TicketPdfScreen(
+                                                                      fileUrl: tourController
+                                                                          .exeTourDetailModel!
+                                                                          .data![
+                                                                      index]
+                                                                          .attachment!)));
+                                                        }
+                                                      else{
+                                                      //  showCustomSnackBar('File is Image',isError: false);
+                                                        Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                                builder: (context) => TourImageScreen(
+                                                                    image_url: tourController
+                                                                        .exeTourDetailModel!
+                                                                        .data![
+                                                                    index]
+                                                                        .attachment!,extension: extension,)));
+                                                      }
+
+                                                    },
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              top: 5.0),
+                                                      child: Text(
+                                                        'View Ticket',
+                                                        // 'Remark: ${widget.model.remark ??'vff':widget.model.remark}',
+                                                        style: TextStyle(
+                                                            color: primaryColor,
+                                                            fontSize: 14,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w500),
+                                                      ),
                                                     ),
                                                   ),
                                           ],
@@ -354,7 +403,7 @@ class _TourListScreen extends State<TourListScreen> {
                                                 padding: const EdgeInsets.only(
                                                     top: 5.0),
                                                 child: Text(
-                                                  'Office Head Remark: ${tourController.exeTourDetailModel!.data![index].officeRemark}',
+                                                  'Head Office Remark: ${tourController.exeTourDetailModel!.data![index].officeRemark}',
                                                   // 'Remark: ${widget.model.remark ??'vff':widget.model.remark}',
                                                   style: TextStyle(
                                                       color: Colors.grey,
