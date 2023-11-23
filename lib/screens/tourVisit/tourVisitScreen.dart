@@ -492,10 +492,9 @@ class _TourVisitScreenState extends State<TourVisitScreen> {
             purpose: purposeController.text,
             tourid: tourid)
         .then((message) async {
-      if (message == 'Request submitted successfully.') {
+      if (message == 'Request submitted successfully.'||message=='Request updated successfully.') {
         showCustomSnackBar(message!, isError: false);
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => TourListScreen()));
+        Navigator.pop(context);
       } else {
         showCustomSnackBar(message!);
       }

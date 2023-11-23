@@ -22,7 +22,6 @@ import '../campaigns/campaignsListWidget.dart';
 import '../noDataFound/noDataFoundScreen.dart';
 import 'package:path/path.dart' as p;
 
-
 class TourListScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -69,12 +68,12 @@ class _TourListScreen extends State<TourListScreen> {
                       fontWeight: FontWeight.bold),
                 ),
               ),
-              body: tourController.isLoading &&
-                      tourController.exeTourDetailModel == null
+              body: tourController.isLoading
                   ? const Center(
                       child: CircularProgressIndicator(),
                     )
-                  : tourController.exeTourDetailModel!.data == null
+                  : tourController.exeTourDetailModel!.data == null ||
+                          tourController.exeTourDetailModel!.data!.isEmpty
                       ? Center(
                           child: SizedBox(
                               height: MediaQuery.of(context).size.height,
@@ -122,12 +121,20 @@ class _TourListScreen extends State<TourListScreen> {
                                                 ? InkWell(
                                                     onTap: () {
                                                       Get.toNamed(RouteHelper
-                                                          .getaddTourRequestRoute(
-                                                              tourController
-                                                                  .exeTourDetailModel!
-                                                                  .data![index]
-                                                                  .id!
-                                                                  .toString()));
+                                                              .getaddTourRequestRoute(
+                                                                  tourController
+                                                                      .exeTourDetailModel!
+                                                                      .data![
+                                                                          index]
+                                                                      .id!
+                                                                      .toString()))!.then((value) {
+                                                        setState(() {
+                                                          Get.find<
+                                                              TourController>()
+                                                              .getTourRequestList();
+                                                        });
+
+                                                      });
 
                                                       /*Navigator.of(context).push(MaterialPageRoute(
                                                           builder: (context) => TourVisitScreen(
@@ -191,9 +198,13 @@ class _TourListScreen extends State<TourListScreen> {
                                                                       .id!
                                                                       .toString()))
                                                           ?.then((value) {
-                                                        Get.find<
-                                                                TourController>()
-                                                            .getTourRequestList();
+
+                                                        setState(() {
+                                                          Get.find<
+                                                              TourController>()
+                                                              .getTourRequestList();
+                                                        });
+
                                                       });
                                                       /* Navigator.of(context).push(MaterialPageRoute(
                                       builder: (context) => TourVisitDetails(
@@ -284,36 +295,37 @@ class _TourListScreen extends State<TourListScreen> {
                                                 ? SizedBox()
                                                 : InkWell(
                                                     onTap: () {
-                                                      final extension = p.extension(tourController
-                                                          .exeTourDetailModel!
-                                                          .data![
-                                                      index]
-                                                          .attachment!);
-                                                      if(extension=='.pdf')
-                                                        {
-                                                          Navigator.push(
-                                                              context,
-                                                              MaterialPageRoute(
-                                                                  builder: (context) => TicketPdfScreen(
-                                                                      fileUrl: tourController
-                                                                          .exeTourDetailModel!
-                                                                          .data![
-                                                                      index]
-                                                                          .attachment!)));
-                                                        }
-                                                      else{
-                                                      //  showCustomSnackBar('File is Image',isError: false);
+                                                      final extension = p
+                                                          .extension(tourController
+                                                              .exeTourDetailModel!
+                                                              .data![index]
+                                                              .attachment!);
+                                                      if (extension == '.pdf') {
                                                         Navigator.push(
                                                             context,
                                                             MaterialPageRoute(
-                                                                builder: (context) => TourImageScreen(
-                                                                    image_url: tourController
+                                                                builder: (context) => TicketPdfScreen(
+                                                                    fileUrl: tourController
                                                                         .exeTourDetailModel!
                                                                         .data![
-                                                                    index]
-                                                                        .attachment!,extension: extension,)));
+                                                                            index]
+                                                                        .attachment!)));
+                                                      } else {
+                                                        //  showCustomSnackBar('File is Image',isError: false);
+                                                        Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                                builder:
+                                                                    (context) =>
+                                                                        TourImageScreen(
+                                                                          image_url: tourController
+                                                                              .exeTourDetailModel!
+                                                                              .data![index]
+                                                                              .attachment!,
+                                                                          extension:
+                                                                              extension,
+                                                                        )));
                                                       }
-
                                                     },
                                                     child: Padding(
                                                       padding:
@@ -434,7 +446,13 @@ class _TourListScreen extends State<TourListScreen> {
                   child: Icon(Icons.add),
                   backgroundColor: primaryColor,
                   onPressed: () {
-                    Get.toNamed(RouteHelper.getaddTourRequestRoute('0'));
+                    Get.toNamed(RouteHelper.getaddTourRequestRoute('0')) ?.then((value) {
+                      setState(() {
+                        Get.find<
+                            TourController>()
+                            .getTourRequestList();
+                      });
+                    });
                     /*Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => TourVisitScreen(tour_requestid: 0)));*/
                   },

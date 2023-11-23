@@ -65,7 +65,7 @@ class _HeadOfficerTourRequests extends State{
             ? const Center(
           child: CircularProgressIndicator(),
         )
-            : tourController.headOfficeRequestList!.data == null
+            : tourController.headOfficeRequestList!.data == null || tourController.headOfficeRequestList!.data!.isEmpty
             ? Center(
             child: SizedBox(
                 height: MediaQuery.of(context).size.height,
@@ -118,7 +118,11 @@ class _HeadOfficerTourRequests extends State{
                                           .headOfficeRequestList!
                                           .data![index]
                                           .id!
-                                          .toString()));
+                                          .toString()))?.then((value) {
+                                            setState(() {
+                                              Get.find<TourController>().getHeadOfficeToursList();
+                                            });
+                                  });
 
                                   /*Navigator.of(context).push(MaterialPageRoute(
                                                           builder: (context) => TourVisitScreen(

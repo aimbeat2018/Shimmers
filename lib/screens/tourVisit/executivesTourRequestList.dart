@@ -67,8 +67,7 @@ class _ExecutivesTourRequestList extends State<ExecutivesTourRequestList> {
                       fontWeight: FontWeight.bold),
                 ),
               ),
-              body: tourController.isLoading &&
-                      tourController.tourRequestListModel == null
+              body: tourController.isLoading
                   ? const Center(
                       child: CircularProgressIndicator(),
                     )

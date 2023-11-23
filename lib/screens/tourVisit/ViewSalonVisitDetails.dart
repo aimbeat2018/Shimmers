@@ -90,7 +90,7 @@ class _ViewSalonVisitDetails extends State<ViewSalonVisitDetails>{
                 fontWeight: FontWeight.bold),
           ),
         ),
-        body: tourController.isLoading && tourVisitModel == null
+        body: tourVisitModel == null
             ? const Center(child: CircularProgressIndicator())
             : tourVisitModel!.tourVisitDetailModel == null ||
             tourVisitModel!.tourVisitDetailModel!.isEmpty
