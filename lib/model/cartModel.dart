@@ -8,6 +8,7 @@ class CartModel {
   int? amount;
   int? amountWithQty;
   int? afterDiscountAmount;
+  int? standalon_discount;
   String? itemSummary;
 
   CartModel(
@@ -21,6 +22,7 @@ class CartModel {
       this.discountType,
       this.amount,
       this.afterDiscountAmount,
+      this.standalon_discount,
       this.itemSummary});
 
   CartModel.fromJson(Map<String, dynamic> json) {
@@ -33,6 +35,7 @@ class CartModel {
     discountType = json['discount_type'];
     amountWithQty = json['amount'];
     afterDiscountAmount = json['after_discount_amount'];
+    standalon_discount = json['standalon_discount'];
     itemSummary = json['item_summary'];
   }
 
@@ -47,6 +50,7 @@ class CartModel {
     data['discount_type'] = this.discountType;
     data['amount'] = this.amountWithQty;
     data['after_discount_amount'] = this.afterDiscountAmount;
+    data['standalon_discount'] = this.standalon_discount;
     data['item_summary'] = this.itemSummary;
     return data;
   }

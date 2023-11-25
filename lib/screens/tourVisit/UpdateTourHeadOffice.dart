@@ -174,7 +174,7 @@ class _UpdateTourHeadOffice extends State<UpdateTourHeadOffice> {
                                         SizedBox(
                                           height: 5,
                                         ),
-                                        Text(
+                                        /*Text(
                                           'Description: ${tourDetailsByIdModel!.data![0].description}',
                                           style: TextStyle(
                                               color: Colors.grey,
@@ -183,7 +183,7 @@ class _UpdateTourHeadOffice extends State<UpdateTourHeadOffice> {
                                         ),
                                         SizedBox(
                                           height: 5,
-                                        ),
+                                        ),*/
                                         Text(
                                           'Amount: ${tourDetailsByIdModel!.data![0].amount!.toString()}',
                                           style: TextStyle(

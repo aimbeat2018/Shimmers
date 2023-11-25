@@ -423,12 +423,11 @@ class _ProductListScreenState extends State<ProductListScreen> {
                                                             });
 
                                                             CartModel _cartModel = CartModel(
-                                                                productId:
-                                                                    salonController
-                                                                        .productModel!
-                                                                        .data![
-                                                                            index]
-                                                                        .id,
+                                                                productId: salonController
+                                                                    .productModel!
+                                                                    .data![
+                                                                        index]
+                                                                    .id,
                                                                 image: salonController
                                                                     .productModel!
                                                                     .data![
@@ -444,25 +443,27 @@ class _ProductListScreenState extends State<ProductListScreen> {
                                                                     .data![
                                                                         index]
                                                                     .quantity,
-                                                                amountWithQty: int.parse(
-                                                                    salonController
-                                                                        .productModel!
-                                                                        .data![
-                                                                            index]
-                                                                        .price!),
+                                                                amountWithQty: int.parse(salonController
+                                                                    .productModel!
+                                                                    .data![
+                                                                        index]
+                                                                    .price!),
                                                                 discountValue:
                                                                     0,
                                                                 discountType:
                                                                     "",
-                                                                amount: int.parse(
-                                                                    salonController
-                                                                        .productModel!
-                                                                        .data![
-                                                                            index]
-                                                                        .price!),
+                                                                amount: int.parse(salonController
+                                                                    .productModel!
+                                                                    .data![
+                                                                        index]
+                                                                    .price!),
                                                                 afterDiscountAmount:
                                                                     0,
-                                                                itemSummary: "");
+                                                                itemSummary: "",
+                                                                standalon_discount: salonController
+                                                                    .productModel!
+                                                                    .data![index]
+                                                                    .standalon_discount);
 
                                                             _cartList.add(
                                                                 _cartModel);
@@ -510,7 +511,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
                                                                       primaryColor),
                                                               child: Padding(
                                                                 padding: const EdgeInsets
-                                                                    .symmetric(
+                                                                        .symmetric(
                                                                     vertical:
                                                                         8.0,
                                                                     horizontal:
@@ -565,7 +566,6 @@ class _ProductListScreenState extends State<ProductListScreen> {
                                                                       } else {
                                                                         salonController.productModel!.data![index].quantity! -
                                                                             1;
-
                                                                         cartModel.quantity = salonController
                                                                             .productModel!
                                                                             .data![index]

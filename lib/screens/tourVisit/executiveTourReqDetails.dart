@@ -176,7 +176,7 @@ class _ExecutiveTourRequestDetails extends State<ExecutiveTourRequestDetails> {
                                         SizedBox(
                                           height: 5,
                                         ),
-                                        Text(
+                                       /* Text(
                                           'Description: ${tourDetailsByIdModel!.data![0].description}',
                                           style: TextStyle(
                                               color: Colors.grey,
@@ -185,7 +185,7 @@ class _ExecutiveTourRequestDetails extends State<ExecutiveTourRequestDetails> {
                                         ),
                                         SizedBox(
                                           height: 5,
-                                        ),
+                                        ),*/
                                         Text(
                                           'Amount: ${tourDetailsByIdModel!.data![0].amount!.toString()}',
                                           style: TextStyle(

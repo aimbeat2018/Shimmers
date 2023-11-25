@@ -75,6 +75,10 @@ class TextConstant {
       "Going back will delete the information added. you will have to add the Salon again.";
   static String backDescription1 =
       "Going back will delete the information added. you will have to add the Details again.";
+  static String discountTitle =
+      "Discount";
+  static String discountDescription =
+      "You are not allowed to give this discount. You need to take approval from manager";
   static String salonCategory = "Salon Category";
   static String salonName = "Salon Name";
   static String salonImage = "Salon Image";

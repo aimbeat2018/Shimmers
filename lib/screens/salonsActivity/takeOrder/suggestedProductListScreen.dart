@@ -157,7 +157,9 @@ class _SuggestedProductListScreenState
                                                   .suggestedProductsList[index]
                                                   .price!),
                                               afterDiscountAmount: 0,
-                                              itemSummary: "");
+                                              itemSummary: "",
+                                              standalon_discount: (widget
+                                                  .suggestedProductsList[index].standalon_discount!));
 
                                           widget.cartList.add(_cartModel);
                                         },

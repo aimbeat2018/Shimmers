@@ -31,6 +31,7 @@ class ProductData {
   int? categoryId;
   int? quantity = 0;
   String? taxName;
+  int? standalon_discount;
   String? taxRatePercent;
   List<SuggestedProducts>? suggestedProducts;
   String? totalAmount;
@@ -48,6 +49,7 @@ class ProductData {
       this.brandId,
       this.categoryId,
       this.taxName,
+      this.standalon_discount,
       this.taxRatePercent,
       this.suggestedProducts,
       this.totalAmount,
@@ -64,6 +66,7 @@ class ProductData {
     brandId = json['brand_id'];
     categoryId = json['category_id'];
     taxName = json['tax_name'];
+    standalon_discount = json['standalon_discount'];
     taxRatePercent = json['tax_rate_percent'];
     if (json['suggested_products'] != null) {
       suggestedProducts = <SuggestedProducts>[];
@@ -87,6 +90,7 @@ class ProductData {
     data['brand_id'] = brandId;
     data['category_id'] = categoryId;
     data['tax_name'] = taxName;
+    data['standalon_discount'] = standalon_discount;
     data['tax_rate_percent'] = taxRatePercent;
     if (suggestedProducts != null) {
       data['suggested_products'] =
@@ -107,6 +111,7 @@ class SuggestedProducts {
   int? unitId;
   int? brandId;
   int? categoryId;
+  int? standalon_discount;
   int? quantity = 0;
   String? totalAmount;
   String? imageUrl;
@@ -120,6 +125,7 @@ class SuggestedProducts {
       this.unitId,
       this.brandId,
       this.categoryId,
+      this.standalon_discount,
       this.totalAmount,
       this.imageUrl,
       this.downloadFileUrl,
@@ -132,6 +138,7 @@ class SuggestedProducts {
     unitId = json['unit_id'];
     brandId = json['brand_id'];
     categoryId = json['category_id'];
+    standalon_discount = json['standalon_discount'];
     totalAmount = json['total_amount'];
     imageUrl = json['image_url'];
     downloadFileUrl = json['download_file_url'];
@@ -146,6 +153,7 @@ class SuggestedProducts {
     data['unit_id'] = unitId;
     data['brand_id'] = brandId;
     data['category_id'] = categoryId;
+    data['standalon_discount'] = standalon_discount;
     data['total_amount'] = totalAmount;
     data['image_url'] = imageUrl;
     data['download_file_url'] = downloadFileUrl;

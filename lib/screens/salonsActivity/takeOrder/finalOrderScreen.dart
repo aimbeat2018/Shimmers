@@ -44,7 +44,7 @@ class _FinalOrderScreenState extends State<FinalOrderScreen> {
   List<String> discountType = ['Percentage', 'Amount'];
   String? selectedDiscountType = "Percentage";
 
-  late int totalAmount, totalDiscountAmount, totalPayableAmount;
+  late int totalAmount, totalDiscountAmount, totalPayableAmount, need_approval,count;
 
   String _connectionStatus = 'unKnown';
   final Connectivity _connectivity = Connectivity();
@@ -66,6 +66,8 @@ class _FinalOrderScreenState extends State<FinalOrderScreen> {
     totalAmount = 0;
     totalDiscountAmount = 0;
     totalPayableAmount = 0;
+    need_approval = 0;
+    count=0;
     for (var cartModel in widget.cartList) {
       totalAmount += cartModel.amount!;
       totalPayableAmount += cartModel.amount!;
@@ -259,9 +261,6 @@ class _FinalOrderScreenState extends State<FinalOrderScreen> {
                                               height: 10,
                                             ),
                                             Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
                                               children: [
                                                 Container(
                                                   width: MediaQuery.of(context)
@@ -282,16 +281,49 @@ class _FinalOrderScreenState extends State<FinalOrderScreen> {
                                                       if (value.isNotEmpty) {
                                                         if (selectedDiscountType ==
                                                             "Percentage") {
-                                                          calculateDiscountPercentageAmount(
-                                                              value, index);
+                                                          int comp_dis =
+                                                              int.parse(value);
+
+                                                          if (comp_dis >
+                                                              widget
+                                                                  .cartList[
+                                                                      index]
+                                                                  .standalon_discount!) {
+                                                            calculateDiscountPercentageAmount(
+                                                                value, index);
+                                                            showDiscountDialog(
+                                                                context);
+                                                            count++;
+                                                          } else {
+                                                            calculateDiscountPercentageAmount(
+                                                                value, index);
+                                                            if(count==0)
+                                                              {
+                                                              }
+                                                            else{
+                                                              count--;
+                                                            }
+                                                          }
                                                         } else {
                                                           calculateDiscountAmount(
                                                               value, index);
                                                         }
                                                       }
+                                                      /* else{
+                                                        widget.cartList[index].afterDiscountAmount=0;
+                                                      }*/
                                                     },
                                                   ),
                                                 ),
+                                                SizedBox(
+                                                  width: 5,
+                                                ),
+                                                Icon(
+                                                  Icons.percent_sharp,
+                                                  size: 20,
+                                                ),
+
+/*
                                                 Container(
                                                   width: MediaQuery.of(context)
                                                           .size
@@ -360,6 +392,7 @@ class _FinalOrderScreenState extends State<FinalOrderScreen> {
                                                         }).toList()),
                                                   ),
                                                 ),
+*/
                                               ],
                                             ),
                                             const SizedBox(
@@ -394,7 +427,7 @@ class _FinalOrderScreenState extends State<FinalOrderScreen> {
                                                       height: 22,
                                                       width: 22,
                                                       margin: const EdgeInsets
-                                                          .symmetric(
+                                                              .symmetric(
                                                           horizontal: 10),
                                                       decoration: BoxDecoration(
                                                         shape: BoxShape.circle,
@@ -430,7 +463,7 @@ class _FinalOrderScreenState extends State<FinalOrderScreen> {
                                                       height: 22,
                                                       width: 22,
                                                       margin: const EdgeInsets
-                                                          .symmetric(
+                                                              .symmetric(
                                                           horizontal: 10),
                                                       decoration: BoxDecoration(
                                                         shape: BoxShape.circle,
@@ -586,6 +619,12 @@ class _FinalOrderScreenState extends State<FinalOrderScreen> {
                                               ),
                                             ),
                                             onPressed: () {
+                                              if(count>0){
+                                                need_approval=1;
+                                              }
+                                              else{
+                                                need_approval=0;
+                                              }
                                               PlaceOrderModel model =
                                                   PlaceOrderModel(
                                                       clientId: int.parse(
@@ -599,7 +638,9 @@ class _FinalOrderScreenState extends State<FinalOrderScreen> {
                                                       subTotal: totalAmount,
                                                       afterSubTotal:
                                                           totalDiscountAmount,
-                                                      note: widget.note);
+                                                      note: widget.note,
+                                                      need_approval:
+                                                          need_approval);
 
                                               placeOrder(
                                                   salonController, model);
@@ -654,6 +695,33 @@ class _FinalOrderScreenState extends State<FinalOrderScreen> {
                 Navigator.pop(parentContext);
               },
             )
+          ],
+        );
+      },
+    );
+  }
+
+  showDiscountDialog(BuildContext parentContext) {
+    showDialog(
+      context: parentContext,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(TextConstant.discountTitle),
+          content: Text(TextConstant.discountDescription),
+          actions: [
+            TextButton(
+              child: Text('Ok'),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+            /* TextButton(
+              child: Text(TextConstant.yes),
+              onPressed: () {
+                Navigator.pop(context);
+                Navigator.pop(parentContext);
+              },
+            )*/
           ],
         );
       },
