@@ -71,7 +71,6 @@ class _FinalOrderScreenState extends State<FinalOrderScreen> {
     for (var cartModel in widget.cartList) {
       totalAmount += cartModel.amount!;
       totalPayableAmount += cartModel.amount!;
-
       cartModel.discountType = selectedDiscountType;
     }
   }
@@ -281,29 +280,8 @@ class _FinalOrderScreenState extends State<FinalOrderScreen> {
                                                       if (value.isNotEmpty) {
                                                         if (selectedDiscountType ==
                                                             "Percentage") {
-                                                          int comp_dis =
-                                                              int.parse(value);
-
-                                                          if (comp_dis >
-                                                              widget
-                                                                  .cartList[
-                                                                      index]
-                                                                  .standalon_discount!) {
                                                             calculateDiscountPercentageAmount(
                                                                 value, index);
-                                                            showDiscountDialog(
-                                                                context);
-                                                            count++;
-                                                          } else {
-                                                            calculateDiscountPercentageAmount(
-                                                                value, index);
-                                                            if(count==0)
-                                                              {
-                                                              }
-                                                            else{
-                                                              count--;
-                                                            }
-                                                          }
                                                         } else {
                                                           calculateDiscountAmount(
                                                               value, index);
@@ -619,13 +597,18 @@ class _FinalOrderScreenState extends State<FinalOrderScreen> {
                                               ),
                                             ),
                                             onPressed: () {
-                                              if(count>0){
-                                                need_approval=1;
-                                              }
-                                              else{
-                                                need_approval=0;
-                                              }
-                                              PlaceOrderModel model =
+                                              for(var productCartlist in widget.cartList!)
+                                                {
+                                                  int actual_discount=productCartlist!.discountValue!;
+                                                  int stand_discount=productCartlist!.standalon_discount!;
+                                                 if(actual_discount>stand_discount)
+                                                   {
+                                                     need_approval=1;
+                                                   }
+                                                }
+                                              if(need_approval==1)
+                                                {
+                                                  PlaceOrderModel model =
                                                   PlaceOrderModel(
                                                       clientId: int.parse(
                                                           widget.salonId),
@@ -637,13 +620,35 @@ class _FinalOrderScreenState extends State<FinalOrderScreen> {
                                                       products: widget.cartList,
                                                       subTotal: totalAmount,
                                                       afterSubTotal:
-                                                          totalDiscountAmount,
+                                                      totalDiscountAmount,
                                                       note: widget.note,
                                                       need_approval:
-                                                          need_approval);
+                                                      need_approval);
+                                                  showDiscountDialog(context,salonController,model);
+                                                }
+                                              else{
+                                                PlaceOrderModel model =
+                                                PlaceOrderModel(
+                                                    clientId: int.parse(
+                                                        widget.salonId),
+                                                    shippingAddress: widget
+                                                        .shippingAddress,
+                                                    address: widget.address,
+                                                    unitTypeId: int.parse(
+                                                        widget.unitTypeId),
+                                                    products: widget.cartList,
+                                                    subTotal: totalAmount,
+                                                    afterSubTotal:
+                                                    totalDiscountAmount,
+                                                    note: widget.note,
+                                                    need_approval:
+                                                    need_approval);
+                                                placeOrder(
+                                                    salonController, model);
+                                              }
 
-                                              placeOrder(
-                                                  salonController, model);
+                                            /*  placeOrder(
+                                                  salonController, model);*/
                                             },
                                             child: Padding(
                                               padding:
@@ -701,7 +706,7 @@ class _FinalOrderScreenState extends State<FinalOrderScreen> {
     );
   }
 
-  showDiscountDialog(BuildContext parentContext) {
+  showDiscountDialog(BuildContext parentContext,SalonController salonController,PlaceOrderModel model) {
     showDialog(
       context: parentContext,
       builder: (BuildContext context) {
@@ -713,15 +718,19 @@ class _FinalOrderScreenState extends State<FinalOrderScreen> {
               child: Text('Ok'),
               onPressed: () {
                 Navigator.pop(context);
+                placeOrder(
+                    salonController, model);
               },
             ),
-            /* TextButton(
-              child: Text(TextConstant.yes),
+             TextButton(
+              child: Text(TextConstant.cancel),
               onPressed: () {
+                setState(() {
+                  need_approval=0;
+                });
                 Navigator.pop(context);
-                Navigator.pop(parentContext);
               },
-            )*/
+            )
           ],
         );
       },

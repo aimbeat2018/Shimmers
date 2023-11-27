@@ -332,7 +332,7 @@ class _AddFinalSalonScreenState extends State<AddFinalSalonScreen> {
                             ),
                             child: TextFormField(
                               style: const TextStyle(fontSize: 14),
-                              enabled: false,
+                             // enabled: false,
                               decoration:
                                   GlobalFunctions.getInputDecorationWhite(""),
                               controller: pincodeController,
@@ -1008,10 +1008,10 @@ class _AddFinalSalonScreenState extends State<AddFinalSalonScreen> {
                                       } else if (_selectedLocation == '') {
                                         showCustomSnackBar('Select Salon Type',
                                             isError: true);
-                                      } else if (salonRouteId == "") {
+                                      } /*else if (salonRouteId == "") {
                                         showCustomSnackBar('Select Route',
                                             isError: true);
-                                      } else {
+                                      }*/ else {
                                         addSalon(salonController);
                                       }
                                     },

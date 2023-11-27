@@ -221,11 +221,14 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             Center(
                               child: InkWell(
                                 onTap: () {
-                                  if (userRole == 'TRF Executive'||userRole=='TRF Manager') {
+                                  if (userRole == 'TRF Executive' ||
+                                      userRole == 'TRF Manager') {
                                     showCustomSnackBar(
                                         'You dont have the permission to use this module',
                                         isError: true);
-                                  } else {
+                                  }
+                                  //    else if(userRole=='sales executive') {
+                                  else {
                                     Navigator.of(context).push(
                                         MaterialPageRoute(
                                             builder: (context) =>
@@ -267,7 +270,8 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             Center(
                               child: InkWell(
                                 onTap: () {
-                                  if (userRole == 'TRF Executive'||userRole=='TRF Manager') {
+                                  if (userRole == 'TRF Executive' ||
+                                      userRole == 'TRF Manager') {
                                     showCustomSnackBar(
                                         'You dont have the permission to use this module',
                                         isError: true);
@@ -313,7 +317,8 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             Center(
                               child: InkWell(
                                 onTap: () {
-                                  if (userRole == 'TRF Executive'||userRole=='TRF Manager') {
+                                  if (userRole == 'TRF Executive' ||
+                                      userRole == 'TRF Manager') {
                                     showCustomSnackBar(
                                         'You dont have the permission to use this module',
                                         isError: true);
@@ -366,7 +371,8 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             Center(
                               child: InkWell(
                                 onTap: () {
-                                  if (userRole == 'TRF Executive'||userRole=='TRF Manager') {
+                                  if (userRole == 'TRF Executive' ||
+                                      userRole == 'TRF Manager') {
                                     showCustomSnackBar(
                                         'You dont have the permission to use this module',
                                         isError: true);
@@ -414,7 +420,8 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             Center(
                               child: InkWell(
                                 onTap: () {
-                                  if (userRole == 'TRF Executive'||userRole=='TRF Manager') {
+                                  if (userRole == 'TRF Executive' ||
+                                      userRole == 'TRF Manager') {
                                     showCustomSnackBar(
                                         'You dont have the permission to use this module',
                                         isError: true);
@@ -463,7 +470,8 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             Center(
                               child: InkWell(
                                 onTap: () {
-                                  if (userRole == 'TRF Executive'||userRole=='TRF Manager') {
+                                  if (userRole == 'TRF Executive' ||
+                                      userRole == 'TRF Manager') {
                                     showCustomSnackBar(
                                         'You dont have the permission to use this module',
                                         isError: true);
@@ -513,7 +521,8 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             Center(
                               child: InkWell(
                                 onTap: () {
-                                  if (userRole == 'TRF Executive'||userRole=='TRF Manager') {
+                                  if (userRole == 'TRF Executive' ||
+                                      userRole == 'TRF Manager') {
                                     showCustomSnackBar(
                                         'You dont have the permission to use this module',
                                         isError: true);
@@ -563,21 +572,18 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                         MaterialPageRoute(
                                             builder: (context) =>
                                                 TourListScreen()));
-                                  } else if(userRole=='TRF Manager') {
+                                  } else if (userRole == 'TRF Manager') {
                                     //TRF Manager Flow
                                     Navigator.of(context).push(
                                         MaterialPageRoute(
                                             builder: (context) =>
                                                 TRFExecutiveListScreen()));
-
-                                  }
-                                  else if(userRole=='Head Officer') {
+                                  } else if (userRole == 'Head Officer') {
                                     //Head Officer Flow
                                     Navigator.of(context).push(
                                         MaterialPageRoute(
                                             builder: (context) =>
                                                 HeadOfficerTourRequests()));
-
                                   }
                                 },
                                 child: SizedBox(
@@ -615,7 +621,8 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             Center(
                               child: InkWell(
                                 onTap: () {
-                                  if (userRole == 'TRF Executive'||userRole=='TRF Manager') {
+                                  if (userRole == 'TRF Executive' ||
+                                      userRole == 'TRF Manager') {
                                     showCustomSnackBar(
                                         'You dont have the permission to use this module',
                                         isError: true);

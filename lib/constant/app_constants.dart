@@ -37,6 +37,7 @@ class AppConstants {
   static const String getEmployeeCampaignResponse = 'get/campaign/answers/list';
   static const String getEmployeeList = 'get/employee/team/members';
   static const String salonwiseLogin='salonwise/login';
+
   static const String gettourrequestlist='get/tour/request/list';
   static const String storetourrequest='store/tour/request';
   static const String deletetourrequest='delete/tour/request';
@@ -48,6 +49,10 @@ class AppConstants {
   static const String updateTourReqByOfficer ='update/tour/request/byheadofficer';
   static const String getApprovedTourRequestList ='get/approved/tour/request/list';
   static const String getTourVisitDetailsById ='get/tour/details/by/reqid';
+  static const String getNondeliveredOrderList ='get/nondelivered/orders';
+  static const String changeOrderStatus ='change/order/status';
+  static const String viewProductDetails ='get/productlist/byorder_id';
+
 
 
 

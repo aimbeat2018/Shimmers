@@ -4,6 +4,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shimmers/screens/salons/addSalon/bottomSheet/salonTypeScreen.dart';
+import 'package:shimmers/screens/salons/salonDetails/orderListScreen.dart';
 import 'package:shimmers/screens/salonsActivity/collectPaymentScreen.dart';
 import 'package:shimmers/screens/salonsActivity/demo/demoListScreen.dart';
 import 'package:shimmers/screens/salonsActivity/salonCampaignListScreen.dart';
@@ -137,7 +138,6 @@ class _SalonDetailsScreenState extends State<SalonDetailsScreen> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
     return _connectionStatus == AppConstants.connectivityCheck
@@ -242,6 +242,23 @@ class _SalonDetailsScreenState extends State<SalonDetailsScreen> {
                         ),
                       ),
                     ),
+                    Center(
+                      child: Padding(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => OrderListScreen()));
+                          },
+                          child: Text('Order List',
+                              style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500)),
+                        ),
+                      ),
+                    )
                   ],
                 ),
                 body: salonController.isLoading ||

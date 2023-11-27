@@ -16,6 +16,7 @@ import 'package:shimmers/repository/salonRepo.dart';
 
 import '../constant/route_helper.dart';
 import '../model/cartModel.dart';
+import '../model/deliveredOrderModel.dart';
 import 'cartController.dart';
 
 class SalonController extends GetxController implements GetxService {
@@ -42,6 +43,8 @@ class SalonController extends GetxController implements GetxService {
   ProductModel? productModel;
 
   SalonDetailsModel? salonDetailsModel;
+
+  DeliveredOrderModel? deliveredOrderModel;
 
   bool? _isLoading = false;
   String? salonAddMessage;
@@ -75,6 +78,40 @@ class SalonController extends GetxController implements GetxService {
     _isLoading = false;
     update();
     return salonRouteModel;
+  }
+
+  Future<DeliveredOrderModel?> getNotDeliveredOrderList() async {
+    _isLoading = true;
+    // update();
+    Response response = await salonRepo.getNonDeliveredOrderList();
+    if (response.statusCode == 200) {
+      deliveredOrderModel = DeliveredOrderModel.fromJson(response.body);
+    } else if (response.statusCode == 401) {
+      Get.offAllNamed(RouteHelper.getLoginRoute());
+    } else {
+      deliveredOrderModel = DeliveredOrderModel();
+    }
+    _isLoading = false;
+    update();
+    return deliveredOrderModel;
+  }
+
+  Future<String?> updateorderStatus({String? order_id, String? status}) async {
+    _isLoading = true;
+    update();
+    Response response =
+        await salonRepo.updateOrderStatus(orderid: order_id, status: status);
+
+    if (response.statusCode == 200) {
+      salonAddMessage = response.body['message'];
+    } else if (response.statusCode == 401) {
+      Get.offAllNamed(RouteHelper.getLoginRoute());
+    } else {
+      salonAddMessage = "";
+    }
+    _isLoading = false;
+    update();
+    return salonAddMessage;
   }
 
   Future<SalonCategoryModel?> getSalonCategory() async {
@@ -464,19 +501,14 @@ class SalonController extends GetxController implements GetxService {
     }
     update();
   }
+
   Future<String?> salonwiseLogin(
-      { String? salonid,
-        String? lat,
-        String? long,
-        String? address}) async {
-    _isLoading = false;//made it false to avoid loading
+      {String? salonid, String? lat, String? long, String? address}) async {
+    _isLoading = false; //made it false to avoid loading
     update();
 
     Response response = await salonRepo.salonWisePunchIn(
-        salonid:salonid,
-        lat: lat,
-        long: long,
-        address: address);
+        salonid: salonid, lat: lat, long: long, address: address);
 
     if (response.statusCode == 200) {
       punchInMsg = response.body['message'];

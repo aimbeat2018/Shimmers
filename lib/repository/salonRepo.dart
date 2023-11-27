@@ -23,6 +23,21 @@ class SalonRepo {
       "longitude": longitude,
     });
   }
+  Future<Response> getNonDeliveredOrderList() async{
+    return await apiClient.getData(AppConstants.getNondeliveredOrderList);
+  }
+  Future<Response> updateOrderStatus({String? orderid,String? status}) async{
+    return await apiClient.postData(AppConstants.changeOrderStatus, {
+      'order_id':orderid,
+      'status':status
+    });
+  }
+  Future<Response> getProductOrderID({String? orderid})async{
+    return await apiClient.postData(AppConstants.viewProductDetails, {
+      'order_id':orderid
+    });
+
+}
 
   Future<Response> getFeedbackPurpose() async {
     return await apiClient.getData(AppConstants.getFeedbackPurpose);

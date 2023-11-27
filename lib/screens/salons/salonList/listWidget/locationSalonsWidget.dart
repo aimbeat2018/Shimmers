@@ -51,7 +51,9 @@ class _LocationSalonsWidgetState extends State<LocationSalonsWidget> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        widget.model.cityName!,
+                        widget.model.cityName == null
+                            ? 'City Name'
+                            : widget.model.cityName!,
                         style: TextStyle(
                             color: isExpanded ? Colors.white : primaryColor,
                             fontSize: 16,
