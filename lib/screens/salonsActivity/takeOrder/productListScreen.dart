@@ -420,8 +420,23 @@ class _ProductListScreenState extends State<ProductListScreen> {
                                                                   .productModel!
                                                                   .data![index]
                                                                   .quantity = 1;
+
                                                             });
 
+                                                            int calculated_price = salonController
+                                                                .productModel!
+                                                                .data![index]
+                                                                .quantity! *
+                                                                int.parse(salonController
+                                                                    .productModel!
+                                                                    .data![index]
+                                                                    .price!);
+
+                                                          /*  salonController
+                                                                .productModel!
+                                                                .data![index]
+                                                                .totalAmount=calculated_price;
+*/
                                                             CartModel _cartModel = CartModel(
                                                                 productId: salonController
                                                                     .productModel!
@@ -443,11 +458,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
                                                                     .data![
                                                                         index]
                                                                     .quantity,
-                                                                amountWithQty: int.parse(salonController
-                                                                    .productModel!
-                                                                    .data![
-                                                                        index]
-                                                                    .price!),
+                                                                amountWithQty: calculated_price,
                                                                 discountValue:
                                                                     0,
                                                                 discountType:
@@ -563,13 +574,26 @@ class _ProductListScreenState extends State<ProductListScreen> {
                                                                             .productModel!
                                                                             .data![index]
                                                                             .quantity = 0;
+
                                                                       } else {
-                                                                        salonController.productModel!.data![index].quantity! -
+                                                                        salonController
+                                                                            .productModel!
+                                                                            .data![index]
+                                                                            .quantity = salonController.productModel!.data![index].quantity! -
                                                                             1;
                                                                         cartModel.quantity = salonController
                                                                             .productModel!
                                                                             .data![index]
                                                                             .quantity!;
+
+                                                                        int calculated_price = cartModel
+                                                                            .amountWithQty! -
+                                                                            int.parse(salonController
+                                                                                .productModel!
+                                                                                .data![index]
+                                                                                .price!);
+
+                                                                        cartModel.amountWithQty=calculated_price;
                                                                       }
                                                                     }
                                                                   }
@@ -640,6 +664,17 @@ class _ProductListScreenState extends State<ProductListScreen> {
                                                                               .data![index]
                                                                               .quantity! +
                                                                           1;
+
+                                                                      int calculated_price = salonController
+                                                                          .productModel!
+                                                                          .data![index]
+                                                                          .quantity! *
+                                                                          int.parse(salonController
+                                                                              .productModel!
+                                                                              .data![index]
+                                                                              .price!);
+
+                                                                      cartModel.amountWithQty=calculated_price;
 
                                                                       cartModel.quantity = salonController
                                                                           .productModel!

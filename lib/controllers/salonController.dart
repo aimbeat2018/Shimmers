@@ -17,6 +17,7 @@ import 'package:shimmers/repository/salonRepo.dart';
 import '../constant/route_helper.dart';
 import '../model/cartModel.dart';
 import '../model/deliveredOrderModel.dart';
+import '../model/viewProductsModel.dart';
 import 'cartController.dart';
 
 class SalonController extends GetxController implements GetxService {
@@ -45,6 +46,8 @@ class SalonController extends GetxController implements GetxService {
   SalonDetailsModel? salonDetailsModel;
 
   DeliveredOrderModel? deliveredOrderModel;
+
+  ViewProductsModel? viewProductsModel;
 
   bool? _isLoading = false;
   String? salonAddMessage;
@@ -112,6 +115,22 @@ class SalonController extends GetxController implements GetxService {
     _isLoading = false;
     update();
     return salonAddMessage;
+  }
+
+  Future<ViewProductsModel?> viewProductsbyOrederId({String? order_id}) async {
+    _isLoading = true;
+   // update();
+    Response response = await salonRepo.getProductByOrderID(orderid: order_id);
+    if (response.statusCode == 200) {
+      viewProductsModel = ViewProductsModel.fromJson(response.body);
+    } else if (response.statusCode == 401) {
+      Get.offAllNamed(RouteHelper.getLoginRoute());
+    } else {
+      viewProductsModel = ViewProductsModel();
+    }
+    _isLoading = false;
+    update();
+    return viewProductsModel;
   }
 
   Future<SalonCategoryModel?> getSalonCategory() async {

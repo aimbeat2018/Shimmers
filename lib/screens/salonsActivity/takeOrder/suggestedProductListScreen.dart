@@ -134,6 +134,12 @@ class _SuggestedProductListScreenState
                                             widget.suggestedProductsList[index]
                                                 .quantity = 1;
                                           });
+                                          int calculated_price = widget
+                                                  .suggestedProductsList[index]
+                                                  .quantity! *
+                                              int.parse(widget
+                                                  .suggestedProductsList[index]
+                                                  .price!);
 
                                           CartModel _cartModel = CartModel(
                                               productId: widget
@@ -148,9 +154,7 @@ class _SuggestedProductListScreenState
                                               quantity: widget
                                                   .suggestedProductsList[index]
                                                   .quantity,
-                                              amountWithQty: int.parse(widget
-                                                  .suggestedProductsList[index]
-                                                  .price!),
+                                              amountWithQty: calculated_price!,
                                               discountValue: 0,
                                               discountType: "",
                                               amount: int.parse(widget
@@ -159,7 +163,8 @@ class _SuggestedProductListScreenState
                                               afterDiscountAmount: 0,
                                               itemSummary: "",
                                               standalon_discount: (widget
-                                                  .suggestedProductsList[index].standalon_discount!));
+                                                  .suggestedProductsList[index]
+                                                  .standalon_discount!));
 
                                           widget.cartList.add(_cartModel);
                                         },
@@ -222,14 +227,29 @@ class _SuggestedProductListScreenState
                                                           widget
                                                                   .suggestedProductsList[
                                                                       index]
-                                                                  .quantity! -
-                                                              1;
+                                                                  .quantity !=
+                                                              widget
+                                                                      .suggestedProductsList[
+                                                                          index]
+                                                                      .quantity! -
+                                                                  1;
 
                                                           cartModel.quantity =
                                                               widget
                                                                   .suggestedProductsList[
                                                                       index]
                                                                   .quantity!;
+
+                                                          int calculated_price = cartModel
+                                                                  .amountWithQty! -
+                                                              int.parse(widget
+                                                                  .suggestedProductsList[
+                                                                      index]
+                                                                  .price!);
+
+                                                          cartModel
+                                                                  .amountWithQty =
+                                                              calculated_price;
                                                         }
                                                       }
                                                     }
@@ -292,6 +312,19 @@ class _SuggestedProductListScreenState
                                                             .suggestedProductsList[
                                                                 index]
                                                             .quantity!;
+
+                                                        int calculated_price = widget
+                                                                .suggestedProductsList[
+                                                                    index]
+                                                                .quantity! *
+                                                            int.parse(widget
+                                                                .suggestedProductsList[
+                                                                    index]
+                                                                .price!);
+
+                                                        cartModel
+                                                                .amountWithQty =
+                                                            calculated_price;
                                                       }
                                                     }
                                                   }

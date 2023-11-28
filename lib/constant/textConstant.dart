@@ -78,7 +78,7 @@ class TextConstant {
   static String discountTitle =
       "Discount";
   static String discountDescription =
-      " One of the product from cart is having more discount. You are not allowed for this discount. You need to take approval from manager";
+      "One of the product from cart is having more discount. You are not allowed for this discount. You need to take approval from manager";
   static String salonCategory = "Salon Category";
   static String salonName = "Salon Name";
   static String salonImage = "Salon Image";

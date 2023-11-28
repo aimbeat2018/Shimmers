@@ -32,7 +32,7 @@ class SalonRepo {
       'status':status
     });
   }
-  Future<Response> getProductOrderID({String? orderid})async{
+  Future<Response> getProductByOrderID({String? orderid})async{
     return await apiClient.postData(AppConstants.viewProductDetails, {
       'order_id':orderid
     });

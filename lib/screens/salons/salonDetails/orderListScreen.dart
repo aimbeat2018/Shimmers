@@ -9,6 +9,7 @@ import 'package:shimmers/constant/custom_snackbar.dart';
 import 'package:shimmers/constant/no_internet_screen.dart';
 import 'package:shimmers/controllers/salonController.dart';
 import 'package:shimmers/screens/noDataFound/noDataFoundScreen.dart';
+import 'package:shimmers/screens/salons/salonDetails/viewOrderedProductDetails.dart';
 
 import '../../../constant/colorsConstant.dart';
 import '../../../constant/internetConnectivity.dart';
@@ -75,169 +76,166 @@ class _OrderListScreen extends State {
                               itemCount: salonController
                                   .deliveredOrderModel!.data!.length,
                               itemBuilder: (BuildContext context, int index) {
-                                return Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 8.0, vertical: 5),
-                                  child: Card(
-                                    elevation: 5,
-                                    shadowColor: primaryColor,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(5))),
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 18.0, vertical: 10),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            'Order Id: ${salonController.deliveredOrderModel!.data![index].id!}',
+                                return Container(
+                                  color: kBackgroundColor,
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10.0, vertical: 15),
+                                  margin: const EdgeInsets.symmetric(
+                                      vertical: 10),
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 18.0, vertical: 10),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          'Order Id: ${salonController.deliveredOrderModel!.data![index].id!}',
+                                          style: TextStyle(
+                                              color: Colors.grey,
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                        SizedBox(
+                                          height: 5,
+                                        ),
+                                        Text(
+                                          'Order Date: ${salonController.deliveredOrderModel!.data![index].orderDate!}',
+                                          style: TextStyle(
+                                              color: Colors.grey,
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                        SizedBox(
+                                          height: 5,
+                                        ),
+                                        Text(
+                                            'Order Amount: Rs.${salonController.deliveredOrderModel!.data![index].total}',
                                             style: TextStyle(
                                                 color: Colors.grey,
                                                 fontSize: 14,
-                                                fontWeight: FontWeight.w500),
-                                          ),
-                                          SizedBox(
-                                            height: 5,
-                                          ),
-                                          Text(
-                                            'Order Date: ${salonController.deliveredOrderModel!.data![index].orderDate!}',
+                                                fontWeight: FontWeight.w500)),
+                                        SizedBox(
+                                          height: 5,
+                                        ),
+                                        Text(
+                                            'Number of Products: ${salonController.deliveredOrderModel!.data![index].no_of_products}',
                                             style: TextStyle(
                                                 color: Colors.grey,
                                                 fontSize: 14,
-                                                fontWeight: FontWeight.w500),
-                                          ),
-                                          SizedBox(
-                                            height: 5,
-                                          ),
-                                          Text(
-                                              'Order Amount: Rs.${salonController.deliveredOrderModel!.data![index].total}',
-                                              style: TextStyle(
-                                                  color: Colors.grey,
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.w500)),
-                                          SizedBox(
-                                            height: 5,
-                                          ),
-                                          Text(
-                                              'Number of Products: ${salonController.deliveredOrderModel!.data![index].no_of_products}',
-                                              style: TextStyle(
-                                                  color: Colors.grey,
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.w500)),
-                                          SizedBox(
-                                            height: 10,
-                                          ),
-                                          Row(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceAround,
-                                            children: [
-                                              ElevatedButton(
-                                                  style: ButtonStyle(
-                                                    backgroundColor:
-                                                        MaterialStateProperty
-                                                            .all<Color>(
-                                                                primaryColor),
-                                                    foregroundColor:
-                                                        MaterialStateProperty
-                                                            .all<Color>(
-                                                                primaryColor),
-                                                    textStyle:
-                                                        MaterialStateProperty
-                                                            .all<TextStyle>(
-                                                      const TextStyle(
-                                                          fontSize: 16),
-                                                    ),
-                                                    padding:
-                                                        MaterialStateProperty
-                                                            .all<EdgeInsets>(
-                                                      const EdgeInsets
-                                                              .symmetric(
-                                                          horizontal: 16,
-                                                          vertical: 8),
-                                                    ),
-                                                    shape: MaterialStateProperty
-                                                        .all<
-                                                            RoundedRectangleBorder>(
-                                                      RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10),
-                                                      ),
+                                                fontWeight: FontWeight.w500)),
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceAround,
+                                          children: [
+                                            ElevatedButton(
+                                                style: ButtonStyle(
+                                                  backgroundColor:
+                                                      MaterialStateProperty
+                                                          .all<Color>(
+                                                              primaryColor),
+                                                  foregroundColor:
+                                                      MaterialStateProperty
+                                                          .all<Color>(
+                                                              primaryColor),
+                                                  textStyle:
+                                                      MaterialStateProperty
+                                                          .all<TextStyle>(
+                                                    const TextStyle(
+                                                        fontSize: 16),
+                                                  ),
+                                                  padding:
+                                                      MaterialStateProperty
+                                                          .all<EdgeInsets>(
+                                                    const EdgeInsets
+                                                            .symmetric(
+                                                        horizontal: 16,
+                                                        vertical: 8),
+                                                  ),
+                                                  shape: MaterialStateProperty
+                                                      .all<
+                                                          RoundedRectangleBorder>(
+                                                    RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius
+                                                              .circular(10),
                                                     ),
                                                   ),
-                                                  onPressed: () {
-                                                  },
-                                                  child: Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            5.0),
-                                                    child: Text(
-                                                      'View Products',
-                                                      style: const TextStyle(
-                                                          fontSize: 14,
-                                                          color: Colors.white,
-                                                          fontWeight:
-                                                              FontWeight.w500),
-                                                    ),
-                                                  )),
-                                              ElevatedButton(
-                                                  style: ButtonStyle(
-                                                    backgroundColor:
-                                                        MaterialStateProperty
-                                                            .all<Color>(
-                                                                primaryColor),
-                                                    foregroundColor:
-                                                        MaterialStateProperty
-                                                            .all<Color>(
-                                                                primaryColor),
-                                                    textStyle:
-                                                        MaterialStateProperty
-                                                            .all<TextStyle>(
-                                                      const TextStyle(
-                                                          fontSize: 16),
-                                                    ),
-                                                    padding:
-                                                        MaterialStateProperty
-                                                            .all<EdgeInsets>(
-                                                      const EdgeInsets
-                                                              .symmetric(
-                                                          horizontal: 16,
-                                                          vertical: 8),
-                                                    ),
-                                                    shape: MaterialStateProperty
-                                                        .all<
-                                                            RoundedRectangleBorder>(
-                                                      RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10),
-                                                      ),
+                                                ),
+                                                onPressed: () {
+                                                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>ViewOrderedProductDetails(order_id: salonController.deliveredOrderModel!.data![index].id.toString())));
+                                                },
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(
+                                                          5.0),
+                                                  child: Text(
+                                                    'View Products',
+                                                    style: const TextStyle(
+                                                        fontSize: 14,
+                                                        color: Colors.white,
+                                                        fontWeight:
+                                                            FontWeight.w500),
+                                                  ),
+                                                )),
+                                            ElevatedButton(
+                                                style: ButtonStyle(
+                                                  backgroundColor:
+                                                      MaterialStateProperty
+                                                          .all<Color>(
+                                                              primaryColor),
+                                                  foregroundColor:
+                                                      MaterialStateProperty
+                                                          .all<Color>(
+                                                              primaryColor),
+                                                  textStyle:
+                                                      MaterialStateProperty
+                                                          .all<TextStyle>(
+                                                    const TextStyle(
+                                                        fontSize: 16),
+                                                  ),
+                                                  padding:
+                                                      MaterialStateProperty
+                                                          .all<EdgeInsets>(
+                                                    const EdgeInsets
+                                                            .symmetric(
+                                                        horizontal: 16,
+                                                        vertical: 8),
+                                                  ),
+                                                  shape: MaterialStateProperty
+                                                      .all<
+                                                          RoundedRectangleBorder>(
+                                                    RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius
+                                                              .circular(10),
                                                     ),
                                                   ),
-                                                  onPressed: () {
-                                                    updateOrderStatus(salonController,salonController.deliveredOrderModel!.data![index].id);
-                                                  },
-                                                  child: Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            5.0),
-                                                    child: Text(
-                                                      'Delivered',
-                                                      style: const TextStyle(
-                                                          fontSize: 14,
-                                                          color: Colors.white,
-                                                          fontWeight:
-                                                              FontWeight.w500),
-                                                    ),
-                                                  )),
-                                            ],
-                                          )
-                                        ],
-                                      ),
+                                                ),
+                                                onPressed: () {
+                                                  updateOrderStatus(salonController,salonController.deliveredOrderModel!.data![index].id);
+                                                },
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(
+                                                          5.0),
+                                                  child: Text(
+                                                    'Delivered',
+                                                    style: const TextStyle(
+                                                        fontSize: 14,
+                                                        color: Colors.white,
+                                                        fontWeight:
+                                                            FontWeight.w500),
+                                                  ),
+                                                )),
+                                          ],
+                                        )
+                                      ],
                                     ),
                                   ),
                                 );

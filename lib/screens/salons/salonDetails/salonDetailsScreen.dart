@@ -242,7 +242,7 @@ class _SalonDetailsScreenState extends State<SalonDetailsScreen> {
                         ),
                       ),
                     ),
-                    Center(
+                   /* Center(
                       child: Padding(
                         padding:
                             EdgeInsets.symmetric(horizontal: 10, vertical: 10),
@@ -258,7 +258,7 @@ class _SalonDetailsScreenState extends State<SalonDetailsScreen> {
                                   fontWeight: FontWeight.w500)),
                         ),
                       ),
-                    )
+                    )*/
                   ],
                 ),
                 body: salonController.isLoading ||
@@ -420,13 +420,13 @@ class _SalonDetailsScreenState extends State<SalonDetailsScreen> {
                               visible: isDetailsVisible ? true : false,
                               child: SizedBox(
                                 height:
-                                    MediaQuery.of(context).size.height * 0.34,
+                                    MediaQuery.of(context).size.height * 0.38,
                                 child: Stack(
                                   children: [
                                     Container(
                                       height:
                                           MediaQuery.of(context).size.height *
-                                              0.30,
+                                              0.34,
                                       color: primaryColor,
                                       padding: const EdgeInsets.symmetric(
                                           vertical: 25, horizontal: 15),
@@ -730,30 +730,42 @@ class _SalonDetailsScreenState extends State<SalonDetailsScreen> {
                                           const SizedBox(
                                             height: 30,
                                           ),
-                                          // Row(
-                                          //   mainAxisAlignment: MainAxisAlignment.center,
-                                          //   children: [
-                                          //     Column(
-                                          //       children: [
-                                          //         Image.asset(
-                                          //           'assets/images/take_stock.png',
-                                          //           height: 28,
-                                          //           width: 28,
-                                          //         ),
-                                          //         const SizedBox(
-                                          //           height: 5,
-                                          //         ),
-                                          //         Text(
-                                          //           TextConstant.updateStock,
-                                          //           style: const TextStyle(
-                                          //               color: Colors.white,
-                                          //               fontSize: 13,
-                                          //               fontWeight: FontWeight.w500),
-                                          //         ),
-                                          //       ],
-                                          //     ),
-                                          //   ],
-                                          // ),
+                                          Padding(
+                                            //Removed padding & make row main axis cnter when more menu added
+                                            padding: const EdgeInsets.only(left: 18.0),
+                                            child: Row(
+                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              children: [
+                                                InkWell(
+                                                  onTap: ()
+                                                  {
+                                                    Navigator.of(context).push(MaterialPageRoute(
+                                                        builder: (context) => OrderListScreen()));
+                                                  },
+                                                  child: Column(
+                                                    children: [
+                                                      Image.asset(
+                                                        'assets/images/take_stock.png',
+                                                        height: 28,
+                                                        width: 28,
+                                                      ),
+                                                      const SizedBox(
+                                                        height: 5,
+                                                      ),
+                                                      Text(
+                                                        'Order List',
+                                                        style: const TextStyle(
+                                                            color: Colors.white,
+                                                            fontSize: 13,
+                                                            fontWeight: FontWeight.w500),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+
                                         ],
                                       ),
                                     ),

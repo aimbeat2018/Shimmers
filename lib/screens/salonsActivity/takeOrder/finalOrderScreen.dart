@@ -69,8 +69,8 @@ class _FinalOrderScreenState extends State<FinalOrderScreen> {
     need_approval = 0;
     count=0;
     for (var cartModel in widget.cartList) {
-      totalAmount += cartModel.amount!;
-      totalPayableAmount += cartModel.amount!;
+      totalAmount += cartModel.amountWithQty!;
+      totalPayableAmount += cartModel.amountWithQty!;
       cartModel.discountType = selectedDiscountType;
     }
   }
@@ -711,7 +711,7 @@ class _FinalOrderScreenState extends State<FinalOrderScreen> {
       context: parentContext,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(TextConstant.discountTitle),
+          title: Text('Alert'),
           content: Text(TextConstant.discountDescription),
           actions: [
             TextButton(
