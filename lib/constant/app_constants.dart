@@ -52,6 +52,8 @@ class AppConstants {
   static const String getNondeliveredOrderList ='get/nondelivered/orders';
   static const String changeOrderStatus ='change/order/status';
   static const String viewProductDetails ='get/productlist/byorder_id';
+  static const String getnotApprovedOrderList ='get/notapproved/orders';
+  static const String changeOrderApprovalStatus ='change/order/approval/status';
 
 
 

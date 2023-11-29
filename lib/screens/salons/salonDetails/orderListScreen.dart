@@ -13,6 +13,7 @@ import 'package:shimmers/screens/salons/salonDetails/viewOrderedProductDetails.d
 
 import '../../../constant/colorsConstant.dart';
 import '../../../constant/internetConnectivity.dart';
+import '../../../constant/textConstant.dart';
 
 class OrderListScreen extends StatefulWidget {
   @override
@@ -218,7 +219,9 @@ class _OrderListScreen extends State {
                                                   ),
                                                 ),
                                                 onPressed: () {
-                                                  updateOrderStatus(salonController,salonController.deliveredOrderModel!.data![index].id);
+                                                  showDeliverDialog(context,salonController,salonController.deliveredOrderModel!.data![index].id.toString());
+
+                                                  //updateOrderStatus(salonController,salonController.deliveredOrderModel!.data![index].id);
                                                 },
                                                 child: Padding(
                                                   padding:
@@ -245,8 +248,35 @@ class _OrderListScreen extends State {
           });
   }
 
-  Future<void> updateOrderStatus(SalonController salonController, int? id) async {
-    salonController.updateorderStatus(order_id: id.toString(),status: 'completed').then((message) {
+  showDeliverDialog(BuildContext parentContext,SalonController salonController,String order_id) {
+    showDialog(
+      context: parentContext,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Order Delivery'),
+          content: Text('Are you sure this Order is delivered?'),
+          actions: [
+            TextButton(
+              child: Text(TextConstant.cancel),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+            TextButton(
+              child: Text(TextConstant.yes),
+              onPressed: () {
+                Navigator.pop(context);
+                updateOrderStatus(salonController,order_id);
+                },
+            )
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> updateOrderStatus(SalonController salonController, String? id) async {
+    salonController.updateorderStatus(order_id: id,status: 'completed').then((message) {
       if(message=='Order status changed successfully.')
         {
           showCustomSnackBar(message!,isError: false);

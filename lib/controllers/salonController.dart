@@ -17,6 +17,7 @@ import 'package:shimmers/repository/salonRepo.dart';
 import '../constant/route_helper.dart';
 import '../model/cartModel.dart';
 import '../model/deliveredOrderModel.dart';
+import '../model/orderApprovalModel.dart';
 import '../model/viewProductsModel.dart';
 import 'cartController.dart';
 
@@ -48,6 +49,8 @@ class SalonController extends GetxController implements GetxService {
   DeliveredOrderModel? deliveredOrderModel;
 
   ViewProductsModel? viewProductsModel;
+
+  OrderApprovalModel? orderApprovalModel;
 
   bool? _isLoading = false;
   String? salonAddMessage;
@@ -99,6 +102,22 @@ class SalonController extends GetxController implements GetxService {
     return deliveredOrderModel;
   }
 
+  Future<OrderApprovalModel?> getapprovalorderList() async {
+    _isLoading = true;
+    update();
+    Response response = await salonRepo.getNotApprovedOrderList();
+    if (response.statusCode == 200) {
+      orderApprovalModel = OrderApprovalModel.fromJson(response.body);
+    } else if (response.statusCode == 401) {
+      Get.offAllNamed(RouteHelper.getLoginRoute());
+    } else {
+      orderApprovalModel = OrderApprovalModel();
+    }
+    _isLoading = false;
+    update();
+    return orderApprovalModel;
+  }
+
   Future<String?> updateorderStatus({String? order_id, String? status}) async {
     _isLoading = true;
     update();
@@ -117,9 +136,28 @@ class SalonController extends GetxController implements GetxService {
     return salonAddMessage;
   }
 
+  Future<String?> updateOrderApproval(
+      {String? order_id, String? status}) async {
+    _isLoading = true;
+    update();
+    Response response =
+        await salonRepo.updateOrderApproval(order_id: order_id, status: status);
+
+    if (response.statusCode == 200) {
+      salonAddMessage = response.body['message'];
+    } else if (response.statusCode == 401) {
+      Get.offAllNamed(RouteHelper.getLoginRoute());
+    } else {
+      salonAddMessage = "";
+    }
+    _isLoading = false;
+    update();
+    return salonAddMessage;
+  }
+
   Future<ViewProductsModel?> viewProductsbyOrederId({String? order_id}) async {
     _isLoading = true;
-   // update();
+    // update();
     Response response = await salonRepo.getProductByOrderID(orderid: order_id);
     if (response.statusCode == 200) {
       viewProductsModel = ViewProductsModel.fromJson(response.body);

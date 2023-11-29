@@ -23,21 +23,30 @@ class SalonRepo {
       "longitude": longitude,
     });
   }
-  Future<Response> getNonDeliveredOrderList() async{
+
+  Future<Response> getNonDeliveredOrderList() async {
     return await apiClient.getData(AppConstants.getNondeliveredOrderList);
   }
-  Future<Response> updateOrderStatus({String? orderid,String? status}) async{
-    return await apiClient.postData(AppConstants.changeOrderStatus, {
-      'order_id':orderid,
-      'status':status
-    });
-  }
-  Future<Response> getProductByOrderID({String? orderid})async{
-    return await apiClient.postData(AppConstants.viewProductDetails, {
-      'order_id':orderid
-    });
 
-}
+  Future<Response> getNotApprovedOrderList() async {
+    return await apiClient.getData(AppConstants.getnotApprovedOrderList);
+  }
+
+  Future<Response> updateOrderStatus({String? orderid, String? status}) async {
+    return await apiClient.postData(AppConstants.changeOrderStatus,
+        {'order_id': orderid, 'status': status});
+  }
+
+  Future<Response> updateOrderApproval(
+      {String? order_id, String? status}) async {
+    return await apiClient.postData(AppConstants.changeOrderApprovalStatus,
+        {'order_id': order_id, 'approval_status': status});
+  }
+
+  Future<Response> getProductByOrderID({String? orderid}) async {
+    return await apiClient
+        .postData(AppConstants.viewProductDetails, {'order_id': orderid});
+  }
 
   Future<Response> getFeedbackPurpose() async {
     return await apiClient.getData(AppConstants.getFeedbackPurpose);
@@ -191,16 +200,10 @@ class SalonRepo {
       "requirement": requirement
     });
   }
+
   Future<Response> salonWisePunchIn(
-      {String? salonid,
-        String? lat,
-        String? long,
-        String? address}) async {
-    return await apiClient.postData(AppConstants.salonwiseLogin, {
-      "salon_id": salonid,
-      "lat":lat,
-      "long": long,
-      "address": address
-    });
+      {String? salonid, String? lat, String? long, String? address}) async {
+    return await apiClient.postData(AppConstants.salonwiseLogin,
+        {"salon_id": salonid, "lat": lat, "long": long, "address": address});
   }
 }
