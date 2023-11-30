@@ -76,56 +76,88 @@ class _ViewOrderedProductDetails extends State<ViewOrderedProductDetails> {
                           padding: EdgeInsets.only(bottom: 10),
                           child: ListView.builder(
                               shrinkWrap: true,
-                              itemCount: salonController.viewProductsModel!.data!.length,
+                              itemCount: salonController
+                                  .viewProductsModel!.data!.length,
                               itemBuilder: (BuildContext context, int index) {
-                            return Container(
-                              color: kBackgroundColor,
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 10.0, vertical: 15),
-                              margin: const EdgeInsets.symmetric(
-                                  vertical: 10),
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 18, vertical: 10),
-                                child: Column(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Item Name: ${salonController.viewProductsModel!.data![index].itemName!}',
-                                      style: TextStyle(
-                                          color: Colors.grey,
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w500),
+                                return Container(
+                                  color: kBackgroundColor,
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10.0, vertical: 15),
+                                  margin:
+                                      const EdgeInsets.symmetric(vertical: 10),
+                                  child: Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 18, vertical: 10),
+                                    child: Row(
+                                      children: [
+                                        salonController
+                                                    .viewProductsModel!
+                                                    .data![index]
+                                                    .default_image !=
+                                                ""
+                                            ? Image.network(
+                                                salonController
+                                                    .viewProductsModel!
+                                                    .data![index]
+                                                    .default_image!,
+                                                height: 50,
+                                                width: 50,
+                                                fit: BoxFit.cover,
+                                              )
+                                            : Image.asset(
+                                                'assets/images/avatar.png',
+                                                height: 50,
+                                                width: 50,
+                                              ),
+                                        const SizedBox(
+                                          width: 15,
+                                        ),
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                'Item Name: ${salonController.viewProductsModel!.data![index].itemName!}',
+                                                style: TextStyle(
+                                                    color: Colors.grey,
+                                                    fontSize: 14,
+                                                    fontWeight:
+                                                        FontWeight.w500),
+                                              ),
+                                              SizedBox(
+                                                height: 5,
+                                              ),
+                                              Text(
+                                                'Amount: ${salonController.viewProductsModel!.data![index].amount!}',
+                                                style: TextStyle(
+                                                    color: Colors.grey,
+                                                    fontSize: 14,
+                                                    fontWeight:
+                                                        FontWeight.w500),
+                                              ),
+                                              SizedBox(
+                                                height: 5,
+                                              ),
+                                              Text(
+                                                'Amount After Discount: ${salonController.viewProductsModel!.data![index].afterDiscountAmount!}',
+                                                style: TextStyle(
+                                                    color: Colors.grey,
+                                                    fontSize: 14,
+                                                    fontWeight:
+                                                        FontWeight.w500),
+                                              ),
+                                              SizedBox(
+                                                height: 5,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    Text(
-                                      'Amount: ${salonController.viewProductsModel!.data![index].amount!}',
-                                      style: TextStyle(
-                                          color: Colors.grey,
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    Text(
-                                      'Amount After Discount: ${salonController.viewProductsModel!.data![index].afterDiscountAmount!}',
-                                      style: TextStyle(
-                                          color: Colors.grey,
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            );
-                          }),
+                                  ),
+                                );
+                              }),
                         ),
             );
           });

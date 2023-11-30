@@ -33,6 +33,7 @@ class Data {
   int? standalonDiscount;
   int? discountValue;
   String? afterDiscountAmount;
+  String? default_image;
 
   Data(
       {this.id,
@@ -42,7 +43,8 @@ class Data {
         this.amount,
         this.standalonDiscount,
         this.discountValue,
-        this.afterDiscountAmount});
+        this.afterDiscountAmount,
+      this.default_image});
 
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -53,6 +55,7 @@ class Data {
     standalonDiscount = json['standalon_discount'];
     discountValue = json['discount_value'];
     afterDiscountAmount = json['after_discount_amount'];
+    default_image = json['default_image'];
   }
 
   Map<String, dynamic> toJson() {
@@ -65,6 +68,7 @@ class Data {
     data['standalon_discount'] = this.standalonDiscount;
     data['discount_value'] = this.discountValue;
     data['after_discount_amount'] = this.afterDiscountAmount;
+    data['default_image'] = this.default_image;
     return data;
   }
 }

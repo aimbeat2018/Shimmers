@@ -299,6 +299,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
                                       height: 10,
                                     ),
                                     Text(
+
                                       TextConstant.clientNote,
                                       style: const TextStyle(
                                           color: Colors.black,
@@ -364,16 +365,20 @@ class _ProductListScreenState extends State<ProductListScreen> {
                                             vertical: 10),
                                         child: Row(
                                           children: [
-                                            if (salonController.productModel!
+                                            salonController.productModel!
                                                     .data![index].imageUrl !=
-                                                "")
+                                                ""?
                                               Image.network(
                                                 salonController.productModel!
                                                     .data![index].imageUrl!,
-                                                height: 70,
-                                                width: 70,
+                                                height: 50,
+                                                width: 50,
                                                 fit: BoxFit.cover,
-                                              ),
+                                              ):Image.asset(
+                                              'assets/images/avatar.png',
+                                              height: 50,
+                                              width: 50,
+                                            ),
                                             const SizedBox(
                                               width: 15,
                                             ),

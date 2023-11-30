@@ -222,19 +222,18 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             Center(
                               child: InkWell(
                                 onTap: () {
-                                  if (userRole == 'TRF Executive' ||
+                                 /* if (userRole == 'TRF Executive' ||
                                       userRole == 'TRF Manager') {
                                     showCustomSnackBar(
                                         'You dont have the permission to use this module',
                                         isError: true);
                                   }
-                                  //    else if(userRole=='sales executive') {
-                                  else {
+                                  else {*/
                                     Navigator.of(context).push(
                                         MaterialPageRoute(
                                             builder: (context) =>
                                                 SalonListScreen()));
-                                  }
+                                 // }
                                 },
                                 child: SizedBox(
                                   height: 135,
@@ -271,17 +270,17 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             Center(
                               child: InkWell(
                                 onTap: () {
-                                  if (userRole == 'TRF Executive' ||
+                                  /*if (userRole == 'TRF Executive' ||
                                       userRole == 'TRF Manager') {
                                     showCustomSnackBar(
                                         'You dont have the permission to use this module',
                                         isError: true);
-                                  } else {
+                                  } else {*/
                                     Navigator.of(context).push(
                                         MaterialPageRoute(
                                             builder: (context) =>
                                                 DistributorsScreen()));
-                                  }
+                               //   }
                                 },
                                 child: SizedBox(
                                   height: 135,
@@ -318,17 +317,17 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             Center(
                               child: InkWell(
                                 onTap: () {
-                                  if (userRole == 'TRF Executive' ||
+                                 /* if (userRole == 'TRF Executive' ||
                                       userRole == 'TRF Manager') {
                                     showCustomSnackBar(
                                         'You dont have the permission to use this module',
                                         isError: true);
-                                  } else {
+                                  } else {*/
                                     Navigator.of(context).push(
                                         MaterialPageRoute(
                                             builder: (context) =>
                                                 CampaignsListScreen()));
-                                  }
+                                //  }
                                 },
                                 child: SizedBox(
                                   height: 135,
@@ -372,19 +371,19 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             Center(
                               child: InkWell(
                                 onTap: () {
-                                  if (userRole == 'TRF Executive' ||
+                                /*  if (userRole == 'TRF Executive' ||
                                       userRole == 'TRF Manager') {
                                     showCustomSnackBar(
                                         'You dont have the permission to use this module',
                                         isError: true);
-                                  } else {
+                                  } else {*/
                                     Navigator.of(context).push(
                                         MaterialPageRoute(
                                             builder: (context) =>
                                                 SetTargetScreen(
                                                   from: 'target',
                                                 )));
-                                  }
+                                //  }
                                 },
                                 child: SizedBox(
                                   height: 135,
@@ -421,20 +420,20 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             Center(
                               child: InkWell(
                                 onTap: () {
-                                  if (userRole == 'TRF Executive' ||
+                                /*  if (userRole == 'TRF Executive' ||
                                       userRole == 'TRF Manager') {
                                     showCustomSnackBar(
                                         'You dont have the permission to use this module',
                                         isError: true);
-                                  } else {
+                                  } else {*/
                                     //Call activity screen here
-                                    /*Navigator.of(context).push(
+                                    Navigator.of(context).push(
                                         MaterialPageRoute(
                                             builder: (context) =>
                                                 SetTargetScreen(
                                                   from: 'target',
-                                                )));*/
-                                  }
+                                                )));
+                                 // }
                                 },
                                 child: SizedBox(
                                   height: 135,
@@ -471,14 +470,14 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             Center(
                               child: InkWell(
                                 onTap: () {
-                                  if (userRole == 'TRF Executive' ||
+                                  /*if (userRole == 'TRF Executive' ||
                                       userRole == 'TRF Manager') {
                                     showCustomSnackBar(
                                         'You dont have the permission to use this module',
                                         isError: true);
                                   } else {
                                     //Go score page
-                                  }
+                                  }*/
                                 },
                                 child: SizedBox(
                                   height: 135,
@@ -522,14 +521,14 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             Center(
                               child: InkWell(
                                 onTap: () {
-                                  if (userRole == 'TRF Executive' ||
+                                  /*if (userRole == 'TRF Executive' ||
                                       userRole == 'TRF Manager') {
                                     showCustomSnackBar(
                                         'You dont have the permission to use this module',
                                         isError: true);
                                   } else {
                                     //Go team page
-                                  }
+                                  }*/
                                 },
                                 child: SizedBox(
                                   height: 135,
@@ -586,6 +585,12 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                             builder: (context) =>
                                                 HeadOfficerTourRequests()));
                                   }
+                                  else{
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                TourListScreen()));
+                                  }
                                 },
                                 child: SizedBox(
                                   height: 135,
@@ -622,14 +627,14 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             Center(
                               child: InkWell(
                                 onTap: () {
-                                  if (userRole == 'TRF Executive' ||
+                               /*   if (userRole == 'TRF Executive' ||
                                       userRole == 'TRF Manager') {
                                     showCustomSnackBar(
                                         'You dont have the permission to use this module',
                                         isError: true);
                                   } else {
                                     //Go nca page
-                                  }
+                                  }*/
                                 },
                                 child: SizedBox(
                                   height: 135,

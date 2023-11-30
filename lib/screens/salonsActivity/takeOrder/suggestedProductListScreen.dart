@@ -91,8 +91,8 @@ class _SuggestedProductListScreenState
                       if (widget.suggestedProductsList[index].imageUrl != "")
                         Image.network(
                           widget.suggestedProductsList[index].imageUrl!,
-                          height: 70,
-                          width: 70,
+                          height: 50,
+                          width: 50,
                           fit: BoxFit.cover,
                         ),
                       const SizedBox(

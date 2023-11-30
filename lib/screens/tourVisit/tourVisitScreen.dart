@@ -31,11 +31,16 @@ class TourVisitScreen extends StatefulWidget {
 }
 
 class _TourVisitScreenState extends State<TourVisitScreen> {
-  TextEditingController remarksController = TextEditingController();
-  TextEditingController purposeController = TextEditingController();
-  TextEditingController areaController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
+  TextEditingController travelfromController = TextEditingController();
+  TextEditingController traveltoController = TextEditingController();
+  TextEditingController rsmnameController = TextEditingController();
   TextEditingController amountController = TextEditingController();
-  String? selectedDate, selectedTime;
+  TextEditingController daysController = TextEditingController();
+  TextEditingController demoController = TextEditingController();
+  TextEditingController remarksController = TextEditingController();
+
+  String? deptDate,returnDate,checkinDate,checkoutDate, selectedTime;
   TourDetailsByIdModel? tourDetailsByIdModel;
 
   String _connectionStatus = 'unKnown';
@@ -69,12 +74,12 @@ class _TourVisitScreenState extends State<TourVisitScreen> {
                   ? remarksController.text = ''
                   : remarksController.text =
                       tourDetailsByIdModel!.data![0].executiveRemark!;
-              purposeController.text = tourDetailsByIdModel!.data![0].purpose!;
-              areaController.text =
+              nameController.text = tourDetailsByIdModel!.data![0].purpose!;
+              travelfromController.text =
                   tourDetailsByIdModel!.data![0].area!.toString();
               amountController.text =
                   tourDetailsByIdModel!.data![0].amount!.toString();
-              selectedDate = tourDetailsByIdModel!.data![0].date!;
+              deptDate = tourDetailsByIdModel!.data![0].date!;
               selectedTime = tourDetailsByIdModel!.data![0].time!;
             }
           });
@@ -111,7 +116,7 @@ class _TourVisitScreenState extends State<TourVisitScreen> {
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 8.0),
                           child: Text(
-                            TextConstant.purpose,
+                            'Sales/Trainer Name',
                             style: const TextStyle(
                                 color: primaryColor,
                                 fontSize: 14,
@@ -124,13 +129,12 @@ class _TourVisitScreenState extends State<TourVisitScreen> {
                       ),
                       TextFormField(
                         style: const TextStyle(fontSize: 14),
-                        maxLines: 2,
                         decoration: GlobalFunctions.getInputDecoration(
-                            TextConstant.purpose),
-                        controller: purposeController,
+                            'Sales/Trainer Name'),
+                        controller: nameController,
                         keyboardType: TextInputType.text,
                         onSaved: (value) {
-                          purposeController.text = value as String;
+                          nameController.text = value as String;
                         },
                       ),
                       SizedBox(
@@ -141,7 +145,7 @@ class _TourVisitScreenState extends State<TourVisitScreen> {
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 8.0),
                           child: Text(
-                            'Area',
+                            'Travel From',
                             style: const TextStyle(
                                 color: primaryColor,
                                 fontSize: 14,
@@ -153,23 +157,21 @@ class _TourVisitScreenState extends State<TourVisitScreen> {
                         height: 15,
                       ),
                       TextFormField(
-                        controller: areaController,
-                        decoration: GlobalFunctions.getInputDecoration('Area'),
+                        controller: travelfromController,
+                        decoration: GlobalFunctions.getInputDecoration('Travel From'),
                         style: TextStyle(fontSize: 14),
                         keyboardType: TextInputType.text,
                         onSaved: (value) {
-                          areaController.text = value as String;
+                          travelfromController.text = value as String;
                         },
                       ),
-                      SizedBox(
-                        height: 25,
-                      ),
+                      SizedBox(height: 25,),
                       Align(
                         alignment: Alignment.topLeft,
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 8.0),
                           child: Text(
-                            TextConstant.amount,
+                            'Travel To',
                             style: const TextStyle(
                                 color: primaryColor,
                                 fontSize: 14,
@@ -177,28 +179,28 @@ class _TourVisitScreenState extends State<TourVisitScreen> {
                           ),
                         ),
                       ),
-                      const SizedBox(
+                      SizedBox(
                         height: 15,
                       ),
                       TextFormField(
-                        style: const TextStyle(fontSize: 14),
-                        decoration: GlobalFunctions.getInputDecoration(
-                            TextConstant.amount),
-                        controller: amountController,
-                        keyboardType: TextInputType.number,
+                        controller: traveltoController,
+                        decoration: GlobalFunctions.getInputDecoration('Travel To'),
+                        style: TextStyle(fontSize: 14),
+                        keyboardType: TextInputType.text,
                         onSaved: (value) {
-                          amountController.text = value as String;
+                          traveltoController.text = value as String;
                         },
                       ),
                       SizedBox(
                         height: 25,
                       ),
+
                       Align(
                         alignment: Alignment.topLeft,
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 8.0),
                           child: Text(
-                            TextConstant.selectDate,
+                            'Departure Date',
                             style: const TextStyle(
                                 color: primaryColor,
                                 fontSize: 14,
@@ -228,7 +230,7 @@ class _TourVisitScreenState extends State<TourVisitScreen> {
                             //you can implement different kind of Date Format here according to your requirement
 
                             setState(() {
-                              selectedDate = formattedDate;
+                              deptDate = formattedDate;
                             });
                           } else {
                             print("Date is not selected");
@@ -248,9 +250,9 @@ class _TourVisitScreenState extends State<TourVisitScreen> {
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 8.0),
                                   child: Text(
-                                    selectedDate == null
-                                        ? TextConstant.selectDate
-                                        : selectedDate!,
+                                    deptDate == null
+                                        ? 'Select Departure Date'
+                                        : deptDate!,
                                     style: const TextStyle(
                                         color: Colors.black, fontSize: 14),
                                   ),
@@ -268,6 +270,78 @@ class _TourVisitScreenState extends State<TourVisitScreen> {
                         height: 25,
                       ),
                       Align(
+                        alignment: Alignment.topLeft,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: Text(
+                            'Return Date',
+                            style: const TextStyle(
+                                color: primaryColor,
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      InkWell(
+                        onTap: () async {
+                          DateTime? pickedDate = await showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime(2000),
+                              //DateTime.now() - not to allow to choose before today.
+                              lastDate: DateTime(2101));
+
+                          if (pickedDate != null) {
+                            print(
+                                pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
+                            String formattedDate =
+                            DateFormat('yyyy-MM-dd').format(pickedDate);
+                            print(
+                                formattedDate); //formatted date output using intl package =>  2021-03-16
+                            //you can implement different kind of Date Format here according to your requirement
+
+                            setState(() {
+                              returnDate = formattedDate;
+                            });
+                          } else {
+                            print("Date is not selected");
+                          }
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(color: primaryColor)),
+                          child: Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 8.0),
+                                      child: Text(
+                                        returnDate == null
+                                            ? 'Select Return Date'
+                                            : returnDate!,
+                                        style: const TextStyle(
+                                            color: Colors.black, fontSize: 14),
+                                      ),
+                                    )),
+                                Icon(
+                                  Icons.calendar_month,
+                                  color: Colors.grey.shade700,
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 25,),
+                      /*Align(
                         alignment: Alignment.topLeft,
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -325,7 +399,234 @@ class _TourVisitScreenState extends State<TourVisitScreen> {
                       ),
                       SizedBox(
                         height: 25,
+                      ),*/
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: Text(
+                            'Check-In Date',
+                            style: const TextStyle(
+                                color: primaryColor,
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
                       ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      InkWell(
+                        onTap: () async {
+                          DateTime? pickedDate = await showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime(2000),
+                              //DateTime.now() - not to allow to choose before today.
+                              lastDate: DateTime(2101));
+
+                          if (pickedDate != null) {
+                            print(
+                                pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
+                            String formattedDate =
+                            DateFormat('yyyy-MM-dd').format(pickedDate);
+                            print(
+                                formattedDate); //formatted date output using intl package =>  2021-03-16
+                            //you can implement different kind of Date Format here according to your requirement
+
+                            setState(() {
+                              checkinDate = formattedDate;
+                            });
+                          } else {
+                            print("Date is not selected");
+                          }
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(color: primaryColor)),
+                          child: Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 8.0),
+                                      child: Text(
+                                        checkinDate == null
+                                            ? 'Select Check-In Date'
+                                            : checkinDate!,
+                                        style: const TextStyle(
+                                            color: Colors.black, fontSize: 14),
+                                      ),
+                                    )),
+                                Icon(
+                                  Icons.calendar_month,
+                                  color: Colors.grey.shade700,
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 25,
+                      ),
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: Text(
+                            'Check-Out Date',
+                            style: const TextStyle(
+                                color: primaryColor,
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      InkWell(
+                        onTap: () async {
+                          DateTime? pickedDate = await showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime(2000),
+                              //DateTime.now() - not to allow to choose before today.
+                              lastDate: DateTime(2101));
+
+                          if (pickedDate != null) {
+                            print(
+                                pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
+                            String formattedDate =
+                            DateFormat('yyyy-MM-dd').format(pickedDate);
+                            print(
+                                formattedDate); //formatted date output using intl package =>  2021-03-16
+                            //you can implement different kind of Date Format here according to your requirement
+
+                            setState(() {
+                              checkoutDate = formattedDate;
+                            });
+                          } else {
+                            print("Date is not selected");
+                          }
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(color: primaryColor)),
+                          child: Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 8.0),
+                                      child: Text(
+                                        checkoutDate == null
+                                            ? 'Select Return Date'
+                                            : checkoutDate!,
+                                        style: const TextStyle(
+                                            color: Colors.black, fontSize: 14),
+                                      ),
+                                    )),
+                                Icon(
+                                  Icons.calendar_month,
+                                  color: Colors.grey.shade700,
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 25,),
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: Text(
+                            'RSM Name',
+                            style: const TextStyle(
+                                color: primaryColor,
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      TextFormField(
+                        style: const TextStyle(fontSize: 14),
+                        decoration: GlobalFunctions.getInputDecoration(
+                            'RSM Name'),
+                        controller: rsmnameController,
+                        keyboardType: TextInputType.text,
+                        onSaved: (value) {
+                          rsmnameController.text = value as String;
+                        },
+                      ),
+                      SizedBox(height: 25,),
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: Text(
+                            'No. Of Days',
+                            style: const TextStyle(
+                                color: primaryColor,
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      TextFormField(
+                        style: const TextStyle(fontSize: 14),
+                        decoration: GlobalFunctions.getInputDecoration(
+                            'No. Of Days'),
+                        controller: daysController,
+                        keyboardType: TextInputType.text,
+                        onSaved: (value) {
+                          daysController.text = value as String;
+                        },
+                      ),
+                      SizedBox(height: 25,),
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: Text(
+                            'No. Of Demos',
+                            style: const TextStyle(
+                                color: primaryColor,
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      TextFormField(
+                        style: const TextStyle(fontSize: 14),
+                        decoration: GlobalFunctions.getInputDecoration(
+                            'No. Of Demo'),
+                        controller: demoController,
+                        keyboardType: TextInputType.text,
+                        onSaved: (value) {
+                          demoController.text = value as String;
+                        },
+                      ),
+                      SizedBox(height: 25,),
                       Align(
                         alignment: Alignment.topLeft,
                         child: Padding(
@@ -385,20 +686,20 @@ class _TourVisitScreenState extends State<TourVisitScreen> {
                                   ),
                                 ),
                                 onPressed: () {
-                                  if (purposeController.text.isEmpty) {
-                                    showCustomSnackBar('Enter Purpose',
+                                  if (nameController.text.isEmpty) {
+                                    showCustomSnackBar('Enter Sales/Trainer Name',
                                         isError: false);
-                                  } else if (areaController.text.isEmpty) {
-                                    showCustomSnackBar('Enter Area',
+                                  } else if (travelfromController.text.isEmpty) {
+                                    showCustomSnackBar('Enter Travel From Field',
                                         isError: false);
-                                  } else if (amountController.text.isEmpty) {
-                                    showCustomSnackBar('Enter Amount',
+                                  } else if (traveltoController.text.isEmpty) {
+                                    showCustomSnackBar('Enter Travel To Field',
                                         isError: false);
-                                  } else if (selectedDate == null) {
-                                    showCustomSnackBar(TextConstant.selectDate,
+                                  } else if (deptDate == null) {
+                                    showCustomSnackBar('Select Departure Date',
                                         isError: false);
-                                  } else if (selectedTime == null) {
-                                    showCustomSnackBar(TextConstant.selectTime,
+                                  } else if (returnDate == null) {
+                                    showCustomSnackBar('Select Return Date',
                                         isError: false);
                                   } else if (remarksController.text.isEmpty) {
                                     showCustomSnackBar('Enter Remark',
@@ -408,9 +709,9 @@ class _TourVisitScreenState extends State<TourVisitScreen> {
                                       /* TourRequestModel tourRequestModel =
                                       TourRequestModel();
                                   tourRequestModel.purpose =
-                                      purposeController.text;
+                                      nameController.text;
                                   tourRequestModel.area = "vashi";
-                                  tourRequestModel.date = selectedDate;
+                                  tourRequestModel.date = deptDate;
                                   tourRequestModel.time = selectedTime;
                                   tourRequestModel.amount =
                                       int.parse(amountController.text);
@@ -422,14 +723,14 @@ class _TourVisitScreenState extends State<TourVisitScreen> {
                                   tourRequestModel.tourReqId = "";*/
                                       String tourReqid = "";
 
-                                      addTourRequest(tourController, tourReqid);
+                                      //addTourRequest(tourController, tourReqid);
                                     } else {
                                       /* TourRequestModel tourRequestModel =
                                       TourRequestModel();
                                   tourRequestModel.purpose =
-                                      purposeController.text;
+                                      nameController.text;
                                   tourRequestModel.area = areaController.text;
-                                  tourRequestModel.date = selectedDate;
+                                  tourRequestModel.date = deptDate;
                                   tourRequestModel.time = selectedTime;
                                   tourRequestModel.amount =
                                       int.parse(amountController.text);
@@ -442,8 +743,8 @@ class _TourVisitScreenState extends State<TourVisitScreen> {
                                   tourRequestModel.tourReqId =
                                       widget.tour_requestid.toString();*/
 
-                                      addTourRequest(tourController,
-                                          widget.tour_requestid.toString());
+                                     /* addTourRequest(tourController,
+                                          widget.tour_requestid.toString());*/
                                     }
                                   }
                                 },
@@ -478,18 +779,18 @@ class _TourVisitScreenState extends State<TourVisitScreen> {
     });
 
   }*/
-  Future<void> addTourRequest(
+ /* Future<void> addTourRequest(
       TourController tourController, String tourid) async {
     tourController
         .submitTourRequest(
             area: areaController.text,
-            date: selectedDate,
+            date: deptDate,
             time: selectedTime,
             amount: amountController.text,
             userid: Get.find<AuthController>().getUserId(),
             roleid: Get.find<AuthController>().getRoleId(),
             remark: remarksController.text,
-            purpose: purposeController.text,
+            purpose: nameController.text,
             tourid: tourid)
         .then((message) async {
       if (message == 'Request submitted successfully.'||message=='Request updated successfully.') {
@@ -499,5 +800,5 @@ class _TourVisitScreenState extends State<TourVisitScreen> {
         showCustomSnackBar(message!);
       }
     });
-  }
+  }*/
 }
