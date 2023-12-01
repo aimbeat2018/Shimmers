@@ -566,13 +566,17 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             Center(
                               child: InkWell(
                                 onTap: () {
-                                  if (userRole == 'TRF Executive') {
+                                  Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              TourListScreen()));
+                                  /*if (userRole == 'TRF Executive') {
                                     //TRF Executive Flow
                                     Navigator.of(context).push(
                                         MaterialPageRoute(
                                             builder: (context) =>
                                                 TourListScreen()));
-                                  } else if (userRole == 'TRF Manager') {
+                                  } else if (userRole == 'TRF Manager' || userRole=='employee') {
                                     //TRF Manager Flow
                                     Navigator.of(context).push(
                                         MaterialPageRoute(
@@ -590,7 +594,11 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                         MaterialPageRoute(
                                             builder: (context) =>
                                                 TourListScreen()));
-                                  }
+                                   *//* Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                TRFExecutiveListScreen()));*//*
+                                  }*/
                                 },
                                 child: SizedBox(
                                   height: 135,

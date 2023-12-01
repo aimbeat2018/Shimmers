@@ -108,7 +108,7 @@ class _ExecutivesTourRequestList extends State<ExecutivesTourRequestList> {
                                           children: [
                                             Expanded(
                                               child: Text(
-                                                'Area: ${tourController.tourRequestListModel!.tourRequestList![index].area!}',
+                                                'Travel From: ${tourController.tourRequestListModel!.tourRequestList![index].travelFrom!}',
                                                 style: TextStyle(
                                                     color: primaryColor,
                                                     fontSize: 16,
@@ -191,26 +191,26 @@ class _ExecutivesTourRequestList extends State<ExecutivesTourRequestList> {
                                               MainAxisAlignment.spaceBetween,
                                           children: [
                                             Text(
-                                              'Date: ${tourController.tourRequestListModel!.tourRequestList![index].date!}',
+                                              'Travel To: ${tourController.tourRequestListModel!.tourRequestList![index].travelTo!}',
                                               style: TextStyle(
                                                   color: Colors.grey,
                                                   fontSize: 14,
                                                   fontWeight: FontWeight.w500),
                                             ),
-                                            Text(
+                                           /* Text(
                                               'Time: ${tourController.tourRequestListModel!.tourRequestList![index].time!}',
                                               style: TextStyle(
                                                   color: Colors.grey,
                                                   fontSize: 14,
                                                   fontWeight: FontWeight.w500),
-                                            ),
+                                            ),*/
                                           ],
                                         ),
                                         SizedBox(
                                           height: 5,
                                         ),
                                         Text(
-                                          'Amount: ${tourController.tourRequestListModel!.tourRequestList![index].amount!.toString()}',
+                                          'Depature Date: ${tourController.tourRequestListModel!.tourRequestList![index].deptDate!.toString()}',
                                           style: TextStyle(
                                               color: Colors.grey,
                                               fontSize: 14,

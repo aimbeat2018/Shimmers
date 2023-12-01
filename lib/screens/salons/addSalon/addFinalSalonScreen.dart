@@ -23,12 +23,12 @@ class AddFinalSalonScreen extends StatefulWidget {
 
   const AddFinalSalonScreen(
       {Key? key,
-      required this.salonImage,
-      required this.mobileNumber,
-      required this.email,
-      required this.gstNumber,
-      required this.categoryName,
-      required this.salonName})
+        required this.salonImage,
+        required this.mobileNumber,
+        required this.email,
+        required this.gstNumber,
+        required this.categoryName,
+        required this.salonName})
       : super(key: key);
 
   @override
@@ -139,7 +139,7 @@ class _AddFinalSalonScreenState extends State<AddFinalSalonScreen> {
 
   Future<void> _getAddressFromLatLng(Position position) async {
     await placemarkFromCoordinates(
-            _currentPosition!.latitude, _currentPosition!.longitude)
+        _currentPosition!.latitude, _currentPosition!.longitude)
         .then((List<Placemark> placemarks) {
       Placemark place = placemarks[0];
       setState(() {
@@ -147,7 +147,7 @@ class _AddFinalSalonScreenState extends State<AddFinalSalonScreen> {
         longi = _currentPosition!.longitude;
         /*, ${place.subAdministrativeArea}*/
         _currentAddress =
-            ' ${place.street}, ${place.subLocality}, ${place.locality}';
+        ' ${place.street}, ${place.subLocality}, ${place.locality}';
 
         pincode = place.postalCode;
         country = place.country;
@@ -201,7 +201,7 @@ class _AddFinalSalonScreenState extends State<AddFinalSalonScreen> {
             body: SingleChildScrollView(
               child: Padding(
                 padding:
-                    const EdgeInsets.symmetric(vertical: 25.0, horizontal: 15),
+                const EdgeInsets.symmetric(vertical: 25.0, horizontal: 15),
                 child: Column(
                   children: [
                     Align(
@@ -290,7 +290,7 @@ class _AddFinalSalonScreenState extends State<AddFinalSalonScreen> {
                             alignment: Alignment.topLeft,
                             child: Padding(
                                 padding:
-                                    const EdgeInsets.symmetric(horizontal: 8.0),
+                                const EdgeInsets.symmetric(horizontal: 8.0),
                                 child: RichText(
                                     text: TextSpan(
                                         style: const TextStyle(
@@ -298,128 +298,17 @@ class _AddFinalSalonScreenState extends State<AddFinalSalonScreen> {
                                             fontSize: 14,
                                             fontWeight: FontWeight.w500),
                                         children: <TextSpan>[
-                                      TextSpan(
-                                        text: TextConstant.pincode,
-                                      ),
-                                      TextSpan(
-                                        text: ' *',
-                                        style: const TextStyle(
-                                            color: Colors.red,
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w500),
-                                      ),
-                                    ]))),
-                          ),
-                          const SizedBox(
-                            height: 15,
-                          ),
-                          Container(
-                            decoration: BoxDecoration(
-                              // boxShadow: const [
-                              //   BoxShadow(
-                              //     color: primaryColor,
-                              //     blurRadius: 12.0, // soften the shadow
-                              //     spreadRadius: 0.5, //extend the shadow
-                              //     offset: Offset(
-                              //       1.0, // Move to right 5  horizontally
-                              //       1.0, // Move to bottom 5 Vertically
-                              //     ),
-                              //   )
-                              // ],
-                              border: Border.all(color: primaryColor),
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: TextFormField(
-                              style: const TextStyle(fontSize: 14),
-                             // enabled: false,
-                              decoration:
-                                  GlobalFunctions.getInputDecorationWhite(""),
-                              controller: pincodeController,
-                              keyboardType: TextInputType.number,
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 15,
-                          ),
-                          Align(
-                            alignment: Alignment.topLeft,
-                            child: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 8.0),
-                                child: RichText(
-                                    text: TextSpan(
-                                        style: const TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w500),
-                                        children: <TextSpan>[
-                                      TextSpan(
-                                        text: TextConstant.companyAddress,
-                                      ),
-                                      TextSpan(
-                                        text: ' *',
-                                        style: const TextStyle(
-                                            color: Colors.red,
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w500),
-                                      ),
-                                    ]))),
-                          ),
-                          const SizedBox(
-                            height: 15,
-                          ),
-                          Container(
-                            decoration: BoxDecoration(
-                              // boxShadow: const [
-                              //   BoxShadow(
-                              //     color: primaryColor,
-                              //     blurRadius: 12.0, // soften the shadow
-                              //     spreadRadius: 0.5, //extend the shadow
-                              //     offset: Offset(
-                              //       1.0, // Move to right 5  horizontally
-                              //       1.0, // Move to bottom 5 Vertically
-                              //     ),
-                              //   )
-                              // ],
-                              border: Border.all(color: primaryColor),
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: TextFormField(
-                              style: const TextStyle(fontSize: 14),
-                              decoration:
-                                  GlobalFunctions.getInputDecorationWhite(""),
-                              controller: companyAddressController,
-                              keyboardType: TextInputType.text,
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 15,
-                          ),
-                          Align(
-                            alignment: Alignment.topLeft,
-                            child: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 8.0),
-                                child: RichText(
-                                    text: TextSpan(
-                                        style: const TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w500),
-                                        children: <TextSpan>[
-                                      TextSpan(
-                                        text: TextConstant.country,
-                                      ),
-                                      TextSpan(
-                                        text: ' *',
-                                        style: const TextStyle(
-                                            color: Colors.red,
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w500),
-                                      ),
-                                    ]))),
+                                          TextSpan(
+                                            text: TextConstant.pincode,
+                                          ),
+                                          TextSpan(
+                                            text: ' *',
+                                            style: const TextStyle(
+                                                color: Colors.red,
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                        ]))),
                           ),
                           const SizedBox(
                             height: 15,
@@ -445,7 +334,118 @@ class _AddFinalSalonScreenState extends State<AddFinalSalonScreen> {
                               style: const TextStyle(fontSize: 14),
                               enabled: false,
                               decoration:
-                                  GlobalFunctions.getInputDecorationWhite(""),
+                              GlobalFunctions.getInputDecorationWhite(""),
+                              controller: pincodeController,
+                              keyboardType: TextInputType.number,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: Padding(
+                                padding:
+                                const EdgeInsets.symmetric(horizontal: 8.0),
+                                child: RichText(
+                                    text: TextSpan(
+                                        style: const TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500),
+                                        children: <TextSpan>[
+                                          TextSpan(
+                                            text: TextConstant.companyAddress,
+                                          ),
+                                          TextSpan(
+                                            text: ' *',
+                                            style: const TextStyle(
+                                                color: Colors.red,
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                        ]))),
+                          ),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                              // boxShadow: const [
+                              //   BoxShadow(
+                              //     color: primaryColor,
+                              //     blurRadius: 12.0, // soften the shadow
+                              //     spreadRadius: 0.5, //extend the shadow
+                              //     offset: Offset(
+                              //       1.0, // Move to right 5  horizontally
+                              //       1.0, // Move to bottom 5 Vertically
+                              //     ),
+                              //   )
+                              // ],
+                              border: Border.all(color: primaryColor),
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: TextFormField(
+                              style: const TextStyle(fontSize: 14),
+                              decoration:
+                              GlobalFunctions.getInputDecorationWhite(""),
+                              controller: companyAddressController,
+                              keyboardType: TextInputType.text,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: Padding(
+                                padding:
+                                const EdgeInsets.symmetric(horizontal: 8.0),
+                                child: RichText(
+                                    text: TextSpan(
+                                        style: const TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500),
+                                        children: <TextSpan>[
+                                          TextSpan(
+                                            text: TextConstant.country,
+                                          ),
+                                          TextSpan(
+                                            text: ' *',
+                                            style: const TextStyle(
+                                                color: Colors.red,
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                        ]))),
+                          ),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                              // boxShadow: const [
+                              //   BoxShadow(
+                              //     color: primaryColor,
+                              //     blurRadius: 12.0, // soften the shadow
+                              //     spreadRadius: 0.5, //extend the shadow
+                              //     offset: Offset(
+                              //       1.0, // Move to right 5  horizontally
+                              //       1.0, // Move to bottom 5 Vertically
+                              //     ),
+                              //   )
+                              // ],
+                              border: Border.all(color: primaryColor),
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: TextFormField(
+                              style: const TextStyle(fontSize: 14),
+                              enabled: false,
+                              decoration:
+                              GlobalFunctions.getInputDecorationWhite(""),
                               controller: countryController,
                               keyboardType: TextInputType.text,
                             ),
@@ -457,7 +457,7 @@ class _AddFinalSalonScreenState extends State<AddFinalSalonScreen> {
                             alignment: Alignment.topLeft,
                             child: Padding(
                                 padding:
-                                    const EdgeInsets.symmetric(horizontal: 8.0),
+                                const EdgeInsets.symmetric(horizontal: 8.0),
                                 child: RichText(
                                     text: TextSpan(
                                         style: const TextStyle(
@@ -465,17 +465,17 @@ class _AddFinalSalonScreenState extends State<AddFinalSalonScreen> {
                                             fontSize: 14,
                                             fontWeight: FontWeight.w500),
                                         children: <TextSpan>[
-                                      TextSpan(
-                                        text: TextConstant.state,
-                                      ),
-                                      TextSpan(
-                                        text: ' *',
-                                        style: const TextStyle(
-                                            color: Colors.red,
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w500),
-                                      ),
-                                    ]))),
+                                          TextSpan(
+                                            text: TextConstant.state,
+                                          ),
+                                          TextSpan(
+                                            text: ' *',
+                                            style: const TextStyle(
+                                                color: Colors.red,
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                        ]))),
                           ),
                           const SizedBox(
                             height: 15,
@@ -501,7 +501,7 @@ class _AddFinalSalonScreenState extends State<AddFinalSalonScreen> {
                               style: const TextStyle(fontSize: 14),
                               enabled: true,
                               decoration:
-                                  GlobalFunctions.getInputDecorationWhite(""),
+                              GlobalFunctions.getInputDecorationWhite(""),
                               controller: stateController,
                               keyboardType: TextInputType.text,
                             ),
@@ -513,7 +513,7 @@ class _AddFinalSalonScreenState extends State<AddFinalSalonScreen> {
                             alignment: Alignment.topLeft,
                             child: Padding(
                                 padding:
-                                    const EdgeInsets.symmetric(horizontal: 8.0),
+                                const EdgeInsets.symmetric(horizontal: 8.0),
                                 child: RichText(
                                     text: TextSpan(
                                         style: const TextStyle(
@@ -521,17 +521,17 @@ class _AddFinalSalonScreenState extends State<AddFinalSalonScreen> {
                                             fontSize: 14,
                                             fontWeight: FontWeight.w500),
                                         children: <TextSpan>[
-                                      TextSpan(
-                                        text: TextConstant.city,
-                                      ),
-                                      TextSpan(
-                                        text: ' *',
-                                        style: const TextStyle(
-                                            color: Colors.red,
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w500),
-                                      ),
-                                    ]))),
+                                          TextSpan(
+                                            text: TextConstant.city,
+                                          ),
+                                          TextSpan(
+                                            text: ' *',
+                                            style: const TextStyle(
+                                                color: Colors.red,
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                        ]))),
                           ),
                           const SizedBox(
                             height: 15,
@@ -557,7 +557,7 @@ class _AddFinalSalonScreenState extends State<AddFinalSalonScreen> {
                               style: const TextStyle(fontSize: 14),
                               enabled: true,
                               decoration:
-                                  GlobalFunctions.getInputDecorationWhite(""),
+                              GlobalFunctions.getInputDecorationWhite(""),
                               controller: cityController,
                               keyboardType: TextInputType.text,
                             ),
@@ -569,7 +569,7 @@ class _AddFinalSalonScreenState extends State<AddFinalSalonScreen> {
                             alignment: Alignment.topLeft,
                             child: Padding(
                                 padding:
-                                    const EdgeInsets.symmetric(horizontal: 8.0),
+                                const EdgeInsets.symmetric(horizontal: 8.0),
                                 child: RichText(
                                     text: TextSpan(
                                         style: const TextStyle(
@@ -577,17 +577,17 @@ class _AddFinalSalonScreenState extends State<AddFinalSalonScreen> {
                                             fontSize: 14,
                                             fontWeight: FontWeight.w500),
                                         children: <TextSpan>[
-                                      TextSpan(
-                                        text: TextConstant.shippingAddress,
-                                      ),
-                                      TextSpan(
-                                        text: ' *',
-                                        style: const TextStyle(
-                                            color: Colors.red,
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w500),
-                                      ),
-                                    ]))),
+                                          TextSpan(
+                                            text: TextConstant.shippingAddress,
+                                          ),
+                                          TextSpan(
+                                            text: ' *',
+                                            style: const TextStyle(
+                                                color: Colors.red,
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                        ]))),
                           ),
                           const SizedBox(
                             height: 15,
@@ -612,7 +612,7 @@ class _AddFinalSalonScreenState extends State<AddFinalSalonScreen> {
                             child: TextFormField(
                               style: const TextStyle(fontSize: 14),
                               decoration:
-                                  GlobalFunctions.getInputDecorationWhite(""),
+                              GlobalFunctions.getInputDecorationWhite(""),
                               controller: shippingAddressController,
                               keyboardType: TextInputType.text,
                             ),
@@ -624,7 +624,7 @@ class _AddFinalSalonScreenState extends State<AddFinalSalonScreen> {
                             alignment: Alignment.topLeft,
                             child: Padding(
                                 padding:
-                                    const EdgeInsets.symmetric(horizontal: 8.0),
+                                const EdgeInsets.symmetric(horizontal: 8.0),
                                 child: RichText(
                                     text: TextSpan(
                                         style: const TextStyle(
@@ -632,17 +632,17 @@ class _AddFinalSalonScreenState extends State<AddFinalSalonScreen> {
                                             fontSize: 14,
                                             fontWeight: FontWeight.w500),
                                         children: <TextSpan>[
-                                      TextSpan(
-                                        text: TextConstant.contactPersonName,
-                                      ),
-                                      TextSpan(
-                                        text: ' *',
-                                        style: const TextStyle(
-                                            color: Colors.red,
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w500),
-                                      ),
-                                    ]))),
+                                          TextSpan(
+                                            text: TextConstant.contactPersonName,
+                                          ),
+                                          TextSpan(
+                                            text: ' *',
+                                            style: const TextStyle(
+                                                color: Colors.red,
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                        ]))),
                           ),
                           const SizedBox(
                             height: 15,
@@ -667,7 +667,7 @@ class _AddFinalSalonScreenState extends State<AddFinalSalonScreen> {
                             child: TextFormField(
                               style: const TextStyle(fontSize: 14),
                               decoration:
-                                  GlobalFunctions.getInputDecorationWhite(""),
+                              GlobalFunctions.getInputDecorationWhite(""),
                               controller: contactPersonNameController,
                               keyboardType: TextInputType.text,
                             ),
@@ -679,7 +679,7 @@ class _AddFinalSalonScreenState extends State<AddFinalSalonScreen> {
                             alignment: Alignment.topLeft,
                             child: Padding(
                                 padding:
-                                    const EdgeInsets.symmetric(horizontal: 8.0),
+                                const EdgeInsets.symmetric(horizontal: 8.0),
                                 child: RichText(
                                     text: TextSpan(
                                         style: const TextStyle(
@@ -687,17 +687,17 @@ class _AddFinalSalonScreenState extends State<AddFinalSalonScreen> {
                                             fontSize: 14,
                                             fontWeight: FontWeight.w500),
                                         children: <TextSpan>[
-                                      TextSpan(
-                                        text: TextConstant.contactPersonNumber,
-                                      ),
-                                      TextSpan(
-                                        text: ' *',
-                                        style: const TextStyle(
-                                            color: Colors.red,
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w500),
-                                      ),
-                                    ]))),
+                                          TextSpan(
+                                            text: TextConstant.contactPersonNumber,
+                                          ),
+                                          TextSpan(
+                                            text: ' *',
+                                            style: const TextStyle(
+                                                color: Colors.red,
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                        ]))),
                           ),
                           const SizedBox(
                             height: 15,
@@ -722,7 +722,7 @@ class _AddFinalSalonScreenState extends State<AddFinalSalonScreen> {
                             child: TextFormField(
                               style: const TextStyle(fontSize: 14),
                               decoration:
-                                  GlobalFunctions.getInputDecorationWhite(""),
+                              GlobalFunctions.getInputDecorationWhite(""),
                               controller: contactPersonMobileController,
                               keyboardType: TextInputType.number,
                             ),
@@ -734,7 +734,7 @@ class _AddFinalSalonScreenState extends State<AddFinalSalonScreen> {
                             alignment: Alignment.topLeft,
                             child: Padding(
                                 padding:
-                                    const EdgeInsets.symmetric(horizontal: 8.0),
+                                const EdgeInsets.symmetric(horizontal: 8.0),
                                 child: RichText(
                                     text: TextSpan(
                                         style: const TextStyle(
@@ -742,17 +742,17 @@ class _AddFinalSalonScreenState extends State<AddFinalSalonScreen> {
                                             fontSize: 14,
                                             fontWeight: FontWeight.w500),
                                         children: <TextSpan>[
-                                      TextSpan(
-                                        text: TextConstant.Password,
-                                      ),
-                                      TextSpan(
-                                        text: ' *',
-                                        style: const TextStyle(
-                                            color: Colors.red,
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w500),
-                                      ),
-                                    ]))),
+                                          TextSpan(
+                                            text: TextConstant.Password,
+                                          ),
+                                          TextSpan(
+                                            text: ' *',
+                                            style: const TextStyle(
+                                                color: Colors.red,
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                        ]))),
                           ),
                           const SizedBox(
                             height: 15,
@@ -778,7 +778,7 @@ class _AddFinalSalonScreenState extends State<AddFinalSalonScreen> {
                               obscureText: true,
                               style: const TextStyle(fontSize: 14),
                               decoration:
-                                  GlobalFunctions.getInputDecorationWhite(""),
+                              GlobalFunctions.getInputDecorationWhite(""),
                               controller: passwordController,
                               keyboardType: TextInputType.text,
                             ),
@@ -790,7 +790,7 @@ class _AddFinalSalonScreenState extends State<AddFinalSalonScreen> {
                             alignment: Alignment.topLeft,
                             child: Padding(
                                 padding:
-                                    const EdgeInsets.symmetric(horizontal: 8.0),
+                                const EdgeInsets.symmetric(horizontal: 8.0),
                                 child: RichText(
                                     text: TextSpan(
                                         style: const TextStyle(
@@ -798,17 +798,17 @@ class _AddFinalSalonScreenState extends State<AddFinalSalonScreen> {
                                             fontSize: 14,
                                             fontWeight: FontWeight.w500),
                                         children: <TextSpan>[
-                                      TextSpan(
-                                        text: TextConstant.salonType,
-                                      ),
-                                      TextSpan(
-                                        text: ' *',
-                                        style: const TextStyle(
-                                            color: Colors.red,
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w500),
-                                      ),
-                                    ]))),
+                                          TextSpan(
+                                            text: TextConstant.salonType,
+                                          ),
+                                          TextSpan(
+                                            text: ' *',
+                                            style: const TextStyle(
+                                                color: Colors.red,
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                        ]))),
                           ),
                           const SizedBox(
                             height: 15,
@@ -856,7 +856,7 @@ class _AddFinalSalonScreenState extends State<AddFinalSalonScreen> {
                             alignment: Alignment.topLeft,
                             child: Padding(
                                 padding:
-                                    const EdgeInsets.symmetric(horizontal: 8.0),
+                                const EdgeInsets.symmetric(horizontal: 8.0),
                                 child: RichText(
                                     text: TextSpan(
                                         style: const TextStyle(
@@ -864,17 +864,17 @@ class _AddFinalSalonScreenState extends State<AddFinalSalonScreen> {
                                             fontSize: 14,
                                             fontWeight: FontWeight.w500),
                                         children: <TextSpan>[
-                                      TextSpan(
-                                        text: TextConstant.route,
-                                      ),
-                                      TextSpan(
-                                        text: ' *',
-                                        style: const TextStyle(
-                                            color: Colors.red,
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w500),
-                                      ),
-                                    ]))),
+                                          TextSpan(
+                                            text: TextConstant.route,
+                                          ),
+                                          TextSpan(
+                                            text: ' *',
+                                            style: const TextStyle(
+                                                color: Colors.red,
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                        ]))),
                           ),
                           const SizedBox(
                             height: 15,
@@ -886,12 +886,12 @@ class _AddFinalSalonScreenState extends State<AddFinalSalonScreen> {
                                 builder: (context) => const SalonRouteScreen(),
                                 backgroundColor: Colors.transparent,
                               ).then((empRouteModel) => {
-                                    setState(() {
-                                      EmpRouteModel model = empRouteModel;
-                                      salonRouteId = model.id.toString();
-                                      salonRoute = model.name;
-                                    })
-                                  });
+                                setState(() {
+                                  EmpRouteModel model = empRouteModel;
+                                  salonRouteId = model.id.toString();
+                                  salonRoute = model.name;
+                                })
+                              });
                             },
                             child: Container(
                               decoration: BoxDecoration(
@@ -916,14 +916,14 @@ class _AddFinalSalonScreenState extends State<AddFinalSalonScreen> {
                                   children: [
                                     Expanded(
                                         child: Padding(
-                                      padding:
+                                          padding:
                                           EdgeInsets.symmetric(horizontal: 8.0),
-                                      child: Text(
-                                        salonRoute == null ? "" : salonRoute!,
-                                        style: TextStyle(
-                                            color: Colors.black, fontSize: 14),
-                                      ),
-                                    )),
+                                          child: Text(
+                                            salonRoute == null ? "" : salonRoute!,
+                                            style: TextStyle(
+                                                color: Colors.black, fontSize: 14),
+                                          ),
+                                        )),
                                     Icon(
                                       Icons.keyboard_arrow_down,
                                       color: Colors.grey.shade900,
@@ -939,92 +939,92 @@ class _AddFinalSalonScreenState extends State<AddFinalSalonScreen> {
                             // height: 45,
                             child: salonController.isLoading
                                 ? const Center(
-                                    child: CircularProgressIndicator(),
-                                  )
+                              child: CircularProgressIndicator(),
+                            )
                                 : ElevatedButton(
-                                    style: ButtonStyle(
-                                      backgroundColor:
-                                          MaterialStateProperty.all<Color>(
-                                              primaryColor),
-                                      foregroundColor:
-                                          MaterialStateProperty.all<Color>(
-                                              primaryColor),
-                                      textStyle:
-                                          MaterialStateProperty.all<TextStyle>(
-                                        const TextStyle(fontSize: 16),
-                                      ),
-                                      padding:
-                                          MaterialStateProperty.all<EdgeInsets>(
-                                        const EdgeInsets.symmetric(
-                                            horizontal: 16, vertical: 8),
-                                      ),
-                                      shape: MaterialStateProperty.all<
-                                          RoundedRectangleBorder>(
-                                        RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                        ),
-                                      ),
+                                style: ButtonStyle(
+                                  backgroundColor:
+                                  MaterialStateProperty.all<Color>(
+                                      primaryColor),
+                                  foregroundColor:
+                                  MaterialStateProperty.all<Color>(
+                                      primaryColor),
+                                  textStyle:
+                                  MaterialStateProperty.all<TextStyle>(
+                                    const TextStyle(fontSize: 16),
+                                  ),
+                                  padding:
+                                  MaterialStateProperty.all<EdgeInsets>(
+                                    const EdgeInsets.symmetric(
+                                        horizontal: 16, vertical: 8),
+                                  ),
+                                  shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                      borderRadius:
+                                      BorderRadius.circular(10),
                                     ),
-                                    onPressed: () {
-                                      if (pincodeController.text.isEmpty) {
-                                        showCustomSnackBar('Enter pincode',
-                                            isError: true);
-                                      } else if (companyAddressController
-                                          .text.isEmpty) {
-                                        showCustomSnackBar(
-                                            'Enter Company Address',
-                                            isError: true);
-                                      } else if (countryController
-                                          .text.isEmpty) {
-                                        showCustomSnackBar('Enter Country',
-                                            isError: true);
-                                      } else if (stateController.text.isEmpty) {
-                                        showCustomSnackBar('Enter State',
-                                            isError: true);
-                                      } else if (cityController.text.isEmpty) {
-                                        showCustomSnackBar('Enter City',
-                                            isError: true);
-                                      } else if (shippingAddressController
-                                          .text.isEmpty) {
-                                        showCustomSnackBar(
-                                            'Enter Shipping Address',
-                                            isError: true);
-                                      } else if (contactPersonNameController
-                                          .text.isEmpty) {
-                                        showCustomSnackBar(
-                                            'Enter Contact Person Name',
-                                            isError: true);
-                                      } else if (contactPersonMobileController
-                                              .text.length !=
-                                          10) {
-                                        showCustomSnackBar(
-                                            'Enter Contact Person Mobile Number',
-                                            isError: true);
-                                      } else if (passwordController
-                                          .text.isEmpty) {
-                                        showCustomSnackBar('Enter Password',
-                                            isError: true);
-                                      } else if (_selectedLocation == '') {
-                                        showCustomSnackBar('Select Salon Type',
-                                            isError: true);
-                                      } /*else if (salonRouteId == "") {
-                                        showCustomSnackBar('Select Route',
-                                            isError: true);
-                                      }*/ else {
-                                        addSalon(salonController);
-                                      }
-                                    },
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(5.0),
-                                      child: Text(
-                                        TextConstant.submit.toUpperCase(),
-                                        style: const TextStyle(
-                                            fontSize: 14,
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.w500),
-                                      ),
-                                    )),
+                                  ),
+                                ),
+                                onPressed: () {
+                                  if (pincodeController.text.isEmpty) {
+                                    showCustomSnackBar('Enter pincode',
+                                        isError: true);
+                                  } else if (companyAddressController
+                                      .text.isEmpty) {
+                                    showCustomSnackBar(
+                                        'Enter Company Address',
+                                        isError: true);
+                                  } else if (countryController
+                                      .text.isEmpty) {
+                                    showCustomSnackBar('Enter Country',
+                                        isError: true);
+                                  } else if (stateController.text.isEmpty) {
+                                    showCustomSnackBar('Enter State',
+                                        isError: true);
+                                  } else if (cityController.text.isEmpty) {
+                                    showCustomSnackBar('Enter City',
+                                        isError: true);
+                                  } else if (shippingAddressController
+                                      .text.isEmpty) {
+                                    showCustomSnackBar(
+                                        'Enter Shipping Address',
+                                        isError: true);
+                                  } else if (contactPersonNameController
+                                      .text.isEmpty) {
+                                    showCustomSnackBar(
+                                        'Enter Contact Person Name',
+                                        isError: true);
+                                  } else if (contactPersonMobileController
+                                      .text.length !=
+                                      10) {
+                                    showCustomSnackBar(
+                                        'Enter Contact Person Mobile Number',
+                                        isError: true);
+                                  } else if (passwordController
+                                      .text.isEmpty) {
+                                    showCustomSnackBar('Enter Password',
+                                        isError: true);
+                                  } else if (_selectedLocation == '') {
+                                    showCustomSnackBar('Select Salon Type',
+                                        isError: true);
+                                  } else if (salonRouteId == "") {
+                                    showCustomSnackBar('Select Route',
+                                        isError: true);
+                                  } else {
+                                    addSalon(salonController);
+                                  }
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.all(5.0),
+                                  child: Text(
+                                    TextConstant.submit.toUpperCase(),
+                                    style: const TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                )),
                           ),
                         ],
                       ),
@@ -1043,25 +1043,25 @@ class _AddFinalSalonScreenState extends State<AddFinalSalonScreen> {
   Future<void> addSalon(SalonController salonController) async {
     salonController
         .addSalon(
-            name: widget.salonName,
-            password: passwordController.text,
-            email: widget.email,
-            location_id: salonRouteId,
-            mobile: widget.mobileNumber,
-            sub_category_id: widget.categoryName,
-            gst_number: widget.gstNumber,
-            country: countryController.text,
-            shipping_address: shippingAddressController.text,
-            postal_code: pincodeController.text,
-            state: stateController.text,
-            city: cityController.text,
-            number: contactPersonMobileController.text,
-            owner_name: TextConstant.contactPersonName,
-            salon_type: _selectedLocation,
-            latitude: lat.toString(),
-            longitude: longi.toString(),
-            address: companyAddressController.text,
-            image: widget.salonImage)
+        name: widget.salonName,
+        password: passwordController.text,
+        email: widget.email,
+        location_id: salonRouteId,
+        mobile: widget.mobileNumber,
+        sub_category_id: widget.categoryName,
+        gst_number: widget.gstNumber,
+        country: countryController.text,
+        shipping_address: shippingAddressController.text,
+        postal_code: pincodeController.text,
+        state: stateController.text,
+        city: cityController.text,
+        number: contactPersonMobileController.text,
+        owner_name: TextConstant.contactPersonName,
+        salon_type: _selectedLocation,
+        latitude: lat.toString(),
+        longitude: longi.toString(),
+        address: companyAddressController.text,
+        image: widget.salonImage)
         .then((message) async {
       if (message == 'Salon added successfully') {
         showCustomSnackBar(message!);

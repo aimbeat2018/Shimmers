@@ -34,6 +34,7 @@ class _TourListWidgetState extends State<TourListWidget> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+/*
               Row(
                 children: [
                   Expanded(
@@ -70,9 +71,11 @@ class _TourListWidgetState extends State<TourListWidget> {
                   )
                 ],
               ),
+*/
               SizedBox(
                 height: 5,
               ),
+/*
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -92,16 +95,17 @@ class _TourListWidgetState extends State<TourListWidget> {
                   ),
                 ],
               ),
+*/
               SizedBox(
                 height: 5,
               ),
-              Text(
+             /* Text(
                 'Amount: ${widget.model.amount!.toString()}',
                 style: TextStyle(
                     color: Colors.grey,
                     fontSize: 14,
                     fontWeight: FontWeight.w500),
-              ),
+              ),*/
               SizedBox(
                 height: 5,
               ),

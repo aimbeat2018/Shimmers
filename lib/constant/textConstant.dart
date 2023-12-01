@@ -23,7 +23,7 @@ class TextConstant {
   static String Activity = "Activity";
   static String ScoreCardAnalytics = "Score Card &\nAnalytics";
   static String Team = "Team";
-  static String ReportTourVisit = "Report Tour Visit";
+  static String ReportTourVisit = "TRF";
   static String TourRequestList = "Tour Request List";
 
   static String Scheme = "Scheme";

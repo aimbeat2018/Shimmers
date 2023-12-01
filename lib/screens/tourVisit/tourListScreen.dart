@@ -107,7 +107,7 @@ class _TourListScreen extends State<TourListScreen> {
                                           children: [
                                             Expanded(
                                               child: Text(
-                                                'Area: ${tourController.exeTourDetailModel!.data![index].area!}',
+                                                'Travel From: ${tourController.exeTourDetailModel!.data![index].travelFrom!}',
                                                 style: TextStyle(
                                                     color: primaryColor,
                                                     fontSize: 16,
@@ -211,7 +211,7 @@ class _TourListScreen extends State<TourListScreen> {
                                           tour_requestid: tourController.exeTourDetailModel!.data![index].id!.toString())));*/
                                                     },
                                                     child: Icon(
-                                                      Icons.file_copy_outlined,
+                                                      Icons.file_present_rounded,
                                                       color: primaryColor,
                                                     ),
                                                   )
@@ -253,19 +253,19 @@ class _TourListScreen extends State<TourListScreen> {
                                               MainAxisAlignment.spaceBetween,
                                           children: [
                                             Text(
-                                              'Date: ${tourController.exeTourDetailModel!.data![index].date!}',
+                                              'Travel To: ${tourController.exeTourDetailModel!.data![index].travelTo!}',
                                               style: TextStyle(
                                                   color: Colors.grey,
                                                   fontSize: 14,
                                                   fontWeight: FontWeight.w500),
                                             ),
-                                            Text(
-                                              'Time: ${tourController.exeTourDetailModel!.data![index].time!}',
+                                            /*Text(
+                                              'Travel To: ${tourController.exeTourDetailModel!.data![index].travelTo!}',
                                               style: TextStyle(
                                                   color: Colors.grey,
                                                   fontSize: 14,
                                                   fontWeight: FontWeight.w500),
-                                            ),
+                                            ),*/
                                           ],
                                         ),
                                         SizedBox(
@@ -276,7 +276,7 @@ class _TourListScreen extends State<TourListScreen> {
                                               MainAxisAlignment.spaceBetween,
                                           children: [
                                             Text(
-                                              'Amount: ${tourController.exeTourDetailModel!.data![index].amount!.toString()}',
+                                              'Departure Date: ${tourController.exeTourDetailModel!.data![index].deptDate!.toString()}',
                                               style: TextStyle(
                                                   color: Colors.grey,
                                                   fontSize: 14,
@@ -344,6 +344,22 @@ class _TourListScreen extends State<TourListScreen> {
                                                     ),
                                                   ),
                                           ],
+                                        ),
+                                        SizedBox(height: 5,),
+                                        Text(
+                                          'Return Date: ${tourController.exeTourDetailModel!.data![index].returnDate!}',
+                                          style: TextStyle(
+                                              color: Colors.grey,
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                        SizedBox(height: 5,),
+                                        Text(
+                                          'RSM Name: ${tourController.exeTourDetailModel!.data![index].rsmName!}',
+                                          style: TextStyle(
+                                              color: Colors.grey,
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w500),
                                         ),
                                         SizedBox(
                                           height: 5,

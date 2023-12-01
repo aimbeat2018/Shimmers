@@ -93,27 +93,25 @@ class TourController extends GetxController implements GetxService {
   }*/
 
   Future<String?> submitTourRequest(
-      {String? area,
-      String? date,
-      String? time,
-      String? amount,
-      String? userid,
-      String? roleid,
-      String? remark,
-      String? purpose,
-      String? tourid}) async {
+      {String? name,
+        String? travel_from,
+        String? travel_to,
+        String? dept_date,
+        String? return_date,
+        String? checkin_date,
+        String? checkout_date,
+        String? rsm_name,
+        String? no_of_days,
+        String? no_of_demos,
+        String? user_id,
+        String? role_id,
+        String? remark,
+        String? tourid}) async {
     _isLoading = true;
     update();
-    Response response = await tourRepo.storeTourRequest(
-        area: area,
-        date: date,
-        time: time,
-        amount: amount,
-        userid: userid,
-        roleid: roleid,
-        remark: remark,
-        purpose: purpose,
-        tourid: tourid);
+    Response response = await tourRepo.storeTourRequest(name: name,travel_from: travel_from,travel_to: travel_to,dept_date: dept_date,
+    return_date: return_date,checkin_date: checkin_date,checkout_date: checkout_date,rsm_name: rsm_name,no_of_days: no_of_days,no_of_demos: no_of_demos,
+    user_id: user_id,role_id: role_id,remark: remark,tourid: tourid);
 
     if (response.statusCode == 200) {
       tourAddMessage = response.body['message'];

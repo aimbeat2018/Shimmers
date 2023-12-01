@@ -130,7 +130,7 @@ class _ExecutiveTourRequestDetails extends State<ExecutiveTourRequestDetails> {
                                           children: [
                                             Expanded(
                                               child: Text(
-                                                'Area: ${tourDetailsByIdModel!.data![0].area!}',
+                                                'Travel From: ${tourDetailsByIdModel!.data![0].travelFrom!}',
                                                 style: TextStyle(
                                                     color: primaryColor,
                                                     fontSize: 16,
@@ -148,26 +148,26 @@ class _ExecutiveTourRequestDetails extends State<ExecutiveTourRequestDetails> {
                                               MainAxisAlignment.spaceBetween,
                                           children: [
                                             Text(
-                                              'Date: ${tourDetailsByIdModel!.data![0].date!}',
+                                              'Travel To: ${tourDetailsByIdModel!.data![0].travelTo!}',
                                               style: TextStyle(
                                                   color: Colors.grey,
                                                   fontSize: 14,
                                                   fontWeight: FontWeight.w500),
                                             ),
-                                            Text(
+                                          /*  Text(
                                               'Time: ${tourDetailsByIdModel!.data![0].time!}',
                                               style: TextStyle(
                                                   color: Colors.grey,
                                                   fontSize: 14,
                                                   fontWeight: FontWeight.w500),
-                                            ),
+                                            ),*/
                                           ],
                                         ),
                                         SizedBox(
                                           height: 5,
                                         ),
                                         Text(
-                                          'Purpose: ${tourDetailsByIdModel!.data![0].purpose!}',
+                                          'Departure Date: ${tourDetailsByIdModel!.data![0].deptDate!}',
                                           style: TextStyle(
                                               color: Colors.grey,
                                               fontSize: 14,
@@ -187,7 +187,7 @@ class _ExecutiveTourRequestDetails extends State<ExecutiveTourRequestDetails> {
                                           height: 5,
                                         ),*/
                                         Text(
-                                          'Amount: ${tourDetailsByIdModel!.data![0].amount!.toString()}',
+                                          'Return Date: ${tourDetailsByIdModel!.data![0].returnDate!}',
                                           style: TextStyle(
                                               color: Colors.grey,
                                               fontSize: 14,
