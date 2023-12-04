@@ -46,11 +46,11 @@ class TourRequestDetails {
   String? remark;
   String? attachment;
   int? isVisited;
-  String? hotel;
-  String? osAllowance;
-  String? tavelTickets;
-  String? other;
-  String? total;
+  int? hotel;
+  int? osAllowance;
+  int? tavelTickets;
+  int? other;
+  int? total;
   int? createdBy;
 
   TourRequestDetails(

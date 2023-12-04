@@ -34,7 +34,6 @@ class _TourVisitScreenState extends State<TourVisitScreen> {
   TextEditingController nameController = TextEditingController();
   TextEditingController travelfromController = TextEditingController();
   TextEditingController traveltoController = TextEditingController();
-  TextEditingController rsmnameController = TextEditingController();
   TextEditingController amountController = TextEditingController();
   TextEditingController daysController = TextEditingController();
   TextEditingController demoController = TextEditingController();
@@ -94,7 +93,6 @@ class _TourVisitScreenState extends State<TourVisitScreen> {
                   : checkoutDate =
               tourDetailsByIdModel!.data![0].checkoutDate!;
 
-              rsmnameController.text=tourDetailsByIdModel!.data![0].rsmName!;
               daysController.text=tourDetailsByIdModel!.data![0].noOfDays!.toString();
 
               tourDetailsByIdModel!.data![0].noOfDemos == null ||
@@ -156,7 +154,8 @@ class _TourVisitScreenState extends State<TourVisitScreen> {
                         decoration: GlobalFunctions.getInputDecoration(
                             'Sales/Trainer Name'),
                         controller: nameController,
-                        keyboardType: TextInputType.text,
+                      //  keyboardType: TextInputType.text,
+                        textCapitalization: TextCapitalization.characters,
                         onSaved: (value) {
                           nameController.text = value as String;
                         },
@@ -184,7 +183,8 @@ class _TourVisitScreenState extends State<TourVisitScreen> {
                         controller: travelfromController,
                         decoration: GlobalFunctions.getInputDecoration('Travel From'),
                         style: TextStyle(fontSize: 14),
-                        keyboardType: TextInputType.text,
+                        textCapitalization: TextCapitalization.characters,
+                        // keyboardType: TextInputType.text,
                         onSaved: (value) {
                           travelfromController.text = value as String;
                         },
@@ -210,7 +210,8 @@ class _TourVisitScreenState extends State<TourVisitScreen> {
                         controller: traveltoController,
                         decoration: GlobalFunctions.getInputDecoration('Travel To'),
                         style: TextStyle(fontSize: 14),
-                        keyboardType: TextInputType.text,
+                       // keyboardType: TextInputType.text,
+                        textCapitalization: TextCapitalization.characters,
                         onSaved: (value) {
                           traveltoController.text = value as String;
                         },
@@ -254,9 +255,19 @@ class _TourVisitScreenState extends State<TourVisitScreen> {
                                 formattedDate); //formatted date output using intl package =>  2021-03-16
                             //you can implement different kind of Date Format here according to your requirement
 
-                            setState(() {
-                              deptDate = formattedDate;
-                            });
+                            DateTime? currentDT=DateTime.now();
+                          /*  if(pickedDate.isBefore(currentDT))
+                              {
+                                showCustomSnackBar('Please select Tour Date after Current Date',isError: false);
+                                setState(() {
+                                  deptDate = '';
+                                });
+                              }
+                            else {*/
+                              setState(() {
+                                deptDate = formattedDate;
+                              });
+                          //  }
                           } else {
                             print("Date is not selected");
                           }
@@ -336,8 +347,10 @@ class _TourVisitScreenState extends State<TourVisitScreen> {
                                   final differenceInDays = returnDT!.difference(deptDT!).inDays;
                                   if(differenceInDays<0)
                                     {
-                                      showCustomSnackBar('Select Departure Date & Return Date Correctly');
+                                      showCustomSnackBar('Select Departure Date & Return Date Correctly',isError: false);
                                       daysController.text='';
+                                      returnDate='';
+                                      deptDate='';
                                     }
                                   else{
                                     setState(() {
@@ -347,6 +360,9 @@ class _TourVisitScreenState extends State<TourVisitScreen> {
 
                                   print('$differenceInDays');
                                 }
+                              else{
+                                showCustomSnackBar('Select Departure Date',isError: false);
+                              }
                             });
                           } else {
                             print("Date is not selected");
@@ -572,7 +588,7 @@ class _TourVisitScreenState extends State<TourVisitScreen> {
                                           horizontal: 8.0),
                                       child: Text(
                                         checkoutDate == ""
-                                            ? 'Select Return Date'
+                                            ? 'Select Check-Out Date'
                                             : checkoutDate!,
                                         style: const TextStyle(
                                             color: Colors.black, fontSize: 14),
@@ -586,33 +602,6 @@ class _TourVisitScreenState extends State<TourVisitScreen> {
                             ),
                           ),
                         ),
-                      ),
-                      SizedBox(height: 25,),
-                      Align(
-                        alignment: Alignment.topLeft,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                          child: Text(
-                            'RSM Name',
-                            style: const TextStyle(
-                                color: primaryColor,
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      TextFormField(
-                        style: const TextStyle(fontSize: 14),
-                        decoration: GlobalFunctions.getInputDecoration(
-                            'RSM Name'),
-                        controller: rsmnameController,
-                        keyboardType: TextInputType.text,
-                        onSaved: (value) {
-                          rsmnameController.text = value as String;
-                        },
                       ),
                       SizedBox(height: 25,),
                       Align(
@@ -692,7 +681,8 @@ class _TourVisitScreenState extends State<TourVisitScreen> {
                         decoration: GlobalFunctions.getInputDecoration(
                             TextConstant.remarks),
                         controller: remarksController,
-                        keyboardType: TextInputType.text,
+                        //keyboardType: TextInputType.text,
+                        textCapitalization: TextCapitalization.characters,
                         onSaved: (value) {
                           remarksController.text = value as String;
                         },
@@ -738,19 +728,13 @@ class _TourVisitScreenState extends State<TourVisitScreen> {
                                   } else if (traveltoController.text.isEmpty) {
                                     showCustomSnackBar('Enter Travel To Field',
                                         isError: false);
-                                  } else if (deptDate == null) {
+                                  } else if (deptDate == '') {
                                     showCustomSnackBar('Select Departure Date',
                                         isError: false);
-                                  } else if (returnDate == null) {
+                                  } else if (returnDate == '') {
                                     showCustomSnackBar('Select Return Date',
                                         isError: false);
-                                  }else if (rsmnameController.text.isEmpty) {
-                                    showCustomSnackBar('Enter RSM Name',
-                                        isError: false);
-                                  }/*else if (remarksController.text.isEmpty) {
-                                    showCustomSnackBar('Enter Remark',
-                                        isError: false);
-                                  }*/
+                                  }
                                   else if (daysController.text.isEmpty) {
                                     showCustomSnackBar('Enter No of Days',
                                         isError: false);
@@ -840,7 +824,6 @@ class _TourVisitScreenState extends State<TourVisitScreen> {
             return_date: returnDate,
             checkin_date: checkinDate,
             checkout_date: checkoutDate,
-            rsm_name: rsmnameController.text,
             no_of_days: daysController.text,
             no_of_demos: demoController.text,
             user_id: Get.find<AuthController>().getUserId(),

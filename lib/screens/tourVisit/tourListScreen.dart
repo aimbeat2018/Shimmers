@@ -211,7 +211,7 @@ class _TourListScreen extends State<TourListScreen> {
                                           tour_requestid: tourController.exeTourDetailModel!.data![index].id!.toString())));*/
                                                     },
                                                     child: Icon(
-                                                      Icons.file_present_rounded,
+                                                      Icons.save_as,
                                                       color: primaryColor,
                                                     ),
                                                   )
@@ -371,9 +371,6 @@ class _TourListScreen extends State<TourListScreen> {
                                               fontSize: 14,
                                               fontWeight: FontWeight.w500),
                                         ),
-                                        SizedBox(
-                                          height: 5,
-                                        ),
                                         tourController
                                                         .exeTourDetailModel!
                                                         .data![index]
@@ -385,15 +382,18 @@ class _TourListScreen extends State<TourListScreen> {
                                                         .executiveRemark ==
                                                     ''
                                             ? SizedBox()
-                                            : Text(
-                                                'Executive Remark: ${tourController.exeTourDetailModel!.data![index].executiveRemark!}',
-                                                // 'Remark: ${widget.model.remark ??'vff':widget.model.remark}',
-                                                style: TextStyle(
-                                                    color: Colors.grey,
-                                                    fontSize: 14,
-                                                    fontWeight:
-                                                        FontWeight.w500),
-                                              ),
+                                            : Padding(
+                                              padding: const EdgeInsets.only(top: 5.0),
+                                              child: Text(
+                                                  'Executive Remark: ${tourController.exeTourDetailModel!.data![index].executiveRemark!}',
+                                                  // 'Remark: ${widget.model.remark ??'vff':widget.model.remark}',
+                                                  style: TextStyle(
+                                                      color: Colors.grey,
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.w500),
+                                                ),
+                                            ),
                                         tourController.exeTourDetailModel!
                                                         .data![index].remark ==
                                                     null ||

@@ -220,7 +220,7 @@ class _ExecutivesTourRequestList extends State<ExecutivesTourRequestList> {
                                           height: 5,
                                         ),
                                         Text(
-                                          'Status: ${tourController.tourRequestListModel!.tourRequestList![index].status! == 0 ? 'Pending' : tourController.tourRequestListModel!.tourRequestList![index].status! == 1 ? 'Approved' : 'Rejected'}',
+                                          'Return Date: ${tourController.tourRequestListModel!.tourRequestList![index].returnDate!.toString()}',
                                           style: TextStyle(
                                               color: Colors.grey,
                                               fontSize: 14,
@@ -228,6 +228,23 @@ class _ExecutivesTourRequestList extends State<ExecutivesTourRequestList> {
                                         ),
                                         SizedBox(
                                           height: 5,
+                                        ),
+                                        Text(
+                                          'No. of Days: ${tourController.tourRequestListModel!.tourRequestList![index].noOfDays!}',
+                                          style: TextStyle(
+                                              color: Colors.grey,
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                        SizedBox(
+                                          height: 5,
+                                        ),
+                                        Text(
+                                          'Status: ${tourController.tourRequestListModel!.tourRequestList![index].status! == 0 ? 'Pending' : tourController.tourRequestListModel!.tourRequestList![index].status! == 1 ? 'Approved' : 'Rejected'}',
+                                          style: TextStyle(
+                                              color: Colors.grey,
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w500),
                                         ),
                                         tourController
                                                         .tourRequestListModel!
@@ -240,15 +257,18 @@ class _ExecutivesTourRequestList extends State<ExecutivesTourRequestList> {
                                                         .executiveRemark ==
                                                     ''
                                             ? SizedBox()
-                                            : Text(
-                                                'Executive Remark: ${tourController.tourRequestListModel!.tourRequestList![index].executiveRemark!}',
-                                                // 'Remark: ${widget.model.remark ??'vff':widget.model.remark}',
-                                                style: TextStyle(
-                                                    color: Colors.grey,
-                                                    fontSize: 14,
-                                                    fontWeight:
-                                                        FontWeight.w500),
-                                              ),
+                                            : Padding(
+                                              padding: const EdgeInsets.only(top: 5.0),
+                                              child: Text(
+                                                  'Executive Remark: ${tourController.tourRequestListModel!.tourRequestList![index].executiveRemark!}',
+                                                  // 'Remark: ${widget.model.remark ??'vff':widget.model.remark}',
+                                                  style: TextStyle(
+                                                      color: Colors.grey,
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.w500),
+                                                ),
+                                            ),
                                         tourController
                                                         .tourRequestListModel!
                                                         .tourRequestList![index]

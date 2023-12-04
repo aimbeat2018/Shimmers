@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../../constant/app_constants.dart';
 import '../../constant/colorsConstant.dart';
@@ -22,6 +23,7 @@ class _ScoreCardScreenState extends State<ScoreCardScreen> {
   String _connectionStatus = 'unKnown';
   final Connectivity _connectivity = Connectivity();
   late StreamSubscription<ConnectivityResult> _connectivitySubscription;
+  String? deptDate="";
 
   @override
   void initState() {
@@ -60,9 +62,9 @@ class _ScoreCardScreenState extends State<ScoreCardScreen> {
                   Container(
                     width: MediaQuery.of(context).size.width,
                     padding: const EdgeInsets.symmetric(
-                        vertical: 20, horizontal: 15),
+                        vertical: 15, horizontal: 15),
                     margin: const EdgeInsets.symmetric(
-                        vertical: 20, horizontal: 10),
+                        vertical: 15, horizontal: 10),
                     color: primaryColor,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -115,7 +117,74 @@ class _ScoreCardScreenState extends State<ScoreCardScreen> {
                         ),
                       ],
                     ),
-                  )
+                  ),
+                  InkWell(
+                    onTap: () async {
+                      DateTime? pickedDate = await showDatePicker(
+                          context: context,
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime(2000),
+                          //DateTime.now() - not to allow to choose before today.
+                          lastDate: DateTime(2101));
+
+                      if (pickedDate != null) {
+                        //deptDT=pickedDate;
+                        print(
+                            pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
+                        String formattedDate =
+                        DateFormat('yyyy-MM-dd').format(pickedDate);
+                        print(
+                            formattedDate); //formatted date output using intl package =>  2021-03-16
+                        //you can implement different kind of Date Format here according to your requirement
+
+                        DateTime? currentDT=DateTime.now();
+                        setState(() {
+                          deptDate = formattedDate;
+                        });
+                        //  }
+                      } else {
+                        print("Date is not selected");
+                      }
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 10.0),
+                      child: Align(
+                        alignment: Alignment.topLeft,
+                        child: Container(
+                          width: 140,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(0),
+                              border: Border.all(color: primaryColor)),
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.calendar_month,
+                                  color: primaryColor,
+                                ),
+                                Expanded(
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 8.0),
+                                      child: Text(
+                                        deptDate == ""
+                                            ? 'Select Date'
+                                            : deptDate!,
+                                        style: const TextStyle(
+                                            color: primaryColor, fontSize: 14),
+                                      ),
+                                    )),
+
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+
                 ],
               ),
             ),

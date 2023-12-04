@@ -12,9 +12,7 @@ import '../../model/campaignListModel.dart';
 
 class TourListWidget extends StatefulWidget {
   final ExecutiveTourModel model;
-
   const TourListWidget({Key? key, required this.model}) : super(key: key);
-
   @override
   State<TourListWidget> createState() => _TourListWidgetState();
 }

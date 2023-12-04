@@ -100,7 +100,6 @@ class TourController extends GetxController implements GetxService {
         String? return_date,
         String? checkin_date,
         String? checkout_date,
-        String? rsm_name,
         String? no_of_days,
         String? no_of_demos,
         String? user_id,
@@ -110,7 +109,7 @@ class TourController extends GetxController implements GetxService {
     _isLoading = true;
     update();
     Response response = await tourRepo.storeTourRequest(name: name,travel_from: travel_from,travel_to: travel_to,dept_date: dept_date,
-    return_date: return_date,checkin_date: checkin_date,checkout_date: checkout_date,rsm_name: rsm_name,no_of_days: no_of_days,no_of_demos: no_of_demos,
+    return_date: return_date,checkin_date: checkin_date,checkout_date: checkout_date,no_of_days: no_of_days,no_of_demos: no_of_demos,
     user_id: user_id,role_id: role_id,remark: remark,tourid: tourid);
 
     if (response.statusCode == 200) {

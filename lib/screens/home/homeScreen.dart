@@ -7,6 +7,7 @@ import 'package:shimmers/screens/campaigns/campaignsListScreen.dart';
 import 'package:shimmers/screens/distributors/distributorsScreen.dart';
 import 'package:shimmers/screens/salons/salonDetails/managerOrderApproval.dart';
 import 'package:shimmers/screens/salons/salonList/salonListScreen.dart';
+import 'package:shimmers/screens/scoreCard/scoreCardScreen.dart';
 import 'package:shimmers/screens/setTarget/setTargetScreen.dart';
 import 'package:shimmers/screens/tourVisit/headOfficerTourRequests.dart';
 import 'package:shimmers/screens/tourVisit/tourListScreen.dart';
@@ -430,7 +431,7 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                     Navigator.of(context).push(
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                SetTargetScreen(
+                                                ScoreCardScreen(
                                                   from: 'target',
                                                 )));
                                  // }
@@ -566,39 +567,26 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             Center(
                               child: InkWell(
                                 onTap: () {
-                                  Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              TourListScreen()));
-                                  /*if (userRole == 'TRF Executive') {
-                                    //TRF Executive Flow
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                TourListScreen()));
-                                  } else if (userRole == 'TRF Manager' || userRole=='employee') {
-                                    //TRF Manager Flow
+                                  if (userRole == 'employee') {
+                                    //Sales Manager Flow
                                     Navigator.of(context).push(
                                         MaterialPageRoute(
                                             builder: (context) =>
                                                 TRFExecutiveListScreen()));
-                                  } else if (userRole == 'Head Officer') {
+                                  }  /*else if (userRole == 'Head Officer') {
                                     //Head Officer Flow
                                     Navigator.of(context).push(
                                         MaterialPageRoute(
                                             builder: (context) =>
                                                 HeadOfficerTourRequests()));
-                                  }
+                                  }*/
                                   else{
+                                    //sales executive flow
                                     Navigator.of(context).push(
                                         MaterialPageRoute(
                                             builder: (context) =>
                                                 TourListScreen()));
-                                   *//* Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                TRFExecutiveListScreen()));*//*
-                                  }*/
+                                  }
                                 },
                                 child: SizedBox(
                                   height: 135,

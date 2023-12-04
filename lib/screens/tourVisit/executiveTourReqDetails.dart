@@ -40,6 +40,7 @@ class _ExecutiveTourRequestDetails extends State<ExecutiveTourRequestDetails> {
   String? selectedStatus = 'Select Status';
   XFile? _pickedFile;
 
+
   @override
   void initState() {
     super.initState();
@@ -100,7 +101,7 @@ class _ExecutiveTourRequestDetails extends State<ExecutiveTourRequestDetails> {
               ),
               body: tourController.isLoading && tourDetailsByIdModel == null
                   ? const Center(child: CircularProgressIndicator())
-                  : tourDetailsByIdModel!.data == null ||
+                  : tourDetailsByIdModel!.data! == null ||
                           tourDetailsByIdModel!.data!.isEmpty
                       ? Center(
                           child: SizedBox(
@@ -176,8 +177,8 @@ class _ExecutiveTourRequestDetails extends State<ExecutiveTourRequestDetails> {
                                         SizedBox(
                                           height: 5,
                                         ),
-                                       /* Text(
-                                          'Description: ${tourDetailsByIdModel!.data![0].description}',
+                                        Text(
+                                          'Return Date: ${tourDetailsByIdModel!.data![0].returnDate!}',
                                           style: TextStyle(
                                               color: Colors.grey,
                                               fontSize: 14,
@@ -185,9 +186,9 @@ class _ExecutiveTourRequestDetails extends State<ExecutiveTourRequestDetails> {
                                         ),
                                         SizedBox(
                                           height: 5,
-                                        ),*/
+                                        ),
                                         Text(
-                                          'Return Date: ${tourDetailsByIdModel!.data![0].returnDate!}',
+                                          'No. of Days: ${tourController.tourRequestListModel!.tourRequestList![0].noOfDays!}',
                                           style: TextStyle(
                                               color: Colors.grey,
                                               fontSize: 14,
@@ -438,13 +439,7 @@ class _ExecutiveTourRequestDetails extends State<ExecutiveTourRequestDetails> {
                                             } else {
                                               String status='';
                                               status=selectedStatus=='Approve'?'1':'2';
-                                              /*if(selectedStatus=='Approve')
-                                                {
-                                                  selectedStatus="1";
-                                                }
-                                              else{
-                                                selectedStatus="0";
-                                              }*/
+
                                               updateTourRequest(
                                                   tourController,
                                                   widget.tour_requestid,
