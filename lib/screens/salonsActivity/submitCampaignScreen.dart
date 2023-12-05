@@ -15,6 +15,7 @@ import '../../constant/internetConnectivity.dart';
 import '../../constant/no_internet_screen.dart';
 import '../../constant/textConstant.dart';
 import '../../controllers/salonController.dart';
+import '../noDataFound/noDataFoundScreen.dart';
 import 'answersListSheet.dart';
 
 class SubmitCampaignScreen extends StatefulWidget {
@@ -146,195 +147,162 @@ class _SubmitCampaignScreenState extends State<SubmitCampaignScreen> {
                           ? Center(
                               child: CircularProgressIndicator(),
                             )
-                          : ListView.builder(
-                              physics: const NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              itemCount: salonController
-                                  .campaignQuestionListModel!.data!.length,
-                              itemBuilder: (BuildContext context, int index) {
-                                return Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 10.0, vertical: 5),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        salonController
-                                            .campaignQuestionListModel!
-                                            .data![index]
-                                            .question!,
-                                        style: const TextStyle(
-                                            color: primaryColor,
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w500),
-                                      ),
-                                      if (salonController
-                                              .campaignQuestionListModel!
-                                              .data![index]
-                                              .answerType! ==
-                                          "dropdown")
-                                        Column(
-                                          children: [
-                                            const SizedBox(
-                                              height: 10,
-                                            ),
-                                            InkWell(
-                                              onTap: () {
-                                                showModalBottomSheet(
-                                                  context: context,
-                                                  builder: (context) =>
-                                                      AnswersListSheet(
-                                                    answerList: salonController
-                                                        .campaignQuestionListModel!
-                                                        .data![index]
-                                                        .answer!,
-                                                  ),
-                                                  backgroundColor:
-                                                      Colors.transparent,
-                                                ).then((value) => {
-                                                      setState(() {
-                                                        selectedValue = value!;
+                          : salonController.campaignQuestionListModel!.data!
+                                      .isEmpty ||
+                                  salonController
+                                          .campaignQuestionListModel!.data ==
+                                      null
+                              ? Center(
+                                  child: SizedBox(
+                                      height:
+                                          MediaQuery.of(context).size.height,
+                                      width: MediaQuery.of(context).size.width,
+                                      child: const NoDataFoundScreen()))
+                              : ListView.builder(
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  shrinkWrap: true,
+                                  itemCount: salonController
+                                      .campaignQuestionListModel!.data!.length,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 10.0, vertical: 5),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            salonController
+                                                .campaignQuestionListModel!
+                                                .data![index]
+                                                .question!,
+                                            style: const TextStyle(
+                                                color: primaryColor,
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                          if (salonController
+                                                  .campaignQuestionListModel!
+                                                  .data![index]
+                                                  .answerType! ==
+                                              "dropdown")
+                                            Column(
+                                              children: [
+                                                const SizedBox(
+                                                  height: 10,
+                                                ),
+                                                InkWell(
+                                                  onTap: () {
+                                                    showModalBottomSheet(
+                                                      context: context,
+                                                      builder: (context) =>
+                                                          AnswersListSheet(
+                                                        answerList: salonController
+                                                            .campaignQuestionListModel!
+                                                            .data![index]
+                                                            .answer!,
+                                                      ),
+                                                      backgroundColor:
+                                                          Colors.transparent,
+                                                    ).then((value) => {
+                                                          setState(() {
+                                                            selectedValue =
+                                                                value!;
 
-                                                        salonController
-                                                                .campaignQuestionListModel!
-                                                                .data![index]
-                                                                .userAnswer =
-                                                            selectedValue;
-                                                      })
-                                                    });
-                                              },
-                                              child: Container(
-                                                decoration: BoxDecoration(
-                                                    color: Colors.white,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            12),
-                                                    border: Border.all(
-                                                        color: primaryColor)),
-                                                child: Padding(
-                                                  padding: const EdgeInsets.all(
-                                                      12.0),
-                                                  child: Row(
-                                                    children: [
-                                                      Expanded(
-                                                          child: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .symmetric(
-                                                                horizontal:
-                                                                    8.0),
-                                                        child: Text(
-                                                          salonController
+                                                            salonController
+                                                                    .campaignQuestionListModel!
+                                                                    .data![index]
+                                                                    .userAnswer =
+                                                                selectedValue;
+                                                          })
+                                                        });
+                                                  },
+                                                  child: Container(
+                                                    decoration: BoxDecoration(
+                                                        color: Colors.white,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(12),
+                                                        border: Border.all(
+                                                            color:
+                                                                primaryColor)),
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              12.0),
+                                                      child: Row(
+                                                        children: [
+                                                          Expanded(
+                                                              child: Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                        .symmetric(
+                                                                    horizontal:
+                                                                        8.0),
+                                                            child: Text(
+                                                              salonController
+                                                                          .campaignQuestionListModel!
+                                                                          .data![
+                                                                              index]
+                                                                          .userAnswer ==
+                                                                      ""
+                                                                  ? ""
+                                                                  : salonController
                                                                       .campaignQuestionListModel!
                                                                       .data![
                                                                           index]
-                                                                      .userAnswer ==
-                                                                  ""
-                                                              ? ""
-                                                              : salonController
-                                                                  .campaignQuestionListModel!
-                                                                  .data![index]
-                                                                  .userAnswer!,
-                                                          style:
-                                                              const TextStyle(
+                                                                      .userAnswer!,
+                                                              style: const TextStyle(
                                                                   color: Colors
                                                                       .black,
                                                                   fontSize: 14),
-                                                        ),
-                                                      )),
-                                                      Icon(
-                                                        Icons
-                                                            .keyboard_arrow_down,
-                                                        color: Colors
-                                                            .grey.shade700,
-                                                      )
-                                                    ],
+                                                            ),
+                                                          )),
+                                                          Icon(
+                                                            Icons
+                                                                .keyboard_arrow_down,
+                                                            color: Colors
+                                                                .grey.shade700,
+                                                          )
+                                                        ],
+                                                      ),
+                                                    ),
                                                   ),
                                                 ),
-                                              ),
+                                              ],
                                             ),
-                                          ],
-                                        ),
-                                      if (salonController
-                                              .campaignQuestionListModel!
-                                              .data![index]
-                                              .answerType! ==
-                                          "multiple_dropdown")
-                                        Column(
-                                          children: [
-                                            const SizedBox(
-                                              height: 10,
-                                            ),
-                                            ListView.builder(
-                                              physics:
-                                                  const NeverScrollableScrollPhysics(),
-                                              shrinkWrap: true,
-                                              itemCount: salonController
+                                          if (salonController
                                                   .campaignQuestionListModel!
                                                   .data![index]
-                                                  .answer!
-                                                  .length,
-                                              itemBuilder:
-                                                  (BuildContext context,
-                                                      int index1) {
-                                                return Padding(
-                                                  padding: const EdgeInsets
-                                                      .symmetric(
-                                                      vertical: 8.0,
-                                                      horizontal: 5),
-                                                  child: InkWell(
-                                                    onTap: () {
-                                                      setState(() {
-                                                        if (salonController
-                                                            .campaignQuestionListModel!
-                                                            .data![index]
-                                                            .selectedAnswerList!
-                                                            .contains(
-                                                                salonController
-                                                                    .campaignQuestionListModel!
-                                                                    .data![
-                                                                        index]
-                                                                    .answer![
-                                                                        index1]
-                                                                    .key!)) {
-                                                          salonController
-                                                              .campaignQuestionListModel!
-                                                              .data![index]
-                                                              .selectedAnswerList!
-                                                              .remove(salonController
-                                                                  .campaignQuestionListModel!
-                                                                  .data![index]
-                                                                  .answer![
-                                                                      index1]
-                                                                  .key!);
-                                                        } else {
-                                                          salonController
-                                                              .campaignQuestionListModel!
-                                                              .data![index]
-                                                              .selectedAnswerList!
-                                                              .add(salonController
-                                                                  .campaignQuestionListModel!
-                                                                  .data![index]
-                                                                  .answer![
-                                                                      index1]
-                                                                  .key!);
-                                                        }
-
-                                                        // if (isValueSelected!) {
-                                                        //   isValueSelected = false;
-                                                        //   // campaignList[index].answers =
-                                                        //   //     campaignList[index]
-                                                        //   //         .answersList![index1]
-                                                        //   //         .name!;
-                                                        // } else {
-                                                        //   isValueSelected = true;
-                                                        // }
-                                                      });
-                                                    },
-                                                    child: Row(
-                                                      children: [
-                                                        Icon(!salonController
+                                                  .answerType! ==
+                                              "multiple_dropdown")
+                                            Column(
+                                              children: [
+                                                const SizedBox(
+                                                  height: 10,
+                                                ),
+                                                ListView.builder(
+                                                  physics:
+                                                      const NeverScrollableScrollPhysics(),
+                                                  shrinkWrap: true,
+                                                  itemCount: salonController
+                                                      .campaignQuestionListModel!
+                                                      .data![index]
+                                                      .answer!
+                                                      .length,
+                                                  itemBuilder:
+                                                      (BuildContext context,
+                                                          int index1) {
+                                                    return Padding(
+                                                      padding: const EdgeInsets
+                                                              .symmetric(
+                                                          vertical: 8.0,
+                                                          horizontal: 5),
+                                                      child: InkWell(
+                                                        onTap: () {
+                                                          setState(() {
+                                                            if (salonController
                                                                 .campaignQuestionListModel!
                                                                 .data![index]
                                                                 .selectedAnswerList!
@@ -344,219 +312,280 @@ class _SubmitCampaignScreenState extends State<SubmitCampaignScreen> {
                                                                         index]
                                                                     .answer![
                                                                         index1]
-                                                                    .key!)
-                                                            ? Icons
-                                                                .check_box_outline_blank_outlined
-                                                            : Icons.check_box),
-                                                        SizedBox(
-                                                          width: 8,
-                                                        ),
-                                                        Text(
-                                                          salonController
-                                                              .campaignQuestionListModel!
-                                                              .data![index]
-                                                              .answer![index1]
-                                                              .key!,
-                                                          style: const TextStyle(
-                                                              color:
-                                                                  Colors.black,
-                                                              fontSize: 16,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w400),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                );
-                                              },
-                                            ),
-                                          ],
-                                        ),
-                                      if (salonController
-                                              .campaignQuestionListModel!
-                                              .data![index]
-                                              .answerType! ==
-                                          "textbox")
-                                        Column(
-                                          children: [
-                                            const SizedBox(
-                                              height: 10,
-                                            ),
-                                            TextFormField(
-                                              style:
-                                                  const TextStyle(fontSize: 14),
-                                              maxLines: 5,
-                                              decoration: GlobalFunctions
-                                                  .getInputDecoration(""),
-                                              keyboardType: TextInputType.text,
-                                              onChanged: (value) {
-                                                setState(() {
-                                                  salonController
-                                                      .campaignQuestionListModel!
-                                                      .data![index]
-                                                      .userAnswer = value;
-                                                });
-                                              },
-                                            ),
-                                          ],
-                                        ),
-                                      if (salonController
-                                              .campaignQuestionListModel!
-                                              .data![index]
-                                              .answerType! ==
-                                          "text")
-                                        Column(
-                                          children: [
-                                            const SizedBox(
-                                              height: 10,
-                                            ),
-                                            TextFormField(
-                                              style:
-                                                  const TextStyle(fontSize: 14),
-                                              maxLines: 1,
-                                              decoration: GlobalFunctions
-                                                  .getInputDecoration(""),
-                                              keyboardType: TextInputType.text,
-                                              onChanged: (value) {
-                                                setState(() {
-                                                  salonController
-                                                      .campaignQuestionListModel!
-                                                      .data![index]
-                                                      .userAnswer = value;
-                                                });
-                                              },
-                                            ),
-                                          ],
-                                        ),
-                                      if (salonController
-                                              .campaignQuestionListModel!
-                                              .data![index]
-                                              .answerType! ==
-                                          "number")
-                                        Column(
-                                          children: [
-                                            const SizedBox(
-                                              height: 10,
-                                            ),
-                                            TextFormField(
-                                              style:
-                                                  const TextStyle(fontSize: 14),
-                                              maxLines: 1,
-                                              decoration: GlobalFunctions
-                                                  .getInputDecoration(""),
-                                              keyboardType:
-                                                  TextInputType.number,
-                                              onChanged: (value) {
-                                                setState(() {
-                                                  salonController
-                                                      .campaignQuestionListModel!
-                                                      .data![index]
-                                                      .userAnswer = value;
-                                                });
-                                              },
-                                            ),
-                                          ],
-                                        ),
-                                      if (salonController
-                                              .campaignQuestionListModel!
-                                              .data![index]
-                                              .answerType! ==
-                                          "date")
-                                        Column(
-                                          children: [
-                                            const SizedBox(
-                                              height: 10,
-                                            ),
-                                            InkWell(
-                                              onTap: () async {
-                                                DateTime? pickedDate =
-                                                    await showDatePicker(
-                                                        context: context,
-                                                        initialDate:
-                                                            DateTime.now(),
-                                                        firstDate:
-                                                            DateTime(2000),
-                                                        //DateTime.now() - not to allow to choose before today.
-                                                        lastDate:
-                                                            DateTime(2101));
-
-                                                if (pickedDate != null) {
-                                                  print(
-                                                      pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
-                                                  String formattedDate =
-                                                      DateFormat('yyyy-MM-dd')
-                                                          .format(pickedDate);
-                                                  print(
-                                                      formattedDate); //formatted date output using intl package =>  2021-03-16
-                                                  //you can implement different kind of Date Format here according to your requirement
-
-                                                  setState(() {
-                                                    salonController
-                                                        .campaignQuestionListModel!
-                                                        .data![index]
-                                                        .userAnswer = formattedDate;
-                                                  });
-                                                } else {
-                                                  print("Date is not selected");
-                                                }
-                                              },
-                                              child: Container(
-                                                decoration: BoxDecoration(
-                                                    color: Colors.white,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            12),
-                                                    border: Border.all(
-                                                        color: primaryColor)),
-                                                child: Padding(
-                                                  padding: const EdgeInsets.all(
-                                                      12.0),
-                                                  child: Row(
-                                                    children: [
-                                                      Expanded(
-                                                          child: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .symmetric(
-                                                                horizontal:
-                                                                    8.0),
-                                                        child: Text(
-                                                          salonController
+                                                                    .key!)) {
+                                                              salonController
+                                                                  .campaignQuestionListModel!
+                                                                  .data![index]
+                                                                  .selectedAnswerList!
+                                                                  .remove(salonController
                                                                       .campaignQuestionListModel!
                                                                       .data![
                                                                           index]
-                                                                      .userAnswer ==
-                                                                  null
-                                                              ? ""
-                                                              : salonController
+                                                                      .answer![
+                                                                          index1]
+                                                                      .key!);
+                                                            } else {
+                                                              salonController
                                                                   .campaignQuestionListModel!
                                                                   .data![index]
-                                                                  .userAnswer!,
-                                                          style:
-                                                              const TextStyle(
+                                                                  .selectedAnswerList!
+                                                                  .add(salonController
+                                                                      .campaignQuestionListModel!
+                                                                      .data![
+                                                                          index]
+                                                                      .answer![
+                                                                          index1]
+                                                                      .key!);
+                                                            }
+
+                                                            // if (isValueSelected!) {
+                                                            //   isValueSelected = false;
+                                                            //   // campaignList[index].answers =
+                                                            //   //     campaignList[index]
+                                                            //   //         .answersList![index1]
+                                                            //   //         .name!;
+                                                            // } else {
+                                                            //   isValueSelected = true;
+                                                            // }
+                                                          });
+                                                        },
+                                                        child: Row(
+                                                          children: [
+                                                            Icon(!salonController
+                                                                    .campaignQuestionListModel!
+                                                                    .data![
+                                                                        index]
+                                                                    .selectedAnswerList!
+                                                                    .contains(salonController
+                                                                        .campaignQuestionListModel!
+                                                                        .data![
+                                                                            index]
+                                                                        .answer![
+                                                                            index1]
+                                                                        .key!)
+                                                                ? Icons
+                                                                    .check_box_outline_blank_outlined
+                                                                : Icons
+                                                                    .check_box),
+                                                            SizedBox(
+                                                              width: 8,
+                                                            ),
+                                                            Text(
+                                                              salonController
+                                                                  .campaignQuestionListModel!
+                                                                  .data![index]
+                                                                  .answer![
+                                                                      index1]
+                                                                  .key!,
+                                                              style: const TextStyle(
+                                                                  color: Colors
+                                                                      .black,
+                                                                  fontSize: 16,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w400),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    );
+                                                  },
+                                                ),
+                                              ],
+                                            ),
+                                          if (salonController
+                                                  .campaignQuestionListModel!
+                                                  .data![index]
+                                                  .answerType! ==
+                                              "textbox")
+                                            Column(
+                                              children: [
+                                                const SizedBox(
+                                                  height: 10,
+                                                ),
+                                                TextFormField(
+                                                  style: const TextStyle(
+                                                      fontSize: 14),
+                                                  maxLines: 5,
+                                                  decoration: GlobalFunctions
+                                                      .getInputDecoration(""),
+                                                  keyboardType:
+                                                      TextInputType.text,
+                                                  onChanged: (value) {
+                                                    setState(() {
+                                                      salonController
+                                                          .campaignQuestionListModel!
+                                                          .data![index]
+                                                          .userAnswer = value;
+                                                    });
+                                                  },
+                                                ),
+                                              ],
+                                            ),
+                                          if (salonController
+                                                  .campaignQuestionListModel!
+                                                  .data![index]
+                                                  .answerType! ==
+                                              "text")
+                                            Column(
+                                              children: [
+                                                const SizedBox(
+                                                  height: 10,
+                                                ),
+                                                TextFormField(
+                                                  style: const TextStyle(
+                                                      fontSize: 14),
+                                                  maxLines: 1,
+                                                  decoration: GlobalFunctions
+                                                      .getInputDecoration(""),
+                                                  keyboardType:
+                                                      TextInputType.text,
+                                                  onChanged: (value) {
+                                                    setState(() {
+                                                      salonController
+                                                          .campaignQuestionListModel!
+                                                          .data![index]
+                                                          .userAnswer = value;
+                                                    });
+                                                  },
+                                                ),
+                                              ],
+                                            ),
+                                          if (salonController
+                                                  .campaignQuestionListModel!
+                                                  .data![index]
+                                                  .answerType! ==
+                                              "number")
+                                            Column(
+                                              children: [
+                                                const SizedBox(
+                                                  height: 10,
+                                                ),
+                                                TextFormField(
+                                                  style: const TextStyle(
+                                                      fontSize: 14),
+                                                  maxLines: 1,
+                                                  decoration: GlobalFunctions
+                                                      .getInputDecoration(""),
+                                                  keyboardType:
+                                                      TextInputType.number,
+                                                  onChanged: (value) {
+                                                    setState(() {
+                                                      salonController
+                                                          .campaignQuestionListModel!
+                                                          .data![index]
+                                                          .userAnswer = value;
+                                                    });
+                                                  },
+                                                ),
+                                              ],
+                                            ),
+                                          if (salonController
+                                                  .campaignQuestionListModel!
+                                                  .data![index]
+                                                  .answerType! ==
+                                              "date")
+                                            Column(
+                                              children: [
+                                                const SizedBox(
+                                                  height: 10,
+                                                ),
+                                                InkWell(
+                                                  onTap: () async {
+                                                    DateTime? pickedDate =
+                                                        await showDatePicker(
+                                                            context: context,
+                                                            initialDate:
+                                                                DateTime.now(),
+                                                            firstDate:
+                                                                DateTime(2000),
+                                                            //DateTime.now() - not to allow to choose before today.
+                                                            lastDate:
+                                                                DateTime(2101));
+
+                                                    if (pickedDate != null) {
+                                                      print(
+                                                          pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
+                                                      String formattedDate =
+                                                          DateFormat(
+                                                                  'yyyy-MM-dd')
+                                                              .format(
+                                                                  pickedDate);
+                                                      print(
+                                                          formattedDate); //formatted date output using intl package =>  2021-03-16
+                                                      //you can implement different kind of Date Format here according to your requirement
+
+                                                      setState(() {
+                                                        salonController
+                                                                .campaignQuestionListModel!
+                                                                .data![index]
+                                                                .userAnswer =
+                                                            formattedDate;
+                                                      });
+                                                    } else {
+                                                      print(
+                                                          "Date is not selected");
+                                                    }
+                                                  },
+                                                  child: Container(
+                                                    decoration: BoxDecoration(
+                                                        color: Colors.white,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(12),
+                                                        border: Border.all(
+                                                            color:
+                                                                primaryColor)),
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              12.0),
+                                                      child: Row(
+                                                        children: [
+                                                          Expanded(
+                                                              child: Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                        .symmetric(
+                                                                    horizontal:
+                                                                        8.0),
+                                                            child: Text(
+                                                              salonController
+                                                                          .campaignQuestionListModel!
+                                                                          .data![
+                                                                              index]
+                                                                          .userAnswer ==
+                                                                      null
+                                                                  ? ""
+                                                                  : salonController
+                                                                      .campaignQuestionListModel!
+                                                                      .data![
+                                                                          index]
+                                                                      .userAnswer!,
+                                                              style: const TextStyle(
                                                                   color: Colors
                                                                       .black,
                                                                   fontSize: 14),
-                                                        ),
-                                                      )),
-                                                      Icon(
-                                                        Icons.calendar_month,
-                                                        color: Colors
-                                                            .grey.shade700,
-                                                      )
-                                                    ],
+                                                            ),
+                                                          )),
+                                                          Icon(
+                                                            Icons
+                                                                .calendar_month,
+                                                            color: Colors
+                                                                .grey.shade700,
+                                                          )
+                                                        ],
+                                                      ),
+                                                    ),
                                                   ),
                                                 ),
-                                              ),
+                                              ],
                                             ),
-                                          ],
-                                        ),
-                                    ],
-                                  ),
-                                );
-                              },
-                            ),
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                ),
                       const SizedBox(height: 40),
                       SizedBox(
                         width: 200,

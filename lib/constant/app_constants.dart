@@ -65,6 +65,7 @@ class AppConstants {
   static const String userId = 'userId';
   static const String userRole = 'userRole';
   static const String roleId = 'roleId';
+  static const String onTour = 'onTour';
   static const String CART_LIST = 'cart_list';
 
   static String connectivityCheck = "ConnectivityResult.none";

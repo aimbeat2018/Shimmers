@@ -579,4 +579,16 @@ class SalonController extends GetxController implements GetxService {
     update();
     return punchInMsg;
   }
+
+  void setonTour(String onTour)
+  {
+    salonRepo.setonTour(onTour);
+  }
+
+  String getonTour()
+  {
+    return salonRepo.getonTour();
+  }
+
+
 }

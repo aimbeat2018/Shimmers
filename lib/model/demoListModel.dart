@@ -32,7 +32,7 @@ class DemoData {
   String? demoStatus;
   int? createdBy;
   String? createdAt;
-  String? updatedBy;
+  int? updatedBy;
   String? updatedAt;
 
   DemoData(

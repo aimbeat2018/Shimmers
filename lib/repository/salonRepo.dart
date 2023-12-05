@@ -206,4 +206,10 @@ class SalonRepo {
     return await apiClient.postData(AppConstants.salonwiseLogin,
         {"salon_id": salonid, "lat": lat, "long": long, "address": address});
   }
+  Future<bool> setonTour(String onTour) async {
+    return await sharedPreferences.setString(AppConstants.onTour, onTour);
+  }
+  String getonTour() {
+    return sharedPreferences.getString(AppConstants.onTour) ?? "";
+  }
 }

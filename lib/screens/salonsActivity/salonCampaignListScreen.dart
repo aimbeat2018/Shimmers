@@ -97,26 +97,29 @@ class _SalonCampaignListScreenState extends State<SalonCampaignListScreen> {
                       // ),
                       salonController.isLoading &&
                               salonController.campaignListModel == null
-                          ? salonController.campaignListModel!.data!.isEmpty
+                          ? const Center(
+                              child: CircularProgressIndicator(),
+                            )
+                          : salonController.campaignListModel!.data == null &&
+                                  salonController
+                                      .campaignListModel!.data!.isEmpty
                               ? Center(
                                   child: NoDataFoundScreen(),
                                 )
-                              : const Center(
-                                  child: CircularProgressIndicator(),
-                                )
-                          : ListView.builder(
-                              physics: const NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              itemCount: salonController
-                                  .campaignListModel!.data!.length,
-                              itemBuilder: (BuildContext context, int index) {
-                                return CampaignsSalonListWidget(
-                                  model: salonController
-                                      .campaignListModel!.data![index],
-                                  salonId: widget.salonId,
-                                );
-                              },
-                            ),
+                              : ListView.builder(
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  shrinkWrap: true,
+                                  itemCount: salonController
+                                      .campaignListModel!.data!.length,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return CampaignsSalonListWidget(
+                                      model: salonController
+                                          .campaignListModel!.data![index],
+                                      salonId: widget.salonId,
+                                    );
+                                  },
+                                ),
                     ],
                   ),
                 ),

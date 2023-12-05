@@ -59,10 +59,36 @@ class _SalonDetailsScreenState extends State<SalonDetailsScreen> {
       Future.delayed(Duration.zero, () async {
         Get.find<SalonController>().getSalonDetails(widget.salonId);
         _getCurrentPosition();
+        showTourVisitDialog(context);
       });
     }
   }
-
+  showTourVisitDialog(BuildContext parentContext) {
+    showDialog(
+      context: parentContext,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Tour Visit '),
+          content: Text('Are you on Tour Visit?'),
+          actions: [
+            TextButton(
+              child: Text('No'),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+            TextButton(
+              child: Text(TextConstant.yes),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            )
+          ],
+        );
+      },
+    );
+  }
   Future<void> _getCurrentPosition() async {
     final hasPermission = await _handleLocationPermission();
 
