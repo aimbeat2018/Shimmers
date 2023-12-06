@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shimmers/constant/custom_snackbar.dart';
@@ -279,6 +280,9 @@ class _AddSalonPersonalDetailsScreenState
                             decoration:
                                 GlobalFunctions.getInputDecorationWhite(""),
                             controller: mobileController,
+                            inputFormatters: [
+                              new LengthLimitingTextInputFormatter(10),
+                            ],
                             keyboardType: TextInputType.number,
                           ),
                         ),

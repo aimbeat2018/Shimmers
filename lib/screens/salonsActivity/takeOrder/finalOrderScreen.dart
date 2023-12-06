@@ -44,7 +44,11 @@ class _FinalOrderScreenState extends State<FinalOrderScreen> {
   List<String> discountType = ['Percentage', 'Amount'];
   String? selectedDiscountType = "Percentage";
 
-  late int totalAmount, totalDiscountAmount, totalPayableAmount, need_approval,count;
+  late int totalAmount,
+      totalDiscountAmount,
+      totalPayableAmount,
+      need_approval,
+      count;
 
   String _connectionStatus = 'unKnown';
   final Connectivity _connectivity = Connectivity();
@@ -67,7 +71,7 @@ class _FinalOrderScreenState extends State<FinalOrderScreen> {
     totalDiscountAmount = 0;
     totalPayableAmount = 0;
     need_approval = 0;
-    count=0;
+    count = 0;
     for (var cartModel in widget.cartList) {
       totalAmount += cartModel.amountWithQty!;
       totalPayableAmount += cartModel.amountWithQty!;
@@ -280,8 +284,8 @@ class _FinalOrderScreenState extends State<FinalOrderScreen> {
                                                       if (value.isNotEmpty) {
                                                         if (selectedDiscountType ==
                                                             "Percentage") {
-                                                            calculateDiscountPercentageAmount(
-                                                                value, index);
+                                                          calculateDiscountPercentageAmount(
+                                                              value, index);
                                                         } else {
                                                           calculateDiscountAmount(
                                                               value, index);
@@ -597,57 +601,74 @@ class _FinalOrderScreenState extends State<FinalOrderScreen> {
                                               ),
                                             ),
                                             onPressed: () {
-                                              for(var productCartlist in widget.cartList!)
-                                                {
-                                                  int actual_discount=productCartlist!.discountValue!;
-                                                  int stand_discount=productCartlist!.standalon_discount!;
-                                                 if(actual_discount>stand_discount)
-                                                   {
-                                                     need_approval=1;
-                                                   }
+                                              for (var productCartlist
+                                                  in widget.cartList!) {
+                                                int actual_discount =
+                                                    productCartlist!
+                                                        .discountValue!;
+                                                int stand_discount =
+                                                    productCartlist!
+                                                        .standalon_discount!;
+                                                if (actual_discount >
+                                                    stand_discount) {
+                                                  need_approval = 1;
                                                 }
-                                              if(need_approval==1)
-                                                {
-                                                  PlaceOrderModel model =
-                                                  PlaceOrderModel(
-                                                      clientId: int.parse(
-                                                          widget.salonId),
-                                                      shippingAddress: widget
-                                                          .shippingAddress,
-                                                      address: widget.address,
-                                                      unitTypeId: int.parse(
-                                                          widget.unitTypeId),
-                                                      products: widget.cartList,
-                                                      subTotal: totalAmount,
-                                                      afterSubTotal:
-                                                      totalDiscountAmount,
-                                                      note: widget.note,
-                                                      need_approval:
-                                                      need_approval);
-                                                  showDiscountDialog(context,salonController,model);
-                                                }
-                                              else{
+                                              }
+                                              if (need_approval == 1) {
                                                 PlaceOrderModel model =
-                                                PlaceOrderModel(
-                                                    clientId: int.parse(
-                                                        widget.salonId),
-                                                    shippingAddress: widget
-                                                        .shippingAddress,
-                                                    address: widget.address,
-                                                    unitTypeId: int.parse(
-                                                        widget.unitTypeId),
-                                                    products: widget.cartList,
-                                                    subTotal: totalAmount,
-                                                    afterSubTotal:
-                                                    totalDiscountAmount,
-                                                    note: widget.note,
-                                                    need_approval:
-                                                    need_approval);
+                                                    PlaceOrderModel(
+                                                        clientId: int
+                                                            .parse(widget
+                                                                .salonId),
+                                                        shippingAddress: widget
+                                                            .shippingAddress,
+                                                        address: widget.address,
+                                                        unitTypeId: int
+                                                            .parse(widget
+                                                                .unitTypeId),
+                                                        products:
+                                                            widget.cartList,
+                                                        subTotal: totalAmount,
+                                                        afterSubTotal:
+                                                            totalDiscountAmount,
+                                                        note: widget.note,
+                                                        need_approval:
+                                                            need_approval,
+                                                        is_on_tour: int.parse(
+                                                            Get.find<
+                                                                    SalonController>()
+                                                                .getonTour()));
+                                                showDiscountDialog(context,
+                                                    salonController, model);
+                                              } else {
+                                                PlaceOrderModel model =
+                                                    PlaceOrderModel(
+                                                        clientId: int
+                                                            .parse(widget
+                                                                .salonId),
+                                                        shippingAddress: widget
+                                                            .shippingAddress,
+                                                        address: widget.address,
+                                                        unitTypeId: int
+                                                            .parse(widget
+                                                                .unitTypeId),
+                                                        products:
+                                                            widget.cartList,
+                                                        subTotal: totalAmount,
+                                                        afterSubTotal:
+                                                            totalDiscountAmount,
+                                                        note: widget.note,
+                                                        need_approval:
+                                                            need_approval,
+                                                        is_on_tour: int.parse(
+                                                            Get.find<
+                                                                    SalonController>()
+                                                                .getonTour()));
                                                 placeOrder(
                                                     salonController, model);
                                               }
 
-                                            /*  placeOrder(
+                                              /*  placeOrder(
                                                   salonController, model);*/
                                             },
                                             child: Padding(
@@ -706,7 +727,8 @@ class _FinalOrderScreenState extends State<FinalOrderScreen> {
     );
   }
 
-  showDiscountDialog(BuildContext parentContext,SalonController salonController,PlaceOrderModel model) {
+  showDiscountDialog(BuildContext parentContext,
+      SalonController salonController, PlaceOrderModel model) {
     showDialog(
       context: parentContext,
       builder: (BuildContext context) {
@@ -718,15 +740,14 @@ class _FinalOrderScreenState extends State<FinalOrderScreen> {
               child: Text('Ok'),
               onPressed: () {
                 Navigator.pop(context);
-                placeOrder(
-                    salonController, model);
+                placeOrder(salonController, model);
               },
             ),
-             TextButton(
+            TextButton(
               child: Text(TextConstant.cancel),
               onPressed: () {
                 setState(() {
-                  need_approval=0;
+                  need_approval = 0;
                 });
                 Navigator.pop(context);
               },

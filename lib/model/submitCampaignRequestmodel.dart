@@ -1,6 +1,7 @@
 class SubmitCampaignRequestModel {
   int? campaignId;
   int? salonId;
+  int? is_on_tour;
   List<UsersAnswer>? answer;
 
   SubmitCampaignRequestModel({this.campaignId, this.salonId, this.answer});
@@ -8,6 +9,7 @@ class SubmitCampaignRequestModel {
   SubmitCampaignRequestModel.fromJson(Map<String, dynamic> json) {
     campaignId = json['campaign_id'];
     salonId = json['salon_id'];
+    is_on_tour = json['is_on_tour'];
     if (json['answer'] != null) {
       answer = <UsersAnswer>[];
       json['answer'].forEach((v) {
@@ -20,6 +22,7 @@ class SubmitCampaignRequestModel {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['campaign_id'] = this.campaignId;
     data['salon_id'] = this.salonId;
+    data['is_on_tour'] = this.is_on_tour;
     if (this.answer != null) {
       data['answer'] = this.answer!.map((v) => v.toJson()).toList();
     }

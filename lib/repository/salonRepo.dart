@@ -96,6 +96,7 @@ class SalonRepo {
       String? salon_type,
       String? latitude,
       String? longitude,
+      String? is_on_tour,
       XFile? image}) async {
     return await apiClient.postMultipartData(AppConstants.addSalon, {
       "name": name!,
@@ -115,7 +116,8 @@ class SalonRepo {
       "country": country!,
       "salon_type": salon_type!,
       "latitude": latitude!,
-      "longitude": longitude!
+      "longitude": longitude!,
+      "is_on_tour": is_on_tour!,
     }, [
       MultipartBody('image', image!)
     ]);
@@ -136,9 +138,9 @@ class SalonRepo {
         .postData(AppConstants.getDemoList, {"salon_id": salonId});
   }
 
-  Future<Response> takeSalonNote({String? note, String? salonId}) async {
+  Future<Response> takeSalonNote({String? note, String? salonId,String? is_on_tour}) async {
     return await apiClient
-        .postData(AppConstants.takeNotes, {"salon_id": salonId, "note": note});
+        .postData(AppConstants.takeNotes, {"salon_id": salonId, "note": note,"is_on_tour":is_on_tour});
   }
 
   Future<Response> collectPayment(
@@ -146,12 +148,14 @@ class SalonRepo {
       String? salonId,
       String? referenceNumber,
       String? amount,
+      String? is_on_tour,
       XFile? image}) async {
     return await apiClient.postMultipartData(AppConstants.collectPayment, {
       "salon_id": salonId!,
       "payment_mode": paymentMode!,
       "reference_number": referenceNumber!,
       "amount": amount!,
+      "is_on_tour":is_on_tour!,
     }, [
       MultipartBody('image', image!)
     ]);
@@ -164,6 +168,7 @@ class SalonRepo {
       String? remark,
       String? latitude,
       String? longitude,
+      String? is_on_tour,
       XFile? image}) async {
     return await apiClient.postMultipartData(AppConstants.addFeedback, {
       "salon_id": salonId!,
@@ -172,6 +177,7 @@ class SalonRepo {
       "remark": remark!,
       "latitude": latitude!,
       "longitude": longitude!,
+      "is_on_tour":is_on_tour!,
     }, [
       MultipartBody('image', image!)
     ]);
@@ -192,12 +198,14 @@ class SalonRepo {
       {String? date,
       String? time,
       String? requirement,
-      String? salonId}) async {
+      String? salonId,
+      String? is_on_tour}) async {
     return await apiClient.postData(AppConstants.addDemoRequest, {
       "salon_id": salonId,
       "date": date,
       "time": time,
-      "requirement": requirement
+      "requirement": requirement,
+      "is_on_tour":is_on_tour
     });
   }
 
@@ -206,9 +214,11 @@ class SalonRepo {
     return await apiClient.postData(AppConstants.salonwiseLogin,
         {"salon_id": salonid, "lat": lat, "long": long, "address": address});
   }
+
   Future<bool> setonTour(String onTour) async {
     return await sharedPreferences.setString(AppConstants.onTour, onTour);
   }
+
   String getonTour() {
     return sharedPreferences.getString(AppConstants.onTour) ?? "";
   }

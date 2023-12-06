@@ -346,7 +346,9 @@ class SalonController extends GetxController implements GetxService {
       String? salon_type,
       String? latitude,
       String? longitude,
-      XFile? image}) async {
+        String? is_on_tour,
+      XFile? image
+      }) async {
     _isLoading = true;
     update();
     Response response = await salonRepo.addSalon(
@@ -368,7 +370,9 @@ class SalonController extends GetxController implements GetxService {
         country: country,
         salon_type: salon_type,
         latitude: latitude,
-        image: image);
+        is_on_tour:is_on_tour,
+        image: image
+    );
 
     if (response.statusCode == 200) {
       salonAddMessage = response.body['message'];
@@ -400,11 +404,11 @@ class SalonController extends GetxController implements GetxService {
     return salonAddMessage;
   }
 
-  Future<String?> takeSalonNote({String? salonId, String? note}) async {
+  Future<String?> takeSalonNote({String? salonId, String? note,String? is_on_tour}) async {
     _isLoading = true;
     update();
     Response response =
-        await salonRepo.takeSalonNote(salonId: salonId, note: note);
+        await salonRepo.takeSalonNote(salonId: salonId, note: note,is_on_tour:is_on_tour);
 
     if (response.statusCode == 200) {
       salonAddMessage = response.body['message'];
@@ -423,6 +427,7 @@ class SalonController extends GetxController implements GetxService {
       String? salonId,
       String? referenceNumber,
       String? amount,
+      String? is_on_tour,
       XFile? image}) async {
     _isLoading = true;
     update();
@@ -431,6 +436,7 @@ class SalonController extends GetxController implements GetxService {
         salonId: salonId,
         referenceNumber: referenceNumber,
         amount: amount,
+        is_on_tour: is_on_tour,
         image: image);
 
     if (response.statusCode == 200) {
@@ -452,6 +458,7 @@ class SalonController extends GetxController implements GetxService {
       String? remark,
       String? latitude,
       String? longitude,
+      String? is_on_tour,
       XFile? image}) async {
     _isLoading = true;
     update();
@@ -462,6 +469,7 @@ class SalonController extends GetxController implements GetxService {
         remark: remark,
         latitude: latitude,
         longitude: longitude,
+        is_on_tour: is_on_tour,
         image: image);
 
     if (response.statusCode == 200) {
@@ -514,12 +522,12 @@ class SalonController extends GetxController implements GetxService {
       {String? salonId,
       String? date,
       String? time,
-      String? requirement}) async {
+      String? requirement,
+      String? is_on_tour}) async {
     _isLoading = true;
     update();
     Response response = await salonRepo.addDemoRequest(
-        salonId: salonId, date: date, time: time, requirement: requirement);
-
+        salonId: salonId, date: date, time: time, requirement: requirement,is_on_tour:is_on_tour);
     if (response.statusCode == 200) {
       salonAddMessage = response.body['message'];
     } else if (response.statusCode == 401) {
@@ -561,7 +569,7 @@ class SalonController extends GetxController implements GetxService {
 
   Future<String?> salonwiseLogin(
       {String? salonid, String? lat, String? long, String? address}) async {
-    _isLoading = false; //made it false to avoid loading
+    _isLoading = true; //made it false to avoid loading
     update();
 
     Response response = await salonRepo.salonWisePunchIn(
@@ -582,7 +590,7 @@ class SalonController extends GetxController implements GetxService {
 
   void setonTour(String onTour)
   {
-    salonRepo.setonTour(onTour);
+    salonRepo.setonTour('0');
   }
 
   String getonTour()

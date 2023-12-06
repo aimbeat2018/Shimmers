@@ -59,7 +59,7 @@ class _SalonDetailsScreenState extends State<SalonDetailsScreen> {
       Future.delayed(Duration.zero, () async {
         Get.find<SalonController>().getSalonDetails(widget.salonId);
         _getCurrentPosition();
-        showTourVisitDialog(context);
+       // showTourVisitDialog(context);
       });
     }
   }
@@ -68,23 +68,35 @@ class _SalonDetailsScreenState extends State<SalonDetailsScreen> {
       context: parentContext,
       barrierDismissible: false,
       builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Tour Visit '),
-          content: Text('Are you on Tour Visit?'),
-          actions: [
-            TextButton(
-              child: Text('No'),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
-            TextButton(
-              child: Text(TextConstant.yes),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            )
-          ],
+        return WillPopScope(
+          onWillPop: () async{
+            return false;
+          },
+          child: AlertDialog(
+            title: Text('Tour Visit '),
+            content: Text('Are you on Tour Visit?'),
+            actions: [
+              TextButton(
+                child: Text('No'),
+                onPressed: () {
+                  setState(() {
+                    Get.find<SalonController>().setonTour('0');
+
+                  });
+                  Navigator.pop(context);
+                },
+              ),
+              TextButton(
+                child: Text(TextConstant.yes),
+                onPressed: () {
+                  setState(() {
+                    Get.find<SalonController>().setonTour('1');
+                  });
+                  Navigator.pop(context);
+                },
+              )
+            ],
+          ),
         );
       },
     );
@@ -190,68 +202,81 @@ class _SalonDetailsScreenState extends State<SalonDetailsScreen> {
                           showCustomSnackBar("Please Punch Out To Go Back",
                               isError: true);
                         } else {
+                         /* setState(() {
+                            Get.find<SalonController>().setonTour('0');
+                          });*/
                           Navigator.pop(context);
                         }
                       },
                       child: Icon(Icons.arrow_back)),
                   actions: [
                     Center(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 10.0, vertical: 10),
-                        child: InkWell(
-                          onTap: () {
-                            if (salonController.salonDetailsModel != null) {
-                              if (salonController
-                                      .salonDetailsModel!.data!.is_clockin ==
-                                  1) {
-                                Get.find<SalonController>()
-                                    .salonwiseLogin(
-                                        salonid: widget.salonId,
-                                        lat: lat.toString(),
-                                        long: longi.toString(),
-                                        address: _currentAddress)
-                                    .then((value) async {
-                                  if (value == 'Clock-out successfully.') {
-                                    setState(() {
-                                      salonController.salonDetailsModel!.data!
-                                          .is_clockin = 0;
-                                    });
-                                  }
-                                });
-                              } else {
-                                Get.find<SalonController>()
-                                    .salonwiseLogin(
-                                        salonid: widget.salonId,
-                                        lat: lat.toString(),
-                                        long: longi.toString(),
-                                        address: _currentAddress)
-                                    .then((value) async {
-                                  if (value == 'Clock-in successfully.') {
-                                    setState(() {
-                                      salonController.salonDetailsModel!.data!
-                                          .is_clockin = 1;
-                                    });
-                                  }
-                                });
-                              }
+                      child: InkWell(
+                        onTap: () {
+                          if (salonController.salonDetailsModel != null) {
+                            if (salonController
+                                .salonDetailsModel!.data!.is_clockin ==
+                                1) {
+                              Get.find<SalonController>()
+                                  .salonwiseLogin(
+                                  salonid: widget.salonId,
+                                  lat: lat.toString(),
+                                  long: longi.toString(),
+                                  address: _currentAddress)
+                                  .then((value) async {
+                                if (value == 'Clock-out successfully.') {
+                                  showCustomSnackBar('Clock-out successfully.',isError: false);
+
+                                  setState(() {
+                                    salonController.salonDetailsModel!.data!
+                                        .is_clockin = 0;
+                                  //  Get.find<SalonController>().setonTour('0');
+                                  });
+                                }
+                              });
                             } else {
                               Get.find<SalonController>()
                                   .salonwiseLogin(
-                                      salonid: widget.salonId,
-                                      lat: lat.toString(),
-                                      long: longi.toString(),
-                                      address: _currentAddress)
+                                  salonid: widget.salonId,
+                                  lat: lat.toString(),
+                                  long: longi.toString(),
+                                  address: _currentAddress)
                                   .then((value) async {
                                 if (value == 'Clock-in successfully.') {
+                                  showCustomSnackBar('Clock-in successfully.',isError: false);
+
                                   setState(() {
                                     salonController.salonDetailsModel!.data!
                                         .is_clockin = 1;
                                   });
+                               //   showTourVisitDialog(context);
                                 }
                               });
                             }
-                          },
+                          } else {
+                            Get.find<SalonController>()
+                                .salonwiseLogin(
+                                salonid: widget.salonId,
+                                lat: lat.toString(),
+                                long: longi.toString(),
+                                address: _currentAddress)
+                                .then((value) async {
+                              if (value == 'Clock-in successfully.') {
+                                showCustomSnackBar('Clock-in successfully.',isError: false);
+
+                                setState(() {
+                                  salonController.salonDetailsModel!.data!
+                                      .is_clockin = 1;
+                                });
+                               // showTourVisitDialog(context);
+                              }
+                            });
+                          }
+                        },
+
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10.0, vertical: 10),
                           child: Text(
                             salonController.salonDetailsModel == null
                                 ? TextConstant.punchIn
@@ -1217,6 +1242,9 @@ class _SalonDetailsScreenState extends State<SalonDetailsScreen> {
     if (salonController.salonDetailsModel!.data!.is_clockin == 1) {
       showCustomSnackBar("Please Punch Out To Go Back", isError: true);
     } else {
+     /* setState(() {
+        Get.find<SalonController>().setonTour('0');
+      });*/
       Navigator.pop(context);
     }
   }

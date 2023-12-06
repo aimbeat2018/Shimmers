@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
@@ -724,6 +725,9 @@ class _AddFinalSalonScreenState extends State<AddFinalSalonScreen> {
                               decoration:
                               GlobalFunctions.getInputDecorationWhite(""),
                               controller: contactPersonMobileController,
+                              inputFormatters: [
+                                new LengthLimitingTextInputFormatter(10),
+                              ],
                               keyboardType: TextInputType.number,
                             ),
                           ),
@@ -1012,6 +1016,7 @@ class _AddFinalSalonScreenState extends State<AddFinalSalonScreen> {
                                     showCustomSnackBar('Select Route',
                                         isError: true);
                                   } else {
+                               //     showTourVisitDialog(context,salonController);
                                     addSalon(salonController);
                                   }
                                 },
@@ -1039,6 +1044,41 @@ class _AddFinalSalonScreenState extends State<AddFinalSalonScreen> {
           });
     });
   }
+  showTourVisitDialog(BuildContext parentContext,SalonController salonController) {
+    showDialog(
+      context: parentContext,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return WillPopScope(
+          onWillPop: () async{
+            return false;
+          },
+          child: AlertDialog(
+            title: Text('Tour Visit '),
+            content: Text('Are you on Tour Visit?'),
+            actions: [
+              TextButton(
+                child: Text('No'),
+                onPressed: () {
+                  Get.find<SalonController>().setonTour('0');
+                  addSalon(salonController);
+                  Navigator.pop(context);
+                },
+              ),
+              TextButton(
+                child: Text(TextConstant.yes),
+                onPressed: () {
+                  Get.find<SalonController>().setonTour('1');
+                  addSalon(salonController);
+                  Navigator.pop(context);
+                },
+              )
+            ],
+          ),
+        );
+      },
+    );
+  }
 
   Future<void> addSalon(SalonController salonController) async {
     salonController
@@ -1061,7 +1101,9 @@ class _AddFinalSalonScreenState extends State<AddFinalSalonScreen> {
         latitude: lat.toString(),
         longitude: longi.toString(),
         address: companyAddressController.text,
-        image: widget.salonImage)
+        is_on_tour: Get.find<SalonController>().getonTour(),
+        image: widget.salonImage,
+        )
         .then((message) async {
       if (message == 'Salon added successfully') {
         showCustomSnackBar(message!);

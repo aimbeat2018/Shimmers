@@ -463,6 +463,7 @@ class _AddFeedBackScreenState extends State<AddFeedBackScreen> {
                                         remarksController.text,
                                         lat.toString(),
                                         longi.toString(),
+                                        Get.find<SalonController>().getonTour(),
                                         _pickedFile);
                                   }
                                 },
@@ -524,6 +525,7 @@ class _AddFeedBackScreenState extends State<AddFeedBackScreen> {
       String? remark,
       String? latitude,
       String? longitude,
+      String? is_on_tour,
       XFile? image) async {
     salonController
         .addFeedback(
@@ -533,6 +535,7 @@ class _AddFeedBackScreenState extends State<AddFeedBackScreen> {
             remark: remark,
             latitude: latitude,
             longitude: longitude,
+        is_on_tour: is_on_tour,
             image: image)
         .then((message) async {
       if (message == 'Feedback inserted successfully') {

@@ -385,7 +385,8 @@ class _AddDemoScreenState extends State<AddDemoScreen> {
             salonId: widget.salonId,
             date: selectedDate,
             time: selectedTime,
-            requirement: requirementController.text)
+            requirement: requirementController.text,
+            is_on_tour: Get.find<SalonController>().getonTour())
         .then((message) async {
       if (message == 'Demo request sent successfully') {
         showCustomSnackBar(message!, isError: false);

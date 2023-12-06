@@ -10,6 +10,7 @@ class PlaceOrderModel {
   int? afterSubTotal;
   String? note;
   int? need_approval;
+  int? is_on_tour;
 
 
   PlaceOrderModel(
@@ -21,7 +22,8 @@ class PlaceOrderModel {
       this.subTotal,
       this.afterSubTotal,
       this.note,
-      this.need_approval});
+      this.need_approval,
+      this.is_on_tour});
 
   PlaceOrderModel.fromJson(Map<String, dynamic> json) {
     clientId = json['client_id'];
@@ -38,6 +40,7 @@ class PlaceOrderModel {
     afterSubTotal = json['after_sub_total'];
     note = json['note'];
     need_approval = json['need_approval'];
+    is_on_tour = json['is_on_tour'];
   }
 
   Map<String, dynamic> toJson() {
@@ -53,6 +56,7 @@ class PlaceOrderModel {
     data['after_sub_total'] = this.afterSubTotal;
     data['note'] = this.note;
     data['need_approval'] = this.need_approval;
+    data['is_on_tour'] = this.is_on_tour;
     return data;
   }
 }
