@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shimmers/model/ExeTourDetailModel.dart';
 import 'package:shimmers/model/TourRequestModel.dart';
+import 'package:shimmers/model/commPhaseModel.dart';
 import 'package:shimmers/model/tourRequestListmodel.dart';
 import 'package:shimmers/model/tourdetailsByIdModel.dart';
 import 'package:shimmers/repository/tourRepo.dart';
@@ -9,6 +10,7 @@ import 'package:shimmers/repository/tourRepo.dart';
 import '../constant/route_helper.dart';
 import '../model/TRFExecutiveProfile.dart';
 import '../model/headOfficeRequestList.dart';
+import '../model/salonDataModel.dart';
 import '../model/tourVisitModel.dart';
 
 class TourController extends GetxController implements GetxService {
@@ -19,6 +21,8 @@ class TourController extends GetxController implements GetxService {
   TRFExecutiveProfile? trfExecutiveProfile;
   TourRequestListModel? tourRequestListModel;
   TourVisitModel? tourVisitModel;
+  CommPhaseModel? commPhaseModel;
+  SalonDataModel? salonDataModel;
   bool? _isLoading = false;
 
   String? tourAddMessage;
@@ -76,6 +80,22 @@ class TourController extends GetxController implements GetxService {
     return trfExecutiveProfile;
   }
 
+  Future<CommPhaseModel?> getCommPhaseList() async {
+    _isLoading = true;
+    // update();
+    Response response = await tourRepo.getCommPhaseList();
+    if (response.statusCode == 200) {
+      commPhaseModel = CommPhaseModel.fromJson(response.body);
+    } else if (response.statusCode == 401) {
+      Get.offAllNamed(RouteHelper.getLoginRoute());
+    } else {
+      commPhaseModel = CommPhaseModel();
+    }
+    _isLoading = false;
+    update();
+    return commPhaseModel;
+  }
+
 /*  Future<String?> submitTourRequest({TourRequestModel? model}) async {
     _isLoading = true;
     update();
@@ -94,23 +114,34 @@ class TourController extends GetxController implements GetxService {
 
   Future<String?> submitTourRequest(
       {String? name,
-        String? travel_from,
-        String? travel_to,
-        String? dept_date,
-        String? return_date,
-        String? checkin_date,
-        String? checkout_date,
-        String? no_of_days,
-        String? no_of_demos,
-        String? user_id,
-        String? role_id,
-        String? remark,
-        String? tourid}) async {
+      String? travel_from,
+      String? travel_to,
+      String? dept_date,
+      String? return_date,
+      String? checkin_date,
+      String? checkout_date,
+      String? no_of_days,
+      String? no_of_demos,
+      String? user_id,
+      String? role_id,
+      String? remark,
+      String? tourid}) async {
     _isLoading = true;
     update();
-    Response response = await tourRepo.storeTourRequest(name: name,travel_from: travel_from,travel_to: travel_to,dept_date: dept_date,
-    return_date: return_date,checkin_date: checkin_date,checkout_date: checkout_date,no_of_days: no_of_days,no_of_demos: no_of_demos,
-    user_id: user_id,role_id: role_id,remark: remark,tourid: tourid);
+    Response response = await tourRepo.storeTourRequest(
+        name: name,
+        travel_from: travel_from,
+        travel_to: travel_to,
+        dept_date: dept_date,
+        return_date: return_date,
+        checkin_date: checkin_date,
+        checkout_date: checkout_date,
+        no_of_days: no_of_days,
+        no_of_demos: no_of_demos,
+        user_id: user_id,
+        role_id: role_id,
+        remark: remark,
+        tourid: tourid);
 
     if (response.statusCode == 200) {
       tourAddMessage = response.body['message'];
@@ -195,6 +226,24 @@ class TourController extends GetxController implements GetxService {
     _isLoading = false;
     update();
     return tourRequestListModel;
+  }
+
+  Future<SalonDataModel?> getSalonNameList({String? key}) async {
+    _isLoading = true;
+    //update();
+
+    Response response = await tourRepo.getSalonListByKey(key: key);
+
+    if (response.statusCode == 200) {
+      salonDataModel = SalonDataModel.fromJson(response.body);
+    } else if (response.statusCode == 401) {
+      Get.offAllNamed(RouteHelper.getLoginRoute());
+    } else {
+      salonDataModel = SalonDataModel();
+    }
+    _isLoading = false;
+    update();
+    return salonDataModel;
   }
 
   Future<TourDetailsByIdModel?> getTourDetailsByid({String? tour_reqid}) async {

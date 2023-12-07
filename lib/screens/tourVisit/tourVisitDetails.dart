@@ -6,6 +6,7 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:shimmers/controllers/tourController.dart';
+import 'package:shimmers/screens/tourVisit/visitDetailsSheet.dart';
 
 import '../../constant/colorsConstant.dart';
 import '../../constant/custom_snackbar.dart';
@@ -34,6 +35,7 @@ class _TourVisitDetails extends State<TourVisitDetails> {
 
   String? selectedDate, selectedTime;
 
+
   String _connectionStatus = 'unKnown';
   final Connectivity _connectivity = Connectivity();
   late StreamSubscription<ConnectivityResult> _connectivitySubscription;
@@ -41,7 +43,7 @@ class _TourVisitDetails extends State<TourVisitDetails> {
   @override
   void initState() {
     super.initState();
-
+    selectedDate=DateFormat('yyyy-MM-dd').format(DateTime.now());
     CheckInternet.initConnectivity().then((value) => setState(() {
           _connectionStatus = value;
         }));
@@ -71,7 +73,7 @@ class _TourVisitDetails extends State<TourVisitDetails> {
             padding: EdgeInsets.symmetric(vertical: 20, horizontal: 15),
             child: Column(
               children: [
-                Align(
+               /* Align(
                   alignment: Alignment.topLeft,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -98,13 +100,13 @@ class _TourVisitDetails extends State<TourVisitDetails> {
                 ),
                 SizedBox(
                   height: 25,
-                ),
+                ),*/
                 Align(
                   alignment: Alignment.topLeft,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
                     child: Text(
-                      TextConstant.selectDate,
+                      'Date',
                       style: const TextStyle(
                           color: primaryColor,
                           fontSize: 14,
@@ -170,10 +172,10 @@ class _TourVisitDetails extends State<TourVisitDetails> {
                     ),
                   ),
                 ),
-                SizedBox(
+               /* SizedBox(
                   height: 25,
-                ),
-                Align(
+                ),*/
+                /*Align(
                   alignment: Alignment.topLeft,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -341,7 +343,7 @@ class _TourVisitDetails extends State<TourVisitDetails> {
                   onSaved: (value) {
                     descriController.text = value as String;
                   },
-                ),
+                ),*/
                 const SizedBox(height: 40),
                 SizedBox(
                   width: 200,
@@ -370,7 +372,9 @@ class _TourVisitDetails extends State<TourVisitDetails> {
                             ),
                           ),
                           onPressed: () {
-                            if (selectedDate == null) {
+                            showModalBottomSheet(context: context, builder:  (context)=>VisitDetailsSheet());
+
+                            /*if (selectedDate == null) {
                               showCustomSnackBar(TextConstant.selectDate,
                                   isError: false);
                             } else if (selectedTime == null) {
@@ -390,12 +394,12 @@ class _TourVisitDetails extends State<TourVisitDetails> {
                                   isError: false);
                             } else {
                               submitTourVisitDetails(tourController);
-                            }
+                            }*/
                           },
                           child: Padding(
                             padding: const EdgeInsets.all(5.0),
                             child: Text(
-                              TextConstant.submit.toUpperCase(),
+                              'Add Salon Details'.toUpperCase(),
                               style: const TextStyle(
                                   fontSize: 14,
                                   color: Colors.white,

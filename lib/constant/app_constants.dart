@@ -54,6 +54,8 @@ class AppConstants {
   static const String viewProductDetails ='get/productlist/byorder_id';
   static const String getnotApprovedOrderList ='get/notapproved/orders';
   static const String changeOrderApprovalStatus ='change/order/approval/status';
+  static const String salonListByKey ='salon/list/bykey';
+  static const String getCommunicationPhaseList ='get/commu/phase/list';
 
 
 

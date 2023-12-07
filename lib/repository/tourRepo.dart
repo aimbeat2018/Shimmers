@@ -26,6 +26,10 @@ class TourRepo {
     return await apiClient.getData(AppConstants.getAllTrfExecutiveList);
   }
 
+  Future<Response> getCommPhaseList() async {
+    return await apiClient.getData(AppConstants.getCommunicationPhaseList);
+  }
+
   /* Future<Response> storeTourRequest({TourRequestModel? tourRequestModel}) async {
     return await apiClient.postData(
         AppConstants.storetourrequest, jsonEncode(tourRequestModel!.toJson()));
@@ -92,10 +96,10 @@ class TourRepo {
     return await apiClient
         .postData(AppConstants.gettourdetailsbyid, {"tour_req_id": tour_id});
   }
-  Future<Response> getVisitedTourList({String? tour_requestid}) async{
-    return await apiClient.postData(AppConstants.getTourVisitDetailsById,{
-      'tour_req_id':tour_requestid
-    });
+
+  Future<Response> getVisitedTourList({String? tour_requestid}) async {
+    return await apiClient.postData(
+        AppConstants.getTourVisitDetailsById, {'tour_req_id': tour_requestid});
   }
 
   Future<Response> getExecutiveTourRequestList({String? executive_id}) async {
@@ -103,23 +107,23 @@ class TourRepo {
         AppConstants.getExecutiveTourRequestList, {"user_id": executive_id});
   }
 
+  Future<Response> getSalonListByKey({String? key}) async {
+    return await apiClient.postData(AppConstants.salonListByKey, {"key": key});
+  }
+
   Future<Response> updateTourRequestStatus(
-      {String? tour_req_id,
-      String? status,
-      String? remark}) async {
+      {String? tour_req_id, String? status, String? remark}) async {
     return await apiClient.postData(AppConstants.updateTourRequest, {
       "tour_req_id": tour_req_id,
       "status": status,
       "remark": remark,
     });
-
   }
 
   Future<Response> updateTourRequestByHeadOfficer(
-      {String? tour_req_id,
-        String? remark,
-        XFile? attachment}) async {
-    return await apiClient.postMultipartData(AppConstants.updateTourReqByOfficer, {
+      {String? tour_req_id, String? remark, XFile? attachment}) async {
+    return await apiClient
+        .postMultipartData(AppConstants.updateTourReqByOfficer, {
       "tour_req_id": tour_req_id!,
       "office_remark": remark!,
     }, [
