@@ -58,6 +58,7 @@ class _ScoreCardScreenState extends State<ScoreCardScreen> {
             ),
             body: SingleChildScrollView(
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
                     width: MediaQuery.of(context).size.width,
@@ -118,38 +119,38 @@ class _ScoreCardScreenState extends State<ScoreCardScreen> {
                       ],
                     ),
                   ),
-                  InkWell(
-                    onTap: () async {
-                      DateTime? pickedDate = await showDatePicker(
-                          context: context,
-                          initialDate: DateTime.now(),
-                          firstDate: DateTime(2000),
-                          //DateTime.now() - not to allow to choose before today.
-                          lastDate: DateTime(2101));
+                  Padding(padding: EdgeInsets.symmetric(horizontal: 10,vertical: 10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      InkWell(
+                        onTap: () async {
+                          DateTime? pickedDate = await showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime(2000),
+                              //DateTime.now() - not to allow to choose before today.
+                              lastDate: DateTime(2101));
 
-                      if (pickedDate != null) {
-                        //deptDT=pickedDate;
-                        print(
-                            pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
-                        String formattedDate =
-                        DateFormat('yyyy-MM-dd').format(pickedDate);
-                        print(
-                            formattedDate); //formatted date output using intl package =>  2021-03-16
-                        //you can implement different kind of Date Format here according to your requirement
+                          if (pickedDate != null) {
+                            //deptDT=pickedDate;
+                            print(
+                                pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
+                            String formattedDate =
+                            DateFormat('yyyy-MM-dd').format(pickedDate);
+                            print(
+                                formattedDate); //formatted date output using intl package =>  2021-03-16
+                            //you can implement different kind of Date Format here according to your requirement
 
-                        DateTime? currentDT=DateTime.now();
-                        setState(() {
-                          deptDate = formattedDate;
-                        });
-                        //  }
-                      } else {
-                        print("Date is not selected");
-                      }
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 10.0),
-                      child: Align(
-                        alignment: Alignment.topLeft,
+                            DateTime? currentDT=DateTime.now();
+                            setState(() {
+                              deptDate = formattedDate;
+                            });
+                            //  }
+                          } else {
+                            print("Date is not selected");
+                          }
+                        },
                         child: Container(
                           width: 140,
                           decoration: BoxDecoration(
@@ -182,8 +183,12 @@ class _ScoreCardScreenState extends State<ScoreCardScreen> {
                           ),
                         ),
                       ),
-                    ),
-                  ),
+                      SizedBox(height: 5,),
+                      Text('Score Card',style: TextStyle(color: primaryColor,fontWeight: FontWeight.w500,fontSize: 14),),
+
+                    ],
+                  ),),
+
 
                 ],
               ),

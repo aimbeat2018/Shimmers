@@ -240,8 +240,8 @@ class _TourVisitScreenState extends State<TourVisitScreen> {
                         onTap: () async {
                           DateTime? pickedDate = await showDatePicker(
                               context: context,
-                              initialDate: DateTime.now(),
-                              firstDate: DateTime(2000),
+                              initialDate:  DateTime.now().add(Duration(days: 7)),
+                              firstDate:  DateTime.now().add(Duration(days: 7)),
                               //DateTime.now() - not to allow to choose before today.
                               lastDate: DateTime(2101));
 
@@ -325,8 +325,8 @@ class _TourVisitScreenState extends State<TourVisitScreen> {
                         onTap: () async {
                           DateTime? pickedDate = await showDatePicker(
                               context: context,
-                              initialDate: DateTime.now(),
-                              firstDate: DateTime(2000),
+                              initialDate:  DateTime.now().add(Duration(days: 7)),
+                              firstDate:  DateTime.now().add(Duration(days: 7)),
                               //DateTime.now() - not to allow to choose before today.
                               lastDate: DateTime(2101));
 

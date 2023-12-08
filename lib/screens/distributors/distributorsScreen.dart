@@ -66,7 +66,7 @@ class _DistributorsScreenState extends State<DistributorsScreen> {
                   ? const Center(
                       child: CircularProgressIndicator(),
                     )
-                  : distributorController.distributorListModel!.data == null
+                  : distributorController.distributorListModel!.data == null || distributorController.distributorListModel!.data!.isEmpty
                       ? Center(
                           child: SizedBox(
                               height: MediaQuery.of(context).size.height,

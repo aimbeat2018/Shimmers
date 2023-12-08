@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:shimmers/controllers/tourController.dart';
+import 'package:shimmers/model/salonVisitModel.dart';
+import 'package:shimmers/model/submitTourModel.dart';
 
 import '../../constant/app_constants.dart';
 import '../../constant/colorsConstant.dart';
@@ -18,6 +20,10 @@ import '../../model/salonDataModel.dart';
 import '../noDataFound/noDataFoundScreen.dart';
 
 class VisitDetailsSheet extends StatefulWidget {
+ /* final List<SalonVisitModel> salonVisitList;
+
+  VisitDetailsSheet({required this.salonVisitList});*/
+
   @override
   State<StatefulWidget> createState() {
     return _VisitDetailsSheet();
@@ -111,82 +117,74 @@ class _VisitDetailsSheet extends State<VisitDetailsSheet> {
                       Visibility(
                         visible: isDetailsVisible ? true : false,
                         child: salonNameList == null || salonNameList!.isEmpty
-                                ? Center(
-                                    child: SizedBox(
-                                        height: 2,
-                                        width:
-                                            MediaQuery.of(context).size.width,
-                                        child: const NoDataFoundScreen()))
-                                : Padding(
-                                    padding: EdgeInsets.only(bottom: 10),
-                                    child: ListView.builder(
-                                        shrinkWrap: true,
-                                        itemCount: salonNameList!.length,
-                                        physics: ScrollPhysics(),
-                                        itemBuilder:
-                                            (BuildContext context, int index) {
-                                          return (Padding(
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: 5, vertical: 1),
-                                            child: InkWell(
-                                              onTap: () {
-                                                salonController.text=salonNameList![index].name!;
-                                                contactController.text=salonNameList![index].mobile!;
-                                                focusNode.requestFocus();
-                                                setState(() {
-                                                  isDetailsVisible=false;
-                                                });
-                                                /* Navigator.of(context).push(
+                            ? Center(
+                                child: SizedBox())
+                            : Padding(
+                                padding: EdgeInsets.only(bottom: 10),
+                                child: ListView.builder(
+                                    shrinkWrap: true,
+                                    itemCount: salonNameList!.length,
+                                    physics: ScrollPhysics(),
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
+                                      return (Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 5, vertical: 1),
+                                        child: InkWell(
+                                          onTap: () {
+                                            salonController.text =
+                                                salonNameList![index].name!;
+                                            contactController.text =
+                                                salonNameList![index].mobile!;
+                                            focusNode.requestFocus();
+                                            setState(() {
+                                              isDetailsVisible = false;
+                                            });
+                                            /* Navigator.of(context).push(
                                 MaterialPageRoute(
                                     builder: (context) =>
                                         ExecutivesTourRequestList(excutive_id: _searchResult![index]!.id.toString())));*/
-                                              },
-                                              child: Card(
-                                                elevation: 2,
-                                                shadowColor: primaryColor,
-                                                shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.all(
-                                                            Radius.circular(
-                                                                5))),
-                                                child: Padding(
-                                                  padding: EdgeInsets.symmetric(
-                                                      horizontal: 18,
-                                                      vertical: 5),
-                                                  child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Text(
-                                                        'Name: ${salonNameList![index].name!.toString()}',
-                                                        style: TextStyle(
-                                                            color: Colors.grey,
-                                                            fontSize: 14,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w500),
-                                                      ),
-                                                      SizedBox(
-                                                        height: 5,
-                                                      ),
-                                                      Text(
-                                                        'Mobile: ${salonNameList![index].mobile!.toString()}',
-                                                        style: TextStyle(
-                                                            color: Colors.grey,
-                                                            fontSize: 14,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w500),
-                                                      ),
-                                                    ],
+                                          },
+                                          child: Card(
+                                            elevation: 2,
+                                            shadowColor: primaryColor,
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(5))),
+                                            child: Padding(
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 18, vertical: 5),
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    'Name: ${salonNameList![index].name!.toString()}',
+                                                    style: TextStyle(
+                                                        color: Colors.grey,
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.w500),
                                                   ),
-                                                ),
+                                                  SizedBox(
+                                                    height: 5,
+                                                  ),
+                                                  Text(
+                                                    'Mobile: ${salonNameList![index].mobile!.toString()}',
+                                                    style: TextStyle(
+                                                        color: Colors.grey,
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.w500),
+                                                  ),
+                                                ],
                                               ),
                                             ),
-                                          ));
-                                        }),
-                                  ),
+                                          ),
+                                        ),
+                                      ));
+                                    }),
+                              ),
                       ),
                       Align(
                         alignment: Alignment.topLeft,
@@ -458,24 +456,43 @@ class _VisitDetailsSheet extends State<VisitDetailsSheet> {
                           ),
                           onPressed: () {
                             if (salonController.text.isEmpty) {
-                              showCustomSnackBar('Select Salon Name', isError: false);
+                              showCustomSnackBar('Select Salon Name',
+                                  isError: false);
                             } else if (contactController.text.isEmpty) {
-                              showCustomSnackBar('Enter Contact Number of Salon', isError: false);
+                              showCustomSnackBar(
+                                  'Enter Contact Number of Salon',
+                                  isError: false);
                             } else if (brandController.text.isEmpty) {
-                              showCustomSnackBar('Enter Existing Brand', isError: false);
-                            } else if (selectedStatus==null || selectedStatus=='') {
+                              showCustomSnackBar('Enter Existing Brand',
+                                  isError: false);
+                            } else if (selectedStatus == null ||
+                                selectedStatus == '') {
                               showCustomSnackBar('Select Communication Phase ',
                                   isError: false);
-                            } else if (is_order==null || is_order=='') {
+                            } else if (is_order == null || is_order == '') {
                               showCustomSnackBar('Select Order Received Field',
                                   isError: false);
-                            } else if (is_order=='yes' && valueController.text.isEmpty) {
+                            } else if (is_order == 'yes' &&
+                                valueController.text.isEmpty) {
                               showCustomSnackBar('Enter Order Value',
                                   isError: false);
-                            } else if (is_satisfy==null || is_satisfy=='') {
+                            } else if (is_satisfy == null || is_satisfy == '') {
                               showCustomSnackBar('Select Client Satisfy Field',
                                   isError: false);
-                            }else {
+                            } else {
+                              VisitData salonVisitModel =
+                                  VisitData();
+                              salonVisitModel.salonName = salonController.text;
+                              salonVisitModel.mobile = contactController.text;
+                              salonVisitModel.existingBrand =
+                                  brandController.text;
+                              salonVisitModel.commPhase = selectedStatus;
+                              salonVisitModel.isOrder = is_order;
+                              is_order == 'yes'? salonVisitModel.orderValue =
+                                  int.parse(valueController.text):salonVisitModel.orderValue =0;
+                              salonVisitModel.isSatisfy = is_satisfy;
+
+                              Navigator.pop(context,salonVisitModel);
                               //submitTourVisitDetails(tourController);
                             }
                           },
@@ -505,16 +522,14 @@ class _VisitDetailsSheet extends State<VisitDetailsSheet> {
         salonDataModel =
             await Get.find<TourController>().getSalonNameList(key: text);
         salonNameList = salonDataModel!.data!;
-        if(salonNameList!.isNotEmpty)
-          {
-            isDetailsVisible=true;
-          }
+        if (salonNameList!.isNotEmpty) {
+          isDetailsVisible = true;
+        }
       });
       setState(() {});
       return;
-    }
-    else{
-      isDetailsVisible=false;
+    } else {
+      isDetailsVisible = false;
       setState(() {
         contactController.clear();
       });

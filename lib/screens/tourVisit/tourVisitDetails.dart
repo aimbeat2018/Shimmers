@@ -6,6 +6,8 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:shimmers/controllers/tourController.dart';
+import 'package:shimmers/model/salonVisitModel.dart';
+import 'package:shimmers/model/submitTourModel.dart';
 import 'package:shimmers/screens/tourVisit/visitDetailsSheet.dart';
 
 import '../../constant/colorsConstant.dart';
@@ -34,7 +36,8 @@ class _TourVisitDetails extends State<TourVisitDetails> {
   TextEditingController descriController = TextEditingController();
 
   String? selectedDate, selectedTime;
-
+  List<VisitData> salonVisitDetailsList = [];
+  bool isListVisible = false;
 
   String _connectionStatus = 'unKnown';
   final Connectivity _connectivity = Connectivity();
@@ -43,7 +46,7 @@ class _TourVisitDetails extends State<TourVisitDetails> {
   @override
   void initState() {
     super.initState();
-    selectedDate=DateFormat('yyyy-MM-dd').format(DateTime.now());
+    selectedDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
     CheckInternet.initConnectivity().then((value) => setState(() {
           _connectionStatus = value;
         }));
@@ -73,7 +76,7 @@ class _TourVisitDetails extends State<TourVisitDetails> {
             padding: EdgeInsets.symmetric(vertical: 20, horizontal: 15),
             child: Column(
               children: [
-               /* Align(
+                /* Align(
                   alignment: Alignment.topLeft,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -172,9 +175,159 @@ class _TourVisitDetails extends State<TourVisitDetails> {
                     ),
                   ),
                 ),
-               /* SizedBox(
-                  height: 25,
-                ),*/
+                SizedBox(height: 25,),
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Text(
+                      'Remark',
+                      style: const TextStyle(
+                          color: primaryColor,
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                TextFormField(
+                  style: const TextStyle(fontSize: 14),
+                  maxLines: 5,
+                  decoration: GlobalFunctions.getInputDecoration('Enter Remark'),
+                  controller: descriController,
+                  keyboardType: TextInputType.text,
+                  onSaved: (value) {
+                    descriController.text = value as String;
+                  },
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                salonVisitDetailsList.isNotEmpty
+                    ? Padding(
+                  padding: EdgeInsets.only(bottom: 10),
+                  child: ListView.builder(
+                      itemCount: salonVisitDetailsList!.length,
+                      shrinkWrap: true,
+                     physics: NeverScrollableScrollPhysics(),
+                     // physics: AlwaysScrollableScrollPhysics(),
+                      itemBuilder: (BuildContext context, int index) {
+                        return Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 5, vertical: 5),
+                          child: Card(
+                            elevation: 2,
+                            shadowColor: primaryColor,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.all(
+                                    Radius.circular(10))),
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 15, vertical: 10),
+                              child: Column(
+                                crossAxisAlignment:
+                                CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        'Salon Name: ${salonVisitDetailsList![index].salonName!.toString()}',
+                                        style: TextStyle(
+                                            color: Colors.grey,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                      InkWell(
+                                        onTap: () {
+                                          setState(() {
+                                            salonVisitDetailsList
+                                                .removeAt(index);
+                                          });
+                                        },
+                                        child: Icon(
+                                          Icons.delete,
+                                          color: primaryColor,
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Text(
+                                    'Salon Mobile: ${salonVisitDetailsList![index].mobile!.toString()}',
+                                    style: TextStyle(
+                                        color: Colors.grey,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Text(
+                                    'Existing Brand: ${salonVisitDetailsList![index].existingBrand!.toString()}',
+                                    style: TextStyle(
+                                        color: Colors.grey,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Text(
+                                    'Communication Phase: ${salonVisitDetailsList![index].commPhase!.toString()}',
+                                    style: TextStyle(
+                                        color: Colors.grey,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Text(
+                                    'Order Received: ${salonVisitDetailsList![index].isOrder!.toString()}',
+                                    style: TextStyle(
+                                        color: Colors.grey,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                  salonVisitDetailsList![index]
+                                      .isOrder ==
+                                      'yes'
+                                      ? Padding(
+                                        padding: const EdgeInsets.only(top: 5.0),
+                                        child: Text(
+                                    'Order Value: Rs. ${salonVisitDetailsList![index].orderValue!.toString()}',
+                                    style: TextStyle(
+                                          color: Colors.grey,
+                                          fontSize: 14,
+                                          fontWeight:
+                                          FontWeight.w500),
+                                  ),
+                                      )
+                                      : SizedBox(),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 5.0),
+                                    child: Text(
+                                      'Client Satisfy: ${salonVisitDetailsList![index].isSatisfy!.toString()}',
+                                      style: TextStyle(
+                                          color: Colors.grey,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
+                      }),
+                )
+                    : SizedBox(),
                 /*Align(
                   alignment: Alignment.topLeft,
                   child: Padding(
@@ -318,33 +471,8 @@ class _TourVisitDetails extends State<TourVisitDetails> {
                 SizedBox(
                   height: 25,
                 ),
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Text(
-                      'Description',
-                      style: const TextStyle(
-                          color: primaryColor,
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                TextFormField(
-                  style: const TextStyle(fontSize: 14),
-                  maxLines: 5,
-                  decoration: GlobalFunctions.getInputDecoration('Description'),
-                  controller: descriController,
-                  keyboardType: TextInputType.text,
-                  onSaved: (value) {
-                    descriController.text = value as String;
-                  },
-                ),*/
-                const SizedBox(height: 40),
+                */
+                const SizedBox(height: 30),
                 SizedBox(
                   width: 200,
                   child: tourController.isLoading
@@ -372,34 +500,28 @@ class _TourVisitDetails extends State<TourVisitDetails> {
                             ),
                           ),
                           onPressed: () {
-                            showModalBottomSheet(context: context, builder:  (context)=>VisitDetailsSheet());
-
-                            /*if (selectedDate == null) {
-                              showCustomSnackBar(TextConstant.selectDate,
-                                  isError: false);
-                            } else if (selectedTime == null) {
-                              showCustomSnackBar(TextConstant.selectTime,
-                                  isError: false);
-                            } else if (areaController.text.isEmpty) {
-                              showCustomSnackBar('Enter Area', isError: false);
-                            } else if (roleController.text.isEmpty) {
-                              showCustomSnackBar('Enter Role', isError: false);
-                            } else if (nameController.text.isEmpty) {
-                              showCustomSnackBar('Enter Name', isError: false);
-                            } else if (contactController.text.isEmpty) {
-                              showCustomSnackBar('Enter Contact ',
-                                  isError: false);
-                            } else if (descriController.text.isEmpty) {
-                              showCustomSnackBar('Enter Description',
-                                  isError: false);
-                            } else {
-                              submitTourVisitDetails(tourController);
-                            }*/
+                            showModalBottomSheet(
+                              context: context,
+                              builder: (context) => VisitDetailsSheet(
+                                  /* salonVisitList:
+                                    courseController.categoryList != null
+                                        ? courseController.categoryList!
+                                        : [],*/
+                                  ),
+                              backgroundColor: Colors.transparent,
+                            ).then((salonDetails) => {
+                                  setState(() {
+                                    VisitData model = salonDetails;
+                                    if (model.salonName != null) {
+                                      salonVisitDetailsList.add(model);
+                                    }
+                                  })
+                                });
                           },
                           child: Padding(
                             padding: const EdgeInsets.all(5.0),
                             child: Text(
-                              'Add Salon Details'.toUpperCase(),
+                              'Fill Salon Details'.toUpperCase(),
                               style: const TextStyle(
                                   fontSize: 14,
                                   color: Colors.white,
@@ -407,6 +529,62 @@ class _TourVisitDetails extends State<TourVisitDetails> {
                             ),
                           )),
                 ),
+                SizedBox(height: 20,),
+                SizedBox(
+                  width: 200,
+                  child: tourController.isLoading
+                      ? Center(
+                    child: CircularProgressIndicator(),
+                  )
+                      : ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor:
+                        MaterialStateProperty.all<Color>(primaryColor),
+                        foregroundColor:
+                        MaterialStateProperty.all<Color>(primaryColor),
+                        textStyle: MaterialStateProperty.all<TextStyle>(
+                          const TextStyle(fontSize: 16),
+                        ),
+                        padding: MaterialStateProperty.all<EdgeInsets>(
+                          const EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 8),
+                        ),
+                        shape: MaterialStateProperty.all<
+                            RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                      ),
+                      onPressed: () {
+                        if (selectedDate == null) {
+                              showCustomSnackBar(TextConstant.selectDate,
+                                  isError: false);
+                            } else if (descriController.text.isEmpty) {
+                              showCustomSnackBar('Enter Remark',
+                                  isError: false);
+                            } else {
+                              SubmitTourModel submitTourModel=SubmitTourModel();
+                              submitTourModel.tourReqId=int.parse(widget.tour_requestid);
+                              submitTourModel.resubmitDate=selectedDate;
+                              submitTourModel.executiveRemark=descriController.text;
+                              submitTourModel.visitData=salonVisitDetailsList;
+
+                              submitTourVisitDetails(tourController,submitTourModel);
+                            }
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Text(
+                          'Submit'.toUpperCase(),
+                          style: const TextStyle(
+                              fontSize: 14,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w500),
+                        ),
+                      )),
+                ),
+
               ],
             ),
           ),
@@ -415,17 +593,9 @@ class _TourVisitDetails extends State<TourVisitDetails> {
     });
   }
 
-  Future<void> submitTourVisitDetails(TourController tourController) async {
+  Future<void> submitTourVisitDetails(TourController tourController,SubmitTourModel submitTourModel) async {
     tourController
-        .submitTourVisitDetails(
-            tour_visitid: widget.tour_requestid,
-            area: areaController.text,
-            date: selectedDate,
-            time: selectedTime,
-            role: roleController.text,
-            name: nameController.text,
-            contact: contactController.text,
-            description: descriController.text)
+        .submitTourVisitDetails(submitTourModel)
         .then((message) async {
       if (message == 'Tour Visit Details submitted successfully.') {
         showCustomSnackBar(message!, isError: false);

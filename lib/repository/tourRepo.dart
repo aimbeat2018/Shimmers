@@ -7,6 +7,7 @@ import 'package:shimmers/model/TourRequestModel.dart';
 
 import '../constant/api/api_client.dart';
 import '../constant/app_constants.dart';
+import '../model/submitTourModel.dart';
 
 class TourRepo {
   final ApiClient apiClient;
@@ -66,25 +67,9 @@ class TourRepo {
     });
   }
 
-  Future<Response> storeTourVisitDetails(
-      {String? tour_visitid,
-      String? area,
-      String? date,
-      String? time,
-      String? role,
-      String? name,
-      String? contact,
-      String? description}) async {
-    return await apiClient.postData(AppConstants.storetourdvisitdetails, {
-      "tour_visit_id": tour_visitid,
-      "area": area,
-      "date": date,
-      "time": time,
-      "role": role,
-      "name": name,
-      "contact": contact,
-      "description": description
-    });
+  Future<Response> storeTourVisitDetails(SubmitTourModel? submitTourModel) async {
+    return await apiClient.postBodyData(AppConstants.storetourdvisitdetails,
+        jsonEncode(submitTourModel!.toJson()));
   }
 
   Future<Response> deleteTourRequest({String? tour_reqid}) async {

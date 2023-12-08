@@ -59,7 +59,7 @@ class _DistributorListWidgetState extends State<DistributorListWidget> {
                     height: 5,
                   ),
                   Text(
-                    widget.model.address!,
+                    widget.model!.address==null?'':widget.model!.address!,
                     style: TextStyle(
                         color: Colors.black,
                         fontSize: 10,

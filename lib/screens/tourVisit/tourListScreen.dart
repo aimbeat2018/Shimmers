@@ -220,10 +220,13 @@ class _TourListScreen extends State<TourListScreen> {
                                               width: 10,
                                             ),
                                             tourController
+                                                .exeTourDetailModel!
+                                                .data![index]
+                                                .status! ==
+                                                1 && tourController
                                                         .exeTourDetailModel!
                                                         .data![index]
-                                                        .isVisited! ==
-                                                    1
+                                                        .isVisited! == 1
                                                 ? InkWell(
                                                     onTap: () {
                                                       Get.toNamed(RouteHelper

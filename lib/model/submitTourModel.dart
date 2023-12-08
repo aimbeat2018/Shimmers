@@ -1,37 +1,40 @@
-class TourVisitModel {
-  String? message;
+class SubmitTourModel {
+  int? tourReqId;
   String? resubmitDate;
   String? executiveRemark;
-  List<TourVisitDetailModel>? tourVisitDetailModel;
+  List<VisitData>? visitData;
 
-  TourVisitModel(
-      {this.message, this.resubmitDate, this.executiveRemark, this.tourVisitDetailModel});
+  SubmitTourModel(
+      {this.tourReqId,
+        this.resubmitDate,
+        this.executiveRemark,
+        this.visitData});
 
-  TourVisitModel.fromJson(Map<String, dynamic> json) {
-    message = json['message'];
+  SubmitTourModel.fromJson(Map<String, dynamic> json) {
+    tourReqId = json['tour_req_id'];
     resubmitDate = json['resubmit_date'];
     executiveRemark = json['executive_remark'];
-    if (json['data'] != null) {
-      tourVisitDetailModel = <TourVisitDetailModel>[];
-      json['data'].forEach((v) {
-        tourVisitDetailModel!.add(new TourVisitDetailModel.fromJson(v));
+    if (json['visit_data'] != null) {
+      visitData = <VisitData>[];
+      json['visit_data'].forEach((v) {
+        visitData!.add(new VisitData.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['message'] = this.message;
+    data['tour_req_id'] = this.tourReqId;
     data['resubmit_date'] = this.resubmitDate;
     data['executive_remark'] = this.executiveRemark;
-    if (this.tourVisitDetailModel != null) {
-      data['data'] = this.tourVisitDetailModel!.map((v) => v.toJson()).toList();
+    if (this.visitData != null) {
+      data['visit_data'] = this.visitData!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
-class TourVisitDetailModel {
+class VisitData {
   String? salonName;
   String? mobile;
   String? existingBrand;
@@ -40,7 +43,7 @@ class TourVisitDetailModel {
   int? orderValue;
   String? isSatisfy;
 
-  TourVisitDetailModel(
+  VisitData(
       {this.salonName,
         this.mobile,
         this.existingBrand,
@@ -49,7 +52,7 @@ class TourVisitDetailModel {
         this.orderValue,
         this.isSatisfy});
 
-  TourVisitDetailModel.fromJson(Map<String, dynamic> json) {
+  VisitData.fromJson(Map<String, dynamic> json) {
     salonName = json['salon_name'];
     mobile = json['mobile'];
     existingBrand = json['existing_brand'];

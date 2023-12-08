@@ -11,6 +11,7 @@ import '../constant/route_helper.dart';
 import '../model/TRFExecutiveProfile.dart';
 import '../model/headOfficeRequestList.dart';
 import '../model/salonDataModel.dart';
+import '../model/submitTourModel.dart';
 import '../model/tourVisitModel.dart';
 
 class TourController extends GetxController implements GetxService {
@@ -155,26 +156,10 @@ class TourController extends GetxController implements GetxService {
     return tourAddMessage;
   }
 
-  Future<String?> submitTourVisitDetails(
-      {String? tour_visitid,
-      String? area,
-      String? date,
-      String? time,
-      String? role,
-      String? name,
-      String? contact,
-      String? description}) async {
+  Future<String?> submitTourVisitDetails(SubmitTourModel? submitTourModel) async {
     _isLoading = true;
     update();
-    Response response = await tourRepo.storeTourVisitDetails(
-        tour_visitid: tour_visitid,
-        area: area,
-        date: date,
-        time: time,
-        role: role,
-        name: name,
-        contact: contact,
-        description: description);
+    Response response = await tourRepo.storeTourVisitDetails(submitTourModel);
 
     if (response.statusCode == 200) {
       tourAddMessage = response.body['message'];
