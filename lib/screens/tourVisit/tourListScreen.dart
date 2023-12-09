@@ -33,6 +33,7 @@ class _TourListScreen extends State<TourListScreen> {
   String _connectionStatus = 'unKnown';
   final Connectivity _connectivity = Connectivity();
   late StreamSubscription<ConnectivityResult> _connectivitySubscription;
+  bool tour_allowed = true;
 
   @override
   void initState() {
@@ -127,13 +128,13 @@ class _TourListScreen extends State<TourListScreen> {
                                                                       .data![
                                                                           index]
                                                                       .id!
-                                                                      .toString()))!.then((value) {
+                                                                      .toString()))!
+                                                          .then((value) {
                                                         setState(() {
                                                           Get.find<
-                                                              TourController>()
+                                                                  TourController>()
                                                               .getTourRequestList();
                                                         });
-
                                                       });
 
                                                       /*Navigator.of(context).push(MaterialPageRoute(
@@ -198,13 +199,11 @@ class _TourListScreen extends State<TourListScreen> {
                                                                       .id!
                                                                       .toString()))
                                                           ?.then((value) {
-
                                                         setState(() {
                                                           Get.find<
-                                                              TourController>()
+                                                                  TourController>()
                                                               .getTourRequestList();
                                                         });
-
                                                       });
                                                       /* Navigator.of(context).push(MaterialPageRoute(
                                       builder: (context) => TourVisitDetails(
@@ -220,13 +219,15 @@ class _TourListScreen extends State<TourListScreen> {
                                               width: 10,
                                             ),
                                             tourController
-                                                .exeTourDetailModel!
-                                                .data![index]
-                                                .status! ==
-                                                1 && tourController
-                                                        .exeTourDetailModel!
-                                                        .data![index]
-                                                        .isVisited! == 1
+                                                            .exeTourDetailModel!
+                                                            .data![index]
+                                                            .status! ==
+                                                        1 &&
+                                                    tourController
+                                                            .exeTourDetailModel!
+                                                            .data![index]
+                                                            .isVisited! ==
+                                                        1
                                                 ? InkWell(
                                                     onTap: () {
                                                       Get.toNamed(RouteHelper
@@ -348,7 +349,9 @@ class _TourListScreen extends State<TourListScreen> {
                                                   ),
                                           ],
                                         ),
-                                        SizedBox(height: 5,),
+                                        SizedBox(
+                                          height: 5,
+                                        ),
                                         Text(
                                           'Return Date: ${tourController.exeTourDetailModel!.data![index].returnDate!}',
                                           style: TextStyle(
@@ -356,7 +359,9 @@ class _TourListScreen extends State<TourListScreen> {
                                               fontSize: 14,
                                               fontWeight: FontWeight.w500),
                                         ),
-                                        SizedBox(height: 5,),
+                                        SizedBox(
+                                          height: 5,
+                                        ),
                                         Text(
                                           'RSM Name: ${tourController.exeTourDetailModel!.data![index].rsmName!}',
                                           style: TextStyle(
@@ -386,8 +391,9 @@ class _TourListScreen extends State<TourListScreen> {
                                                     ''
                                             ? SizedBox()
                                             : Padding(
-                                              padding: const EdgeInsets.only(top: 5.0),
-                                              child: Text(
+                                                padding: const EdgeInsets.only(
+                                                    top: 5.0),
+                                                child: Text(
                                                   'Executive Remark: ${tourController.exeTourDetailModel!.data![index].executiveRemark!}',
                                                   // 'Remark: ${widget.model.remark ??'vff':widget.model.remark}',
                                                   style: TextStyle(
@@ -396,7 +402,7 @@ class _TourListScreen extends State<TourListScreen> {
                                                       fontWeight:
                                                           FontWeight.w500),
                                                 ),
-                                            ),
+                                              ),
                                         tourController.exeTourDetailModel!
                                                         .data![index].remark ==
                                                     null ||
@@ -465,13 +471,32 @@ class _TourListScreen extends State<TourListScreen> {
                   child: Icon(Icons.add),
                   backgroundColor: primaryColor,
                   onPressed: () {
-                    Get.toNamed(RouteHelper.getaddTourRequestRoute('0')) ?.then((value) {
-                      setState(() {
-                        Get.find<
-                            TourController>()
-                            .getTourRequestList();
+                   /* for(int i=0;i<tourController.exeTourDetailModel!.data!.length;i++)
+                      {
+                        if(tourController.exeTourDetailModel!.data![i].isVisited==0)
+                          {
+                            tour_allowed=false;
+                          }
+                      }*/
+                    for(var tours in tourController.exeTourDetailModel!.data!)
+                      {
+                        if(tours.isVisited==0)
+                          {
+                            tour_allowed=false;
+                          }
+                      }
+                    if (tour_allowed) {
+                      Get.toNamed(RouteHelper.getaddTourRequestRoute('0'))
+                          ?.then((value) {
+                        setState(() {
+                          Get.find<TourController>().getTourRequestList();
+                        });
                       });
-                    });
+                    } else {
+                      showCustomSnackBar(
+                          'Please complete previous tour visit before adding new !',
+                          isError: false);
+                    }
                     /*Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => TourVisitScreen(tour_requestid: 0)));*/
                   },

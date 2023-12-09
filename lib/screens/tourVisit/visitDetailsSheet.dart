@@ -20,7 +20,24 @@ import '../../model/salonDataModel.dart';
 import '../noDataFound/noDataFoundScreen.dart';
 
 class VisitDetailsSheet extends StatefulWidget {
- /* final List<SalonVisitModel> salonVisitList;
+  final String salonName,
+      salonMob,
+      brand,
+      comm_phase,
+      order_value,
+      is_order,
+      is_satisfy;
+
+  VisitDetailsSheet(
+      {required this.salonName,
+      required this.salonMob,
+      required this.brand,
+      required this.comm_phase,
+      required this.order_value,
+      required this.is_order,
+      required this.is_satisfy});
+
+  /* final List<SalonVisitModel> salonVisitList;
 
   VisitDetailsSheet({required this.salonVisitList});*/
 
@@ -59,6 +76,16 @@ class _VisitDetailsSheet extends State<VisitDetailsSheet> {
           }));
     });
     getPhaseList();
+    if(widget.salonName!='') {
+      salonController.text = widget.salonName;
+      contactController.text = widget.salonMob;
+      brandController.text = widget.brand;
+      selectedStatus = widget.comm_phase;
+      is_order=widget.is_order;
+      is_satisfy=widget.is_satisfy;
+      valueController.text = widget.order_value;
+    }
+
   }
 
   Future<void> getPhaseList() async {
@@ -117,8 +144,7 @@ class _VisitDetailsSheet extends State<VisitDetailsSheet> {
                       Visibility(
                         visible: isDetailsVisible ? true : false,
                         child: salonNameList == null || salonNameList!.isEmpty
-                            ? Center(
-                                child: SizedBox())
+                            ? Center(child: SizedBox())
                             : Padding(
                                 padding: EdgeInsets.only(bottom: 10),
                                 child: ListView.builder(
@@ -480,19 +506,20 @@ class _VisitDetailsSheet extends State<VisitDetailsSheet> {
                               showCustomSnackBar('Select Client Satisfy Field',
                                   isError: false);
                             } else {
-                              VisitData salonVisitModel =
-                                  VisitData();
+                              VisitData salonVisitModel = VisitData();
                               salonVisitModel.salonName = salonController.text;
                               salonVisitModel.mobile = contactController.text;
                               salonVisitModel.existingBrand =
                                   brandController.text;
                               salonVisitModel.commPhase = selectedStatus;
                               salonVisitModel.isOrder = is_order;
-                              is_order == 'yes'? salonVisitModel.orderValue =
-                                  int.parse(valueController.text):salonVisitModel.orderValue =0;
+                              is_order == 'yes'
+                                  ? salonVisitModel.orderValue =
+                                      int.parse(valueController.text)
+                                  : salonVisitModel.orderValue = 0;
                               salonVisitModel.isSatisfy = is_satisfy;
 
-                              Navigator.pop(context,salonVisitModel);
+                              Navigator.pop(context, salonVisitModel);
                               //submitTourVisitDetails(tourController);
                             }
                           },
@@ -524,6 +551,9 @@ class _VisitDetailsSheet extends State<VisitDetailsSheet> {
         salonNameList = salonDataModel!.data!;
         if (salonNameList!.isNotEmpty) {
           isDetailsVisible = true;
+        }
+        else{
+          showCustomSnackBar('Salon Name is not found in list!',isError: false);
         }
       });
       setState(() {});

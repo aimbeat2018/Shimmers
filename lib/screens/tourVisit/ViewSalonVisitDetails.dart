@@ -91,14 +91,14 @@ class _ViewSalonVisitDetails extends State<ViewSalonVisitDetails> {
               ),
               body: tourVisitModel == null
                   ? const Center(child: CircularProgressIndicator())
-                  : tourVisitModel!.tourVisitDetailModel == null ||
+                  : /*tourVisitModel!.tourVisitDetailModel == null ||
                           tourVisitModel!.tourVisitDetailModel!.isEmpty
                       ? Center(
                           child: SizedBox(
                               height: MediaQuery.of(context).size.height,
                               width: MediaQuery.of(context).size.width,
                               child: const NoDataFoundScreen()))
-                      : SingleChildScrollView(
+                      : */SingleChildScrollView(
                           child: Padding(
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 10.0, vertical: 20),
@@ -258,7 +258,11 @@ class _ViewSalonVisitDetails extends State<ViewSalonVisitDetails> {
                                               );
                                             }),
                                       )
-                                    : SizedBox()
+                                    : Center(
+                                    child: SizedBox(
+                                        height: MediaQuery.of(context).size.height,
+                                        width: MediaQuery.of(context).size.width,
+                                        child: const NoDataFoundScreen()))
                               ],
                             ),
                           ),

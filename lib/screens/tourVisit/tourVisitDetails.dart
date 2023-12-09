@@ -251,19 +251,64 @@ class _TourVisitDetails extends State<TourVisitDetails> {
                                         child: Icon(
                                           Icons.delete,
                                           color: primaryColor,
+                                          size: 20,
                                         ),
-                                      )
+                                      ),
+
                                     ],
                                   ),
                                   SizedBox(
                                     height: 5,
                                   ),
-                                  Text(
-                                    'Salon Mobile: ${salonVisitDetailsList![index].mobile!.toString()}',
-                                    style: TextStyle(
-                                        color: Colors.grey,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500),
+                                  Row(
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        'Salon Mobile: ${salonVisitDetailsList![index].mobile!.toString()}',
+                                        style: TextStyle(
+                                            color: Colors.grey,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                      InkWell(
+                                        onTap: () {
+                                          showModalBottomSheet(
+                                            context: context,
+                                            builder: (context) => VisitDetailsSheet(
+                                              salonName: salonVisitDetailsList![index].salonName!.toString(),
+                                              salonMob: salonVisitDetailsList![index].mobile!.toString(),
+                                              brand: salonVisitDetailsList![index].existingBrand!.toString(),
+                                              comm_phase: salonVisitDetailsList![index].commPhase!.toString(),
+                                              order_value: salonVisitDetailsList![index].orderValue!.toString(),
+                                              is_order:salonVisitDetailsList![index].isOrder!.toString(),
+                                              is_satisfy: salonVisitDetailsList![index].isSatisfy!.toString(),
+                                            ),
+                                            backgroundColor: Colors.transparent,
+                                          ).then((salonDetails) => {
+                                            setState(() {
+                                              VisitData model = salonDetails;
+                                              if (model.salonName != null) {
+                                                salonVisitDetailsList[index].salonName=model.salonName;
+                                                salonVisitDetailsList[index].mobile=model.mobile;
+                                                salonVisitDetailsList[index].existingBrand=model.existingBrand;
+                                                salonVisitDetailsList[index].commPhase=model.commPhase;
+                                                salonVisitDetailsList[index].isOrder=model.isOrder;
+                                                salonVisitDetailsList[index].orderValue=model.orderValue;
+                                                salonVisitDetailsList[index].isSatisfy=model.isSatisfy;
+                                               // salonVisitDetailsList.add(model);
+                                              }
+                                            })
+                                          });
+
+                                        },
+                                        child: Icon(
+                                          Icons.edit,
+                                          color: primaryColor,
+                                          size: 20,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                   SizedBox(
                                     height: 5,
@@ -502,12 +547,13 @@ class _TourVisitDetails extends State<TourVisitDetails> {
                           onPressed: () {
                             showModalBottomSheet(
                               context: context,
-                              builder: (context) => VisitDetailsSheet(
-                                  /* salonVisitList:
-                                    courseController.categoryList != null
-                                        ? courseController.categoryList!
-                                        : [],*/
-                                  ),
+                              builder: (context) => VisitDetailsSheet(salonName: '',
+                                salonMob: '',
+                                brand: '',
+                                comm_phase: '',
+                                order_value: '',
+                                is_order:'',
+                                is_satisfy: '',),
                               backgroundColor: Colors.transparent,
                             ).then((salonDetails) => {
                                   setState(() {

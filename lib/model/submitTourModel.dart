@@ -13,7 +13,7 @@ class SubmitTourModel {
   SubmitTourModel.fromJson(Map<String, dynamic> json) {
     tourReqId = json['tour_req_id'];
     resubmitDate = json['resubmit_date'];
-    executiveRemark = json['executive_remark'];
+    executiveRemark = json['visit_remark'];
     if (json['visit_data'] != null) {
       visitData = <VisitData>[];
       json['visit_data'].forEach((v) {
@@ -26,7 +26,7 @@ class SubmitTourModel {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['tour_req_id'] = this.tourReqId;
     data['resubmit_date'] = this.resubmitDate;
-    data['executive_remark'] = this.executiveRemark;
+    data['visit_remark'] = this.executiveRemark;
     if (this.visitData != null) {
       data['visit_data'] = this.visitData!.map((v) => v.toJson()).toList();
     }
