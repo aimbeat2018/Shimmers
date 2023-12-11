@@ -302,7 +302,7 @@ class _TRFExecutiveListScreen extends State {
     }
 
     for (var members in _executiveDetails!) {
-      if (members.name!.toLowerCase().contains(text)) {
+      if (members.name!.toLowerCase().contains(text.toLowerCase())) {
         _searchResult!.add(members);
       }
     }

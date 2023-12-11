@@ -5,6 +5,7 @@ import 'package:shimmers/controllers/campaignController.dart';
 import 'package:shimmers/controllers/cartController.dart';
 import 'package:shimmers/controllers/distributorController.dart';
 import 'package:shimmers/controllers/salonController.dart';
+import 'package:shimmers/controllers/scoreController.dart';
 import 'package:shimmers/controllers/targetController.dart';
 import 'package:shimmers/repository/TagetRepo.dart';
 import 'package:shimmers/repository/attendanceRepo.dart';
@@ -12,6 +13,7 @@ import 'package:shimmers/repository/campaignRepo.dart';
 import 'package:shimmers/repository/cartRepo.dart';
 import 'package:shimmers/repository/distributorRepo.dart';
 import 'package:shimmers/repository/salonRepo.dart';
+import 'package:shimmers/repository/scoreRepo.dart';
 
 import '../controllers/authController.dart';
 import '../controllers/tourController.dart';
@@ -44,6 +46,9 @@ Future<void> init() async {
   Get.lazyPut(() => CartRepo(sharedPreferences: Get.find()));
   Get.lazyPut(
       () => TourRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
+  Get.lazyPut(
+      ()=> ScoreRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
+
 
   // Controller
   Get.lazyPut(() => AuthController(authRepo: Get.find()));
@@ -54,4 +59,5 @@ Future<void> init() async {
   Get.lazyPut(() => CampaignController(campaignRepo: Get.find()));
   Get.lazyPut(() => TargetController(targetRepo: Get.find()));
   Get.lazyPut(() => TourController(tourRepo: Get.find()));
+  Get.lazyPut(() => ScoreController(scoreRepo: Get.find()));
 }

@@ -56,8 +56,7 @@ class AppConstants {
   static const String changeOrderApprovalStatus ='change/order/approval/status';
   static const String salonListByKey ='salon/list/bykey';
   static const String getCommunicationPhaseList ='get/commu/phase/list';
-
-
+  static const String employeeScorecard ='employee/scorecard';
 
 
 

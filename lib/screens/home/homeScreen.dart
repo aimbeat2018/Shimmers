@@ -7,6 +7,7 @@ import 'package:shimmers/screens/campaigns/campaignsListScreen.dart';
 import 'package:shimmers/screens/distributors/distributorsScreen.dart';
 import 'package:shimmers/screens/salons/salonDetails/managerOrderApproval.dart';
 import 'package:shimmers/screens/salons/salonList/salonListScreen.dart';
+import 'package:shimmers/screens/scoreCard/executiveListActivity.dart';
 import 'package:shimmers/screens/scoreCard/scoreCardScreen.dart';
 import 'package:shimmers/screens/setTarget/setTargetScreen.dart';
 import 'package:shimmers/screens/tourVisit/headOfficerTourRequests.dart';
@@ -421,20 +422,15 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             Center(
                               child: InkWell(
                                 onTap: () {
-                                /*  if (userRole == 'TRF Executive' ||
-                                      userRole == 'TRF Manager') {
-                                    showCustomSnackBar(
-                                        'You dont have the permission to use this module',
-                                        isError: true);
-                                  } else {*/
                                     //Call activity screen here
+                                  if (userRole == 'employee') {
+                                    //Sales Manager see the activities of sales executive
                                     Navigator.of(context).push(
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                ScoreCardScreen(
-                                                  from: 'target',
-                                                )));
-                                 // }
+                                                ExecutiveListActivity()));
+                                  }
+
                                 },
                                 child: SizedBox(
                                   height: 135,
