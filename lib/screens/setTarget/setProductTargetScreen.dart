@@ -4,10 +4,12 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shimmers/model/setTargetModel.dart';
 import 'package:shimmers/screens/setTarget/setProductListWidget.dart';
 
 import '../../constant/app_constants.dart';
 import '../../constant/colorsConstant.dart';
+import '../../constant/custom_snackbar.dart';
 import '../../constant/internetConnectivity.dart';
 import '../../constant/no_internet_screen.dart';
 import '../../constant/textConstant.dart';
@@ -214,7 +216,30 @@ class _SetProductTargetScreenState extends State<SetProductTargetScreen> {
                                       ),
                                     ),
                                     onPressed: () {
+                                      _productData;
+                                      _productData;
+                                      SetTargetModel setTargetModel =
+                                          new SetTargetModel();
 
+                                      List<ProductDataModel> productTargetList =
+                                          [];
+
+                                      for (var targetModel in _productData!) {
+                                        ProductDataModel productDataModel =
+                                            new ProductDataModel();
+                                        productDataModel.productId =
+                                            targetModel.id;
+                                        productDataModel.target =
+                                            targetModel.target;
+                                        productTargetList.add(productDataModel);
+                                      }
+                                      setTargetModel.employeeId =
+                                          widget.membersModel.id;
+                                      setTargetModel.productData =
+                                          productTargetList;
+
+                                      submitTargetData(
+                                          setTargetModel, targetController);
                                     },
                                     child: Padding(
                                       padding: const EdgeInsets.all(5.0),
@@ -235,5 +260,25 @@ class _SetProductTargetScreenState extends State<SetProductTargetScreen> {
               ),
             );
           });
+  }
+
+  void submitTargetData(
+      SetTargetModel setTargetModel, TargetController targetController) async {
+    targetController
+        .submitProductWiseTarget(setTargetModel: setTargetModel)
+        .then((value) async{
+      if (value! == 'Target assigned successfully')
+      {
+        showCustomSnackBar(value!,
+            isError: false);
+        Navigator.pop(context);
+
+      }
+      else
+      {
+        showCustomSnackBar(value!,
+            isError: false);
+      }
+            });
   }
 }

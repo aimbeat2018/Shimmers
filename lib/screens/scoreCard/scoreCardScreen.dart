@@ -47,7 +47,7 @@ class _ScoreCardScreenState extends State<ScoreCardScreen> {
     if (mounted) {
       Future.delayed(Duration.zero, () async {
         Get.find<ScoreController>()
-            .getEmployeeScorecard(widget.excutive_id, '', '');
+            .getEmployeeScorecard(user_id:widget.excutive_id,from_date: '',to_date: '');
       });
     }
   }
@@ -349,6 +349,7 @@ class _ScoreCardScreenState extends State<ScoreCardScreen> {
                                                     'Select To Date',
                                                     isError: true);
                                               } else {
+                                                //call API here
                                                 // addSalon(salonController);
                                               }
                                             },

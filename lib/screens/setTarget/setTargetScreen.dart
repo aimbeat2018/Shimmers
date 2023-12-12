@@ -75,7 +75,7 @@ class _SetTargetScreenState extends State<SetTargetScreen> {
     }
 
     for (var members in _userDetails!) {
-      if (members.name!.contains(text)) {
+      if (members.name!.toLowerCase().contains(text.toLowerCase())) {
         _searchResult!.add(members);
       }
     }

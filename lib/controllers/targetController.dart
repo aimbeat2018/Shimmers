@@ -4,6 +4,7 @@ import 'package:shimmers/repository/TagetRepo.dart';
 
 import '../constant/route_helper.dart';
 import '../model/productModel.dart';
+import '../model/setTargetModel.dart';
 
 class TargetController extends GetxController implements GetxService {
   final TargetRepo targetRepo;
@@ -20,6 +21,7 @@ class TargetController extends GetxController implements GetxService {
   EmployeeListModel? employeeListModel;
 
   ProductModel? productModel;
+  String? targetResponse;
 
   Future<EmployeeListModel?> getEmployeeList() async {
     _isLoading = true;
@@ -53,5 +55,27 @@ class TargetController extends GetxController implements GetxService {
     _isLoading = false;
     update();
     return productModel;
+  }
+
+  Future<String?> submitProductWiseTarget(
+      {SetTargetModel? setTargetModel}) async{
+    _isLoading=true;
+    Response response=await targetRepo.submitProductTarget(setTargetModel);
+
+    if(response.statusCode==200)
+      {
+        targetResponse=response.body['message'];
+      }
+    else if(response.statusCode==401)
+      {
+        Get.offAllNamed(RouteHelper.getLoginRoute());
+      }
+    else{
+      targetResponse='';
+    }
+    _isLoading=false;
+    update();
+    return targetResponse;
+
   }
 }

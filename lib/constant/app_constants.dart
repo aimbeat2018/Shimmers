@@ -57,6 +57,8 @@ class AppConstants {
   static const String salonListByKey ='salon/list/bykey';
   static const String getCommunicationPhaseList ='get/commu/phase/list';
   static const String employeeScorecard ='employee/scorecard';
+  static const String assignEmployeeTarget ='assign/employee/target';
+  static const String employeedetailActivity ='employee/scorecard/details';
 
 
 

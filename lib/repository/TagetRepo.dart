@@ -1,10 +1,12 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constant/api/api_client.dart';
 import '../constant/app_constants.dart';
+import '../model/setTargetModel.dart';
 
 class TargetRepo {
   final ApiClient apiClient;
@@ -18,5 +20,9 @@ class TargetRepo {
 
   Future<Response> getProducts() async {
     return await apiClient.getData(AppConstants.getProducts);
+  }
+
+  Future<Response> submitProductTarget(SetTargetModel? setTargetModel) async {
+    return await apiClient.postBodyData(AppConstants.assignEmployeeTarget,jsonEncode(setTargetModel!.toJson()));
   }
 }

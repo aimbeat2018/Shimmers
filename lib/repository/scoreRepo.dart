@@ -17,6 +17,12 @@ class ScoreRepo{
       'to_date':to_date
     });
   }
+  Future<Response> getEmployeeActivityDetails({String? emp_id,String? activityType}) async{
+    return await apiClient.postData(AppConstants.employeedetailActivity, {
+      'user_id': emp_id,
+      'activity_type':activityType
+    });
+  }
 
 
 
