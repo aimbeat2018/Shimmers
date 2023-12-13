@@ -4,6 +4,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:shimmers/screens/scoreCard/userActivityDetailsScreen.dart';
 
 import '../../constant/app_constants.dart';
 import '../../constant/colorsConstant.dart';
@@ -47,7 +48,7 @@ class _ScoreCardScreenState extends State<ScoreCardScreen> {
     if (mounted) {
       Future.delayed(Duration.zero, () async {
         Get.find<ScoreController>()
-            .getEmployeeScorecard(user_id:widget.excutive_id,from_date: '',to_date: '');
+            .getEmployeeScorecard(user_id:widget.excutive_id,from_date: '',to_date: '',isload: true);
       });
     }
   }
@@ -350,7 +351,8 @@ class _ScoreCardScreenState extends State<ScoreCardScreen> {
                                                     isError: true);
                                               } else {
                                                 //call API here
-                                                // addSalon(salonController);
+                                                Get.find<ScoreController>()
+                                                    .getEmployeeScorecard(user_id:widget.excutive_id,from_date: fromDate,to_date: toDate,isload: false);
                                               }
                                             },
                                             child: Padding(
@@ -398,15 +400,20 @@ class _ScoreCardScreenState extends State<ScoreCardScreen> {
                                         SizedBox(
                                           height: 5,
                                         ),
-                                        Align(
-                                            alignment: Alignment.topRight,
-                                            child: Text(
-                                              'Explore',
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontWeight: FontWeight.w500,
-                                                  fontSize: 12),
-                                            )),
+                                        InkWell(
+                                          onTap: (){
+                                            Navigator.of(context).push(MaterialPageRoute(builder: (context)=>UserActivityDetailsScreen(userId: widget.excutive_id,activityType:'salon_',fromDate: fromDate!,toDate: toDate!,)));
+                                          },
+                                          child: Align(
+                                              alignment: Alignment.topRight,
+                                              child: Text(
+                                                'Explore',
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontWeight: FontWeight.w500,
+                                                    fontSize: 12),
+                                              )),
+                                        ),
                                         SizedBox(
                                           height: 5,
                                         ),
