@@ -4,11 +4,13 @@ import 'package:shimmers/repository/scoreRepo.dart';
 import '../constant/route_helper.dart';
 import '../model/activityCountModel.dart';
 import '../model/employeeActivityDetail.dart';
+import '../model/employeeTargetDetail.dart';
 
 class ScoreController extends GetxController implements GetxService {
   final ScoreRepo scoreRepo;
   ActivityCountModel? activityCountModel;
   EmployeeActivityDetail? employeeActivityDetail;
+  EmployeeTargetDetail? employeeTargetDetail;
   bool? _isLoading = false;
 
   bool get isLoading => _isLoading!;
@@ -46,7 +48,10 @@ class ScoreController extends GetxController implements GetxService {
       String? toDate}) async {
     _isLoading = true;
     Response response = await scoreRepo.getEmployeeActivityDetails(
-        emp_id: user_id, activityType: activityType,from_date: fromDate,to_date: toDate);
+        emp_id: user_id,
+        activityType: activityType,
+        from_date: fromDate,
+        to_date: toDate);
 
     if (response.statusCode == 200) {
       employeeActivityDetail = EmployeeActivityDetail.fromJson(response.body);
@@ -58,5 +63,28 @@ class ScoreController extends GetxController implements GetxService {
     _isLoading = false;
     update();
     return employeeActivityDetail;
+  }
+
+  Future<EmployeeTargetDetail?> employeeTargetDetails(
+      {String? user_id,
+      String? activityType,
+      String? fromDate,
+      String? toDate}) async {
+    _isLoading = true;
+    Response response = await scoreRepo.getEmployeeTargetDetails(
+        emp_id: user_id,
+        activityType: activityType,
+        from_date: fromDate,
+        to_date: toDate);
+    if (response.statusCode == 200) {
+      employeeTargetDetail = EmployeeTargetDetail.fromJson(response.body);
+    } else if (response.statusCode == 401) {
+      Get.offAllNamed(RouteHelper.getLoginRoute());
+    } else {
+      employeeTargetDetail = EmployeeTargetDetail();
+    }
+    _isLoading = false;
+    update();
+    return employeeTargetDetail;
   }
 }

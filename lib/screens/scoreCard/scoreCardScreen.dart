@@ -4,6 +4,8 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:shimmers/model/employeeTargetDetail.dart';
+import 'package:shimmers/screens/scoreCard/employeeTargetDetailsScreen.dart';
 import 'package:shimmers/screens/scoreCard/userActivityDetailsScreen.dart';
 
 import '../../constant/app_constants.dart';
@@ -47,8 +49,11 @@ class _ScoreCardScreenState extends State<ScoreCardScreen> {
     });
     if (mounted) {
       Future.delayed(Duration.zero, () async {
-        Get.find<ScoreController>()
-            .getEmployeeScorecard(user_id:widget.excutive_id,from_date: '',to_date: '',isload: true);
+        Get.find<ScoreController>().getEmployeeScorecard(
+            user_id: widget.excutive_id,
+            from_date: '',
+            to_date: '',
+            isload: true);
       });
     }
   }
@@ -116,8 +121,7 @@ class _ScoreCardScreenState extends State<ScoreCardScreen> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            'Name: ${scoreController
-                                          .activityCountModel!.name!}',
+                                            'Name: ${scoreController.activityCountModel!.name!}',
                                             style: TextStyle(
                                                 color: Colors.white,
                                                 fontSize: 14,
@@ -127,8 +131,7 @@ class _ScoreCardScreenState extends State<ScoreCardScreen> {
                                             height: 5,
                                           ),
                                           Text(
-                                           'Role: ${scoreController
-                                               .activityCountModel!.role!}',
+                                            'Role: ${scoreController.activityCountModel!.role!}',
                                             style: TextStyle(
                                                 color: Colors.white,
                                                 fontSize: 14,
@@ -138,8 +141,7 @@ class _ScoreCardScreenState extends State<ScoreCardScreen> {
                                             height: 5,
                                           ),
                                           Text(
-                                           'Mobile: ${scoreController
-                                               .activityCountModel!.mobile!}',
+                                            'Mobile: ${scoreController.activityCountModel!.mobile!}',
                                             style: TextStyle(
                                                 color: Colors.white,
                                                 fontSize: 14,
@@ -327,10 +329,11 @@ class _ScoreCardScreenState extends State<ScoreCardScreen> {
                                                   .all<TextStyle>(
                                                 const TextStyle(fontSize: 16),
                                               ),
-                                              padding: MaterialStateProperty.all<
-                                                  EdgeInsets>(
+                                              padding: MaterialStateProperty
+                                                  .all<EdgeInsets>(
                                                 const EdgeInsets.symmetric(
-                                                    horizontal: 16, vertical: 8),
+                                                    horizontal: 16,
+                                                    vertical: 8),
                                               ),
                                               shape: MaterialStateProperty.all<
                                                   RoundedRectangleBorder>(
@@ -352,17 +355,25 @@ class _ScoreCardScreenState extends State<ScoreCardScreen> {
                                               } else {
                                                 //call API here
                                                 Get.find<ScoreController>()
-                                                    .getEmployeeScorecard(user_id:widget.excutive_id,from_date: fromDate,to_date: toDate,isload: false);
+                                                    .getEmployeeScorecard(
+                                                        user_id:
+                                                            widget.excutive_id,
+                                                        from_date: fromDate,
+                                                        to_date: toDate,
+                                                        isload: false);
                                               }
                                             },
                                             child: Padding(
-                                              padding: const EdgeInsets.all(5.0),
+                                              padding:
+                                                  const EdgeInsets.all(5.0),
                                               child: Text(
-                                                TextConstant.submit.toUpperCase(),
+                                                TextConstant.submit
+                                                    .toUpperCase(),
                                                 style: const TextStyle(
                                                     fontSize: 14,
                                                     color: Colors.white,
-                                                    fontWeight: FontWeight.w500),
+                                                    fontWeight:
+                                                        FontWeight.w500),
                                               ),
                                             )),
                                   ),
@@ -401,8 +412,18 @@ class _ScoreCardScreenState extends State<ScoreCardScreen> {
                                           height: 5,
                                         ),
                                         InkWell(
-                                          onTap: (){
-                                            Navigator.of(context).push(MaterialPageRoute(builder: (context)=>UserActivityDetailsScreen(userId: widget.excutive_id,activityType:'salon_',fromDate: fromDate!,toDate: toDate!,)));
+                                          onTap: () {
+                                            Navigator.of(context).push(
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        UserActivityDetailsScreen(
+                                                          userId: widget
+                                                              .excutive_id,
+                                                          activityType:
+                                                              'salon_created',
+                                                          fromDate: fromDate!,
+                                                          toDate: toDate!,
+                                                        )));
                                           },
                                           child: Align(
                                               alignment: Alignment.topRight,
@@ -482,15 +503,30 @@ class _ScoreCardScreenState extends State<ScoreCardScreen> {
                                         SizedBox(
                                           height: 5,
                                         ),
-                                        Align(
-                                            alignment: Alignment.topRight,
-                                            child: Text(
-                                              'Explore',
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontWeight: FontWeight.w500,
-                                                  fontSize: 12),
-                                            )),
+                                        InkWell(
+                                          onTap: (){
+                                            Navigator.of(context).push(
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        UserActivityDetailsScreen(
+                                                          userId: widget
+                                                              .excutive_id,
+                                                          activityType:
+                                                          'salon_visit',
+                                                          fromDate: fromDate!,
+                                                          toDate: toDate!,
+                                                        )));
+                                          },
+                                          child: Align(
+                                              alignment: Alignment.topRight,
+                                              child: Text(
+                                                'Explore',
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontWeight: FontWeight.w500,
+                                                    fontSize: 12),
+                                              )),
+                                        ),
                                         SizedBox(
                                           height: 5,
                                         ),
@@ -559,15 +595,30 @@ class _ScoreCardScreenState extends State<ScoreCardScreen> {
                                         SizedBox(
                                           height: 5,
                                         ),
-                                        Align(
-                                            alignment: Alignment.topRight,
-                                            child: Text(
-                                              'Explore',
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontWeight: FontWeight.w500,
-                                                  fontSize: 12),
-                                            )),
+                                        InkWell(
+                                          onTap: (){
+                                            Navigator.of(context).push(
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        UserActivityDetailsScreen(
+                                                          userId: widget
+                                                              .excutive_id,
+                                                          activityType:
+                                                          'salon_order_value',
+                                                          fromDate: fromDate!,
+                                                          toDate: toDate!,
+                                                        )));
+                                          },
+                                          child: Align(
+                                              alignment: Alignment.topRight,
+                                              child: Text(
+                                                'Explore',
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontWeight: FontWeight.w500,
+                                                    fontSize: 12),
+                                              )),
+                                        ),
                                         SizedBox(
                                           height: 5,
                                         ),
@@ -633,15 +684,31 @@ class _ScoreCardScreenState extends State<ScoreCardScreen> {
                                         SizedBox(
                                           height: 5,
                                         ),
-                                        Align(
-                                            alignment: Alignment.topRight,
-                                            child: Text(
-                                              'Explore',
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontWeight: FontWeight.w500,
-                                                  fontSize: 12),
-                                            )),
+                                     InkWell(
+                                       onTap: ()
+                                       {
+                                         Navigator.of(context).push(
+                                             MaterialPageRoute(
+                                                 builder: (context) =>
+                                                     EmployeeTargetDetailsScreen(
+                                                       user_id: widget
+                                                           .excutive_id,
+                                                       activity_type:
+                                                       'assigned_target',
+                                                       from_date: fromDate!,
+                                                       to_date: toDate!,
+                                                     )));
+                                       },
+                                          child: Align(
+                                              alignment: Alignment.topRight,
+                                              child: Text(
+                                                'Explore',
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontWeight: FontWeight.w500,
+                                                    fontSize: 12),
+                                              )),
+                                        ),
                                         SizedBox(
                                           height: 5,
                                         ),
@@ -724,7 +791,7 @@ class _ScoreCardScreenState extends State<ScoreCardScreen> {
                                           height: 10,
                                         ),
                                         Text(
-                                          'Scheduled Demo Count',
+                                          'Demo Count',
                                           style: TextStyle(
                                               color: Colors.white,
                                               fontWeight: FontWeight.w500,
@@ -733,15 +800,30 @@ class _ScoreCardScreenState extends State<ScoreCardScreen> {
                                         SizedBox(
                                           height: 5,
                                         ),
-                                        Align(
-                                            alignment: Alignment.topRight,
-                                            child: Text(
-                                              'Explore',
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontWeight: FontWeight.w500,
-                                                  fontSize: 12),
-                                            )),
+                                        InkWell(
+                                          onTap: (){
+                                            Navigator.of(context).push(
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        UserActivityDetailsScreen(
+                                                          userId: widget
+                                                              .excutive_id,
+                                                          activityType:
+                                                          'demo',
+                                                          fromDate: fromDate!,
+                                                          toDate: toDate!,
+                                                        )));
+                                          },
+                                          child: Align(
+                                              alignment: Alignment.topRight,
+                                              child: Text(
+                                                'Explore',
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontWeight: FontWeight.w500,
+                                                    fontSize: 12),
+                                              )),
+                                        ),
                                         SizedBox(
                                           height: 5,
                                         ),
@@ -812,15 +894,30 @@ class _ScoreCardScreenState extends State<ScoreCardScreen> {
                                         SizedBox(
                                           height: 5,
                                         ),
-                                        Align(
-                                            alignment: Alignment.topRight,
-                                            child: Text(
-                                              'Explore',
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontWeight: FontWeight.w500,
-                                                  fontSize: 12),
-                                            )),
+                                        InkWell(
+                                          onTap: (){
+                                            Navigator.of(context).push(
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        UserActivityDetailsScreen(
+                                                          userId: widget
+                                                              .excutive_id,
+                                                          activityType:
+                                                          'feedback',
+                                                          fromDate: fromDate!,
+                                                          toDate: toDate!,
+                                                        )));
+                                          },
+                                          child: Align(
+                                              alignment: Alignment.topRight,
+                                              child: Text(
+                                                'Explore',
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontWeight: FontWeight.w500,
+                                                    fontSize: 12),
+                                              )),
+                                        ),
                                         SizedBox(
                                           height: 5,
                                         ),
@@ -892,15 +989,30 @@ class _ScoreCardScreenState extends State<ScoreCardScreen> {
                                         SizedBox(
                                           height: 5,
                                         ),
-                                        Align(
-                                            alignment: Alignment.topRight,
-                                            child: Text(
-                                              'Explore',
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontWeight: FontWeight.w500,
-                                                  fontSize: 12),
-                                            )),
+                                        InkWell(
+                                          onTap: (){
+                                            Navigator.of(context).push(
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        UserActivityDetailsScreen(
+                                                          userId: widget
+                                                              .excutive_id,
+                                                          activityType:
+                                                          'payment_collect',
+                                                          fromDate: fromDate!,
+                                                          toDate: toDate!,
+                                                        )));
+                                          },
+                                          child: Align(
+                                              alignment: Alignment.topRight,
+                                              child: Text(
+                                                'Explore',
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontWeight: FontWeight.w500,
+                                                    fontSize: 12),
+                                              )),
+                                        ),
                                         SizedBox(
                                           height: 5,
                                         ),

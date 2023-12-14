@@ -59,6 +59,9 @@ class AppConstants {
   static const String employeeScorecard ='employee/scorecard';
   static const String assignEmployeeTarget ='assign/employee/target';
   static const String employeedetailActivity ='employee/scorecard/details';
+  static const String employeeTargetDetail ='employee/scorecard/target/details';
+  static const String employeeCampaignDetail ='employee/scorecard/campaign/list';
+
 
 
 

@@ -26,9 +26,14 @@ class Data {
   String? salonName;
   String? mobile;
   String? address;
-  Null? orderAmount;
+  int? orderAmount;
+  String? date;
   String? rating;
   String? remark;
+  String? demoDate;
+  String? demoTime;
+  String? requirement;
+  String? demoStatus;
 
   Data(
       {this.salonId,
@@ -36,8 +41,13 @@ class Data {
         this.mobile,
         this.address,
         this.orderAmount,
+        this.date,
         this.rating,
-        this.remark});
+        this.remark,
+        this.demoDate,
+        this.demoTime,
+        this.requirement,
+        this.demoStatus});
 
   Data.fromJson(Map<String, dynamic> json) {
     salonId = json['salon_id'];
@@ -45,8 +55,13 @@ class Data {
     mobile = json['mobile'];
     address = json['address'];
     orderAmount = json['order_amount'];
+    date = json['date'];
     rating = json['rating'];
     remark = json['remark'];
+    demoDate = json['demo_date'];
+    demoTime = json['demo_time'];
+    requirement = json['requirement'];
+    demoStatus = json['demo_status'];
   }
 
   Map<String, dynamic> toJson() {
@@ -56,8 +71,13 @@ class Data {
     data['mobile'] = this.mobile;
     data['address'] = this.address;
     data['order_amount'] = this.orderAmount;
+    data['date'] = this.date;
     data['rating'] = this.rating;
     data['remark'] = this.remark;
+    data['demo_date'] = this.demoDate;
+    data['demo_time'] = this.demoTime;
+    data['requirement'] = this.requirement;
+    data['demo_status'] = this.demoStatus;
     return data;
   }
 }
