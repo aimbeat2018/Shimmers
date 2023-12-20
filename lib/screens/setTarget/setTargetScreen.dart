@@ -141,7 +141,7 @@ class _SetTargetScreenState extends State<SetTargetScreen> {
                         onChanged: onSearchTextChanged,
                       ),
                       const SizedBox(
-                        height: 20,
+                        height: 10,
                       ),
                       targetController.isLoading && model == null
                           ? const Center(child: CircularProgressIndicator())

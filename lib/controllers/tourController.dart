@@ -9,6 +9,7 @@ import 'package:shimmers/repository/tourRepo.dart';
 
 import '../constant/route_helper.dart';
 import '../model/TRFExecutiveProfile.dart';
+import '../model/addExpensesModel.dart';
 import '../model/headOfficeRequestList.dart';
 import '../model/salonDataModel.dart';
 import '../model/submitTourModel.dart';
@@ -26,7 +27,7 @@ class TourController extends GetxController implements GetxService {
   SalonDataModel? salonDataModel;
   bool? _isLoading = false;
 
-  String? tourAddMessage;
+  String? tourAddMessage, expensesAddMsg;
 
   bool get isLoading => _isLoading!;
 
@@ -156,7 +157,8 @@ class TourController extends GetxController implements GetxService {
     return tourAddMessage;
   }
 
-  Future<String?> submitTourVisitDetails(SubmitTourModel? submitTourModel) async {
+  Future<String?> submitTourVisitDetails(
+      SubmitTourModel? submitTourModel) async {
     _isLoading = true;
     update();
     Response response = await tourRepo.storeTourVisitDetails(submitTourModel);
@@ -309,5 +311,22 @@ class TourController extends GetxController implements GetxService {
     _isLoading = false;
     update();
     return tourAddMessage;
+  }
+
+  Future<String?> addExpenses({AddExpensesModel? addExpensesModel}) async {
+    _isLoading = true;
+    update();
+    Response response =
+        await tourRepo.storeExpenses(addExpensesModel: addExpensesModel);
+    if (response.statusCode == 200) {
+      expensesAddMsg = response.body['message'];
+    } else if (response.statusCode == 401) {
+      Get.offAllNamed(RouteHelper.getLoginRoute());
+    } else {
+      expensesAddMsg = '';
+    }
+    _isLoading = false;
+    update();
+    return expensesAddMsg;
   }
 }

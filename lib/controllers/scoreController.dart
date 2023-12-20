@@ -87,4 +87,6 @@ class ScoreController extends GetxController implements GetxService {
     update();
     return employeeTargetDetail;
   }
+
+
 }

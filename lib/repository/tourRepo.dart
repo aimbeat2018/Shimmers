@@ -7,6 +7,7 @@ import 'package:shimmers/model/TourRequestModel.dart';
 
 import '../constant/api/api_client.dart';
 import '../constant/app_constants.dart';
+import '../model/addExpensesModel.dart';
 import '../model/submitTourModel.dart';
 
 class TourRepo {
@@ -114,5 +115,9 @@ class TourRepo {
     }, [
       MultipartBody('attachment', attachment!)
     ]);
+  }
+  Future<Response> storeExpenses({AddExpensesModel? addExpensesModel}) async
+  {
+   return await apiClient.postBodyData(AppConstants.addExpenses, jsonEncode(addExpensesModel!.toJson()));
   }
 }

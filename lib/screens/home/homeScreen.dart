@@ -10,6 +10,7 @@ import 'package:shimmers/screens/salons/salonList/salonListScreen.dart';
 import 'package:shimmers/screens/scoreCard/executiveListActivity.dart';
 import 'package:shimmers/screens/scoreCard/scoreCardScreen.dart';
 import 'package:shimmers/screens/setTarget/setTargetScreen.dart';
+import 'package:shimmers/screens/tourVisit/addExpensesScreen.dart';
 import 'package:shimmers/screens/tourVisit/headOfficerTourRequests.dart';
 import 'package:shimmers/screens/tourVisit/tourListScreen.dart';
 import 'package:shimmers/screens/tourVisit/tourVisitScreen.dart';
@@ -430,6 +431,12 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                             builder: (context) =>
                                                 ExecutiveListActivity()));
                                   }
+                                  else{
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                ScoreCardScreen(excutive_id: Get.find<AuthController>().getUserId())));
+                                  }
 
                                 },
                                 child: SizedBox(
@@ -709,45 +716,48 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             ),
                           ),
                           VerticalDividerFadeDown(),
-/*
                           Center(
-                            child: SizedBox(
-                              height: 135,
-                              width: 115,
-                              child: Column(
-                                children: [
-                                  SizedBox(
-                                    height: 20,
+                            child:InkWell(
+                              onTap: (){
+                                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>AddExpensesScreen()));
+                                /*if (userRole == 'employee') {
+                                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>ManagerOrderApproval()));
+                                } else {
+                                  showCustomSnackBar(
+                                      'You dont have the permission to use this module',
+                                      isError: true);
+                                }*/
+                              },
+                              child: SizedBox(
+                                  height: 135,
+                                  width: 115,
+                                  child: Column(
+                                    children: [
+                                      SizedBox(
+                                        height: 20,
+                                      ),
+                                      Image.asset(
+                                        'assets/images/list.png',
+                                        width: 35,
+                                        height: 35,
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(15.0),
+                                        child: Text(
+                                          'Expenses',
+                                          maxLines: 1,
+                                          overflow: TextOverflow.clip,
+                                          style: const TextStyle(
+                                              color: primaryColor,
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.w600),
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                  Image.asset(
-                                    'assets/images/list.png',
-                                    width: 35,
-                                    height: 35,
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(15.0),
-                                    child: Text(
-                                      TextConstant.NCE,
-                                      maxLines: 1,
-                                      overflow: TextOverflow.clip,
-                                      style: const TextStyle(
-                                          color: primaryColor,
-                                          fontSize: 13,
-                                          fontWeight: FontWeight.w600),
-                                    ),
-                                  ),
-                                ],
-                              ),
+                                ),
                             ),
-                          ),
-
-*/
-                          Center(
-                            child: SizedBox(
-                              height: 135,
-                              width: 115,
                             ),
-                          ),
                           VerticalDividerFadeDown(),
                           Center(
                             child: SizedBox(

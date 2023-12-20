@@ -1,13 +1,13 @@
 class EmployeeTargetDetail {
-  List<Data>? data;
+  List<EmployeeTargetList>? data;
 
   EmployeeTargetDetail({this.data});
 
   EmployeeTargetDetail.fromJson(Map<String, dynamic> json) {
     if (json['data'] != null) {
-      data = <Data>[];
+      data = <EmployeeTargetList>[];
       json['data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
+        data!.add(new EmployeeTargetList.fromJson(v));
       });
     }
   }
@@ -21,19 +21,19 @@ class EmployeeTargetDetail {
   }
 }
 
-class Data {
+class EmployeeTargetList {
   String? productName;
   int? assignedTarget;
   int? completedTarget;
   String? status;
 
-  Data(
+  EmployeeTargetList(
       {this.productName,
         this.assignedTarget,
         this.completedTarget,
         this.status});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  EmployeeTargetList.fromJson(Map<String, dynamic> json) {
     productName = json['product_name'];
     assignedTarget = json['assigned_target'];
     completedTarget = json['completed_target'];

@@ -96,8 +96,7 @@ class _ScoreCardScreenState extends State<ScoreCardScreen> {
                                 Row(
                                   children: [
                                     scoreController.activityCountModel!
-                                                .profileImage! ==
-                                            ""
+                                                .profileImage! == ""
                                         ? Image.asset(
                                             'assets/images/avatar.png',
                                             height: 50,

@@ -1,13 +1,13 @@
 class EmployeeActivityDetail {
-  List<Data>? data;
+  List<ActivityTypeDetails>? data;
 
   EmployeeActivityDetail({this.data});
 
   EmployeeActivityDetail.fromJson(Map<String, dynamic> json) {
     if (json['data'] != null) {
-      data = <Data>[];
+      data = <ActivityTypeDetails>[];
       json['data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
+        data!.add(new ActivityTypeDetails.fromJson(v));
       });
     }
   }
@@ -21,7 +21,7 @@ class EmployeeActivityDetail {
   }
 }
 
-class Data {
+class ActivityTypeDetails {
   int? salonId;
   String? salonName;
   String? mobile;
@@ -35,7 +35,7 @@ class Data {
   String? requirement;
   String? demoStatus;
 
-  Data(
+  ActivityTypeDetails(
       {this.salonId,
         this.salonName,
         this.mobile,
@@ -49,7 +49,7 @@ class Data {
         this.requirement,
         this.demoStatus});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  ActivityTypeDetails.fromJson(Map<String, dynamic> json) {
     salonId = json['salon_id'];
     salonName = json['salon_name'];
     mobile = json['mobile'];
