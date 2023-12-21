@@ -13,6 +13,7 @@ import '../model/addExpensesModel.dart';
 import '../model/headOfficeRequestList.dart';
 import '../model/salonDataModel.dart';
 import '../model/submitTourModel.dart';
+import '../model/totalExpensesModel.dart';
 import '../model/tourVisitModel.dart';
 
 class TourController extends GetxController implements GetxService {
@@ -25,6 +26,7 @@ class TourController extends GetxController implements GetxService {
   TourVisitModel? tourVisitModel;
   CommPhaseModel? commPhaseModel;
   SalonDataModel? salonDataModel;
+  TotalExpensesModel? totalExpensesModel;
   bool? _isLoading = false;
 
   String? tourAddMessage, expensesAddMsg;
@@ -328,5 +330,23 @@ class TourController extends GetxController implements GetxService {
     _isLoading = false;
     update();
     return expensesAddMsg;
+  }
+
+  Future<TotalExpensesModel?> getExpensesList() async {
+    _isLoading=true;
+
+    Response response=await tourRepo.getExpensesList();
+    if(response.statusCode==200)
+      {
+        totalExpensesModel=TotalExpensesModel.fromJson(response.body);
+      }
+    else if (response.statusCode == 401) {
+      Get.offAllNamed(RouteHelper.getLoginRoute());
+    } else {
+      totalExpensesModel = TotalExpensesModel();
+    }
+    _isLoading=false;
+    update();
+    return totalExpensesModel;
   }
 }

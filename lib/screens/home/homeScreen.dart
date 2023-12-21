@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:shimmers/constant/custom_snackbar.dart';
 import 'package:shimmers/model/profileModel.dart';
 import 'package:shimmers/screens/campaigns/campaignsListScreen.dart';
@@ -11,6 +12,7 @@ import 'package:shimmers/screens/scoreCard/executiveListActivity.dart';
 import 'package:shimmers/screens/scoreCard/scoreCardScreen.dart';
 import 'package:shimmers/screens/setTarget/setTargetScreen.dart';
 import 'package:shimmers/screens/tourVisit/addExpensesScreen.dart';
+import 'package:shimmers/screens/tourVisit/expensesListScreen.dart';
 import 'package:shimmers/screens/tourVisit/headOfficerTourRequests.dart';
 import 'package:shimmers/screens/tourVisit/tourListScreen.dart';
 import 'package:shimmers/screens/tourVisit/tourVisitScreen.dart';
@@ -719,7 +721,19 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                           Center(
                             child:InkWell(
                               onTap: (){
-                                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>AddExpensesScreen()));
+
+                                PersistentNavBarNavigator.pushNewScreen(
+                                  context,
+                                  screen:  ExpensesListScreen(),
+                                  withNavBar: false,
+                                );
+                               /* PersistentNavBarNavigator.pushNewScreen(
+                                  context,
+                                  screen:  AddExpensesScreen(
+                                      expenses_id: '0'),
+                                  withNavBar: false,
+                                );*/
+
                                 /*if (userRole == 'employee') {
                                   Navigator.of(context).push(MaterialPageRoute(builder: (context)=>ManagerOrderApproval()));
                                 } else {

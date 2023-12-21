@@ -9,6 +9,7 @@ import '../constant/api/api_client.dart';
 import '../constant/app_constants.dart';
 import '../model/addExpensesModel.dart';
 import '../model/submitTourModel.dart';
+import '../model/totalExpensesModel.dart';
 
 class TourRepo {
   final ApiClient apiClient;
@@ -119,5 +120,9 @@ class TourRepo {
   Future<Response> storeExpenses({AddExpensesModel? addExpensesModel}) async
   {
    return await apiClient.postBodyData(AppConstants.addExpenses, jsonEncode(addExpensesModel!.toJson()));
+  }
+  Future<Response> getExpensesList()async
+  {
+    return await apiClient.getData(AppConstants.getExpenseList,);
   }
 }

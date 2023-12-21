@@ -38,7 +38,6 @@ class _EmployeeTargetDetailsScreen extends State<EmployeeTargetDetailsScreen> {
   List<EmployeeTargetList>? _searchResult;
   List<EmployeeTargetList>? employeeTargetList;
 
-
   @override
   void initState() {
     super.initState();
@@ -52,7 +51,7 @@ class _EmployeeTargetDetailsScreen extends State<EmployeeTargetDetailsScreen> {
           }));
     });
     getEmployeeTargetDetails();
-   /* if (mounted) {
+    /* if (mounted) {
       Future.delayed(Duration.zero, () async {
         Get.find<ScoreController>().employeeTargetDetails(
             user_id: widget.user_id,
@@ -62,14 +61,16 @@ class _EmployeeTargetDetailsScreen extends State<EmployeeTargetDetailsScreen> {
       });
     }*/
   }
+
   Future<void> getEmployeeTargetDetails() async {
     employeeTargetList = [];
     _searchResult = [];
-    employeeTargetDetail = await Get.find<ScoreController>().employeeTargetDetails(
-        user_id: widget.user_id,
-        activityType: widget.activity_type,
-        fromDate: widget.from_date,
-        toDate: widget.to_date);
+    employeeTargetDetail = await Get.find<ScoreController>()
+        .employeeTargetDetails(
+            user_id: widget.user_id,
+            activityType: widget.activity_type,
+            fromDate: widget.from_date,
+            toDate: widget.to_date);
 
     employeeTargetList = employeeTargetDetail!.data!;
 
@@ -77,6 +78,7 @@ class _EmployeeTargetDetailsScreen extends State<EmployeeTargetDetailsScreen> {
       setState(() {});
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return _connectionStatus == AppConstants.connectivityCheck
@@ -96,7 +98,8 @@ class _EmployeeTargetDetailsScreen extends State<EmployeeTargetDetailsScreen> {
               ),
               body: SingleChildScrollView(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 25,horizontal: 10),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 25, horizontal: 10),
                   child: Column(
                     children: [
                       TextFormField(
@@ -105,15 +108,15 @@ class _EmployeeTargetDetailsScreen extends State<EmployeeTargetDetailsScreen> {
                         decoration: const InputDecoration(
                             enabledBorder: OutlineInputBorder(
                               borderRadius:
-                              BorderRadius.all(Radius.circular(12.0)),
+                                  BorderRadius.all(Radius.circular(12.0)),
                               borderSide:
-                              BorderSide(color: primaryColor, width: 1),
+                                  BorderSide(color: primaryColor, width: 1),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius:
-                              BorderRadius.all(Radius.circular(12.0)),
+                                  BorderRadius.all(Radius.circular(12.0)),
                               borderSide:
-                              BorderSide(color: primaryColor, width: 1),
+                                  BorderSide(color: primaryColor, width: 1),
                             ),
                             contentPadding: EdgeInsets.symmetric(
                                 vertical: 15, horizontal: 15),
@@ -133,60 +136,125 @@ class _EmployeeTargetDetailsScreen extends State<EmployeeTargetDetailsScreen> {
                       ),
                       scoreController.isLoading
                           ? Center(child: CircularProgressIndicator())
-                          : scoreController.employeeTargetDetail!.data == null &&
-                                  scoreController.employeeTargetDetail!.data!.isEmpty
+                          : scoreController.employeeTargetDetail!.data ==
+                                      null &&
+                                  scoreController
+                                      .employeeTargetDetail!.data!.isEmpty
                               ? Center(
                                   child: SizedBox(
-                                      height: MediaQuery.of(context).size.height,
+                                      height:
+                                          MediaQuery.of(context).size.height,
                                       width: MediaQuery.of(context).size.width,
                                       child: const NoDataFoundScreen()))
-                              : Padding(
-                                  padding: EdgeInsets.only(bottom: 10),
-                                  child: ListView.builder(
-                                      shrinkWrap: true,
-                                      itemCount: scoreController
-                                          .employeeTargetDetail!.data!.length,
-                                      itemBuilder: (BuildContext context, int index) {
-                                        return Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 8, vertical: 5),
-                                          child: Card(
-                                            elevation: 5,
-                                            shadowColor: primaryColor,
-                                            shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.all(
-                                                    Radius.circular(5))),
-                                            child: Padding(
+                              : _searchResult!.isNotEmpty ||
+                                      searchController.text.isNotEmpty
+                                  ? Padding(
+                                      padding: EdgeInsets.only(bottom: 10),
+                                      child: ListView.builder(
+                                          shrinkWrap: true,
+                                          itemCount:
+                                              _searchResult!
+                                              .length,
+                                          itemBuilder: (BuildContext context,
+                                              int index) {
+                                            return Padding(
                                               padding: EdgeInsets.symmetric(
-                                                  horizontal: 18, vertical: 10),
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                      'Product Name: ${scoreController.employeeTargetDetail!.data![index].productName}'),
-                                                  SizedBox(
-                                                    height: 5,
+                                                  horizontal: 8, vertical: 5),
+                                              child: Card(
+                                                elevation: 5,
+                                                shadowColor: primaryColor,
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                5))),
+                                                child: Padding(
+                                                  padding: EdgeInsets.symmetric(
+                                                      horizontal: 18,
+                                                      vertical: 10),
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Text(
+                                                          'Product Name: ${_searchResult![index].productName}'),
+                                                      SizedBox(
+                                                        height: 5,
+                                                      ),
+                                                      Text(
+                                                          'Assigned Target: ${_searchResult![index].assignedTarget}'),
+                                                      SizedBox(
+                                                        height: 5,
+                                                      ),
+                                                      Text(
+                                                          'Completed Target: ${_searchResult![index].completedTarget}'),
+                                                      SizedBox(
+                                                        height: 5,
+                                                      ),
+                                                      Text(
+                                                          'Status: ${_searchResult![index].status}'),
+                                                    ],
                                                   ),
-                                                  Text(
-                                                      'Assigned Target: ${scoreController.employeeTargetDetail!.data![index].assignedTarget}'),
-                                                  SizedBox(
-                                                    height: 5,
-                                                  ),
-                                                  Text(
-                                                      'Completed Target: ${scoreController.employeeTargetDetail!.data![index].completedTarget}'),
-                                                  SizedBox(
-                                                    height: 5,
-                                                  ),
-                                                  Text(
-                                                      'Status: ${scoreController.employeeTargetDetail!.data![index].status}'),
-                                                ],
+                                                ),
                                               ),
-                                            ),
-                                          ),
-                                        );
-                                      }),
-                                ),
+                                            );
+                                          }),
+                                    )
+                                  : Padding(
+                                      padding: EdgeInsets.only(bottom: 10),
+                                      child: ListView.builder(
+                                          shrinkWrap: true,
+                                          itemCount: scoreController
+                                              .employeeTargetDetail!
+                                              .data!
+                                              .length,
+                                          itemBuilder: (BuildContext context,
+                                              int index) {
+                                            return Padding(
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 8, vertical: 5),
+                                              child: Card(
+                                                elevation: 5,
+                                                shadowColor: primaryColor,
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                5))),
+                                                child: Padding(
+                                                  padding: EdgeInsets.symmetric(
+                                                      horizontal: 18,
+                                                      vertical: 10),
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Text(
+                                                          'Product Name: ${scoreController.employeeTargetDetail!.data![index].productName}'),
+                                                      SizedBox(
+                                                        height: 5,
+                                                      ),
+                                                      Text(
+                                                          'Assigned Target: ${scoreController.employeeTargetDetail!.data![index].assignedTarget}'),
+                                                      SizedBox(
+                                                        height: 5,
+                                                      ),
+                                                      Text(
+                                                          'Completed Target: ${scoreController.employeeTargetDetail!.data![index].completedTarget}'),
+                                                      SizedBox(
+                                                        height: 5,
+                                                      ),
+                                                      Text(
+                                                          'Status: ${scoreController.employeeTargetDetail!.data![index].status}'),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            );
+                                          }),
+                                    ),
                     ],
                   ),
                 ),
@@ -194,6 +262,7 @@ class _EmployeeTargetDetailsScreen extends State<EmployeeTargetDetailsScreen> {
             );
           });
   }
+
   onSearchTextChanged(String text) async {
     _searchResult!.clear();
     if (text.isEmpty) {
