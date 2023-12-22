@@ -69,7 +69,8 @@ class TourRepo {
     });
   }
 
-  Future<Response> storeTourVisitDetails(SubmitTourModel? submitTourModel) async {
+  Future<Response> storeTourVisitDetails(
+      SubmitTourModel? submitTourModel) async {
     return await apiClient.postBodyData(AppConstants.storetourdvisitdetails,
         jsonEncode(submitTourModel!.toJson()));
   }
@@ -117,12 +118,23 @@ class TourRepo {
       MultipartBody('attachment', attachment!)
     ]);
   }
-  Future<Response> storeExpenses({AddExpensesModel? addExpensesModel}) async
-  {
-   return await apiClient.postBodyData(AppConstants.addExpenses, jsonEncode(addExpensesModel!.toJson()));
+
+  Future<Response> storeExpenses({AddExpensesModel? addExpensesModel}) async {
+    return await apiClient.postBodyData(
+        AppConstants.addExpenses, jsonEncode(addExpensesModel!.toJson()));
   }
-  Future<Response> getExpensesList()async
-  {
-    return await apiClient.getData(AppConstants.getExpenseList,);
+
+  Future<Response> getExpensesList() async {
+    return await apiClient.getData(
+      AppConstants.getExpenseList,
+    );
+  }
+
+  Future<Response> deleteExpenses({String? expenses_id}) async {
+    return await apiClient
+        .postData(AppConstants.deleteExpenses, {'expenses_id': expenses_id});
+  }
+  Future<Response> expensesDetailsByid({String? expenses_id}) async {
+    return await apiClient.postData(AppConstants.expenseDetailsById, {'expenses_id': expenses_id});
   }
 }

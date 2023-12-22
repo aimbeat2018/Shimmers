@@ -155,6 +155,7 @@ class _EmployeeTargetDetailsScreen extends State<EmployeeTargetDetailsScreen> {
                                           itemCount:
                                               _searchResult!
                                               .length,
+                                          physics: const NeverScrollableScrollPhysics(),
                                           itemBuilder: (BuildContext context,
                                               int index) {
                                             return Padding(
@@ -209,6 +210,7 @@ class _EmployeeTargetDetailsScreen extends State<EmployeeTargetDetailsScreen> {
                                               .employeeTargetDetail!
                                               .data!
                                               .length,
+                                          physics: const NeverScrollableScrollPhysics(),
                                           itemBuilder: (BuildContext context,
                                               int index) {
                                             return Padding(

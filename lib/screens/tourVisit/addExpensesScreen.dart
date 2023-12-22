@@ -42,6 +42,7 @@ class _AddExpensesScreen extends State<AddExpensesScreen> {
   TextEditingController totalController = TextEditingController();
   TextEditingController remarksController = TextEditingController();
   String? selectedDate, selectedTime;
+  late int da_amount,ta_amount,hotel_amount,mis_amount,total_amount;
 
   @override
   void initState() {
@@ -56,6 +57,11 @@ class _AddExpensesScreen extends State<AddExpensesScreen> {
             _connectionStatus = value;
           }));
     });
+    da_amount=0;
+    ta_amount=0;
+    hotel_amount=0;
+    mis_amount=0;
+    total_amount=0;
   }
 
   @override
@@ -239,6 +245,10 @@ class _AddExpensesScreen extends State<AddExpensesScreen> {
                         onSaved: (value) {
                           daController.text = value as String;
                         },
+                        onChanged: (value){
+                          da_amount=int.parse(value);
+                          calculateTotal(da_amount,ta_amount,hotel_amount,mis_amount);
+                        },
                       ),
                       SizedBox(
                         height: 25,
@@ -265,6 +275,13 @@ class _AddExpensesScreen extends State<AddExpensesScreen> {
                         // enabled: false,
                         controller: taController,
                         keyboardType: TextInputType.number,
+                        onChanged: (value)
+                        {
+                          if(value.isNotEmpty){
+                            ta_amount=int.parse(value);
+                            calculateTotal(da_amount,ta_amount,hotel_amount,mis_amount);
+                          }
+                        },
                         onSaved: (value) {
                           taController.text = value as String;
                         },
@@ -297,6 +314,10 @@ class _AddExpensesScreen extends State<AddExpensesScreen> {
                         onSaved: (value) {
                           hotelController.text = value as String;
                         },
+                        onChanged: (value){
+                          hotel_amount=int.parse(value);
+                          calculateTotal(da_amount,ta_amount,hotel_amount,mis_amount);
+                        },
                       ),
                       SizedBox(
                         height: 25,
@@ -325,6 +346,10 @@ class _AddExpensesScreen extends State<AddExpensesScreen> {
                         keyboardType: TextInputType.number,
                         onSaved: (value) {
                           misphoneController.text = value as String;
+                        },
+                        onChanged: (value){
+                          mis_amount=int.parse(value);
+                          calculateTotal(da_amount,ta_amount,hotel_amount,mis_amount);
                         },
                       ),
                       SizedBox(
@@ -355,6 +380,8 @@ class _AddExpensesScreen extends State<AddExpensesScreen> {
                         onSaved: (value) {
                           totalController.text = value as String;
                         },
+                        enabled: false,
+
                       ),
                       SizedBox(
                         height: 25,
@@ -421,7 +448,7 @@ class _AddExpensesScreen extends State<AddExpensesScreen> {
                                 onPressed: () {
                                   if (areaController.text.isEmpty) {
                                     showCustomSnackBar(
-                                        'Enter Area',
+                                        'Enter Area Covered',
                                         isError: false);
                                   } else if (approxKmController.text.isEmpty) {
                                     showCustomSnackBar('Enter Approximate Km',
@@ -510,6 +537,13 @@ class _AddExpensesScreen extends State<AddExpensesScreen> {
       } else {
         showCustomSnackBar(message!);
       }
+    });
+  }
+
+  void calculateTotal(int ta_amt,int da_amt,int hotel_amt,int misc_amt) {
+    total_amount=ta_amt+da_amt+hotel_amt+misc_amt;
+    setState(() {
+      totalController.text=total_amount.toString();
     });
   }
 }

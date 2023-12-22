@@ -721,18 +721,13 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                           Center(
                             child:InkWell(
                               onTap: (){
-
-                                PersistentNavBarNavigator.pushNewScreen(
+                               /* PersistentNavBarNavigator.pushNewScreen(
                                   context,
                                   screen:  ExpensesListScreen(),
                                   withNavBar: false,
-                                );
-                               /* PersistentNavBarNavigator.pushNewScreen(
-                                  context,
-                                  screen:  AddExpensesScreen(
-                                      expenses_id: '0'),
-                                  withNavBar: false,
                                 );*/
+                                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>ExpensesListScreen()));
+
 
                                 /*if (userRole == 'employee') {
                                   Navigator.of(context).push(MaterialPageRoute(builder: (context)=>ManagerOrderApproval()));

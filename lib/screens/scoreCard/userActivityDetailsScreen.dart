@@ -10,6 +10,7 @@ import 'package:shimmers/screens/noDataFound/noDataFoundScreen.dart';
 
 import '../../constant/colorsConstant.dart';
 import '../../constant/internetConnectivity.dart';
+import '../../constant/route_helper.dart';
 import '../../constant/textConstant.dart';
 import '../../controllers/scoreController.dart';
 import '../../model/employeeActivityDetail.dart';
@@ -160,124 +161,131 @@ class _UserActivityDetailScreen extends State<UserActivityDetailsScreen> {
                                             return Padding(
                                                 padding: EdgeInsets.symmetric(
                                                     horizontal: 8, vertical: 5),
-                                                child: Card(
-                                                  elevation: 5,
-                                                  shadowColor: primaryColor,
-                                                  shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.all(
-                                                            Radius.circular(5)),
-                                                  ),
-                                                  child: Padding(
-                                                    padding: EdgeInsets.symmetric(
-                                                        horizontal: 18,
-                                                        vertical: 10),
-                                                    child: Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Text(
-                                                            'Salon Name: ${_searchResult![index].salonName}'),
-                                                        SizedBox(
-                                                          height: 5,
-                                                        ),
-                                                        Text(
-                                                            'Salon Mobile: ${_searchResult![index].mobile}'),
-                                                        SizedBox(
-                                                          height: 5,
-                                                        ),
-                                                        Text(
-                                                            'Salon Location: ${_searchResult![index].address}'),
-                                                        widget.activityType ==
-                                                                'salon_order_value'
-                                                            ? Padding(
-                                                                padding:
-                                                                    const EdgeInsets
-                                                                            .only(
-                                                                        top: 5.0),
-                                                                child: Text(
-                                                                    'Salon Order Value: Rs.${_searchResult![index].orderAmount}'),
-                                                              )
-                                                            : SizedBox(),
-                                                        widget.activityType ==
-                                                                'demo'
-                                                            ? Padding(
-                                                                padding:
-                                                                    const EdgeInsets
-                                                                            .only(
-                                                                        top: 5.0),
-                                                                child: Text(
-                                                                    'Demo Date: ${_searchResult![index].demoDate}'),
-                                                              )
-                                                            : SizedBox(),
-                                                        widget.activityType ==
-                                                                'demo'
-                                                            ? Padding(
-                                                                padding:
-                                                                    const EdgeInsets
-                                                                            .only(
-                                                                        top: 5.0),
-                                                                child: Text(
-                                                                    'Demo Time: ${_searchResult![index].demoTime}'),
-                                                              )
-                                                            : SizedBox(),
-                                                        widget.activityType ==
-                                                                'demo'
-                                                            ? Padding(
-                                                                padding:
-                                                                    const EdgeInsets
-                                                                            .only(
-                                                                        top: 5.0),
-                                                                child: Text(
-                                                                    'Requirement: ${_searchResult![index].requirement}'),
-                                                              )
-                                                            : SizedBox(),
-                                                        widget.activityType ==
-                                                                'demo'
-                                                            ? Padding(
-                                                                padding:
-                                                                    const EdgeInsets
-                                                                            .only(
-                                                                        top: 5.0),
-                                                                child: Text(
-                                                                    'Demo Status: ${_searchResult![index].demoStatus}'),
-                                                              )
-                                                            : SizedBox(),
-                                                        widget.activityType ==
-                                                                'feedback'
-                                                            ? Padding(
-                                                                padding:
-                                                                    const EdgeInsets
-                                                                            .only(
-                                                                        top: 5.0),
-                                                                child: Text(
-                                                                    'Rating : ${_searchResult![index].rating}'),
-                                                              )
-                                                            : SizedBox(),
-                                                        widget.activityType ==
-                                                                'feedback'
-                                                            ? Padding(
-                                                                padding:
-                                                                    const EdgeInsets
-                                                                            .only(
-                                                                        top: 5.0),
-                                                                child: Text(
-                                                                    'Remark : ${_searchResult![index].remark}'),
-                                                              )
-                                                            : SizedBox(),
-                                                        widget.activityType ==
-                                                                'payment_collect'
-                                                            ? Padding(
-                                                                padding:
-                                                                    const EdgeInsets
-                                                                            .only(
-                                                                        top: 5.0),
-                                                                child: Text(
-                                                                    'Payment Collected : Rs.${_searchResult![index].orderAmount}'),
-                                                              )
-                                                            : SizedBox(),
-                                                      ],
+                                                child: InkWell(
+                                                  onTap: ()
+                                                  {
+                                                    Get.toNamed(
+                                                        RouteHelper.getSalonDetailsRoute(_searchResult![index].salonId.toString()));
+                                                  },
+                                                  child: Card(
+                                                    elevation: 5,
+                                                    shadowColor: primaryColor,
+                                                    shape: RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.all(
+                                                              Radius.circular(5)),
+                                                    ),
+                                                    child: Padding(
+                                                      padding: EdgeInsets.symmetric(
+                                                          horizontal: 18,
+                                                          vertical: 10),
+                                                      child: Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Text(
+                                                              'Salon Name: ${_searchResult![index].salonName}'),
+                                                          SizedBox(
+                                                            height: 5,
+                                                          ),
+                                                          Text(
+                                                              'Salon Mobile: ${_searchResult![index].mobile}'),
+                                                          SizedBox(
+                                                            height: 5,
+                                                          ),
+                                                          Text(
+                                                              'Salon Location: ${_searchResult![index].address}'),
+                                                          widget.activityType ==
+                                                                  'salon_order_value'
+                                                              ? Padding(
+                                                                  padding:
+                                                                      const EdgeInsets
+                                                                              .only(
+                                                                          top: 5.0),
+                                                                  child: Text(
+                                                                      'Salon Order Value: Rs.${_searchResult![index].orderAmount}'),
+                                                                )
+                                                              : SizedBox(),
+                                                          widget.activityType ==
+                                                                  'demo'
+                                                              ? Padding(
+                                                                  padding:
+                                                                      const EdgeInsets
+                                                                              .only(
+                                                                          top: 5.0),
+                                                                  child: Text(
+                                                                      'Demo Date: ${_searchResult![index].demoDate}'),
+                                                                )
+                                                              : SizedBox(),
+                                                          widget.activityType ==
+                                                                  'demo'
+                                                              ? Padding(
+                                                                  padding:
+                                                                      const EdgeInsets
+                                                                              .only(
+                                                                          top: 5.0),
+                                                                  child: Text(
+                                                                      'Demo Time: ${_searchResult![index].demoTime}'),
+                                                                )
+                                                              : SizedBox(),
+                                                          widget.activityType ==
+                                                                  'demo'
+                                                              ? Padding(
+                                                                  padding:
+                                                                      const EdgeInsets
+                                                                              .only(
+                                                                          top: 5.0),
+                                                                  child: Text(
+                                                                      'Requirement: ${_searchResult![index].requirement}'),
+                                                                )
+                                                              : SizedBox(),
+                                                          widget.activityType ==
+                                                                  'demo'
+                                                              ? Padding(
+                                                                  padding:
+                                                                      const EdgeInsets
+                                                                              .only(
+                                                                          top: 5.0),
+                                                                  child: Text(
+                                                                      'Demo Status: ${_searchResult![index].demoStatus}'),
+                                                                )
+                                                              : SizedBox(),
+                                                          widget.activityType ==
+                                                                  'feedback'
+                                                              ? Padding(
+                                                                  padding:
+                                                                      const EdgeInsets
+                                                                              .only(
+                                                                          top: 5.0),
+                                                                  child: Text(
+                                                                      'Rating : ${_searchResult![index].rating}'),
+                                                                )
+                                                              : SizedBox(),
+                                                          widget.activityType ==
+                                                                  'feedback'
+                                                              ? Padding(
+                                                                  padding:
+                                                                      const EdgeInsets
+                                                                              .only(
+                                                                          top: 5.0),
+                                                                  child: Text(
+                                                                      'Remark : ${_searchResult![index].remark}'),
+                                                                )
+                                                              : SizedBox(),
+                                                          widget.activityType ==
+                                                                  'payment_collect'
+                                                              ? Padding(
+                                                                  padding:
+                                                                      const EdgeInsets
+                                                                              .only(
+                                                                          top: 5.0),
+                                                                  child: Text(
+                                                                      'Payment Collected : Rs.${_searchResult![index].orderAmount}'),
+                                                                )
+                                                              : SizedBox(),
+                                                        ],
+                                                      ),
                                                     ),
                                                   ),
                                                 ));
@@ -297,124 +305,131 @@ class _UserActivityDetailScreen extends State<UserActivityDetailsScreen> {
                                             return Padding(
                                                 padding: EdgeInsets.symmetric(
                                                     horizontal: 8, vertical: 5),
-                                                child: Card(
-                                                  elevation: 5,
-                                                  shadowColor: primaryColor,
-                                                  shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.all(
-                                                            Radius.circular(5)),
-                                                  ),
-                                                  child: Padding(
-                                                    padding: EdgeInsets.symmetric(
-                                                        horizontal: 18,
-                                                        vertical: 10),
-                                                    child: Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Text(
-                                                            'Salon Name: ${scoreController.employeeActivityDetail!.data![index].salonName}'),
-                                                        SizedBox(
-                                                          height: 5,
-                                                        ),
-                                                        Text(
-                                                            'Salon Mobile: ${scoreController.employeeActivityDetail!.data![index].mobile}'),
-                                                        SizedBox(
-                                                          height: 5,
-                                                        ),
-                                                        Text(
-                                                            'Salon Location: ${scoreController.employeeActivityDetail!.data![index].address}'),
-                                                        widget.activityType ==
-                                                                'salon_order_value'
-                                                            ? Padding(
-                                                                padding:
-                                                                    const EdgeInsets
-                                                                            .only(
-                                                                        top: 5.0),
-                                                                child: Text(
-                                                                    'Salon Order Value: Rs.${scoreController.employeeActivityDetail!.data![index].orderAmount}'),
-                                                              )
-                                                            : SizedBox(),
-                                                        widget.activityType ==
-                                                                'demo'
-                                                            ? Padding(
-                                                                padding:
-                                                                    const EdgeInsets
-                                                                            .only(
-                                                                        top: 5.0),
-                                                                child: Text(
-                                                                    'Demo Date: ${scoreController.employeeActivityDetail!.data![index].demoDate}'),
-                                                              )
-                                                            : SizedBox(),
-                                                        widget.activityType ==
-                                                                'demo'
-                                                            ? Padding(
-                                                                padding:
-                                                                    const EdgeInsets
-                                                                            .only(
-                                                                        top: 5.0),
-                                                                child: Text(
-                                                                    'Demo Time: ${scoreController.employeeActivityDetail!.data![index].demoTime}'),
-                                                              )
-                                                            : SizedBox(),
-                                                        widget.activityType ==
-                                                                'demo'
-                                                            ? Padding(
-                                                                padding:
-                                                                    const EdgeInsets
-                                                                            .only(
-                                                                        top: 5.0),
-                                                                child: Text(
-                                                                    'Requirement: ${scoreController.employeeActivityDetail!.data![index].requirement}'),
-                                                              )
-                                                            : SizedBox(),
-                                                        widget.activityType ==
-                                                                'demo'
-                                                            ? Padding(
-                                                                padding:
-                                                                    const EdgeInsets
-                                                                            .only(
-                                                                        top: 5.0),
-                                                                child: Text(
-                                                                    'Demo Status: ${scoreController.employeeActivityDetail!.data![index].demoStatus}'),
-                                                              )
-                                                            : SizedBox(),
-                                                        widget.activityType ==
-                                                                'feedback'
-                                                            ? Padding(
-                                                                padding:
-                                                                    const EdgeInsets
-                                                                            .only(
-                                                                        top: 5.0),
-                                                                child: Text(
-                                                                    'Rating : ${scoreController.employeeActivityDetail!.data![index].rating}'),
-                                                              )
-                                                            : SizedBox(),
-                                                        widget.activityType ==
-                                                                'feedback'
-                                                            ? Padding(
-                                                                padding:
-                                                                    const EdgeInsets
-                                                                            .only(
-                                                                        top: 5.0),
-                                                                child: Text(
-                                                                    'Remark : ${scoreController.employeeActivityDetail!.data![index].remark}'),
-                                                              )
-                                                            : SizedBox(),
-                                                        widget.activityType ==
-                                                                'payment_collect'
-                                                            ? Padding(
-                                                                padding:
-                                                                    const EdgeInsets
-                                                                            .only(
-                                                                        top: 5.0),
-                                                                child: Text(
-                                                                    'Payment Collected : Rs.${scoreController.employeeActivityDetail!.data![index].orderAmount}'),
-                                                              )
-                                                            : SizedBox(),
-                                                      ],
+                                                child: InkWell(
+                                                  onTap: ()
+                                                  {
+                                                    Get.toNamed(
+                                                        RouteHelper.getSalonDetailsRoute(scoreController.employeeActivityDetail!.data![index].salonId.toString()));
+                                                  },
+                                                  child: Card(
+                                                    elevation: 5,
+                                                    shadowColor: primaryColor,
+                                                    shape: RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.all(
+                                                              Radius.circular(5)),
+                                                    ),
+                                                    child: Padding(
+                                                      padding: EdgeInsets.symmetric(
+                                                          horizontal: 18,
+                                                          vertical: 10),
+                                                      child: Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Text(
+                                                              'Salon Name: ${scoreController.employeeActivityDetail!.data![index].salonName}'),
+                                                          SizedBox(
+                                                            height: 5,
+                                                          ),
+                                                          Text(
+                                                              'Salon Mobile: ${scoreController.employeeActivityDetail!.data![index].mobile}'),
+                                                          SizedBox(
+                                                            height: 5,
+                                                          ),
+                                                          Text(
+                                                              'Salon Location: ${scoreController.employeeActivityDetail!.data![index].address}'),
+                                                          widget.activityType ==
+                                                                  'salon_order_value'
+                                                              ? Padding(
+                                                                  padding:
+                                                                      const EdgeInsets
+                                                                              .only(
+                                                                          top: 5.0),
+                                                                  child: Text(
+                                                                      'Salon Order Value: Rs.${scoreController.employeeActivityDetail!.data![index].orderAmount}'),
+                                                                )
+                                                              : SizedBox(),
+                                                          widget.activityType ==
+                                                                  'demo'
+                                                              ? Padding(
+                                                                  padding:
+                                                                      const EdgeInsets
+                                                                              .only(
+                                                                          top: 5.0),
+                                                                  child: Text(
+                                                                      'Demo Date: ${scoreController.employeeActivityDetail!.data![index].demoDate}'),
+                                                                )
+                                                              : SizedBox(),
+                                                          widget.activityType ==
+                                                                  'demo'
+                                                              ? Padding(
+                                                                  padding:
+                                                                      const EdgeInsets
+                                                                              .only(
+                                                                          top: 5.0),
+                                                                  child: Text(
+                                                                      'Demo Time: ${scoreController.employeeActivityDetail!.data![index].demoTime}'),
+                                                                )
+                                                              : SizedBox(),
+                                                          widget.activityType ==
+                                                                  'demo'
+                                                              ? Padding(
+                                                                  padding:
+                                                                      const EdgeInsets
+                                                                              .only(
+                                                                          top: 5.0),
+                                                                  child: Text(
+                                                                      'Requirement: ${scoreController.employeeActivityDetail!.data![index].requirement}'),
+                                                                )
+                                                              : SizedBox(),
+                                                          widget.activityType ==
+                                                                  'demo'
+                                                              ? Padding(
+                                                                  padding:
+                                                                      const EdgeInsets
+                                                                              .only(
+                                                                          top: 5.0),
+                                                                  child: Text(
+                                                                      'Demo Status: ${scoreController.employeeActivityDetail!.data![index].demoStatus}'),
+                                                                )
+                                                              : SizedBox(),
+                                                          widget.activityType ==
+                                                                  'feedback'
+                                                              ? Padding(
+                                                                  padding:
+                                                                      const EdgeInsets
+                                                                              .only(
+                                                                          top: 5.0),
+                                                                  child: Text(
+                                                                      'Rating : ${scoreController.employeeActivityDetail!.data![index].rating}'),
+                                                                )
+                                                              : SizedBox(),
+                                                          widget.activityType ==
+                                                                  'feedback'
+                                                              ? Padding(
+                                                                  padding:
+                                                                      const EdgeInsets
+                                                                              .only(
+                                                                          top: 5.0),
+                                                                  child: Text(
+                                                                      'Remark : ${scoreController.employeeActivityDetail!.data![index].remark}'),
+                                                                )
+                                                              : SizedBox(),
+                                                          widget.activityType ==
+                                                                  'payment_collect'
+                                                              ? Padding(
+                                                                  padding:
+                                                                      const EdgeInsets
+                                                                              .only(
+                                                                          top: 5.0),
+                                                                  child: Text(
+                                                                      'Payment Collected : Rs.${scoreController.employeeActivityDetail!.data![index].orderAmount}'),
+                                                                )
+                                                              : SizedBox(),
+                                                        ],
+                                                      ),
                                                     ),
                                                   ),
                                                 ));

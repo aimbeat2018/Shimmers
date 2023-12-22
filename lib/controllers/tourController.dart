@@ -8,6 +8,7 @@ import 'package:shimmers/model/tourdetailsByIdModel.dart';
 import 'package:shimmers/repository/tourRepo.dart';
 
 import '../constant/route_helper.dart';
+import '../model/ExpensesByIdModel.dart';
 import '../model/TRFExecutiveProfile.dart';
 import '../model/addExpensesModel.dart';
 import '../model/headOfficeRequestList.dart';
@@ -27,6 +28,7 @@ class TourController extends GetxController implements GetxService {
   CommPhaseModel? commPhaseModel;
   SalonDataModel? salonDataModel;
   TotalExpensesModel? totalExpensesModel;
+  ExpensesByIdModel? expensesByIdModel;
   bool? _isLoading = false;
 
   String? tourAddMessage, expensesAddMsg;
@@ -333,20 +335,52 @@ class TourController extends GetxController implements GetxService {
   }
 
   Future<TotalExpensesModel?> getExpensesList() async {
-    _isLoading=true;
+    _isLoading = true;
 
-    Response response=await tourRepo.getExpensesList();
-    if(response.statusCode==200)
-      {
-        totalExpensesModel=TotalExpensesModel.fromJson(response.body);
-      }
-    else if (response.statusCode == 401) {
+    Response response = await tourRepo.getExpensesList();
+    if (response.statusCode == 200) {
+      totalExpensesModel = TotalExpensesModel.fromJson(response.body);
+    } else if (response.statusCode == 401) {
       Get.offAllNamed(RouteHelper.getLoginRoute());
     } else {
       totalExpensesModel = TotalExpensesModel();
     }
-    _isLoading=false;
+    _isLoading = false;
     update();
     return totalExpensesModel;
+  }
+
+  Future<String?> deleteExpenses({String? expenses_id}) async {
+    _isLoading = true;
+
+    Response response = await tourRepo.deleteExpenses(expenses_id: expenses_id);
+    if (response.statusCode == 200) {
+      exeTourDetailModel = response.body['message'];
+    } else if (response.statusCode == 401) {
+      Get.offAllNamed(RouteHelper.getLoginRoute());
+    } else {
+      expensesAddMsg = '';
+    }
+    _isLoading = false;
+    update();
+    return expensesAddMsg;
+  }
+
+  Future<ExpensesByIdModel?> getExpensesDetailsById(
+      {String? expenses_id}) async {
+    _isLoading = true;
+
+    Response response =
+        await tourRepo.expensesDetailsByid(expenses_id: expenses_id);
+    if (response.statusCode == 200) {
+      expensesByIdModel = ExpensesByIdModel.fromJson(response.body);
+    } else if (response.statusCode == 401) {
+      Get.offAllNamed(RouteHelper.getLoginRoute());
+    } else {
+      expensesByIdModel = ExpensesByIdModel();
+    }
+    _isLoading = false;
+    update();
+    return expensesByIdModel;
   }
 }
