@@ -78,6 +78,7 @@ class _ExpensesListScreen extends State<ExpensesListScreen> {
                                 shrinkWrap: true,
                                 itemCount: tourController
                                     .totalExpensesModel!.data!.length,
+                                physics: const NeverScrollableScrollPhysics(),
                                 itemBuilder: (BuildContext context, int index) {
                                   return Padding(
                                     padding: EdgeInsets.symmetric(
@@ -194,7 +195,17 @@ class _ExpensesListScreen extends State<ExpensesListScreen> {
                                               height: 5,
                                             ),
                                             Text(
-                                                'Hotel / Restaurant: Rs.${tourController.totalExpensesModel!.data![index].ta}',
+                                                'Hotel / Restaurant: Rs.${tourController.totalExpensesModel!.data![index].hotel}',
+                                                style: TextStyle(
+                                                    color: Colors.grey,
+                                                    fontSize: 14,
+                                                    fontWeight:
+                                                        FontWeight.w500)),
+                                            SizedBox(
+                                              height: 5,
+                                            ),
+                                            Text(
+                                                'Miscellaneous Amount: Rs.${tourController.totalExpensesModel!.data![index].miscOther}',
                                                 style: TextStyle(
                                                     color: Colors.grey,
                                                     fontSize: 14,
@@ -209,7 +220,7 @@ class _ExpensesListScreen extends State<ExpensesListScreen> {
                                                     color: Colors.grey,
                                                     fontSize: 14,
                                                     fontWeight:
-                                                        FontWeight.w500)),
+                                                    FontWeight.w500)),
                                             SizedBox(
                                               height: 5,
                                             )

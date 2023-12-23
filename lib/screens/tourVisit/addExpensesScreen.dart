@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:shimmers/constant/no_internet_screen.dart';
 import 'package:shimmers/controllers/authController.dart';
+import 'package:shimmers/model/ExpensesByIdModel.dart';
 import 'package:shimmers/model/addExpensesModel.dart';
 
 import '../../constant/app_constants.dart';
@@ -43,6 +44,7 @@ class _AddExpensesScreen extends State<AddExpensesScreen> {
   TextEditingController remarksController = TextEditingController();
   String? selectedDate, selectedTime;
   late int da_amount,ta_amount,hotel_amount,mis_amount,total_amount;
+  ExpensesByIdModel? expensesByidModel;
 
   @override
   void initState() {
@@ -62,6 +64,25 @@ class _AddExpensesScreen extends State<AddExpensesScreen> {
     hotel_amount=0;
     mis_amount=0;
     total_amount=0;
+    if(widget.expenses_id!='0')
+      {
+        if(_connectionStatus!=AppConstants.connectivityCheck)
+          {
+            if(mounted)
+              {
+                Future.delayed(Duration.zero,() async{
+                  expensesByidModel=await Get.find<TourController>().getExpensesDetailsById(expenses_id: widget.expenses_id.toString());
+                  if(expensesByidModel!=null)
+                    {
+                      expensesByidModel!.data!.ta! == null ||
+                          expensesByidModel!.data!.da! == ''
+                          ? remarksController.text = ''
+                          : remarksController.text =
+                      expensesByidModel!.data!.ta!.toString();                    }
+                });
+              }
+          }
+      }
   }
 
   @override
@@ -479,16 +500,11 @@ class _AddExpensesScreen extends State<AddExpensesScreen> {
                                     addExpensesModel.area = areaController.text;
                                     addExpensesModel.kilometer =
                                         approxKmController.text;
-                                    addExpensesModel.da =
-                                        int.parse(daController.text);
-                                    addExpensesModel.ta =
-                                        int.parse(taController.text);
-                                    addExpensesModel.hotel =
-                                        int.parse(hotelController.text);
-                                    addExpensesModel.miscOther =
-                                        int.parse(misphoneController.text);
-                                    addExpensesModel.total =
-                                        int.parse(totalController.text);
+                                    addExpensesModel.da = da_amount;
+                                    addExpensesModel.ta = ta_amount;
+                                    addExpensesModel.hotel = hotel_amount;
+                                    addExpensesModel.miscOther = mis_amount;
+                                    addExpensesModel.total = total_amount;
                                     addExpensesModel.remark =
                                         remarksController.text;
 
