@@ -53,4 +53,19 @@ class ScoreRepo {
       'to_date': to_date
     });
   }
+
+  Future<Response> getSalonwiseCampaignDetails(
+      {String? user_id,
+      String? campaign_id,
+      String? salon_id,
+      String? from_date,
+      String? to_date}) async {
+    return await apiClient.postData(AppConstants.salonwiseCampaignDetails, {
+      'user_id': user_id,
+      'campaign_id': campaign_id,
+      'salon_id': salon_id,
+      'from_date': from_date,
+      'to_date': to_date
+    });
+  }
 }

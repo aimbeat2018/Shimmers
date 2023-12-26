@@ -4,7 +4,9 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:shimmers/controllers/authController.dart';
 import 'package:shimmers/model/employeeTargetDetail.dart';
+import 'package:shimmers/screens/scoreCard/employeeCampaignDetails.dart';
 import 'package:shimmers/screens/scoreCard/employeeTargetDetailsScreen.dart';
 import 'package:shimmers/screens/scoreCard/userActivityDetailsScreen.dart';
 
@@ -96,7 +98,8 @@ class _ScoreCardScreenState extends State<ScoreCardScreen> {
                                 Row(
                                   children: [
                                     scoreController.activityCountModel!
-                                                .profileImage! == ""
+                                                .profileImage! ==
+                                            ""
                                         ? Image.asset(
                                             'assets/images/avatar.png',
                                             height: 50,
@@ -503,7 +506,7 @@ class _ScoreCardScreenState extends State<ScoreCardScreen> {
                                           height: 5,
                                         ),
                                         InkWell(
-                                          onTap: (){
+                                          onTap: () {
                                             Navigator.of(context).push(
                                                 MaterialPageRoute(
                                                     builder: (context) =>
@@ -511,7 +514,7 @@ class _ScoreCardScreenState extends State<ScoreCardScreen> {
                                                           userId: widget
                                                               .excutive_id,
                                                           activityType:
-                                                          'salon_visit',
+                                                              'salon_visit',
                                                           fromDate: fromDate!,
                                                           toDate: toDate!,
                                                         )));
@@ -595,7 +598,7 @@ class _ScoreCardScreenState extends State<ScoreCardScreen> {
                                           height: 5,
                                         ),
                                         InkWell(
-                                          onTap: (){
+                                          onTap: () {
                                             Navigator.of(context).push(
                                                 MaterialPageRoute(
                                                     builder: (context) =>
@@ -603,7 +606,7 @@ class _ScoreCardScreenState extends State<ScoreCardScreen> {
                                                           userId: widget
                                                               .excutive_id,
                                                           activityType:
-                                                          'salon_order_value',
+                                                              'salon_order_value',
                                                           fromDate: fromDate!,
                                                           toDate: toDate!,
                                                         )));
@@ -683,21 +686,20 @@ class _ScoreCardScreenState extends State<ScoreCardScreen> {
                                         SizedBox(
                                           height: 5,
                                         ),
-                                     InkWell(
-                                       onTap: ()
-                                       {
-                                         Navigator.of(context).push(
-                                             MaterialPageRoute(
-                                                 builder: (context) =>
-                                                     EmployeeTargetDetailsScreen(
-                                                       user_id: widget
-                                                           .excutive_id,
-                                                       activity_type:
-                                                       'assigned_target',
-                                                       from_date: fromDate!,
-                                                       to_date: toDate!,
-                                                     )));
-                                       },
+                                        InkWell(
+                                          onTap: () {
+                                            Navigator.of(context).push(
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        EmployeeTargetDetailsScreen(
+                                                          user_id: widget
+                                                              .excutive_id,
+                                                          activity_type:
+                                                              'assigned_target',
+                                                          from_date: fromDate!,
+                                                          to_date: toDate!,
+                                                        )));
+                                          },
                                           child: Align(
                                               alignment: Alignment.topRight,
                                               child: Text(
@@ -800,15 +802,14 @@ class _ScoreCardScreenState extends State<ScoreCardScreen> {
                                           height: 5,
                                         ),
                                         InkWell(
-                                          onTap: (){
+                                          onTap: () {
                                             Navigator.of(context).push(
                                                 MaterialPageRoute(
                                                     builder: (context) =>
                                                         UserActivityDetailsScreen(
                                                           userId: widget
                                                               .excutive_id,
-                                                          activityType:
-                                                          'demo',
+                                                          activityType: 'demo',
                                                           fromDate: fromDate!,
                                                           toDate: toDate!,
                                                         )));
@@ -894,7 +895,7 @@ class _ScoreCardScreenState extends State<ScoreCardScreen> {
                                           height: 5,
                                         ),
                                         InkWell(
-                                          onTap: (){
+                                          onTap: () {
                                             Navigator.of(context).push(
                                                 MaterialPageRoute(
                                                     builder: (context) =>
@@ -902,7 +903,7 @@ class _ScoreCardScreenState extends State<ScoreCardScreen> {
                                                           userId: widget
                                                               .excutive_id,
                                                           activityType:
-                                                          'feedback',
+                                                              'feedback',
                                                           fromDate: fromDate!,
                                                           toDate: toDate!,
                                                         )));
@@ -989,7 +990,7 @@ class _ScoreCardScreenState extends State<ScoreCardScreen> {
                                           height: 5,
                                         ),
                                         InkWell(
-                                          onTap: (){
+                                          onTap: () {
                                             Navigator.of(context).push(
                                                 MaterialPageRoute(
                                                     builder: (context) =>
@@ -997,7 +998,7 @@ class _ScoreCardScreenState extends State<ScoreCardScreen> {
                                                           userId: widget
                                                               .excutive_id,
                                                           activityType:
-                                                          'payment_collect',
+                                                              'payment_collect',
                                                           fromDate: fromDate!,
                                                           toDate: toDate!,
                                                         )));
@@ -1077,15 +1078,29 @@ class _ScoreCardScreenState extends State<ScoreCardScreen> {
                                         SizedBox(
                                           height: 5,
                                         ),
-                                        Align(
-                                            alignment: Alignment.topRight,
-                                            child: Text(
-                                              'Explore',
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontWeight: FontWeight.w500,
-                                                  fontSize: 12),
-                                            )),
+                                        InkWell(
+                                          onTap: () {
+                                            Navigator.of(context).push(
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        EmployeeCampaignDetails(
+                                                          userID: widget.excutive_id,
+                                                          activityType:
+                                                              'campaign',
+                                                          fromDate: fromDate!,
+                                                          toDate: toDate!,
+                                                        )));
+                                          },
+                                          child: Align(
+                                              alignment: Alignment.topRight,
+                                              child: Text(
+                                                'Explore',
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontWeight: FontWeight.w500,
+                                                    fontSize: 12),
+                                              )),
+                                        ),
                                         SizedBox(
                                           height: 5,
                                         ),

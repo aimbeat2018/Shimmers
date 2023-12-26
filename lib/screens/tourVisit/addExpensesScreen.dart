@@ -74,11 +74,48 @@ class _AddExpensesScreen extends State<AddExpensesScreen> {
                   expensesByidModel=await Get.find<TourController>().getExpensesDetailsById(expenses_id: widget.expenses_id.toString());
                   if(expensesByidModel!=null)
                     {
-                      expensesByidModel!.data!.ta! == null ||
+                      expensesByidModel!.data!.da == null ||
                           expensesByidModel!.data!.da! == ''
+                          ? daController.text = ''
+                          : daController.text =
+                      expensesByidModel!.data!.da!.toString();
+
+                      expensesByidModel!.data!.da == null ||
+                          expensesByidModel!.data!.da! == ''
+                          ? da_amount = 0
+                          : da_amount =
+                          expensesByidModel!.data!.da!;
+
+                      expensesByidModel!.data!.miscOther == null ||
+                          expensesByidModel!.data!.miscOther! == ''
+                          ? misphoneController.text = ''
+                          : misphoneController.text =
+                          expensesByidModel!.data!.miscOther!.toString();
+
+                      expensesByidModel!.data!.miscOther == null ||
+                          expensesByidModel!.data!.miscOther! == ''
+                          ? mis_amount = 0
+                          : mis_amount =
+                          expensesByidModel!.data!.miscOther!;
+
+                      expensesByidModel!.data!.remark == null ||
+                          expensesByidModel!.data!.remark! == ''
                           ? remarksController.text = ''
                           : remarksController.text =
-                      expensesByidModel!.data!.ta!.toString();                    }
+                          expensesByidModel!.data!.remark!.toString();
+                      selectedDate=expensesByidModel!.data!.date;
+                      areaController.text=expensesByidModel!.data!.areaCovered!;
+                      approxKmController.text=expensesByidModel!.data!.kilometer!;
+                      taController.text=expensesByidModel!.data!.ta!.toString();
+                      ta_amount=expensesByidModel!.data!.ta!;
+                      hotelController.text=expensesByidModel!.data!.hotel!.toString();
+                      hotel_amount=expensesByidModel!.data!.hotel!;
+                     // misphoneController.text=expensesByidModel!.data!.miscOther!.toString();
+                      totalController.text=expensesByidModel!.data!.total!.toString();
+                      total_amount=expensesByidModel!.data!.total!;
+                      remarksController.text=expensesByidModel!.data!.remark!.toString();
+
+                    }
                 });
               }
           }
@@ -510,15 +547,6 @@ class _AddExpensesScreen extends State<AddExpensesScreen> {
 
                                     addTourExpenses(
                                         tourController, addExpensesModel);
-
-                                    /*if (widget.tour_requestid == '0') {
-                                String tourReqid = "";
-
-                                addTourRequest(tourController, tourReqid);
-                              } else {
-                                addTourRequest(tourController,
-                                    widget.tour_requestid.toString());
-                              }*/
                                   }
                                 },
                                 child: Padding(
@@ -549,6 +577,11 @@ class _AddExpensesScreen extends State<AddExpensesScreen> {
         showCustomSnackBar(message!, isError: false);
         Navigator.pop(context);
         /* Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => TourListScreen()));*/
+      } else if (message == 'Expenses updated successfully.') {
+      showCustomSnackBar(message!, isError: false);
+      Navigator.pop(context);
+      /* Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => TourListScreen()));*/
       } else {
         showCustomSnackBar(message!);

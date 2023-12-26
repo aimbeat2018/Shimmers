@@ -355,7 +355,7 @@ class TourController extends GetxController implements GetxService {
 
     Response response = await tourRepo.deleteExpenses(expenses_id: expenses_id);
     if (response.statusCode == 200) {
-      exeTourDetailModel = response.body['message'];
+      expensesAddMsg = response.body['message'];
     } else if (response.statusCode == 401) {
       Get.offAllNamed(RouteHelper.getLoginRoute());
     } else {

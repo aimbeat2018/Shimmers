@@ -494,7 +494,7 @@ class _TourListScreen extends State<TourListScreen> {
                       });
                     } else {
                       showCustomSnackBar(
-                          'Please complete previous tour visit before adding new !',
+                          'Please complete previous tour visit before adding new!',
                           isError: false);
                     }
                     /*Navigator.of(context).push(MaterialPageRoute(
