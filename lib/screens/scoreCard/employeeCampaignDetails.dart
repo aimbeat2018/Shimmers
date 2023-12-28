@@ -106,7 +106,15 @@ class _EmployeeCampaignDetails extends State<EmployeeCampaignDetails> {
                                                         .toString(),
                                                     salonId: scoreController
                                                         .scoreCampaignModel!
-                                                        .data![index].salonId.toString(),fromDate: widget.fromDate,toDate: widget.toDate,
+                                                        .data![index]
+                                                        .salonId
+                                                        .toString(),
+                                                    fromDate: widget.fromDate,
+                                                    toDate: widget.toDate,
+                                                    cstartDate: scoreController.scoreCampaignModel!.data![index].startDate!,
+                                                    cendDate: scoreController.scoreCampaignModel!.data![index].endDate!,
+                                                    salonName: scoreController.scoreCampaignModel!.data![index].salonName!,
+                                                    campaignName: scoreController.scoreCampaignModel!.data![index].campaignName!,
                                                   )));
                                     },
                                     child: Card(
@@ -157,8 +165,7 @@ class _EmployeeCampaignDetails extends State<EmployeeCampaignDetails> {
                                                 style: TextStyle(
                                                     color: Colors.grey,
                                                     fontSize: 14,
-                                                    fontWeight:
-                                                        FontWeight.w500)),
+                                                    fontWeight: FontWeight.w500)),
                                             SizedBox(
                                               height: 5,
                                             )
