@@ -370,20 +370,22 @@ class _SubmitCampaignScreenState extends State<SubmitCampaignScreen> {
                                                             SizedBox(
                                                               width: 8,
                                                             ),
-                                                            Text(
-                                                              salonController
-                                                                  .campaignQuestionListModel!
-                                                                  .data![index]
-                                                                  .answer![
-                                                                      index1]
-                                                                  .key!,
-                                                              style: const TextStyle(
-                                                                  color: Colors
-                                                                      .black,
-                                                                  fontSize: 16,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w400),
+                                                            Expanded(
+                                                              child: Text(
+                                                                salonController
+                                                                    .campaignQuestionListModel!
+                                                                    .data![index]
+                                                                    .answer![
+                                                                        index1]
+                                                                    .key!,
+                                                                style: const TextStyle(
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontSize: 16,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w400),
+                                                              ),
                                                             ),
                                                           ],
                                                         ),

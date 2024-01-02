@@ -133,7 +133,6 @@ class ScoreController extends GetxController implements GetxService {
         to_date: todate);
     if (response.statusCode == 200) {
       userCampaignAnswerModel = UserCampaignAnswerModel.fromJson(response.body);
-     // userCampaignAnswerModel=UserCampaignAnswerModel.fromJson(jsonDecode(response.body));
     } else if (response.statusCode == 401) {
       Get.offAllNamed(RouteHelper.getLoginRoute());
     } else {

@@ -4,9 +4,6 @@ class UserCampaignAnswerModel {
   UserCampaignAnswerModel({this.data});
 
   UserCampaignAnswerModel.fromJson(Map<String, dynamic> json) {
-    var temp = json["data"];
-    print("temp's runtime type: ${temp.runtimeType}");  // List<dynamic>
-    data = temp;
     if (json['data'] != null) {
       data = <Data>[];
       json['data'].forEach((v) {
