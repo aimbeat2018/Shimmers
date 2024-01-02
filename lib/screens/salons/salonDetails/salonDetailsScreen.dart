@@ -471,13 +471,13 @@ class _SalonDetailsScreenState extends State<SalonDetailsScreen> {
                               visible: isDetailsVisible ? true : false,
                               child: SizedBox(
                                 height:
-                                    MediaQuery.of(context).size.height * 0.38,
+                                    MediaQuery.of(context).size.height * 0.40,
                                 child: Stack(
                                   children: [
                                     Container(
                                       height:
                                           MediaQuery.of(context).size.height *
-                                              0.34,
+                                              0.36,
                                       color: primaryColor,
                                       padding: const EdgeInsets.symmetric(
                                           vertical: 25, horizontal: 15),

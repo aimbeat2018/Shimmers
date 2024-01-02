@@ -622,7 +622,7 @@ class _SubmitCampaignScreenState extends State<SubmitCampaignScreen> {
                                       SubmitCampaignRequestModel();
                                   model.campaignId = widget.model.id;
                                   model.salonId = widget.salonId;
-                                  model.is_on_tour=int.parse(Get.find<SalonController>().getonTour());
+                                  model.is_on_tour=0;
                                   List<UsersAnswer> userAnswersList = [];
                                   for (var campaignQuestionData
                                       in salonController

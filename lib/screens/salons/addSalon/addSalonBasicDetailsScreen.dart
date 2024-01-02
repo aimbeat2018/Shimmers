@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:shimmers/constant/custom_snackbar.dart';
 import 'package:shimmers/constant/textConstant.dart';
 import 'package:shimmers/model/salonCategoryModel.dart';
@@ -331,14 +332,22 @@ class _AddSalonBasicDetailsScreenState
                                     showCustomSnackBar('Enter salon name',
                                         isError: true);
                                   } else {
-                                    Navigator.of(context)
+                                    PersistentNavBarNavigator.pushNewScreen(
+                                      context,
+                                      screen: AddSalonPersonalDetailsScreen(
+                                          salonCategory: salonId,
+                                          salonName:
+                                          salonNameController.text),
+                                      withNavBar: false,
+                                    );
+                                    /*Navigator.of(context)
                                         .pushReplacement(MaterialPageRoute(
                                       builder: (context) =>
                                           AddSalonPersonalDetailsScreen(
                                               salonCategory: salonId,
                                               salonName:
                                                   salonNameController.text),
-                                    ));
+                                    ));*/
                                   }
                                 },
                                 child: Padding(

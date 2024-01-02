@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shimmers/constant/custom_snackbar.dart';
 import 'package:shimmers/model/employeeRouteListModel.dart';
+import 'package:shimmers/screens/home/mainScreen.dart';
 import 'package:shimmers/screens/salons/addSalon/bottomSheet/salonRouteScreen.dart';
 
 import '../../../constant/colorsConstant.dart';
@@ -1101,13 +1102,15 @@ class _AddFinalSalonScreenState extends State<AddFinalSalonScreen> {
         latitude: lat.toString(),
         longitude: longi.toString(),
         address: companyAddressController.text,
-        is_on_tour: Get.find<SalonController>().getonTour(),
+        is_on_tour: '0',
         image: widget.salonImage,
         )
         .then((message) async {
       if (message == 'Salon added successfully') {
         showCustomSnackBar(message!);
         Navigator.pop(context);
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => MainScreen()));
       } else {
         showCustomSnackBar(message!);
       }
