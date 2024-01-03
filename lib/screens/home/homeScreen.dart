@@ -6,6 +6,7 @@ import 'package:shimmers/constant/custom_snackbar.dart';
 import 'package:shimmers/model/profileModel.dart';
 import 'package:shimmers/screens/campaigns/campaignsListScreen.dart';
 import 'package:shimmers/screens/distributors/distributorsScreen.dart';
+import 'package:shimmers/screens/liveTracking/liveTrackingScreen.dart';
 import 'package:shimmers/screens/salons/salonDetails/managerOrderApproval.dart';
 import 'package:shimmers/screens/salons/salonList/salonListScreen.dart';
 import 'package:shimmers/screens/scoreCard/executiveListActivity.dart';
@@ -227,18 +228,16 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             Center(
                               child: InkWell(
                                 onTap: () {
-                                 /* if (userRole == 'TRF Executive' ||
+                                  /* if (userRole == 'TRF Executive' ||
                                       userRole == 'TRF Manager') {
                                     showCustomSnackBar(
                                         'You dont have the permission to use this module',
                                         isError: true);
                                   }
                                   else {*/
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                SalonListScreen()));
-                                 // }
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => SalonListScreen()));
+                                  // }
                                 },
                                 child: SizedBox(
                                   height: 135,
@@ -281,11 +280,10 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                         'You dont have the permission to use this module',
                                         isError: true);
                                   } else {*/
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                DistributorsScreen()));
-                               //   }
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) =>
+                                          DistributorsScreen()));
+                                  //   }
                                 },
                                 child: SizedBox(
                                   height: 135,
@@ -322,17 +320,16 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             Center(
                               child: InkWell(
                                 onTap: () {
-                                 /* if (userRole == 'TRF Executive' ||
+                                  /* if (userRole == 'TRF Executive' ||
                                       userRole == 'TRF Manager') {
                                     showCustomSnackBar(
                                         'You dont have the permission to use this module',
                                         isError: true);
                                   } else {*/
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                CampaignsListScreen()));
-                                //  }
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) =>
+                                          CampaignsListScreen()));
+                                  //  }
                                 },
                                 child: SizedBox(
                                   height: 135,
@@ -376,19 +373,17 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             Center(
                               child: InkWell(
                                 onTap: () {
-                                /*  if (userRole == 'TRF Executive' ||
+                                  /*  if (userRole == 'TRF Executive' ||
                                       userRole == 'TRF Manager') {
                                     showCustomSnackBar(
                                         'You dont have the permission to use this module',
                                         isError: true);
                                   } else {*/
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                SetTargetScreen(
-                                                  from: 'target',
-                                                )));
-                                //  }
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => SetTargetScreen(
+                                            from: 'target',
+                                          )));
+                                  //  }
                                 },
                                 child: SizedBox(
                                   height: 135,
@@ -425,21 +420,22 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             Center(
                               child: InkWell(
                                 onTap: () {
-                                    //Call activity screen here
+                                  //Call activity screen here
                                   if (userRole == 'employee') {
                                     //Sales Manager see the activities of sales executive
                                     Navigator.of(context).push(
                                         MaterialPageRoute(
                                             builder: (context) =>
                                                 ExecutiveListActivity()));
-                                  }
-                                  else{
+                                  } else {
                                     Navigator.of(context).push(
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                ScoreCardScreen(excutive_id: Get.find<AuthController>().getUserId())));
+                                                ScoreCardScreen(
+                                                    excutive_id: Get.find<
+                                                            AuthController>()
+                                                        .getUserId())));
                                   }
-
                                 },
                                 child: SizedBox(
                                   height: 135,
@@ -578,14 +574,15 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                         MaterialPageRoute(
                                             builder: (context) =>
                                                 TRFExecutiveListScreen()));
-                                  }  /*else if (userRole == 'Head Officer') {
+                                  }
+                                  /*else if (userRole == 'Head Officer') {
                                     //Head Officer Flow
                                     Navigator.of(context).push(
                                         MaterialPageRoute(
                                             builder: (context) =>
                                                 HeadOfficerTourRequests()));
                                   }*/
-                                  else{
+                                  else {
                                     //sales executive flow
                                     Navigator.of(context).push(
                                         MaterialPageRoute(
@@ -628,7 +625,7 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             Center(
                               child: InkWell(
                                 onTap: () {
-                               /*   if (userRole == 'TRF Executive' ||
+                                  /*   if (userRole == 'TRF Executive' ||
                                       userRole == 'TRF Manager') {
                                     showCustomSnackBar(
                                         'You dont have the permission to use this module',
@@ -679,7 +676,9 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             child: InkWell(
                               onTap: () {
                                 if (userRole == 'employee') {
-                                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>ManagerOrderApproval()));
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) =>
+                                          ManagerOrderApproval()));
                                 } else {
                                   showCustomSnackBar(
                                       'You dont have the permission to use this module',
@@ -719,15 +718,16 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                           ),
                           VerticalDividerFadeDown(),
                           Center(
-                            child:InkWell(
-                              onTap: (){
-                               /* PersistentNavBarNavigator.pushNewScreen(
+                            child: InkWell(
+                              onTap: () {
+                                /* PersistentNavBarNavigator.pushNewScreen(
                                   context,
                                   screen:  ExpensesListScreen(),
                                   withNavBar: false,
                                 );*/
-                                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>ExpensesListScreen()));
-
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) =>
+                                        ExpensesListScreen()));
 
                                 /*if (userRole == 'employee') {
                                   Navigator.of(context).push(MaterialPageRoute(builder: (context)=>ManagerOrderApproval()));
@@ -738,40 +738,73 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                 }*/
                               },
                               child: SizedBox(
-                                  height: 135,
-                                  width: 115,
-                                  child: Column(
-                                    children: [
-                                      SizedBox(
-                                        height: 20,
+                                height: 135,
+                                width: 115,
+                                child: Column(
+                                  children: [
+                                    SizedBox(
+                                      height: 20,
+                                    ),
+                                    Image.asset(
+                                      'assets/images/list.png',
+                                      width: 35,
+                                      height: 35,
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(15.0),
+                                      child: Text(
+                                        'Expenses',
+                                        maxLines: 1,
+                                        overflow: TextOverflow.clip,
+                                        style: const TextStyle(
+                                            color: primaryColor,
+                                            fontSize: 13,
+                                            fontWeight: FontWeight.w600),
                                       ),
-                                      Image.asset(
-                                        'assets/images/list.png',
-                                        width: 35,
-                                        height: 35,
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(15.0),
-                                        child: Text(
-                                          'Expenses',
-                                          maxLines: 1,
-                                          overflow: TextOverflow.clip,
-                                          style: const TextStyle(
-                                              color: primaryColor,
-                                              fontSize: 13,
-                                              fontWeight: FontWeight.w600),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
+                              ),
                             ),
-                            ),
+                          ),
                           VerticalDividerFadeDown(),
                           Center(
-                            child: SizedBox(
-                              height: 135,
-                              width: 115,
+                            child: InkWell(
+                              onTap: () {
+                                 PersistentNavBarNavigator.pushNewScreen(
+                                  context,
+                                  screen:  LiveTrackingScreen(),
+                                  withNavBar: false,
+                                );
+                              },
+                              child: SizedBox(
+                                height: 135,
+                                width: 115,
+                                child: Column(
+                                  children: [
+                                    SizedBox(
+                                      height: 20,
+                                    ),
+                                    Image.asset(
+                                      'assets/images/list.png',
+                                      width: 35,
+                                      height: 35,
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(15.0),
+                                      child: Text(
+                                        'Live Tracking',
+                                        maxLines: 1,
+                                        overflow: TextOverflow.clip,
+                                        style: const TextStyle(
+                                            color: primaryColor,
+                                            fontSize: 13,
+                                            fontWeight: FontWeight.w600),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ),
                           ),
                         ],
