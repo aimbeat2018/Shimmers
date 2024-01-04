@@ -7,6 +7,7 @@ import '../constant/route_helper.dart';
 import '../model/activityCountModel.dart';
 import '../model/employeeActivityDetail.dart';
 import '../model/employeeTargetDetail.dart';
+import '../model/liveTrackingModel.dart';
 import '../model/scoreCampaignModel.dart';
 import '../model/userCampaignAnswerModel.dart';
 
@@ -17,6 +18,7 @@ class ScoreController extends GetxController implements GetxService {
   EmployeeTargetDetail? employeeTargetDetail;
   ScoreCampaignModel? scoreCampaignModel;
   UserCampaignAnswerModel? userCampaignAnswerModel;
+  LiveTrackingModel? liveTrackingModel;
   bool? _isLoading = false;
 
   bool get isLoading => _isLoading!;
@@ -141,5 +143,19 @@ class ScoreController extends GetxController implements GetxService {
     _isLoading = false;
     update();
     return userCampaignAnswerModel;
+  }
+
+  Future<LiveTrackingModel?> getLiveTrackingList() async {
+    _isLoading = true;
+    Response response = await scoreRepo.getLiveTrackingList();
+    if (response.statusCode == 200) {
+    } else if (response.statusCode == 401) {
+      Get.offAllNamed(RouteHelper.getLoginRoute());
+    } else {
+      liveTrackingModel=LiveTrackingModel();
+    }
+    _isLoading=false;
+    update();
+    return liveTrackingModel;
   }
 }

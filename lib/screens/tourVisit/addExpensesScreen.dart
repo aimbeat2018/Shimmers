@@ -103,6 +103,7 @@ class _AddExpensesScreen extends State<AddExpensesScreen> {
                           ? remarksController.text = ''
                           : remarksController.text =
                           expensesByidModel!.data!.remark!.toString();
+
                       selectedDate=expensesByidModel!.data!.date;
                       areaController.text=expensesByidModel!.data!.areaCovered!;
                       approxKmController.text=expensesByidModel!.data!.kilometer!;
@@ -113,7 +114,7 @@ class _AddExpensesScreen extends State<AddExpensesScreen> {
                      // misphoneController.text=expensesByidModel!.data!.miscOther!.toString();
                       totalController.text=expensesByidModel!.data!.total!.toString();
                       total_amount=expensesByidModel!.data!.total!;
-                      remarksController.text=expensesByidModel!.data!.remark!.toString();
+                   //   remarksController.text=expensesByidModel!.data!.remark!.toString();
 
                     }
                 });

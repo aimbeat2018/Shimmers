@@ -5,10 +5,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:shimmers/constant/app_constants.dart';
+import 'package:shimmers/controllers/scoreController.dart';
+import 'package:shimmers/screens/salons/salonDetails/salonDetailsScreen.dart';
 
 import '../../constant/colorsConstant.dart';
 import '../../constant/internetConnectivity.dart';
+import '../../constant/no_internet_screen.dart';
 import '../../constant/textConstant.dart';
 
 class LiveTrackingScreen extends StatefulWidget {
@@ -29,38 +34,39 @@ class _LiveTrackingScreen extends State<LiveTrackingScreen> {
   final Completer<GoogleMapController> _controller =
       Completer<GoogleMapController>();
   static const LatLng _center = const LatLng(19.076090, 72.877426);
-  static const CameraPosition _kLake = CameraPosition(
+
+  /*static const CameraPosition _kLake = CameraPosition(
       bearing: 192.8334901395799,
       target: LatLng(37.43296265331129, -122.08832357078792),
       tilt: 59.440717697143555,
-      zoom: 19.151926040649414);
+      zoom: 19.151926040649414);*/
 
   List<Marker> _marker = [];
+  //for on tap remove const & pass context to redirect
   final List<Marker> _list = const [
     // List of Markers Added on Google Map
     Marker(
         markerId: MarkerId('1'),
         position: LatLng(20.42796133580664, 80.885749655962),
         infoWindow: InfoWindow(
-          title: 'My Position',
-        )
-    ),
-
+          title: 'Salon Name',
+          snippet: 'Sales Executive'
+        )),
     Marker(
         markerId: MarkerId('2'),
         position: LatLng(25.42796133580664, 80.885749655962),
         infoWindow: InfoWindow(
-          title: 'Location 1',
-        )
-    ),
+          title: 'Pretty Beauty',
+          snippet: 'Sales Executive',
+        )),
 
     Marker(
         markerId: MarkerId('3'),
         position: LatLng(20.42796133580664, 73.885749655962),
         infoWindow: InfoWindow(
-          title: 'Location 2',
-        )
-    ),
+          title: 'Enrich Beauty',
+          snippet: 'Sales Manager',
+        )),
   ];
 
   @override
@@ -79,57 +85,80 @@ class _LiveTrackingScreen extends State<LiveTrackingScreen> {
     if (mounted) {
       Future.delayed(Duration.zero, () async {
         _getCurrentPosition();
+        Get.find<ScoreController>().getLiveTrackingList();
         _marker.addAll(_list);
-
       });
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: primaryColor,
-        centerTitle: true,
-        title: Text(
-          'Live Tracking',
-          style: const TextStyle(
-              color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
-        ),
-      ),
-        body: Container(
-          // on below line creating google maps.
-          child: GoogleMap(
-            // on below line setting camera position
-            initialCameraPosition: const CameraPosition(
-              target: _center,
-              //LatLng(19.076090, 72.877426),
-               zoom: 11,
-            ),
-            // on below line specifying map type.
-            mapType: MapType.normal,
-            markers: Set<Marker>.of(_marker),
-            // on below line setting user location enabled.
-            myLocationEnabled: true,
-            // on below line setting compass enabled.
-            compassEnabled: true,
-            // on below line specifying controller on map complete.
-            onMapCreated: (GoogleMapController controller){
-              _controller.complete(controller);
-            },
-          ),
-        )
-      /*floatingActionButton: FloatingActionButton.extended(
-        onPressed: _goToTheLake,
-        label: const Text('To the lake!'),
-        icon: const Icon(Icons.directions_boat),
-      ),*/
-    );
+    return _connectionStatus == AppConstants.connectivityCheck
+        ? NoInternetScreen()
+        : GetBuilder<ScoreController>(builder: (scoreController) {
+            return Scaffold(
+                appBar: AppBar(
+                  backgroundColor: primaryColor,
+                  centerTitle: true,
+                  title: Text(
+                    'Live Tracking',
+                    style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  actions: [
+                    InkWell(
+                      onTap: () {
+                        Get.find<ScoreController>().getLiveTrackingList();
+                      },
+                      child: Padding(
+                        padding: EdgeInsets.only(right: 10),
+                        child: Icon(
+                          Icons.refresh,
+                          size: 25,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+                body: scoreController.isLoading
+                    ? Center(child: CircularProgressIndicator())
+                    : Container(
+                        // on below line creating google maps.
+                        child: GoogleMap(
+                          // on below line setting camera position
+                          initialCameraPosition: const CameraPosition(
+                            target: _center,
+                            //LatLng(19.076090, 72.877426),
+                            zoom: 11,
+                          ),
+                          // on below line specifying map type.
+                          mapType: MapType.normal,
+                          markers: Set<Marker>.of(_marker),
+                          // on below line setting user location enabled.
+                          myLocationEnabled: true,
+                          // on below line setting compass enabled.
+                          compassEnabled: true,
+                          // on below line specifying controller on map complete.
+                          onMapCreated: (GoogleMapController controller) {
+                            _controller.complete(controller);
+                          },
+                        ),
+                      )
+                /*floatingActionButton: FloatingActionButton.extended(
+            onPressed: _goToTheLake,
+            label: const Text('To the lake!'),
+            icon: const Icon(Icons.directions_boat),
+          ),*/
+                );
+          });
   }
-  Future<void> _goToTheLake() async {
+
+  /*Future<void> _goToTheLake() async {
     final GoogleMapController controller = await _controller.future;
     await controller.animateCamera(CameraUpdate.newCameraPosition(_kLake));
-  }
+  }*/
 
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
