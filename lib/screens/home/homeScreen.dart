@@ -694,7 +694,7 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                       height: 20,
                                     ),
                                     Image.asset(
-                                      'assets/images/list.png',
+                                      'assets/images/order_list.png',
                                       width: 35,
                                       height: 35,
                                     ),
@@ -746,7 +746,7 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                       height: 20,
                                     ),
                                     Image.asset(
-                                      'assets/images/list.png',
+                                      'assets/images/expenses.png',
                                       width: 35,
                                       height: 35,
                                     ),
@@ -786,7 +786,7 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                       height: 20,
                                     ),
                                     Image.asset(
-                                      'assets/images/list.png',
+                                      'assets/images/google_map.png',
                                       width: 35,
                                       height: 35,
                                     ),

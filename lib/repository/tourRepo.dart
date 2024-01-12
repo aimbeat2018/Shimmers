@@ -119,9 +119,36 @@ class TourRepo {
     ]);
   }
 
-  Future<Response> storeExpenses({AddExpensesModel? addExpensesModel}) async {
-    return await apiClient.postBodyData(
-        AppConstants.addExpenses, jsonEncode(addExpensesModel!.toJson()));
+  Future<Response> storeExpenses({
+    String? expenses_id,
+    String? user_id,
+    String? date,
+    String? area,
+    String? kilometer,
+    String? da,
+    String? ta,
+    String? hotel,
+    String? misc_other,
+    String? total,
+    String? remark,
+    XFile? attachment
+  }) async {
+    return await apiClient.postMultipartData(
+        AppConstants.addExpenses, {
+          'expenses_id':expenses_id!,
+      'user_id':user_id!,
+      'date':date!,
+      'area':area!,
+      'kilometer':kilometer!,
+      'da':da!,
+      'ta':ta!,
+      'hotel':hotel!,
+      'misc_other':misc_other!,
+      'total':total!,
+      'remark':remark!,
+    }, [
+      MultipartBody('attachment', attachment!)
+    ]);
   }
 
   Future<Response> getExpensesList() async {

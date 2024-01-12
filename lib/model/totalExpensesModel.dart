@@ -37,7 +37,8 @@ class ExpensesDetailModel {
   int? total;
   String? remark;
   int? createdBy;
-  Null? updatedBy;
+  int? updatedBy;
+  String? attachment;
 
   ExpensesDetailModel(
       {this.id,
@@ -52,7 +53,8 @@ class ExpensesDetailModel {
         this.total,
         this.remark,
         this.createdBy,
-        this.updatedBy});
+        this.updatedBy,
+      this.attachment});
 
   ExpensesDetailModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -68,6 +70,7 @@ class ExpensesDetailModel {
     remark = json['remark'];
     createdBy = json['created_by'];
     updatedBy = json['updated_by'];
+    attachment = json['attachment'];
   }
 
   Map<String, dynamic> toJson() {
@@ -85,6 +88,7 @@ class ExpensesDetailModel {
     data['remark'] = this.remark;
     data['created_by'] = this.createdBy;
     data['updated_by'] = this.updatedBy;
+    data['attachment'] = this.attachment;
     return data;
   }
 }

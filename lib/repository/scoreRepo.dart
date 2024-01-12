@@ -69,6 +69,6 @@ class ScoreRepo {
     });
   }
   Future<Response> getLiveTrackingList() async {
-    return await apiClient.getData(AppConstants.liveExecutivesList);
+    return await apiClient.getData(AppConstants.getliveExecutivesList);
   }
 }

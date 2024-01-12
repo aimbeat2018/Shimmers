@@ -36,7 +36,7 @@ class _TourImageScreen extends State<TourImageScreen>{
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "View Ticket",
+          "View Attachment",
           style: const TextStyle(
               color: Colors.white,
               fontSize: 16,

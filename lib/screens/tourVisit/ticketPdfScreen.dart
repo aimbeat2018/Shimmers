@@ -58,7 +58,7 @@ class _TicketPdfScreen extends State<TicketPdfScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "View Ticket",
+          "View Attachment",
           style: const TextStyle(
               color: Colors.white,
               fontSize: 16,

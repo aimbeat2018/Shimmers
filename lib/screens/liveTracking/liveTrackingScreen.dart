@@ -15,6 +15,7 @@ import '../../constant/colorsConstant.dart';
 import '../../constant/internetConnectivity.dart';
 import '../../constant/no_internet_screen.dart';
 import '../../constant/textConstant.dart';
+import '../../model/liveTrackingModel.dart';
 
 class LiveTrackingScreen extends StatefulWidget {
   @override
@@ -28,46 +29,18 @@ class _LiveTrackingScreen extends State<LiveTrackingScreen> {
   final Connectivity _connectivity = Connectivity();
   late StreamSubscription<ConnectivityResult> _connectivitySubscription;
   Position? _currentPosition;
+ // LatLng currentLatLng;
   double? lat, longi;
   String? _currentAddress;
   late GoogleMapController mapController;
   final Completer<GoogleMapController> _controller =
       Completer<GoogleMapController>();
-  static const LatLng _center = const LatLng(19.076090, 72.877426);
-
-  /*static const CameraPosition _kLake = CameraPosition(
-      bearing: 192.8334901395799,
-      target: LatLng(37.43296265331129, -122.08832357078792),
-      tilt: 59.440717697143555,
-      zoom: 19.151926040649414);*/
+  LatLng? currentLatLng;
+  LiveTrackingModel? trackingModel;
+  List<LiveTrackList>? liveTrackList;
 
   List<Marker> _marker = [];
-  //for on tap remove const & pass context to redirect
-  final List<Marker> _list = const [
-    // List of Markers Added on Google Map
-    Marker(
-        markerId: MarkerId('1'),
-        position: LatLng(20.42796133580664, 80.885749655962),
-        infoWindow: InfoWindow(
-          title: 'Salon Name',
-          snippet: 'Sales Executive'
-        )),
-    Marker(
-        markerId: MarkerId('2'),
-        position: LatLng(25.42796133580664, 80.885749655962),
-        infoWindow: InfoWindow(
-          title: 'Pretty Beauty',
-          snippet: 'Sales Executive',
-        )),
 
-    Marker(
-        markerId: MarkerId('3'),
-        position: LatLng(20.42796133580664, 73.885749655962),
-        infoWindow: InfoWindow(
-          title: 'Enrich Beauty',
-          snippet: 'Sales Manager',
-        )),
-  ];
 
   @override
   void initState() {
@@ -85,10 +58,33 @@ class _LiveTrackingScreen extends State<LiveTrackingScreen> {
     if (mounted) {
       Future.delayed(Duration.zero, () async {
         _getCurrentPosition();
-        Get.find<ScoreController>().getLiveTrackingList();
-        _marker.addAll(_list);
+        _getLiveEmpList();
+       /* Get.find<ScoreController>().getLiveTrackingList();
+        _marker.addAll(_list);*/
       });
     }
+  }
+
+  Future<void> _getLiveEmpList() async {
+    trackingModel = await Get.find<ScoreController>().getLiveTrackingList();
+    liveTrackList = trackingModel!.data!;
+    liveTrackList!.forEach((element) {
+      _marker.add(Marker(
+          markerId: MarkerId(element.salonName!),
+          draggable: false,
+          onTap: () {
+            print(element.salonId);
+          },
+          position:
+              LatLng(double.parse(element.latitude!), double.parse(element.longitude!)),
+          infoWindow: InfoWindow(
+            title: element.name!,
+            snippet: element.salonName!,
+          )));
+    });
+    setState(() {
+
+    });
   }
 
   @override
@@ -110,7 +106,7 @@ class _LiveTrackingScreen extends State<LiveTrackingScreen> {
                   actions: [
                     InkWell(
                       onTap: () {
-                        Get.find<ScoreController>().getLiveTrackingList();
+                        _getLiveEmpList();
                       },
                       child: Padding(
                         padding: EdgeInsets.only(right: 10),
@@ -128,10 +124,10 @@ class _LiveTrackingScreen extends State<LiveTrackingScreen> {
                         // on below line creating google maps.
                         child: GoogleMap(
                           // on below line setting camera position
-                          initialCameraPosition: const CameraPosition(
-                            target: _center,
+                          initialCameraPosition: CameraPosition(
+                            target: currentLatLng!,
                             //LatLng(19.076090, 72.877426),
-                            zoom: 11,
+                            zoom: 12,
                           ),
                           // on below line specifying map type.
                           mapType: MapType.normal,
@@ -146,11 +142,6 @@ class _LiveTrackingScreen extends State<LiveTrackingScreen> {
                           },
                         ),
                       )
-                /*floatingActionButton: FloatingActionButton.extended(
-            onPressed: _goToTheLake,
-            label: const Text('To the lake!'),
-            icon: const Icon(Icons.directions_boat),
-          ),*/
                 );
           });
   }
@@ -174,6 +165,7 @@ class _LiveTrackingScreen extends State<LiveTrackingScreen> {
         .then((Position position) {
       setState(() {
         _currentPosition = position;
+        currentLatLng= LatLng(position.latitude, position.longitude);
       });
       _getAddressFromLatLng(_currentPosition!);
     }).catchError((e) {

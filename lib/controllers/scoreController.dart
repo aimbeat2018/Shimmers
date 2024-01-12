@@ -149,6 +149,7 @@ class ScoreController extends GetxController implements GetxService {
     _isLoading = true;
     Response response = await scoreRepo.getLiveTrackingList();
     if (response.statusCode == 200) {
+      liveTrackingModel=LiveTrackingModel.fromJson(response.body);
     } else if (response.statusCode == 401) {
       Get.offAllNamed(RouteHelper.getLoginRoute());
     } else {

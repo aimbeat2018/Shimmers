@@ -317,11 +317,34 @@ class TourController extends GetxController implements GetxService {
     return tourAddMessage;
   }
 
-  Future<String?> addExpenses({AddExpensesModel? addExpensesModel}) async {
+  Future<String?> addExpenses(
+      {String? expenses_id,
+      String? user_id,
+      String? date,
+      String? area,
+      String? kilometer,
+      String? da,
+      String? ta,
+      String? hotel,
+      String? misc_other,
+      String? total,
+      String? remark,
+      XFile? attachment}) async {
     _isLoading = true;
     update();
-    Response response =
-        await tourRepo.storeExpenses(addExpensesModel: addExpensesModel);
+    Response response = await tourRepo.storeExpenses(
+        expenses_id: expenses_id,
+        user_id: user_id,
+        date: date,
+        area: area,
+        kilometer: kilometer,
+        da: da,
+        ta: ta,
+        hotel: hotel,
+        misc_other: misc_other,
+        total: total,
+        remark: remark,
+        attachment: attachment);
     if (response.statusCode == 200) {
       expensesAddMsg = response.body['message'];
     } else if (response.statusCode == 401) {

@@ -9,12 +9,15 @@ import 'package:shimmers/constant/app_constants.dart';
 import 'package:shimmers/constant/custom_snackbar.dart';
 import 'package:shimmers/constant/no_internet_screen.dart';
 import 'package:shimmers/screens/tourVisit/addExpensesScreen.dart';
+import 'package:shimmers/screens/tourVisit/ticketPdfScreen.dart';
+import 'package:shimmers/screens/tourVisit/tourImageScreen.dart';
 
 import '../../constant/colorsConstant.dart';
 import '../../constant/internetConnectivity.dart';
 import '../../constant/route_helper.dart';
 import '../../controllers/tourController.dart';
 import '../noDataFound/noDataFoundScreen.dart';
+import 'package:path/path.dart' as p;
 
 class ExpensesListScreen extends StatefulWidget {
   @override
@@ -77,7 +80,7 @@ class _ExpensesListScreen extends State<ExpensesListScreen> {
                               shrinkWrap: true,
                               itemCount: tourController
                                   .totalExpensesModel!.data!.length,
-                             // physics: const NeverScrollableScrollPhysics(),
+                              // physics: const NeverScrollableScrollPhysics(),
                               itemBuilder: (BuildContext context, int index) {
                                 return Padding(
                                   padding: EdgeInsets.symmetric(
@@ -109,10 +112,16 @@ class _ExpensesListScreen extends State<ExpensesListScreen> {
                                               ),
                                               InkWell(
                                                   onTap: () {
-                                                    PersistentNavBarNavigator.pushNewScreen(
+                                                    PersistentNavBarNavigator
+                                                        .pushNewScreen(
                                                       context,
-                                                      screen:  AddExpensesScreen(
-                                                          expenses_id: tourController.totalExpensesModel!.data![index].id!.toString()),
+                                                      screen: AddExpensesScreen(
+                                                          expenses_id:
+                                                              tourController
+                                                                  .totalExpensesModel!
+                                                                  .data![index]
+                                                                  .id!
+                                                                  .toString()),
                                                       withNavBar: false,
                                                     ).then((value) {
                                                       setState(() {
@@ -153,13 +162,80 @@ class _ExpensesListScreen extends State<ExpensesListScreen> {
                                           SizedBox(
                                             height: 5,
                                           ),
-                                          Text(
-                                              'Area Covered: ${tourController.totalExpensesModel!.data![index].areaCovered}',
-                                              style: TextStyle(
-                                                  color: Colors.grey,
-                                                  fontSize: 14,
-                                                  fontWeight:
-                                                      FontWeight.w500)),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                  'Area Covered: ${tourController.totalExpensesModel!.data![index].areaCovered}',
+                                                  style: TextStyle(
+                                                      color: Colors.grey,
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.w500)),
+                                              tourController
+                                                              .totalExpensesModel!
+                                                              .data![index]
+                                                              .attachment ==
+                                                          null ||
+                                                      tourController
+                                                              .totalExpensesModel!
+                                                              .data![index]
+                                                              .attachment ==
+                                                          ''
+                                                  ? SizedBox()
+                                                  : InkWell(
+                                                      onTap: () {
+                                                        final extension = p
+                                                            .extension(tourController
+                                                                .totalExpensesModel!
+                                                                .data![index]
+                                                                .attachment!);
+                                                        if (extension ==
+                                                            '.pdf') {
+                                                          Navigator.push(
+                                                              context,
+                                                              MaterialPageRoute(
+                                                                  builder: (context) => TicketPdfScreen(
+                                                                      fileUrl: tourController
+                                                                          .totalExpensesModel!
+                                                                          .data![
+                                                                              index]
+                                                                          .attachment!)));
+                                                        } else {
+                                                          //  showCustomSnackBar('File is Image',isError: false);
+                                                          Navigator.push(
+                                                              context,
+                                                              MaterialPageRoute(
+                                                                  builder:
+                                                                      (context) =>
+                                                                          TourImageScreen(
+                                                                            image_url:
+                                                                                tourController.totalExpensesModel!.data![index].attachment!,
+                                                                            extension:
+                                                                                extension,
+                                                                          )));
+                                                        }
+                                                      },
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(top: 5.0),
+                                                        child: Text(
+                                                          'View Attachment',
+                                                          // 'Remark: ${widget.model.remark ??'vff':widget.model.remark}',
+                                                          style: TextStyle(
+                                                              color:
+                                                                  primaryColor,
+                                                              fontSize: 14,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500),
+                                                        ),
+                                                      ),
+                                                    ),
+                                            ],
+                                          ),
                                           SizedBox(
                                             height: 5,
                                           ),
@@ -168,48 +244,87 @@ class _ExpensesListScreen extends State<ExpensesListScreen> {
                                               style: TextStyle(
                                                   color: Colors.grey,
                                                   fontSize: 14,
-                                                  fontWeight:
-                                                      FontWeight.w500)),
+                                                  fontWeight: FontWeight.w500)),
                                           SizedBox(
                                             height: 5,
                                           ),
                                           Text(
-                                              'DA: Rs.${tourController.totalExpensesModel!.data![index].da}',
+                                              tourController
+                                                              .totalExpensesModel!
+                                                              .data![index]
+                                                              .da ==
+                                                          null ||
+                                                      tourController
+                                                              .totalExpensesModel!
+                                                              .data![index]
+                                                              .da ==
+                                                          ''
+                                                  ? 'DA: Rs.0'
+                                                  : 'DA: Rs.${tourController.totalExpensesModel!.data![index].da}',
                                               style: TextStyle(
                                                   color: Colors.grey,
                                                   fontSize: 14,
-                                                  fontWeight:
-                                                      FontWeight.w500)),
+                                                  fontWeight: FontWeight.w500)),
                                           SizedBox(
                                             height: 5,
                                           ),
                                           Text(
-                                              'TA: Rs.${tourController.totalExpensesModel!.data![index].ta}',
+                                              tourController
+                                                              .totalExpensesModel!
+                                                              .data![index]
+                                                              .ta ==
+                                                          null ||
+                                                      tourController
+                                                              .totalExpensesModel!
+                                                              .data![index]
+                                                              .ta ==
+                                                          ''
+                                                  ? 'TA: Rs.0'
+                                                  : 'TA: Rs.${tourController.totalExpensesModel!.data![index].ta}',
                                               style: TextStyle(
                                                   color: Colors.grey,
                                                   fontSize: 14,
-                                                  fontWeight:
-                                                      FontWeight.w500)),
+                                                  fontWeight: FontWeight.w500)),
                                           SizedBox(
                                             height: 5,
                                           ),
                                           Text(
-                                              'Hotel / Restaurant: Rs.${tourController.totalExpensesModel!.data![index].hotel}',
+                                              tourController
+                                                              .totalExpensesModel!
+                                                              .data![index]
+                                                              .hotel ==
+                                                          null ||
+                                                      tourController
+                                                              .totalExpensesModel!
+                                                              .data![index]
+                                                              .hotel ==
+                                                          ''
+                                                  ? 'Hotel / Restaurant: Rs.0'
+                                                  : 'Hotel / Restaurant: Rs.${tourController.totalExpensesModel!.data![index].hotel}',
                                               style: TextStyle(
                                                   color: Colors.grey,
                                                   fontSize: 14,
-                                                  fontWeight:
-                                                      FontWeight.w500)),
+                                                  fontWeight: FontWeight.w500)),
                                           SizedBox(
                                             height: 5,
                                           ),
                                           Text(
-                                              'Miscellaneous Amount: Rs.${tourController.totalExpensesModel!.data![index].miscOther}',
+                                              tourController
+                                                              .totalExpensesModel!
+                                                              .data![index]
+                                                              .miscOther ==
+                                                          null ||
+                                                      tourController
+                                                              .totalExpensesModel!
+                                                              .data![index]
+                                                              .miscOther ==
+                                                          ''
+                                                  ? 'Miscellaneous Amount: Rs.0'
+                                                  : 'Miscellaneous Amount: Rs.${tourController.totalExpensesModel!.data![index].miscOther}',
                                               style: TextStyle(
                                                   color: Colors.grey,
                                                   fontSize: 14,
-                                                  fontWeight:
-                                                      FontWeight.w500)),
+                                                  fontWeight: FontWeight.w500)),
                                           SizedBox(
                                             height: 5,
                                           ),
@@ -218,8 +333,7 @@ class _ExpensesListScreen extends State<ExpensesListScreen> {
                                               style: TextStyle(
                                                   color: Colors.grey,
                                                   fontSize: 14,
-                                                  fontWeight:
-                                                  FontWeight.w500)),
+                                                  fontWeight: FontWeight.w500)),
                                           SizedBox(
                                             height: 5,
                                           )
@@ -231,7 +345,7 @@ class _ExpensesListScreen extends State<ExpensesListScreen> {
                               }),
                         ),
               floatingActionButtonLocation:
-              FloatingActionButtonLocation.endDocked,
+                  FloatingActionButtonLocation.endDocked,
               floatingActionButton: Padding(
                 padding: const EdgeInsets.only(bottom: 15.0),
                 child: FloatingActionButton(
@@ -241,14 +355,11 @@ class _ExpensesListScreen extends State<ExpensesListScreen> {
                   onPressed: () {
                     PersistentNavBarNavigator.pushNewScreen(
                       context,
-                      screen:  AddExpensesScreen(
-                          expenses_id: '0'),
+                      screen: AddExpensesScreen(expenses_id: '0'),
                       withNavBar: false,
                     ).then((value) {
                       setState(() {
-                        Get.find<
-                            TourController>()
-                            .getExpensesList();
+                        Get.find<TourController>().getExpensesList();
                       });
                     });
                   },
@@ -264,13 +375,12 @@ class _ExpensesListScreen extends State<ExpensesListScreen> {
         .deleteExpenses(expenses_id: expense_id)
         .then((message) {
       if (message == 'Executive Expenses deleted successfully') {
-        showCustomSnackBar(message!,isError: false);
+        showCustomSnackBar(message!, isError: false);
         setState(() {
           tourController.totalExpensesModel!.data!.removeAt(index);
         });
-      }
-      else{
-        showCustomSnackBar(message!,isError: false);
+      } else {
+        showCustomSnackBar(message!, isError: false);
       }
     });
   }
