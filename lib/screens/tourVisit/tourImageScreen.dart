@@ -12,9 +12,9 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:shimmers/constant/custom_snackbar.dart';
 
 class TourImageScreen extends StatefulWidget{
-  String image_url,extension;
+  String image_url,extension,from;
 
-  TourImageScreen({required this.image_url,required this.extension});
+  TourImageScreen({required this.image_url,required this.extension,required this.from});
 
   @override
   State<StatefulWidget> createState() {
@@ -47,8 +47,14 @@ class _TourImageScreen extends State<TourImageScreen>{
             padding: EdgeInsets.symmetric(horizontal: 10),
             child: InkWell(onTap: (){
               var url = widget.image_url;
-              var filename = 'TourTicket${widget.extension}';
-              download(url, filename);
+              if(widget=='tour') {
+                var filename = 'TourTicket${widget.extension}';
+                download(url, filename);
+              }
+              else{
+                var filename = 'Expenses${widget.extension}';
+                download(url, filename);
+              }
             },
                 child: Icon(Icons.download)),
           )

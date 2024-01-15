@@ -201,7 +201,7 @@ class _ExpensesListScreen extends State<ExpensesListScreen> {
                                                                           .totalExpensesModel!
                                                                           .data![
                                                                               index]
-                                                                          .attachment!)));
+                                                                          .attachment!,from: 'expenses',)));
                                                         } else {
                                                           //  showCustomSnackBar('File is Image',isError: false);
                                                           Navigator.push(
@@ -213,7 +213,7 @@ class _ExpensesListScreen extends State<ExpensesListScreen> {
                                                                             image_url:
                                                                                 tourController.totalExpensesModel!.data![index].attachment!,
                                                                             extension:
-                                                                                extension,
+                                                                                extension,from: 'expenses',
                                                                           )));
                                                         }
                                                       },

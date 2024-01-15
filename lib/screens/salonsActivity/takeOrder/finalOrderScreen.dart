@@ -634,10 +634,7 @@ class _FinalOrderScreenState extends State<FinalOrderScreen> {
                                                         note: widget.note,
                                                         need_approval:
                                                             need_approval,
-                                                        is_on_tour: int.parse(
-                                                            Get.find<
-                                                                    SalonController>()
-                                                                .getonTour()));
+                                                        is_on_tour: 0);
                                                 showDiscountDialog(context,
                                                     salonController, model);
                                               } else {
@@ -660,10 +657,7 @@ class _FinalOrderScreenState extends State<FinalOrderScreen> {
                                                         note: widget.note,
                                                         need_approval:
                                                             need_approval,
-                                                        is_on_tour: int.parse(
-                                                            Get.find<
-                                                                    SalonController>()
-                                                                .getonTour()));
+                                                        is_on_tour: 0);
                                                 placeOrder(
                                                     salonController, model);
                                               }
@@ -897,7 +891,13 @@ class _FinalOrderScreenState extends State<FinalOrderScreen> {
       SalonController salonController, PlaceOrderModel model) async {
     salonController.placeOrder(model).then((message) async {
       if (message == 'Order placed successfully.') {
-        showCustomSnackBar(message!, isError: false);
+        if(need_approval==1)
+          {
+            showCustomSnackBar("Order send successfully for an approval!");
+          }
+        else{
+          showCustomSnackBar(message!, isError: false);
+        }
         Navigator.pop(context);
       } else {
         showCustomSnackBar(message!);

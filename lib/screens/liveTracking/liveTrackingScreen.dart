@@ -8,6 +8,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:shimmers/constant/app_constants.dart';
+import 'package:shimmers/constant/custom_snackbar.dart';
 import 'package:shimmers/controllers/scoreController.dart';
 import 'package:shimmers/screens/salons/salonDetails/salonDetailsScreen.dart';
 
@@ -68,6 +69,9 @@ class _LiveTrackingScreen extends State<LiveTrackingScreen> {
   Future<void> _getLiveEmpList() async {
     trackingModel = await Get.find<ScoreController>().getLiveTrackingList();
     liveTrackList = trackingModel!.data!;
+    if(trackingModel!.data!.isEmpty){
+      showCustomSnackBar('No executive is live today!');
+    }
     liveTrackList!.forEach((element) {
       _marker.add(Marker(
           markerId: MarkerId(element.salonName!),
@@ -118,7 +122,7 @@ class _LiveTrackingScreen extends State<LiveTrackingScreen> {
                     )
                   ],
                 ),
-                body: scoreController.isLoading
+                body: scoreController.isLoading || currentLatLng==null
                     ? Center(child: CircularProgressIndicator())
                     : Container(
                         // on below line creating google maps.
@@ -137,9 +141,7 @@ class _LiveTrackingScreen extends State<LiveTrackingScreen> {
                           // on below line setting compass enabled.
                           compassEnabled: true,
                           // on below line specifying controller on map complete.
-                          onMapCreated: (GoogleMapController controller) {
-                            _controller.complete(controller);
-                          },
+                          onMapCreated: _onMapCreated,
                         ),
                       )
                 );
@@ -155,6 +157,9 @@ class _LiveTrackingScreen extends State<LiveTrackingScreen> {
     mapController = controller;
     mapController.animateCamera(CameraUpdate.newLatLngZoom(
         LatLng(_currentPosition!.latitude, _currentPosition!.longitude), 14));
+    setState(() {
+      _controller.complete();
+    });
   }
 
   Future<void> _getCurrentPosition() async {

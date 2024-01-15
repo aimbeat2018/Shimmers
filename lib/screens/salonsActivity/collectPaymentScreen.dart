@@ -434,7 +434,7 @@ class _CollectPaymentScreenState extends State<CollectPaymentScreen> {
             paymentMode: paymentMode,
             referenceNumber: referenceNumber,
             amount: amount,
-            is_on_tour: Get.find<SalonController>().getonTour(),
+            is_on_tour: '0',
             image: image)
         .then((message) async {
       if (message == 'Payment collected successfully.') {

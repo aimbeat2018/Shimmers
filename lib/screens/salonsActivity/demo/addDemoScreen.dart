@@ -386,7 +386,7 @@ class _AddDemoScreenState extends State<AddDemoScreen> {
             date: selectedDate,
             time: selectedTime,
             requirement: requirementController.text,
-            is_on_tour: Get.find<SalonController>().getonTour())
+            is_on_tour: '0')
         .then((message) async {
       if (message == 'Demo request sent successfully') {
         showCustomSnackBar(message!, isError: false);

@@ -11,8 +11,8 @@ import 'package:permission_handler/permission_handler.dart';
 import '../../constant/custom_snackbar.dart';
 
 class TicketPdfScreen extends StatefulWidget {
-  String fileUrl;
-  TicketPdfScreen({required this.fileUrl});
+  String fileUrl,from;
+  TicketPdfScreen({required this.fileUrl,required this.from});
 
 
   @override
@@ -69,8 +69,14 @@ class _TicketPdfScreen extends State<TicketPdfScreen> {
             padding: EdgeInsets.symmetric(horizontal: 10),
             child: InkWell(onTap: (){
               var url = widget.fileUrl;
-              var filename = 'TourTicket.pdf';
-              download(url, filename);
+              if(widget.from=='tour') {
+                var filename = 'TourTicket.pdf';
+                download(url, filename);
+              }
+              else{
+                var filename = 'Expenses.pdf';
+                download(url, filename);
+              }
             },
                 child: Icon(Icons.download)),
           )

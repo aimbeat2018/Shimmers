@@ -169,7 +169,7 @@ class _TakeNoteScreenState extends State<TakeNoteScreen> {
       showCustomSnackBar("No internet connection", isError: false);
     } else {
       salonController
-          .takeSalonNote(salonId: widget.salonId, note: note,is_on_tour:Get.find<SalonController>().getonTour())
+          .takeSalonNote(salonId: widget.salonId, note: note,is_on_tour:'0')
           .then((message) async {
         if (message == 'Note added successfully.') {
           showCustomSnackBar(message!, isError: false);

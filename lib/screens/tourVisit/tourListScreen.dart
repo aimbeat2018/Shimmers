@@ -313,7 +313,7 @@ class _TourListScreen extends State<TourListScreen> {
                                                                         .exeTourDetailModel!
                                                                         .data![
                                                                             index]
-                                                                        .attachment!)));
+                                                                        .attachment!,from:'tour')));
                                                       } else {
                                                         //  showCustomSnackBar('File is Image',isError: false);
                                                         Navigator.push(
@@ -327,7 +327,7 @@ class _TourListScreen extends State<TourListScreen> {
                                                                               .data![index]
                                                                               .attachment!,
                                                                           extension:
-                                                                              extension,
+                                                                              extension,from: 'tour',
                                                                         )));
                                                       }
                                                     },

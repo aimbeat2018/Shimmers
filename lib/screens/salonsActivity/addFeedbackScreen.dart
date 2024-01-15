@@ -463,7 +463,7 @@ class _AddFeedBackScreenState extends State<AddFeedBackScreen> {
                                         remarksController.text,
                                         lat.toString(),
                                         longi.toString(),
-                                        Get.find<SalonController>().getonTour(),
+                                        '0',
                                         _pickedFile);
                                   }
                                 },
