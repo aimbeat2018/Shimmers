@@ -133,9 +133,6 @@ class _VisitDetailsSheet extends State<VisitDetailsSheet> {
                             GlobalFunctions.getInputDecoration('Salon Name'),
                         style: TextStyle(fontSize: 14),
                         keyboardType: TextInputType.text,
-                        /* onSaved: (value) {
-                  salonController.text = value as String;
-                },*/
                         onChanged: onSearchTextChanged,
                       ),
                       SizedBox(

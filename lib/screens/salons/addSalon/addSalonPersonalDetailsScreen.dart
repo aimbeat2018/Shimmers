@@ -494,7 +494,7 @@ class _AddSalonPersonalDetailsScreenState
           title: 'Cropper',
         ),
       ],
-      compressQuality: 100,
+      compressQuality: 80,
     );
 
     _pickedFile = XFile(croppedFile!.path);

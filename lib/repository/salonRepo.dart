@@ -56,8 +56,9 @@ class SalonRepo {
     return await apiClient.getData(AppConstants.salonCategory);
   }
 
-  Future<Response> getEmpRouteList() async {
-    return await apiClient.getData(AppConstants.routeList);
+  Future<Response> getEmpRouteList({String? key}) async {
+    return await apiClient.postData(AppConstants.routeList, {"key": key});
+
   }
 
   Future<Response> getUnitType() async {

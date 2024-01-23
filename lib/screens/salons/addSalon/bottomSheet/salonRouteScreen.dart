@@ -18,7 +18,7 @@ class _SalonRouteScreenState extends State<SalonRouteScreen> {
   void initState() {
     super.initState();
 
-    Get.find<SalonController>().getEmpRouteList();
+    //Get.find<SalonController>().getEmpRouteList();
   }
 
   @override

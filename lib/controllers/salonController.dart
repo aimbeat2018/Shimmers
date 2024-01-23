@@ -205,10 +205,10 @@ class SalonController extends GetxController implements GetxService {
     return feedBackPurposeModel;
   }
 
-  Future<EmployeeRouteListModel?> getEmpRouteList() async {
+  Future<EmployeeRouteListModel?> getEmpRouteList({String? key}) async {
     _isLoading = true;
     // update();
-    Response response = await salonRepo.getEmpRouteList();
+    Response response = await salonRepo.getEmpRouteList(key:key);
 
     if (response.statusCode == 200) {
       employeeRouteListModel = EmployeeRouteListModel.fromJson(response.body);

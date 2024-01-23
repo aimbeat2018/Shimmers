@@ -771,11 +771,16 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                           Center(
                             child: InkWell(
                               onTap: () {
-                                 PersistentNavBarNavigator.pushNewScreen(
-                                  context,
-                                  screen:  LiveTrackingScreen(),
-                                  withNavBar: false,
-                                );
+                                if (userRole == 'employee') {
+                                  PersistentNavBarNavigator.pushNewScreen(
+                                    context,
+                                    screen: LiveTrackingScreen(),
+                                    withNavBar: false,
+                                  );
+                                }
+                                else{
+                                  showCustomSnackBar('You dont have the permission to use this module!');
+                                }
                               },
                               child: SizedBox(
                                 height: 135,
