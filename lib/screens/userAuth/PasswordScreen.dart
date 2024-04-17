@@ -236,6 +236,6 @@ class PasswordScreenState extends State<PasswordScreen> {
 
   forgetPassword() {
     Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => PasswordResetScreen()));
+        .push(MaterialPageRoute(builder: (context) => PasswordResetScreen(email: widget.email!,image: widget.image!)));
   }
 }

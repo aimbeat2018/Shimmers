@@ -187,7 +187,12 @@ class _NewSalonsScreenState extends State<NewSalonsScreen> {
                           child: CircularProgressIndicator(),
                         ),
                       )
-                    : salonController.salonRouteModel!.salonRouteData == null || salonController.salonRouteModel!.salonRouteData!.salons!.isEmpty
+                    : salonController.salonRouteModel!.salonRouteData == null ||
+                            salonController.salonRouteModel!.salonRouteData!
+                                .salons!.isEmpty ||
+                            salonController
+                                    .salonRouteModel!.salonRouteData!.salons ==
+                                null
                         ? Center(
                             child: SizedBox(
                                 height:
