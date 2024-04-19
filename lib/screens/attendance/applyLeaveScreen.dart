@@ -81,6 +81,9 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
         : GetBuilder<AttendanceController>(builder: (attendanceController) {
             return Scaffold(
               appBar: AppBar(
+                iconTheme: IconThemeData(
+                  color: Colors.white, //change your color here
+                ),
                 backgroundColor: primaryColor,
                 centerTitle: true,
                 title: Text(

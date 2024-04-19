@@ -33,6 +33,7 @@ class PasswordResetScreenState extends State<PasswordResetScreen> {
   String _connectionStatus = 'unKnown';
   final Connectivity _connectivity = Connectivity();
   late StreamSubscription<ConnectivityResult> _connectivitySubscription;
+  bool passwordVisible = true;
 
   @override
   void initState() {
@@ -113,7 +114,7 @@ class PasswordResetScreenState extends State<PasswordResetScreen> {
                                     fontWeight: FontWeight.normal,
                                     fontSize: 16),
                               ),
-                              const SizedBox(height: 10),
+                              const SizedBox(height: 40),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -122,7 +123,7 @@ class PasswordResetScreenState extends State<PasswordResetScreen> {
                                   //   style: TextStyle(color: primaryColor),
                                   // ),
                                   Text(
-                                    'Enter Password',
+                                    'Password',
                                     style: TextStyle(color: primaryColor),
                                   ),
                                   SizedBox(
@@ -133,13 +134,10 @@ class PasswordResetScreenState extends State<PasswordResetScreen> {
                                       boxShadow: [
                                         BoxShadow(
                                           color: primaryColor,
-                                          blurRadius: 12.0,
-                                          // soften the shadow
-                                          spreadRadius: 0.5,
-                                          //extend the shadow
+                                          blurRadius: 12.0, // soften the shadow
+                                          spreadRadius: 0.5, //extend the shadow
                                           offset: Offset(
-                                            1.0,
-                                            // Move to right 5  horizontally
+                                            1.0, // Move to right 5  horizontally
                                             1.0, // Move to bottom 5 Vertically
                                           ),
                                         )
@@ -147,20 +145,71 @@ class PasswordResetScreenState extends State<PasswordResetScreen> {
                                       color: Colors.white,
                                       borderRadius: BorderRadius.circular(12),
                                     ),
-                                    child: TextFormField(
-                                      obscureText: true,
-                                      focusNode: _focusNodes[0],
-                                      style: const TextStyle(fontSize: 14),
-                                      decoration:
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        Expanded(
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                                            child: TextFormField(
+                                              obscureText: passwordVisible,
+                                              focusNode: _focusNodes[0],
+                                              style: const TextStyle(fontSize: 14),
+                                              /*decoration:
                                           GlobalFunctions.getInputDecoration(
                                         TextConstant.enterPassword,
-                                      ),
-                                      controller: _passwordController,
-                                      keyboardType: TextInputType.text,
-                                      onSaved: (value) {
-                                        _passwordController.text =
-                                            value as String;
-                                      },
+                                      ),*/
+                                              decoration: const InputDecoration(
+                                                enabledBorder: OutlineInputBorder(
+                                                  borderRadius: BorderRadius.all(
+                                                      Radius.circular(12.0)),
+                                                  borderSide: BorderSide(
+                                                      color: Colors.white,
+                                                      width: 2),
+                                                ),
+                                                focusedBorder: OutlineInputBorder(
+                                                  borderRadius: BorderRadius.all(
+                                                      Radius.circular(12.0)),
+                                                  borderSide: BorderSide(
+                                                      color: Colors.white,
+                                                      width: 2),
+                                                ),
+                                                hintText: "Enter Password",
+                                                hintStyle: TextStyle(
+                                                  fontFamily: 'calibri_reqular',
+                                                ),
+                                                contentPadding:
+                                                EdgeInsets.symmetric(
+                                                    vertical: 10,
+                                                    horizontal: 5),
+                                              ),
+
+                                              controller: _passwordController,
+                                              keyboardType: TextInputType.text,
+                                              onSaved: (value) {
+                                                _passwordController.text = value as String;
+                                              },
+                                            ),
+                                          ),
+                                        ),
+                                        Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 6.0),
+                                            child: InkWell(
+                                              onTap: () {
+                                                setState(() {
+                                                  passwordVisible = !passwordVisible;
+                                                });
+                                              },
+                                              child: Icon(
+                                                passwordVisible
+                                                    ? Icons.visibility_off
+                                                    : Icons.visibility,
+                                                color: Colors.grey,
+                                              ),
+                                            )),
+                                      ],
                                     ),
                                   ),
                                 ],

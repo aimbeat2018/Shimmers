@@ -185,6 +185,9 @@ class _SalonDetailsScreenState extends State<SalonDetailsScreen> {
               child: Scaffold(
                 backgroundColor: kBackgroundColor,
                 appBar: AppBar(
+                  iconTheme: IconThemeData(
+                    color: Colors.white, //change your color here
+                  ),
                   backgroundColor: primaryColor,
                   automaticallyImplyLeading: false,
                   title: Text(

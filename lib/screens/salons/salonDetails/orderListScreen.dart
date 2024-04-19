@@ -51,6 +51,9 @@ class _OrderListScreen extends State {
         : GetBuilder<SalonController>(builder: (salonController) {
             return Scaffold(
               appBar: AppBar(
+                iconTheme: IconThemeData(
+                  color: Colors.white, //change your color here
+                ),
                 backgroundColor: primaryColor,
                 centerTitle: true,
                 title: Text(

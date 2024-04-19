@@ -50,6 +50,9 @@ class _HeadOfficerTourRequests extends State{
         : GetBuilder<TourController>(builder: (tourController) {
       return Scaffold(
         appBar: AppBar(
+          iconTheme: IconThemeData(
+            color: Colors.white, //change your color here
+          ),
           backgroundColor: primaryColor,
           centerTitle: true,
           title: Text(

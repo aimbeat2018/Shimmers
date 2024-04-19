@@ -117,6 +117,9 @@ class _TourVisitScreenState extends State<TourVisitScreen> {
         : GetBuilder<TourController>(builder: (tourController) {
             return Scaffold(
               appBar: AppBar(
+                iconTheme: IconThemeData(
+                  color: Colors.white, //change your color here
+                ),
                 backgroundColor: primaryColor,
                 centerTitle: true,
                 title: Text(

@@ -35,8 +35,8 @@ class RouteHelper {
   static String getPasswordChangedScreenRoute(String email, String image) =>
       '$passwordChangedScreen?email=$email&image=$image';
 
-  static String getPasswordScreenRoute(String image, String email) =>
-      '$passwordScreen?image=$image&email=$email';
+  static String getPasswordScreenRoute(String image, String email,String name) =>
+      '$passwordScreen?image=$image&email=$email&name=$name';
 
   static String getSalonDetailsRoute(String salonId) =>
       '$salonDetails?salonId=$salonId';
@@ -71,6 +71,7 @@ class RouteHelper {
         page: () => PasswordScreen(
               image: Get.parameters['image'],
               email: Get.parameters['email'],
+              name: Get.parameters['name'],
             )),
     GetPage(
         name: salonDetails,

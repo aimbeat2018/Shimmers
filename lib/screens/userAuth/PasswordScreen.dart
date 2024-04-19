@@ -19,8 +19,9 @@ class PasswordScreen extends StatefulWidget {
   // static const String name = 'password';
   final String? image;
   final String? email;
+  final String? name;
 
-  const PasswordScreen({super.key, required this.image, this.email});
+  const PasswordScreen({super.key, required this.image, this.email, this.name});
 
   @override
   State<StatefulWidget> createState() => PasswordScreenState();
@@ -35,6 +36,7 @@ class PasswordScreenState extends State<PasswordScreen> {
   String _connectionStatus = 'unKnown';
   final Connectivity _connectivity = Connectivity();
   late StreamSubscription<ConnectivityResult> _connectivitySubscription;
+  bool passwordVisible = true;
 
   @override
   void initState() {
@@ -94,18 +96,18 @@ class PasswordScreenState extends State<PasswordScreen> {
                                 width: 120,
                               ),
                       ),
+                      Text(
+                        widget.name!,
+                        style: TextStyle(color: primaryColor, fontSize: 16),
+                      ),
                       SizedBox(
                         height: 80,
                       ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          // Text(
-                          //   widget.email! ?? '',
-                          //   style: TextStyle(color: primaryColor),
-                          // ),
                           Text(
-                            'Enter Password',
+                            'Password',
                             style: TextStyle(color: primaryColor),
                           ),
                           SizedBox(
@@ -127,18 +129,71 @@ class PasswordScreenState extends State<PasswordScreen> {
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(12),
                             ),
-                            child: TextFormField(
-                              obscureText: true,
-                              focusNode: _focusNodes[0],
-                              style: const TextStyle(fontSize: 14),
-                              decoration: GlobalFunctions.getInputDecoration(
-                                TextConstant.enterPassword,
-                              ),
-                              controller: _passwordController,
-                              keyboardType: TextInputType.text,
-                              onSaved: (value) {
-                                _passwordController.text = value as String;
-                              },
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                                    child: TextFormField(
+                                      obscureText: passwordVisible,
+                                      focusNode: _focusNodes[0],
+                                      style: const TextStyle(fontSize: 14),
+                                      /*decoration:
+                                          GlobalFunctions.getInputDecoration(
+                                        TextConstant.enterPassword,
+                                      ),*/
+                                      decoration: const InputDecoration(
+                                        enabledBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(12.0)),
+                                          borderSide: BorderSide(
+                                              color: Colors.white,
+                                              width: 2),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(12.0)),
+                                          borderSide: BorderSide(
+                                              color: Colors.white,
+                                              width: 2),
+                                        ),
+                                        hintText: "Enter Password",
+                                        hintStyle: TextStyle(
+                                          fontFamily: 'calibri_reqular',
+                                        ),
+                                        contentPadding:
+                                        EdgeInsets.symmetric(
+                                            vertical: 10,
+                                            horizontal: 5),
+                                      ),
+
+                                      controller: _passwordController,
+                                      keyboardType: TextInputType.text,
+                                      onSaved: (value) {
+                                        _passwordController.text = value as String;
+                                      },
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 6.0),
+                                    child: InkWell(
+                                      onTap: () {
+                                        setState(() {
+                                          passwordVisible = !passwordVisible;
+                                        });
+                                      },
+                                      child: Icon(
+                                        passwordVisible
+                                            ? Icons.visibility_off
+                                            : Icons.visibility,
+                                        color: Colors.grey,
+                                      ),
+                                    )),
+                              ],
                             ),
                           ),
                         ],
@@ -221,7 +276,7 @@ class PasswordScreenState extends State<PasswordScreen> {
     authController
         .loginUser(phone: widget.email!, password: password, deviceToken: "")
         .then((loginModel) async {
-      if (loginModel!.success!) {
+      if (loginModel!.code == 200) {
         if (loginModel.passwordChanged == 1) {
           Get.offNamed(RouteHelper.getMainScreenRoute());
         } else {
@@ -235,7 +290,8 @@ class PasswordScreenState extends State<PasswordScreen> {
   }
 
   forgetPassword() {
-    Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => PasswordResetScreen(email: widget.email!,image: widget.image!)));
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) =>
+            PasswordResetScreen(email: widget.email!, image: widget.image!)));
   }
 }

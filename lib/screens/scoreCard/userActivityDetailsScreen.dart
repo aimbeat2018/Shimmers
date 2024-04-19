@@ -79,6 +79,9 @@ class _UserActivityDetailScreen extends State<UserActivityDetailsScreen> {
         : GetBuilder<ScoreController>(builder: (scoreController) {
             return Scaffold(
               appBar: AppBar(
+                iconTheme: IconThemeData(
+                  color: Colors.white, //change your color here
+                ),
                 backgroundColor: primaryColor,
                 centerTitle: true,
                 title: Text(

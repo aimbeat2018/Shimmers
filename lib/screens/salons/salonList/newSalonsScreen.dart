@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:shimmers/constant/colorsConstant.dart';
 import 'package:shimmers/constant/textConstant.dart';
 import 'package:shimmers/controllers/salonController.dart';
@@ -139,9 +140,14 @@ class _NewSalonsScreenState extends State<NewSalonsScreen> {
               children: [
                 InkWell(
                   onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
+                    PersistentNavBarNavigator.pushNewScreen(
+                      context,
+                      screen: AddSalonBasicDetailsScreen(),
+                      withNavBar: false,
+                    );
+                   /* Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) =>
-                            const AddSalonBasicDetailsScreen()));
+                            const AddSalonBasicDetailsScreen()));*/
                   },
                   child: Align(
                     alignment: Alignment.topRight,

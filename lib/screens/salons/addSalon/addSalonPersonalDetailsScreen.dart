@@ -66,6 +66,9 @@ class _AddSalonPersonalDetailsScreenState
     return WillPopScope(
         child: Scaffold(
           appBar: AppBar(
+            iconTheme: IconThemeData(
+              color: Colors.white, //change your color here
+            ),
             backgroundColor: primaryColor,
             centerTitle: true,
             title: Text(
@@ -304,13 +307,13 @@ class _AddSalonPersonalDetailsScreenState
                                     TextSpan(
                                       text: TextConstant.Email,
                                     ),
-                                    TextSpan(
+                                   /* TextSpan(
                                       text: ' *',
                                       style: const TextStyle(
                                           color: Colors.red,
                                           fontSize: 14,
                                           fontWeight: FontWeight.w500),
-                                    ),
+                                    ),*/
                                   ]))),
                         ),
                         const SizedBox(
@@ -429,10 +432,10 @@ class _AddSalonPersonalDetailsScreenState
                                 } else if (mobileController.text.length != 10) {
                                   showCustomSnackBar('Enter mobile number',
                                       isError: true);
-                                } else if (emailController.text.isEmpty) {
+                                } /*else if (emailController.text.isEmpty) {
                                   showCustomSnackBar('Enter email id',
                                       isError: true);
-                                } else {
+                                } */else {
                                   Navigator.of(context)
                                       .pushReplacement(MaterialPageRoute(
                                     builder: (context) => AddFinalSalonScreen(

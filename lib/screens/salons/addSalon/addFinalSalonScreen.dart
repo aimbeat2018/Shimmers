@@ -192,6 +192,9 @@ class _AddFinalSalonScreenState extends State<AddFinalSalonScreen> {
       return WillPopScope(
           child: Scaffold(
             appBar: AppBar(
+              iconTheme: IconThemeData(
+                color: Colors.white, //change your color here
+              ),
               backgroundColor: primaryColor,
               centerTitle: true,
               title: Text(

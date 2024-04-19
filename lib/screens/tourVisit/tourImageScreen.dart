@@ -35,6 +35,9 @@ class _TourImageScreen extends State<TourImageScreen>{
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        iconTheme: IconThemeData(
+          color: Colors.white, //change your color here
+        ),
         title: Text(
           "View Attachment",
           style: const TextStyle(

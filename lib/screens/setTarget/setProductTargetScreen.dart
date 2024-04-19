@@ -90,6 +90,9 @@ class _SetProductTargetScreenState extends State<SetProductTargetScreen> {
         : GetBuilder<TargetController>(builder: (targetController) {
             return Scaffold(
               appBar: AppBar(
+                iconTheme: IconThemeData(
+                  color: Colors.white, //change your color here
+                ),
                 backgroundColor: primaryColor,
                 centerTitle: true,
                 title: Text(

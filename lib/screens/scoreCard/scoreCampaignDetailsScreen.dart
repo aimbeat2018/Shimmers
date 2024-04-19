@@ -78,6 +78,9 @@ class _ScoreCampaignDetailsScreen extends State<ScoreCampaignDetailsScreen> {
         : GetBuilder<ScoreController>(builder: (scoreController) {
             return Scaffold(
               appBar: AppBar(
+                iconTheme: IconThemeData(
+                  color: Colors.white, //change your color here
+                ),
                 backgroundColor: primaryColor,
                 centerTitle: true,
                 title: Text(

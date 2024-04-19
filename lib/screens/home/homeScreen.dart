@@ -105,6 +105,9 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       return Scaffold(
         key: _scaffoldKey,
         appBar: AppBar(
+          iconTheme: IconThemeData(
+            color: Colors.white, //change your color here
+          ),
           backgroundColor: primaryColor,
           centerTitle: false,
           title: Text(

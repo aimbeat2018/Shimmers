@@ -141,6 +141,9 @@ class _DistributorWiseSalonScreenState
         : GetBuilder<DistributorController>(builder: (distributorController) {
             return Scaffold(
               appBar: AppBar(
+                iconTheme: IconThemeData(
+                  color: Colors.white, //change your color here
+                ),
                 backgroundColor: primaryColor,
                 centerTitle: true,
                 title: Text(

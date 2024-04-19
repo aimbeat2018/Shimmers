@@ -33,6 +33,7 @@ class LoginScreenState extends State<LoginScreen> {
   final Connectivity _connectivity = Connectivity();
   late StreamSubscription<ConnectivityResult> _connectivitySubscription;
 
+
   @override
   void initState() {
     super.initState();
@@ -196,7 +197,7 @@ class LoginScreenState extends State<LoginScreen> {
     authController.checkEmail(mobile).then((model) async {
       if (model!.success!) {
         Get.offNamed(RouteHelper.getPasswordScreenRoute(
-            model.user!.image!, model.user!.email!));
+            model.user!.image!, model.user!.email!,model.user!.name!));
       } else {
         showCustomSnackBar('Email or mobile not found');
       }

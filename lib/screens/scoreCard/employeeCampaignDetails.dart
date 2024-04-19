@@ -62,6 +62,9 @@ class _EmployeeCampaignDetails extends State<EmployeeCampaignDetails> {
         : GetBuilder<ScoreController>(builder: (scoreController) {
             return Scaffold(
               appBar: AppBar(
+                iconTheme: IconThemeData(
+                  color: Colors.white, //change your color here
+                ),
                 backgroundColor: primaryColor,
                 centerTitle: true,
                 title: Text(

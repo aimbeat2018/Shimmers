@@ -28,6 +28,9 @@ class _LeavesScreenState extends State<LeavesScreen> {
     return GetBuilder<AttendanceController>(builder: (attendanceController) {
       return Scaffold(
         appBar: AppBar(
+          iconTheme: IconThemeData(
+            color: Colors.white, //change your color here
+          ),
           backgroundColor: primaryColor,
           centerTitle: true,
           title: Text(

@@ -55,6 +55,9 @@ class _TakeNoteScreenState extends State<TakeNoteScreen> {
                 child: Column(
                   children: [
                     AppBar(
+                      iconTheme: IconThemeData(
+                        color: Colors.white, //change your color here
+                      ),
                       backgroundColor: primaryColor,
                       centerTitle: true,
                       title: Text(

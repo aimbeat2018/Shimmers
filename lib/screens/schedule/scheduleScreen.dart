@@ -70,6 +70,9 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
         ? const NoInternetScreen()
         : Scaffold(
             appBar: AppBar(
+              iconTheme: IconThemeData(
+                color: Colors.white, //change your color here
+              ),
               backgroundColor: primaryColor,
               centerTitle: true,
               title: Text(

@@ -48,6 +48,9 @@ class _SalonListScreenState extends State<SalonListScreen> {
             length: 2,
             child: Scaffold(
               appBar: AppBar(
+                iconTheme: IconThemeData(
+                  color: Colors.white, //change your color here
+                ),
                 backgroundColor: primaryColor,
                 centerTitle: true,
                 title: Text(

@@ -51,7 +51,11 @@ class _AddSalonBasicDetailsScreenState
   }
 
   TextEditingController salonNameController = TextEditingController();
+  TextEditingController beatrouteidController = TextEditingController();
   String salonCategory = '', salonId = '';
+  List<String> customerTypeList=['SALON ','RETAIL SHOP','WHOLESALE SHOP','FREELANCER'];
+  String? selectedCustType;
+
 
   @override
   void initState() {
@@ -69,6 +73,9 @@ class _AddSalonBasicDetailsScreenState
       return WillPopScope(
           child: Scaffold(
             appBar: AppBar(
+              iconTheme: IconThemeData(
+                color: Colors.white, //change your color here
+              ),
               backgroundColor: primaryColor,
               centerTitle: true,
               title: Text(
@@ -226,7 +233,7 @@ class _AddSalonBasicDetailsScreenState
                                           EdgeInsets.symmetric(horizontal: 8.0),
                                       child: Text(
                                         salonCategory == ''
-                                            ? ""
+                                            ? "Select Salon Category"
                                             : salonCategory,
                                         style: TextStyle(
                                             color: Colors.black, fontSize: 14),
@@ -299,7 +306,123 @@ class _AddSalonBasicDetailsScreenState
                               },
                             ),
                           ),
+                          const SizedBox(
+                            height: 25,
+                          ),
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: Padding(
+                                padding:
+                                const EdgeInsets.symmetric(horizontal: 8.0),
+                                child: RichText(
+                                    text: TextSpan(
+                                        style: const TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500),
+                                        children: <TextSpan>[
+                                          TextSpan(
+                                            text: 'Customer Sub type',
+                                          ),
+                                          TextSpan(
+                                            text: ' *',
+                                            style: const TextStyle(
+                                                color: Colors.red,
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                        ]))),
+                          ),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          Container(
+                            width: MediaQuery.of(context).size.width,
+                            padding: EdgeInsets.symmetric(horizontal: 15),
+                            decoration: BoxDecoration(
+                              border: Border.all(color: primaryColor),
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: DropdownButtonHideUnderline(
+                              child: DropdownButton(
+                                hint: Text('Select Customer Sub Type'),
+                                  isExpanded: true,
+                                  value: selectedCustType,
+                                  onChanged: (newValue) {
+                                    setState(() {
+                                      selectedCustType = newValue;
+                                    });
+                                  },
+                                  items: customerTypeList.map((ratingType) {
+                                    return DropdownMenuItem(
+                                      child: new Text(ratingType),
+                                      value: ratingType,
+                                    );
+                                  }).toList()),
+                            ),
+
+                          ),
+                          const SizedBox(
+                            height: 25,
+                          ),
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: Padding(
+                                padding:
+                                const EdgeInsets.symmetric(horizontal: 8.0),
+                                child: RichText(
+                                    text: TextSpan(
+                                        style: const TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500),
+                                        children: <TextSpan>[
+                                          TextSpan(
+                                            text: 'Beatroute ID',
+                                          ),
+                                         /* TextSpan(
+                                            text: ' *',
+                                            style: const TextStyle(
+                                                color: Colors.red,
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w500),
+                                          ),*/
+                                        ]))),
+                          ),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                              // boxShadow: const [
+                              //   BoxShadow(
+                              //     color: primaryColor,
+                              //     blurRadius: 12.0, // soften the shadow
+                              //     spreadRadius: 0.5, //extend the shadow
+                              //     offset: Offset(
+                              //       1.0, // Move to right 5  horizontally
+                              //       1.0, // Move to bottom 5 Vertically
+                              //     ),
+                              //   )
+                              // ],
+                              border: Border.all(color: primaryColor),
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: TextFormField(
+                              style: const TextStyle(fontSize: 14),
+                              decoration:
+                              GlobalFunctions.getInputDecorationWhite(""),
+                              controller: beatrouteidController,
+                              keyboardType: TextInputType.text,
+                              onSaved: (value) {
+                                beatrouteidController.text = value as String;
+                              },
+                            ),
+                          ),
                           const SizedBox(height: 50),
+
                           SizedBox(
                             width: 200,
                             // height: 45,
@@ -331,7 +454,10 @@ class _AddSalonBasicDetailsScreenState
                                   if (salonNameController.text.isEmpty) {
                                     showCustomSnackBar('Enter salon name',
                                         isError: true);
-                                  } else {
+                                  }else if(selectedCustType==null){
+                                    showCustomSnackBar('Select customer sub type',
+                                        isError: true);
+                                } else{
                                     PersistentNavBarNavigator.pushNewScreen(
                                       context,
                                       screen: AddSalonPersonalDetailsScreen(
