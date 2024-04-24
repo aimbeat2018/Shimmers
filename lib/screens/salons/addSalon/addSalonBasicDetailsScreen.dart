@@ -3,8 +3,10 @@ import 'package:get/get.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:shimmers/constant/custom_snackbar.dart';
 import 'package:shimmers/constant/textConstant.dart';
+import 'package:shimmers/model/brandDetailModel.dart';
 import 'package:shimmers/model/salonCategoryModel.dart';
 import 'package:shimmers/screens/salons/addSalon/addSalonPersonalDetailsScreen.dart';
+import 'package:shimmers/screens/salons/addSalon/bottomSheet/brandListScreen.dart';
 import 'package:shimmers/screens/salons/addSalon/bottomSheet/salonCatgeoryScreen.dart';
 
 import '../../../constant/colorsConstant.dart';
@@ -53,6 +55,7 @@ class _AddSalonBasicDetailsScreenState
   TextEditingController salonNameController = TextEditingController();
   TextEditingController beatrouteidController = TextEditingController();
   String salonCategory = '', salonId = '';
+  String brandName = '', brandId = '';
   List<String> customerTypeList=['SALON ','RETAIL SHOP','WHOLESALE SHOP','FREELANCER'];
   String? selectedCustType;
 
@@ -62,7 +65,9 @@ class _AddSalonBasicDetailsScreenState
     super.initState();
     if (mounted) {
       Future.delayed(Duration.zero, () async {
-        Get.find<SalonController>().getSalonCategory();
+        Get.find<SalonController>().getSalonCategory().then((value) async{
+          Get.find<SalonController>().getBrandList();
+        });
       });
     }
   }
@@ -362,6 +367,83 @@ class _AddSalonBasicDetailsScreenState
                                   }).toList()),
                             ),
 
+                          ),
+                          const SizedBox(
+                            height: 25,
+                          ),
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: Padding(
+                              padding:
+                              const EdgeInsets.symmetric(horizontal: 8.0),
+                              child: Text(
+                                'Customer Existing Brand',
+                                style: const TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          InkWell(
+                            onTap: () {
+                              showModalBottomSheet(
+                                context: context,
+                                builder: (context) =>
+                                 BrandListScreen(),
+                                backgroundColor: Colors.transparent,
+                              ).then((value) => {
+                                setState(() {
+                                  BrandListData model = value;
+                                  brandName = model!.brandName!;
+                                  brandId = model.id!.toString();
+                                })
+                              });
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                // boxShadow: const [
+                                //   BoxShadow(
+                                //     color: primaryColor,
+                                //     blurRadius: 12.0, // soften the shadow
+                                //     spreadRadius: 0.5, //extend the shadow
+                                //     offset: Offset(
+                                //       1.0, // Move to right 5  horizontally
+                                //       1.0, // Move to bottom 5 Vertically
+                                //     ),
+                                //   )
+                                // ],
+                                border: Border.all(color: primaryColor),
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(12.0),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                        child: Padding(
+                                          padding:
+                                          EdgeInsets.symmetric(horizontal: 8.0),
+                                          child: Text(
+                                            brandName == ''
+                                                ? "Select Customer Existing Brand"
+                                                : brandName,
+                                            style: TextStyle(
+                                                color: Colors.black, fontSize: 14),
+                                          ),
+                                        )),
+                                    Icon(
+                                      Icons.keyboard_arrow_down,
+                                      color: Colors.grey.shade900,
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
                           ),
                           const SizedBox(
                             height: 25,

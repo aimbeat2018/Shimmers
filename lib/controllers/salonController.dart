@@ -15,6 +15,7 @@ import 'package:shimmers/model/unitTypeModel.dart';
 import 'package:shimmers/repository/salonRepo.dart';
 
 import '../constant/route_helper.dart';
+import '../model/brandDetailModel.dart';
 import '../model/cartModel.dart';
 import '../model/deliveredOrderModel.dart';
 import '../model/orderApprovalModel.dart';
@@ -51,6 +52,8 @@ class SalonController extends GetxController implements GetxService {
   ViewProductsModel? viewProductsModel;
 
   OrderApprovalModel? orderApprovalModel;
+
+  BrandDetailModel? brandDetailModel;
 
   bool? _isLoading = false;
   String? salonAddMessage;
@@ -586,6 +589,22 @@ class SalonController extends GetxController implements GetxService {
     _isLoading = false;
     update();
     return punchInMsg;
+  }
+  Future<BrandDetailModel?> getBrandList() async {
+    _isLoading=true;
+    update();
+    Response response=await salonRepo.getBrandList();
+    if(response.statusCode==200){
+      brandDetailModel=BrandDetailModel.fromJson(response.body);
+    }else if(response.statusCode==401){
+      Get.offNamed(RouteHelper.getLoginRoute());
+    }
+    else{
+      brandDetailModel=BrandDetailModel();
+    }
+    _isLoading=false;
+    update();
+  return brandDetailModel;
   }
 
   void setonTour(String onTour)

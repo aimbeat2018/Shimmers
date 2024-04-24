@@ -223,4 +223,8 @@ class SalonRepo {
   String getonTour() {
     return sharedPreferences.getString(AppConstants.onTour) ?? "";
   }
+
+  Future<Response> getBrandList() async{
+    return await apiClient.getData(AppConstants.getBrandList);
+  }
 }

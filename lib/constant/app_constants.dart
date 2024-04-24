@@ -67,6 +67,7 @@ class AppConstants {
   static const String deleteExpenses='delete/executive/expenses';
   static const String expenseDetailsById='expense/by/expense_id';
   static const String getliveExecutivesList='get/employee/tracking/details';
+  static const String getBrandList='get/brand/list';
 
 
 
