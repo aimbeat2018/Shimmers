@@ -592,7 +592,7 @@ class SalonController extends GetxController implements GetxService {
   }
   Future<BrandDetailModel?> getBrandList() async {
     _isLoading=true;
-    update();
+   // update();
     Response response=await salonRepo.getBrandList();
     if(response.statusCode==200){
       brandDetailModel=BrandDetailModel.fromJson(response.body);

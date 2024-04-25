@@ -374,16 +374,26 @@ class _AddSalonBasicDetailsScreenState
                           Align(
                             alignment: Alignment.topLeft,
                             child: Padding(
-                              padding:
-                              const EdgeInsets.symmetric(horizontal: 8.0),
-                              child: Text(
-                                'Customer Existing Brand',
-                                style: const TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w500),
-                              ),
-                            ),
+                                padding:
+                                const EdgeInsets.symmetric(horizontal: 8.0),
+                                child: RichText(
+                                    text: TextSpan(
+                                        style: const TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500),
+                                        children: <TextSpan>[
+                                          TextSpan(
+                                            text: 'Customer Brand Name',
+                                          ),
+                                           TextSpan(
+                                            text: ' *',
+                                            style: const TextStyle(
+                                                color: Colors.red,
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                        ]))),
                           ),
                           const SizedBox(
                             height: 15,
@@ -393,11 +403,11 @@ class _AddSalonBasicDetailsScreenState
                               showModalBottomSheet(
                                 context: context,
                                 builder: (context) =>
-                                 BrandListScreen(),
+                                const BrandListScreen(),
                                 backgroundColor: Colors.transparent,
                               ).then((value) => {
                                 setState(() {
-                                  BrandListData model = value;
+                                  BrandListData model = value!;
                                   brandName = model!.brandName!;
                                   brandId = model.id!.toString();
                                 })
@@ -430,7 +440,7 @@ class _AddSalonBasicDetailsScreenState
                                           EdgeInsets.symmetric(horizontal: 8.0),
                                           child: Text(
                                             brandName == ''
-                                                ? "Select Customer Existing Brand"
+                                                ? "Select Customer Brand Name"
                                                 : brandName,
                                             style: TextStyle(
                                                 color: Colors.black, fontSize: 14),
@@ -539,7 +549,10 @@ class _AddSalonBasicDetailsScreenState
                                   }else if(selectedCustType==null){
                                     showCustomSnackBar('Select customer sub type',
                                         isError: true);
-                                } else{
+                                } else if(brandName==null||brandName==''){
+                                    showCustomSnackBar('Select customer brand name ',isError: true);
+                                  }
+                                  else{
                                     PersistentNavBarNavigator.pushNewScreen(
                                       context,
                                       screen: AddSalonPersonalDetailsScreen(
