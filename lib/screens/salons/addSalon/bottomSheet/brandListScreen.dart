@@ -18,7 +18,6 @@ class _BrandListScreen extends State<BrandListScreen> {
   @override
   void initState() {
     super.initState();
-
     Get.find<SalonController>().getBrandList();
   }
 

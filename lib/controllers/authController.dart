@@ -78,7 +78,7 @@ class AuthController extends GetxController implements GetxService {
 
   Future<ProfileModel?> getUserProfile() async {
     _isLoading = true;
-  //  update();
+    //  update();
     Response response = await authRepo.getUserProfile();
 
     if (response.statusCode == 200) {
@@ -117,12 +117,15 @@ class AuthController extends GetxController implements GetxService {
   String getUserId() {
     return authRepo.getUserId();
   }
-  String getUserRole(){
+
+  String getUserRole() {
     return authRepo.getUserRole();
   }
-  String getRoleId(){
+
+  String getRoleId() {
     return authRepo.getRoleId();
   }
+
   bool clearSharedData() {
     return authRepo.clearSharedData();
   }

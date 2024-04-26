@@ -23,6 +23,9 @@ class AddFinalSalonScreen extends StatefulWidget {
   final String gstNumber;
   final String categoryName;
   final String salonName;
+  final String custType;
+  final String brandId;
+  final String beatrouteId;
 
   const AddFinalSalonScreen(
       {Key? key,
@@ -31,7 +34,10 @@ class AddFinalSalonScreen extends StatefulWidget {
       required this.email,
       required this.gstNumber,
       required this.categoryName,
-      required this.salonName})
+      required this.salonName,
+      required this.custType,
+      required this.brandId,
+      required this.beatrouteId})
       : super(key: key);
 
   @override
@@ -207,8 +213,8 @@ class _AddFinalSalonScreenState extends State<AddFinalSalonScreen> {
             ),
             body: _currentAddress == null
                 ? Center(
-                child: CircularProgressIndicator(),
-                   /* child: SizedBox(
+                    child: CircularProgressIndicator(),
+                    /* child: SizedBox(
                       height: 200.0,
                       child: Stack(
                         children: <Widget>[
@@ -1170,6 +1176,9 @@ class _AddFinalSalonScreenState extends State<AddFinalSalonScreen> {
       longitude: longi.toString(),
       address: companyAddressController.text,
       is_on_tour: '0',
+      customer_sub_type: widget.custType,
+      brand_id: widget.brandId,
+      beatroute_id: widget.beatrouteId,
       image: widget.salonImage,
     )
         .then((message) async {

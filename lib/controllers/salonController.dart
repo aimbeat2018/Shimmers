@@ -211,7 +211,7 @@ class SalonController extends GetxController implements GetxService {
   Future<EmployeeRouteListModel?> getEmpRouteList({String? key}) async {
     _isLoading = true;
     // update();
-    Response response = await salonRepo.getEmpRouteList(key:key);
+    Response response = await salonRepo.getEmpRouteList(key: key);
 
     if (response.statusCode == 200) {
       employeeRouteListModel = EmployeeRouteListModel.fromJson(response.body);
@@ -349,9 +349,11 @@ class SalonController extends GetxController implements GetxService {
       String? salon_type,
       String? latitude,
       String? longitude,
-        String? is_on_tour,
-      XFile? image
-      }) async {
+      String? is_on_tour,
+      String? customer_sub_type,
+      String? brand_id,
+      String? beatroute_id,
+      XFile? image}) async {
     _isLoading = true;
     update();
     Response response = await salonRepo.addSalon(
@@ -373,9 +375,11 @@ class SalonController extends GetxController implements GetxService {
         country: country,
         salon_type: salon_type,
         latitude: latitude,
-        is_on_tour:is_on_tour,
-        image: image
-    );
+        is_on_tour: is_on_tour,
+        customer_sub_type: customer_sub_type,
+        brand_id: brand_id,
+        beatroute_id: beatroute_id,
+        image: image);
 
     if (response.statusCode == 200) {
       salonAddMessage = response.body['message'];
@@ -407,11 +411,12 @@ class SalonController extends GetxController implements GetxService {
     return salonAddMessage;
   }
 
-  Future<String?> takeSalonNote({String? salonId, String? note,String? is_on_tour}) async {
+  Future<String?> takeSalonNote(
+      {String? salonId, String? note, String? is_on_tour}) async {
     _isLoading = true;
     update();
-    Response response =
-        await salonRepo.takeSalonNote(salonId: salonId, note: note,is_on_tour:is_on_tour);
+    Response response = await salonRepo.takeSalonNote(
+        salonId: salonId, note: note, is_on_tour: is_on_tour);
 
     if (response.statusCode == 200) {
       salonAddMessage = response.body['message'];
@@ -530,7 +535,11 @@ class SalonController extends GetxController implements GetxService {
     _isLoading = true;
     update();
     Response response = await salonRepo.addDemoRequest(
-        salonId: salonId, date: date, time: time, requirement: requirement,is_on_tour:is_on_tour);
+        salonId: salonId,
+        date: date,
+        time: time,
+        requirement: requirement,
+        is_on_tour: is_on_tour);
     if (response.statusCode == 200) {
       salonAddMessage = response.body['message'];
     } else if (response.statusCode == 401) {
@@ -590,32 +599,28 @@ class SalonController extends GetxController implements GetxService {
     update();
     return punchInMsg;
   }
+
   Future<BrandDetailModel?> getBrandList() async {
-    _isLoading=true;
-   // update();
-    Response response=await salonRepo.getBrandList();
-    if(response.statusCode==200){
-      brandDetailModel=BrandDetailModel.fromJson(response.body);
-    }else if(response.statusCode==401){
+    _isLoading = true;
+    // update();
+    Response response = await salonRepo.getBrandList();
+    if (response.statusCode == 200) {
+      brandDetailModel = BrandDetailModel.fromJson(response.body);
+    } else if (response.statusCode == 401) {
       Get.offNamed(RouteHelper.getLoginRoute());
+    } else {
+      brandDetailModel = BrandDetailModel();
     }
-    else{
-      brandDetailModel=BrandDetailModel();
-    }
-    _isLoading=false;
+    _isLoading = false;
     update();
-  return brandDetailModel;
+    return brandDetailModel;
   }
 
-  void setonTour(String onTour)
-  {
+  void setonTour(String onTour) {
     salonRepo.setonTour('0');
   }
 
-  String getonTour()
-  {
+  String getonTour() {
     return salonRepo.getonTour();
   }
-
-
 }

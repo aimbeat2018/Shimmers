@@ -98,6 +98,9 @@ class SalonRepo {
       String? latitude,
       String? longitude,
       String? is_on_tour,
+      String? customer_sub_type,
+      String? brand_id,
+      String? beatroute_id,
       XFile? image}) async {
     return await apiClient.postMultipartData(AppConstants.addSalon, {
       "name": name!,
@@ -119,6 +122,9 @@ class SalonRepo {
       "latitude": latitude!,
       "longitude": longitude!,
       "is_on_tour": is_on_tour!,
+      "customer_sub_type": customer_sub_type!,
+      "brand_id": brand_id!,
+      "beatroute_id": beatroute_id!,
     }, [
       MultipartBody('image', image!)
     ]);

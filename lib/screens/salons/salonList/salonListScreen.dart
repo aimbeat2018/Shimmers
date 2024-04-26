@@ -80,6 +80,7 @@ class _SalonListScreenState extends State<SalonListScreen> {
                 // ],
                 bottom: TabBar(
                   indicatorColor: Colors.white,
+                  labelColor: Colors.white,
                   tabs: [
                     Tab(
                       text: TextConstant.newStr,

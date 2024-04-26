@@ -558,7 +558,10 @@ class _AddSalonBasicDetailsScreenState
                                       screen: AddSalonPersonalDetailsScreen(
                                           salonCategory: salonId,
                                           salonName:
-                                          salonNameController.text),
+                                          salonNameController.text,
+                                      custType:selectedCustType!,
+                                      brandId:brandId,
+                                      beatrouteId:beatrouteidController.text),
                                       withNavBar: false,
                                     );
                                     /*Navigator.of(context)

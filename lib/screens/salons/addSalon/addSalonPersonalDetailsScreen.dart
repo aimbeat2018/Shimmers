@@ -16,9 +16,12 @@ class AddSalonPersonalDetailsScreen extends StatefulWidget {
 
   final String salonCategory;
   final String salonName;
+  final String custType;
+  final String brandId;
+  final String beatrouteId;
 
   const AddSalonPersonalDetailsScreen(
-      {Key? key, required this.salonCategory, required this.salonName})
+      {Key? key, required this.salonCategory, required this.salonName,required this.custType,required this.brandId,required this.beatrouteId})
       : super(key: key);
 
   @override
@@ -445,6 +448,9 @@ class _AddSalonPersonalDetailsScreenState
                                       mobileNumber: mobileController.text,
                                       email: emailController.text,
                                       gstNumber: gstController.text,
+                                        custType:widget.custType,
+                                        brandId:widget.brandId,
+                                        beatrouteId:widget.beatrouteId,
                                     ),
                                   ));
                                 }

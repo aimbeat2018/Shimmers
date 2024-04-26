@@ -424,7 +424,8 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                               child: InkWell(
                                 onTap: () {
                                   //Call activity screen here
-                                  if (userRole == 'employee') {
+                               //   if (userRole == 'employee') {
+                                  if (userRole == 'manager') {
                                     //Sales Manager see the activities of sales executive
                                     Navigator.of(context).push(
                                         MaterialPageRoute(
@@ -571,7 +572,8 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             Center(
                               child: InkWell(
                                 onTap: () {
-                                  if (userRole == 'employee') {
+                                  //if (userRole == 'employee') {
+                                  if (userRole == 'manager') {
                                     //Sales Manager Flow
                                     Navigator.of(context).push(
                                         MaterialPageRoute(
@@ -678,7 +680,8 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                           Center(
                             child: InkWell(
                               onTap: () {
-                                if (userRole == 'employee') {
+                                //if (userRole == 'employee') {
+                                if (userRole == 'manager') {
                                   Navigator.of(context).push(MaterialPageRoute(
                                       builder: (context) =>
                                           ManagerOrderApproval()));
@@ -704,7 +707,7 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                     Padding(
                                       padding: const EdgeInsets.all(15.0),
                                       child: Text(
-                                        'Order List',
+                                        'Order Approval',
                                         maxLines: 2,
                                         textAlign: TextAlign.center,
                                         overflow: TextOverflow.clip,
@@ -774,7 +777,7 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                           Center(
                             child: InkWell(
                               onTap: () {
-                                if (userRole == 'employee') {
+                                if (userRole == 'manager') {
                                   PersistentNavBarNavigator.pushNewScreen(
                                     context,
                                     screen: LiveTrackingScreen(),
