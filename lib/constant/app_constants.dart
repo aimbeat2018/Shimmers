@@ -11,6 +11,7 @@ class AppConstants {
   static const String employeePunchOut = 'employee/clockout';
   static const String attendanceHistory = 'get/employee/attendance/data';
   static const String salonRouteList = 'get/new/existing/salons';
+  static const String salonRouteListNew = 'get/new/existing/salons_new';
   static const String salonCategory = 'get/salon/categories';
   static const String routeList = 'get/routes/cities/list';
   static const String addSalon = 'add/salon';

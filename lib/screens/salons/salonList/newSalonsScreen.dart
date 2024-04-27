@@ -8,6 +8,7 @@ import 'package:shimmers/constant/textConstant.dart';
 import 'package:shimmers/controllers/salonController.dart';
 import 'package:shimmers/screens/salons/addSalon/addSalonBasicDetailsScreen.dart';
 
+import '../../../constant/route_helper.dart';
 import '../../noDataFound/noDataFoundScreen.dart';
 import 'listWidget/locationSalonsWidget.dart';
 
@@ -24,6 +25,7 @@ class _NewSalonsScreenState extends State<NewSalonsScreen> {
   String? _currentAddress;
   double? lat, longi;
   Position? _currentPosition;
+  bool isExpanded = false;
 
   Future<bool> _handleLocationPermission() async {
     bool serviceEnabled;
@@ -145,7 +147,7 @@ class _NewSalonsScreenState extends State<NewSalonsScreen> {
                       screen: AddSalonBasicDetailsScreen(),
                       withNavBar: false,
                     );
-                   /* Navigator.of(context).push(MaterialPageRoute(
+                    /* Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) =>
                             const AddSalonBasicDetailsScreen()));*/
                   },
@@ -185,7 +187,7 @@ class _NewSalonsScreenState extends State<NewSalonsScreen> {
                   height: 10,
                 ),
                 salonController.isLoading ||
-                        salonController.salonRouteModel == null
+                        salonController.salonListModel == null
                     ? SizedBox(
                         height: MediaQuery.of(context).size.height / 1.5,
                         width: MediaQuery.of(context).size.width,
@@ -193,12 +195,9 @@ class _NewSalonsScreenState extends State<NewSalonsScreen> {
                           child: CircularProgressIndicator(),
                         ),
                       )
-                    : salonController.salonRouteModel!.salonRouteData == null ||
-                            salonController.salonRouteModel!.salonRouteData!
-                                .salons!.isEmpty ||
+                    : salonController.salonListModel!.salondetailData == null ||
                             salonController
-                                    .salonRouteModel!.salonRouteData!.salons ==
-                                null
+                                .salonListModel!.salondetailData!.isEmpty
                         ? Center(
                             child: SizedBox(
                                 height:
@@ -208,14 +207,180 @@ class _NewSalonsScreenState extends State<NewSalonsScreen> {
                         : ListView.builder(
                             physics: const NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
-                            itemCount: salonController.salonRouteModel!
-                                .salonRouteData!.salons!.length,
+                            itemCount: salonController
+                                .salonListModel!.salondetailData!.length,
                             itemBuilder: (BuildContext context, int index) {
-                              return LocationSalonsWidget(
+                              return Column(
+                                children: [
+                                  Container(
+                                    margin: isExpanded
+                                        ? EdgeInsets.only(
+                                            left: 8, right: 8, top: 5)
+                                        : EdgeInsets.only(
+                                            left: 8,
+                                            right: 8,
+                                            top: 5,
+                                            bottom: 15),
+                                    decoration: BoxDecoration(
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: primaryColor,
+                                          blurRadius: 5.0, // soften the shadow
+                                          spreadRadius: 0.1, //extend the shadow
+                                          offset: Offset(
+                                            1.5, // Move to right 5  horizontally
+                                            1.5, // Move to bottom 5 Vertically
+                                          ),
+                                        )
+                                      ],
+                                      color: isExpanded
+                                          ? primaryColor
+                                          : kBackgroundColor,
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                    child: Column(
+                                      children: [
+                                        Text(
+                                          salonController.salonListModel!.salondetailData![index].distributorName == null
+                                              ? "Distributor Name"
+                                              : "${salonController.salonListModel!.salondetailData![index].distributorName!}",
+                                          style: TextStyle(
+                                              color: primaryColor,
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        InkWell(
+                                          onTap: () {
+                                            Get.toNamed(
+                                                RouteHelper.getSalonDetailsRoute(
+                                                    salonController.salonListModel!
+                                                        .salondetailData![index].id!
+                                                        .toString()));
+                                          },
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 10.0, horizontal: 15),
+                                            child: Row(
+                                              children: [
+                                                salonController
+                                                            .salonListModel!
+                                                            .salondetailData![index]
+                                                            .image ==
+                                                        ""
+                                                    ? Image.asset(
+                                                        'assets/images/avatar.png',
+                                                        height: 50,
+                                                        width: 50,
+                                                      )
+                                                    : Image.network(
+                                                        salonController
+                                                            .salonListModel!
+                                                            .salondetailData![index]
+                                                            .image!,
+                                                        height: 50,
+                                                        width: 50,
+                                                        errorBuilder: (context,
+                                                            exception, stackTrace) {
+                                                          return Image.asset(
+                                                            'assets/images/avatar.png',
+                                                            fit: BoxFit.cover,
+                                                            height: 50,
+                                                            width: 50,
+                                                          );
+                                                        },
+                                                      ),
+                                                SizedBox(
+                                                  width: 10,
+                                                ),
+                                                Expanded(
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment.start,
+                                                    children: [
+                                                      Text(
+                                                        salonController
+                                                            .salonListModel!
+                                                            .salondetailData![index]
+                                                            .name!,
+                                                        style: TextStyle(
+                                                            color: primaryColor,
+                                                            fontSize: 14,
+                                                            fontWeight:
+                                                                FontWeight.bold),
+                                                      ),
+                                                      SizedBox(
+                                                        height: 5,
+                                                      ),
+                                                      Text(
+                                                        salonController
+                                                            .salonListModel!
+                                                            .salondetailData![index]
+                                                            .address!,
+                                                        style: TextStyle(
+                                                            color: Colors.black,
+                                                            fontSize: 10,
+                                                            fontWeight:
+                                                                FontWeight.normal),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                Align(
+                                                  alignment: Alignment.topRight,
+                                                  child: Container(
+                                                    decoration: const BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius.all(
+                                                                Radius.circular(5)),
+                                                        color: primaryColor),
+                                                    child: Padding(
+                                                      padding: const EdgeInsets
+                                                          .symmetric(
+                                                          horizontal: 5.0,
+                                                          vertical: 8),
+                                                      child: Row(
+                                                        mainAxisSize:
+                                                            MainAxisSize.min,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment.end,
+                                                        children: [
+                                                          const Icon(
+                                                            Icons.location_on,
+                                                            color: Colors.white,
+                                                            size: 13,
+                                                          ),
+                                                          const SizedBox(
+                                                            width: 5,
+                                                          ),
+                                                          Text(
+                                                            '${salonController.salonListModel!.salondetailData![index].distance!} Away',
+                                                            style: const TextStyle(
+                                                                color: Colors.white,
+                                                                fontSize: 11,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .normal),
+                                                          )
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              );
+
+                              /*LocationSalonsWidget(
                                 model: salonController.salonRouteModel!
                                     .salonRouteData!.salons![index],
                                 position: index,
-                              );
+                              );*/
                             })
               ],
             ),

@@ -19,6 +19,7 @@ import '../model/brandDetailModel.dart';
 import '../model/cartModel.dart';
 import '../model/deliveredOrderModel.dart';
 import '../model/orderApprovalModel.dart';
+import '../model/salonListModel.dart';
 import '../model/viewProductsModel.dart';
 import 'cartController.dart';
 
@@ -28,6 +29,8 @@ class SalonController extends GetxController implements GetxService {
   SalonController({required this.salonRepo});
 
   SalonRouteModel? salonRouteModel;
+
+  SalonListModel? salonListModel;
 
   SalonCategoryModel? salonCategoryModel;
 
@@ -70,7 +73,7 @@ class SalonController extends GetxController implements GetxService {
 
   String? punchInMsg;
 
-  Future<SalonRouteModel?> getSalonRouteList(
+  Future<SalonListModel?> getSalonRouteList(
       {String? latitude, String? longitude, String? type}) async {
     _isLoading = true;
     update();
@@ -78,15 +81,15 @@ class SalonController extends GetxController implements GetxService {
         latitude: latitude, longitude: longitude, type: type);
 
     if (response.statusCode == 200) {
-      salonRouteModel = SalonRouteModel.fromJson(response.body);
+      salonListModel = SalonListModel.fromJson(response.body);
     } else if (response.statusCode == 401) {
       Get.offAllNamed(RouteHelper.getLoginRoute());
     } else {
-      salonRouteModel = SalonRouteModel();
+      salonListModel = SalonListModel();
     }
     _isLoading = false;
     update();
-    return salonRouteModel;
+    return salonListModel;
   }
 
   Future<DeliveredOrderModel?> getNotDeliveredOrderList() async {

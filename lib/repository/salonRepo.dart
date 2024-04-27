@@ -17,7 +17,7 @@ class SalonRepo {
 
   Future<Response> getRouteList(
       {String? latitude, String? longitude, String? type}) async {
-    return await apiClient.postData(AppConstants.salonRouteList, {
+    return await apiClient.postData(AppConstants.salonRouteListNew, {
       "type": type,
       "latitude": latitude,
       "longitude": longitude,
