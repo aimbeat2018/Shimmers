@@ -98,7 +98,9 @@ class _ExistingSalonsScreenState extends State<ExistingSalonsScreen> {
           Get.find<SalonController>().getSalonRouteList(
               latitude: lat.toString(),
               longitude: longi.toString(),
-              type: "existing");
+              type: "existing",
+          key:"",
+          start:"1");
 
           // Get.find<SalonController>().getSalonRouteList(
           //     latitude: "16.69537730",
@@ -231,17 +233,15 @@ class _ExistingSalonsScreenState extends State<ExistingSalonsScreen> {
                             ),
                             child: Column(
                               children: [
-                                Align(
-                                  alignment: Alignment.topLeft,
-                                  child: Text(
-                                    salonController.salonListModel!.salondetailData![index].distributorName == null
-                                        ? "Distributor Name"
-                                        : "${salonController.salonListModel!.salondetailData![index].distributorName!}",
-                                    style: TextStyle(
-                                        color: primaryColor,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.bold),
-                                  ),
+                                SizedBox(height:10),
+                                Text(
+                                  salonController.salonListModel!.salondetailData![index].distributorName == null
+                                      ? "Distributor Name"
+                                      : "${salonController.salonListModel!.salondetailData![index].distributorName!}",
+                                  style: TextStyle(
+                                      color: primaryColor,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold),
                                 ),
                                 InkWell(
                                   onTap: () {

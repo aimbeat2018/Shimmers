@@ -16,11 +16,13 @@ class SalonRepo {
   SalonRepo({required this.apiClient, required this.sharedPreferences});
 
   Future<Response> getRouteList(
-      {String? latitude, String? longitude, String? type}) async {
+      {String? latitude, String? longitude, String? type,String? key,String? start}) async {
     return await apiClient.postData(AppConstants.salonRouteListNew, {
       "type": type,
       "latitude": latitude,
       "longitude": longitude,
+      "key":key,
+      "start":start
     });
   }
 

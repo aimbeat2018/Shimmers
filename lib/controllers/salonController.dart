@@ -74,11 +74,11 @@ class SalonController extends GetxController implements GetxService {
   String? punchInMsg;
 
   Future<SalonListModel?> getSalonRouteList(
-      {String? latitude, String? longitude, String? type}) async {
+      {String? latitude, String? longitude, String? type,String? key,String? start}) async {
     _isLoading = true;
     update();
     Response response = await salonRepo.getRouteList(
-        latitude: latitude, longitude: longitude, type: type);
+        latitude: latitude, longitude: longitude, type: type,key:key,start: start);
 
     if (response.statusCode == 200) {
       salonListModel = SalonListModel.fromJson(response.body);
