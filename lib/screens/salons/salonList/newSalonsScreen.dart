@@ -147,8 +147,8 @@ class _NewSalonsScreenState extends State<NewSalonsScreen> {
                 latitude: lat.toString(),
                 longitude: longi.toString(),
                 type: "new",
-                key: "",
-                start: "1")
+                key: searchController.text,
+                start: page.toString())
             .then((value) => setState(() {
                   if (page == 1) {
                     salonList = value!.salondetailData!;

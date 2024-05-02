@@ -480,7 +480,7 @@ class _SalonDetailsScreenState extends State<SalonDetailsScreen> {
                                     Container(
                                       height:
                                           MediaQuery.of(context).size.height *
-                                              0.36,
+                                              0.38,
                                       color: primaryColor,
                                       padding: const EdgeInsets.symmetric(
                                           vertical: 25, horizontal: 15),
