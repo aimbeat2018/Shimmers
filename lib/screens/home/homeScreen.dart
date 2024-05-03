@@ -376,17 +376,16 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             Center(
                               child: InkWell(
                                 onTap: () {
-                                  /*  if (userRole == 'TRF Executive' ||
-                                      userRole == 'TRF Manager') {
-                                    showCustomSnackBar(
-                                        'You dont have the permission to use this module',
-                                        isError: true);
-                                  } else {*/
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (context) => SetTargetScreen(
+                                    if (userRole == 'employee') {
+                                      Navigator.of(context).push(MaterialPageRoute(
+                                          builder: (context) => SetTargetScreen(
                                             from: 'target',
                                           )));
-                                  //  }
+                                  } else {
+                                      showCustomSnackBar(
+                                          'You dont have the permission to use this module',
+                                          isError: true);
+                                  }
                                 },
                                 child: SizedBox(
                                   height: 135,
@@ -424,22 +423,8 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                               child: InkWell(
                                 onTap: () {
                                   //Call activity screen here
-                               //   if (userRole == 'employee') {
-                                  if (userRole == 'manager') {
-                                    //Sales Manager see the activities of sales executive
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                ExecutiveListActivity()));
-                                  } else {
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                ScoreCardScreen(
-                                                    excutive_id: Get.find<
-                                                            AuthController>()
-                                                        .getUserId())));
-                                  }
+                                  showCustomSnackBar('Cooming soon!');
+
                                 },
                                 child: SizedBox(
                                   height: 135,
@@ -476,14 +461,23 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             Center(
                               child: InkWell(
                                 onTap: () {
-                                  /*if (userRole == 'TRF Executive' ||
-                                      userRole == 'TRF Manager') {
-                                    showCustomSnackBar(
-                                        'You dont have the permission to use this module',
-                                        isError: true);
+
+                                  if (userRole == 'employee') {
+                                    //Sales Manager see the activities of sales executive
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                ExecutiveListActivity()));
                                   } else {
-                                    //Go score page
-                                  }*/
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                ScoreCardScreen(
+                                                    excutive_id: Get.find<
+                                                        AuthController>()
+                                                        .getUserId())));
+                                  }
+
                                 },
                                 child: SizedBox(
                                   height: 135,
@@ -572,8 +566,7 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             Center(
                               child: InkWell(
                                 onTap: () {
-                                  //if (userRole == 'employee') {
-                                  if (userRole == 'manager') {
+                                  if (userRole == 'employee') {
                                     //Sales Manager Flow
                                     Navigator.of(context).push(
                                         MaterialPageRoute(
@@ -681,7 +674,7 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             child: InkWell(
                               onTap: () {
                                 //if (userRole == 'employee') {
-                                if (userRole == 'manager') {
+                                if (userRole == 'employee') {
                                   Navigator.of(context).push(MaterialPageRoute(
                                       builder: (context) =>
                                           ManagerOrderApproval()));
@@ -777,7 +770,7 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                           Center(
                             child: InkWell(
                               onTap: () {
-                                if (userRole == 'manager') {
+                                if (userRole == 'employee') {
                                   PersistentNavBarNavigator.pushNewScreen(
                                     context,
                                     screen: LiveTrackingScreen(),

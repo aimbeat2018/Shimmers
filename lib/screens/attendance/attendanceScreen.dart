@@ -431,7 +431,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                           overflow: TextOverflow.ellipsis,
                                           style: const TextStyle(
                                               color: Colors.white,
-                                              fontSize: 20,
+                                              fontSize: 18,
                                               fontWeight: FontWeight.bold),
                                         ),
                                         SizedBox(
@@ -450,7 +450,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                                 fontSize: MediaQuery.of(context)
                                                         .size
                                                         .width *
-                                                    0.15,
+                                                    0.10,
                                                 fontWeight: FontWeight.bold),
                                           ),
                                         ),
@@ -477,7 +477,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                           overflow: TextOverflow.ellipsis,
                                           style: const TextStyle(
                                               color: Colors.white,
-                                              fontSize: 20,
+                                              fontSize: 18,
                                               fontWeight: FontWeight.bold),
                                         ),
                                         SizedBox(
@@ -496,7 +496,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                                 fontSize: MediaQuery.of(context)
                                                         .size
                                                         .width *
-                                                    0.15,
+                                                    0.10,
                                                 fontWeight: FontWeight.bold),
                                           ),
                                         ),

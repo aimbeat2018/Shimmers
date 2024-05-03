@@ -56,16 +56,20 @@ class _AddSalonBasicDetailsScreenState
   TextEditingController beatrouteidController = TextEditingController();
   String salonCategory = '', salonId = '';
   String brandName = '', brandId = '';
-  List<String> customerTypeList=['SALON ','RETAIL SHOP','WHOLESALE SHOP','FREELANCER'];
+  List<String> customerTypeList = [
+    'SALON ',
+    'RETAIL SHOP',
+    'WHOLESALE SHOP',
+    'FREELANCER'
+  ];
   String? selectedCustType;
-
 
   @override
   void initState() {
     super.initState();
     if (mounted) {
       Future.delayed(Duration.zero, () async {
-        Get.find<SalonController>().getSalonCategory().then((value) async{
+        Get.find<SalonController>().getSalonCategory().then((value) async {
           Get.find<SalonController>().getBrandList();
         });
       });
@@ -184,13 +188,24 @@ class _AddSalonBasicDetailsScreenState
                             child: Padding(
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 8.0),
-                              child: Text(
-                                TextConstant.salonCategory,
-                                style: const TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w500),
-                              ),
+                              child: RichText(
+                                  text: TextSpan(
+                                      style: const TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w500),
+                                      children: <TextSpan>[
+                                    TextSpan(
+                                      text: TextConstant.salonCategory,
+                                    ),
+                                    TextSpan(
+                                      text: ' *',
+                                      style: const TextStyle(
+                                          color: Colors.red,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                  ])),
                             ),
                           ),
                           const SizedBox(
@@ -318,7 +333,7 @@ class _AddSalonBasicDetailsScreenState
                             alignment: Alignment.topLeft,
                             child: Padding(
                                 padding:
-                                const EdgeInsets.symmetric(horizontal: 8.0),
+                                    const EdgeInsets.symmetric(horizontal: 8.0),
                                 child: RichText(
                                     text: TextSpan(
                                         style: const TextStyle(
@@ -326,17 +341,17 @@ class _AddSalonBasicDetailsScreenState
                                             fontSize: 14,
                                             fontWeight: FontWeight.w500),
                                         children: <TextSpan>[
-                                          TextSpan(
-                                            text: 'Customer Sub type',
-                                          ),
-                                          TextSpan(
-                                            text: ' *',
-                                            style: const TextStyle(
-                                                color: Colors.red,
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w500),
-                                          ),
-                                        ]))),
+                                      TextSpan(
+                                        text: 'Customer Sub type',
+                                      ),
+                                      TextSpan(
+                                        text: ' *',
+                                        style: const TextStyle(
+                                            color: Colors.red,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                    ]))),
                           ),
                           const SizedBox(
                             height: 15,
@@ -351,7 +366,7 @@ class _AddSalonBasicDetailsScreenState
                             ),
                             child: DropdownButtonHideUnderline(
                               child: DropdownButton(
-                                hint: Text('Select Customer Sub Type'),
+                                  hint: Text('Select Customer Sub Type'),
                                   isExpanded: true,
                                   value: selectedCustType,
                                   onChanged: (newValue) {
@@ -366,7 +381,6 @@ class _AddSalonBasicDetailsScreenState
                                     );
                                   }).toList()),
                             ),
-
                           ),
                           const SizedBox(
                             height: 25,
@@ -375,7 +389,7 @@ class _AddSalonBasicDetailsScreenState
                             alignment: Alignment.topLeft,
                             child: Padding(
                                 padding:
-                                const EdgeInsets.symmetric(horizontal: 8.0),
+                                    const EdgeInsets.symmetric(horizontal: 8.0),
                                 child: RichText(
                                     text: TextSpan(
                                         style: const TextStyle(
@@ -383,17 +397,17 @@ class _AddSalonBasicDetailsScreenState
                                             fontSize: 14,
                                             fontWeight: FontWeight.w500),
                                         children: <TextSpan>[
-                                          TextSpan(
-                                            text: 'Customer Brand Name',
-                                          ),
-                                           TextSpan(
-                                            text: ' *',
-                                            style: const TextStyle(
-                                                color: Colors.red,
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w500),
-                                          ),
-                                        ]))),
+                                      TextSpan(
+                                        text: 'Customer Brand Name',
+                                      ),
+                                      TextSpan(
+                                        text: ' *',
+                                        style: const TextStyle(
+                                            color: Colors.red,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                    ]))),
                           ),
                           const SizedBox(
                             height: 15,
@@ -402,16 +416,15 @@ class _AddSalonBasicDetailsScreenState
                             onTap: () {
                               showModalBottomSheet(
                                 context: context,
-                                builder: (context) =>
-                                const BrandListScreen(),
+                                builder: (context) => const BrandListScreen(),
                                 backgroundColor: Colors.transparent,
                               ).then((value) => {
-                                setState(() {
-                                  BrandListData model = value!;
-                                  brandName = model!.brandName!;
-                                  brandId = model.id!.toString();
-                                })
-                              });
+                                    setState(() {
+                                      BrandListData model = value!;
+                                      brandName = model!.brandName!;
+                                      brandId = model.id!.toString();
+                                    })
+                                  });
                             },
                             child: Container(
                               decoration: BoxDecoration(
@@ -436,16 +449,16 @@ class _AddSalonBasicDetailsScreenState
                                   children: [
                                     Expanded(
                                         child: Padding(
-                                          padding:
+                                      padding:
                                           EdgeInsets.symmetric(horizontal: 8.0),
-                                          child: Text(
-                                            brandName == ''
-                                                ? "Select Customer Brand Name"
-                                                : brandName,
-                                            style: TextStyle(
-                                                color: Colors.black, fontSize: 14),
-                                          ),
-                                        )),
+                                      child: Text(
+                                        brandName == ''
+                                            ? "Select Customer Brand Name"
+                                            : brandName,
+                                        style: TextStyle(
+                                            color: Colors.black, fontSize: 14),
+                                      ),
+                                    )),
                                     Icon(
                                       Icons.keyboard_arrow_down,
                                       color: Colors.grey.shade900,
@@ -462,7 +475,7 @@ class _AddSalonBasicDetailsScreenState
                             alignment: Alignment.topLeft,
                             child: Padding(
                                 padding:
-                                const EdgeInsets.symmetric(horizontal: 8.0),
+                                    const EdgeInsets.symmetric(horizontal: 8.0),
                                 child: RichText(
                                     text: TextSpan(
                                         style: const TextStyle(
@@ -470,17 +483,17 @@ class _AddSalonBasicDetailsScreenState
                                             fontSize: 14,
                                             fontWeight: FontWeight.w500),
                                         children: <TextSpan>[
-                                          TextSpan(
-                                            text: 'Beatroute ID',
-                                          ),
-                                         /* TextSpan(
-                                            text: ' *',
-                                            style: const TextStyle(
-                                                color: Colors.red,
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w500),
-                                          ),*/
-                                        ]))),
+                                      TextSpan(
+                                        text: 'Beatroute ID',
+                                      ),
+                                      TextSpan(
+                                        text: ' *',
+                                        style: const TextStyle(
+                                            color: Colors.red,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                    ]))),
                           ),
                           const SizedBox(
                             height: 15,
@@ -505,7 +518,7 @@ class _AddSalonBasicDetailsScreenState
                             child: TextFormField(
                               style: const TextStyle(fontSize: 14),
                               decoration:
-                              GlobalFunctions.getInputDecorationWhite(""),
+                                  GlobalFunctions.getInputDecorationWhite(""),
                               controller: beatrouteidController,
                               keyboardType: TextInputType.text,
                               onSaved: (value) {
@@ -514,7 +527,6 @@ class _AddSalonBasicDetailsScreenState
                             ),
                           ),
                           const SizedBox(height: 50),
-
                           SizedBox(
                             width: 200,
                             // height: 45,
@@ -543,25 +555,36 @@ class _AddSalonBasicDetailsScreenState
                                   ),
                                 ),
                                 onPressed: () {
-                                  if (salonNameController.text.isEmpty) {
+                                  if (salonCategory == null ||
+                                      salonCategory == '') {
+                                    showCustomSnackBar('Select salon category',
+                                        isError: true);
+                                  } else if (salonNameController.text.isEmpty) {
                                     showCustomSnackBar('Enter salon name',
                                         isError: true);
-                                  }else if(selectedCustType==null){
-                                    showCustomSnackBar('Select customer sub type',
+                                  } else if (selectedCustType == null) {
+                                    showCustomSnackBar(
+                                        'Select customer sub type',
                                         isError: true);
-                                } else if(brandName==null||brandName==''){
-                                    showCustomSnackBar('Select customer brand name ',isError: true);
-                                  }
-                                  else{
+                                  } else if (brandName == null ||
+                                      brandName == '') {
+                                    showCustomSnackBar(
+                                        'Select customer brand name ',
+                                        isError: true);
+                                  } else if (beatrouteidController
+                                      .text.isEmpty) {
+                                    showCustomSnackBar('Enter beatroute id',
+                                        isError: true);
+                                  } else {
                                     PersistentNavBarNavigator.pushNewScreen(
                                       context,
                                       screen: AddSalonPersonalDetailsScreen(
                                           salonCategory: salonId,
-                                          salonName:
-                                          salonNameController.text,
-                                      custType:selectedCustType!,
-                                      brandId:brandId,
-                                      beatrouteId:beatrouteidController.text),
+                                          salonName: salonNameController.text,
+                                          custType: selectedCustType!,
+                                          brandId: brandId,
+                                          beatrouteId:
+                                              beatrouteidController.text),
                                       withNavBar: false,
                                     );
                                     /*Navigator.of(context)
