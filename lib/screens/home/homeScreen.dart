@@ -376,7 +376,7 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             Center(
                               child: InkWell(
                                 onTap: () {
-                                    if (userRole == 'employee') {
+                                    if (userRole == 'sales_manager') {
                                       Navigator.of(context).push(MaterialPageRoute(
                                           builder: (context) => SetTargetScreen(
                                             from: 'target',
@@ -462,7 +462,7 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                               child: InkWell(
                                 onTap: () {
 
-                                  if (userRole == 'employee') {
+                                  if (userRole == 'sales_manager') {
                                     //Sales Manager see the activities of sales executive
                                     Navigator.of(context).push(
                                         MaterialPageRoute(
@@ -566,7 +566,7 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             Center(
                               child: InkWell(
                                 onTap: () {
-                                  if (userRole == 'employee') {
+                                  if (userRole == 'sales_manager') {
                                     //Sales Manager Flow
                                     Navigator.of(context).push(
                                         MaterialPageRoute(
@@ -673,8 +673,7 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                           Center(
                             child: InkWell(
                               onTap: () {
-                                //if (userRole == 'employee') {
-                                if (userRole == 'employee') {
+                                if (userRole == 'sales_manager') {
                                   Navigator.of(context).push(MaterialPageRoute(
                                       builder: (context) =>
                                           ManagerOrderApproval()));
@@ -770,7 +769,7 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                           Center(
                             child: InkWell(
                               onTap: () {
-                                if (userRole == 'employee') {
+                                if (userRole == 'sales_manager') {
                                   PersistentNavBarNavigator.pushNewScreen(
                                     context,
                                     screen: LiveTrackingScreen(),

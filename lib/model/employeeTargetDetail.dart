@@ -22,18 +22,62 @@ class EmployeeTargetDetail {
 }
 
 class EmployeeTargetList {
+  int? id;
+  String? brandName;
+  int? brandAssignedTarget;
+  int? brandCompletedTarget;
+  String? brandTargetStatus;
+  List<ProductData>? productData;
+
+  EmployeeTargetList(
+      {this.id,
+        this.brandName,
+        this.brandAssignedTarget,
+        this.brandCompletedTarget,
+        this.brandTargetStatus,
+        this.productData});
+
+  EmployeeTargetList.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    brandName = json['brand_name'];
+    brandAssignedTarget = json['brand_assigned_target'];
+    brandCompletedTarget = json['brand_completed_target'];
+    brandTargetStatus = json['brand_target_status'];
+    if (json['product_data'] != null) {
+      productData = <ProductData>[];
+      json['product_data'].forEach((v) {
+        productData!.add(new ProductData.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['brand_name'] = this.brandName;
+    data['brand_assigned_target'] = this.brandAssignedTarget;
+    data['brand_completed_target'] = this.brandCompletedTarget;
+    data['brand_target_status'] = this.brandTargetStatus;
+    if (this.productData != null) {
+      data['product_data'] = this.productData!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
+class ProductData {
   String? productName;
   int? assignedTarget;
   int? completedTarget;
   String? status;
 
-  EmployeeTargetList(
+  ProductData(
       {this.productName,
         this.assignedTarget,
         this.completedTarget,
         this.status});
 
-  EmployeeTargetList.fromJson(Map<String, dynamic> json) {
+  ProductData.fromJson(Map<String, dynamic> json) {
     productName = json['product_name'];
     assignedTarget = json['assigned_target'];
     completedTarget = json['completed_target'];

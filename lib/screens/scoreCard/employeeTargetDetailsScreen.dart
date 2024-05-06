@@ -182,22 +182,22 @@ class _EmployeeTargetDetailsScreen extends State<EmployeeTargetDetailsScreen> {
                                                             .start,
                                                     children: [
                                                       Text(
-                                                          'Product Name: ${_searchResult![index].productName}'),
+                                                          'Brand Name: ${_searchResult![index].brandName}'),
                                                       SizedBox(
                                                         height: 5,
                                                       ),
                                                       Text(
-                                                          'Assigned Target: ${_searchResult![index].assignedTarget}'),
+                                                          'Brand Assigned Target: ${_searchResult![index].brandAssignedTarget}'),
                                                       SizedBox(
                                                         height: 5,
                                                       ),
                                                       Text(
-                                                          'Completed Target: ${_searchResult![index].completedTarget}'),
+                                                          'Brand Completed Target: ${_searchResult![index].brandCompletedTarget}'),
                                                       SizedBox(
                                                         height: 5,
                                                       ),
                                                       Text(
-                                                          'Status: ${_searchResult![index].status}'),
+                                                          'Brand Target Status: ${_searchResult![index].brandTargetStatus}'),
                                                     ],
                                                   ),
                                                 ),
@@ -237,22 +237,22 @@ class _EmployeeTargetDetailsScreen extends State<EmployeeTargetDetailsScreen> {
                                                             .start,
                                                     children: [
                                                       Text(
-                                                          'Product Name: ${scoreController.employeeTargetDetail!.data![index].productName}'),
+                                                          'Brand Name: ${scoreController.employeeTargetDetail!.data![index].brandName}'),
                                                       SizedBox(
                                                         height: 5,
                                                       ),
                                                       Text(
-                                                          'Assigned Target: ${scoreController.employeeTargetDetail!.data![index].assignedTarget}'),
+                                                          'Brand Assigned Target: ${scoreController.employeeTargetDetail!.data![index].brandAssignedTarget}'),
                                                       SizedBox(
                                                         height: 5,
                                                       ),
                                                       Text(
-                                                          'Completed Target: ${scoreController.employeeTargetDetail!.data![index].completedTarget}'),
+                                                          'Brand Completed Target: ${scoreController.employeeTargetDetail!.data![index].brandCompletedTarget}'),
                                                       SizedBox(
                                                         height: 5,
                                                       ),
                                                       Text(
-                                                          'Status: ${scoreController.employeeTargetDetail!.data![index].status}'),
+                                                          'Brand Target Status: ${scoreController.employeeTargetDetail!.data![index].brandTargetStatus}'),
                                                     ],
                                                   ),
                                                 ),
@@ -277,7 +277,7 @@ class _EmployeeTargetDetailsScreen extends State<EmployeeTargetDetailsScreen> {
     }
 
     for (var members in employeeTargetList!) {
-      if (members.productName!.toLowerCase().contains(text.toLowerCase())) {
+      if (members.brandName!.toLowerCase().contains(text.toLowerCase())) {
         _searchResult!.add(members);
       }
     }
