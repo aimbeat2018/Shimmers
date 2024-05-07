@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:shimmers/constant/app_constants.dart';
 import 'package:shimmers/constant/no_internet_screen.dart';
 import 'package:shimmers/controllers/scoreController.dart';
+import 'package:shimmers/screens/setTarget/brandwiseTargetDetails.dart';
 
 import '../../constant/colorsConstant.dart';
 import '../../constant/internetConnectivity.dart';
@@ -37,6 +38,7 @@ class _EmployeeTargetDetailsScreen extends State<EmployeeTargetDetailsScreen> {
   EmployeeTargetDetail? employeeTargetDetail;
   List<EmployeeTargetList>? _searchResult;
   List<EmployeeTargetList>? employeeTargetList;
+  bool isExpanded = false;
 
   @override
   void initState() {
@@ -155,49 +157,85 @@ class _EmployeeTargetDetailsScreen extends State<EmployeeTargetDetailsScreen> {
                                       padding: EdgeInsets.only(bottom: 10),
                                       child: ListView.builder(
                                           shrinkWrap: true,
-                                          itemCount:
-                                              _searchResult!
-                                              .length,
-                                          physics: const NeverScrollableScrollPhysics(),
+                                          itemCount: _searchResult!.length,
+                                          physics:
+                                              const NeverScrollableScrollPhysics(),
                                           itemBuilder: (BuildContext context,
                                               int index) {
                                             return Padding(
-                                              padding: EdgeInsets.symmetric(
-                                                  horizontal: 8, vertical: 5),
+                                              padding: const EdgeInsets.symmetric(
+                                                  vertical: 8.0, horizontal: 10),
                                               child: Card(
                                                 elevation: 5,
-                                                shadowColor: primaryColor,
+                                                color: _searchResult![index].brandTargetStatus == "pending"
+                                                    ? Colors.red.shade50
+                                                    : Colors.green.shade50,
                                                 shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.all(
-                                                            Radius.circular(
-                                                                5))),
+                                                  borderRadius:
+                                                  BorderRadius.all(Radius.circular(10)),
+                                                ),
                                                 child: Padding(
-                                                  padding: EdgeInsets.symmetric(
-                                                      horizontal: 18,
-                                                      vertical: 10),
-                                                  child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
+                                                  padding: const EdgeInsets.symmetric(
+                                                      horizontal: 15.0, vertical: 8),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                    MainAxisAlignment.spaceBetween,
                                                     children: [
-                                                      Text(
-                                                          'Brand Name: ${_searchResult![index].brandName}'),
-                                                      SizedBox(
-                                                        height: 5,
+                                                      Expanded(
+                                                        child: Column(
+                                                          mainAxisAlignment:
+                                                          MainAxisAlignment.start,
+                                                          crossAxisAlignment:
+                                                          CrossAxisAlignment.start,
+                                                          children: [
+                                                            Text(
+                                                              'Brand Name: ${_searchResult![index].brandName}',
+                                                              style: const TextStyle(
+                                                                  color: primaryColor,
+                                                                  fontSize: 16,
+                                                                  fontWeight: FontWeight.bold),
+                                                            ),
+                                                            SizedBox(
+                                                              height: 5,
+                                                            ),
+                                                            Text(
+                                                              'Brand Assigned Target: ${_searchResult![index].brandAssignedTarget}',
+                                                              style: const TextStyle(
+                                                                  color: primaryColor,
+                                                                  fontSize: 13,
+                                                                  fontWeight: FontWeight.w500),
+                                                            ),
+                                                            SizedBox(
+                                                              height: 5,
+                                                            ),
+                                                            Text(
+                                                              'Brand Completed Target: ${_searchResult![index].brandCompletedTarget}',
+                                                              style: const TextStyle(
+                                                                  color: primaryColor,
+                                                                  fontSize: 13,
+                                                                  fontWeight: FontWeight.w500),
+                                                            ),
+                                                            SizedBox(
+                                                              height: 5,
+                                                            ),
+                                                            Text(
+                                                              'Brand Target Status: ${_searchResult![index].brandTargetStatus!}',
+                                                              style: TextStyle(
+                                                                  color: _searchResult![index].brandTargetStatus ==
+                                                                      "pending"
+                                                                      ? Colors.red
+                                                                      : Colors.green,
+                                                                  fontSize: 13,
+                                                                  fontWeight: FontWeight.w500),
+                                                            ),
+                                                          ],
+                                                        ),
                                                       ),
-                                                      Text(
-                                                          'Brand Assigned Target: ${_searchResult![index].brandAssignedTarget}'),
-                                                      SizedBox(
-                                                        height: 5,
-                                                      ),
-                                                      Text(
-                                                          'Brand Completed Target: ${_searchResult![index].brandCompletedTarget}'),
-                                                      SizedBox(
-                                                        height: 5,
-                                                      ),
-                                                      Text(
-                                                          'Brand Target Status: ${_searchResult![index].brandTargetStatus}'),
+                                                      Icon(
+                                                        Icons.arrow_forward_ios_rounded,
+                                                        color: Colors.grey,
+                                                        size: 20,
+                                                      )
                                                     ],
                                                   ),
                                                 ),
@@ -213,46 +251,89 @@ class _EmployeeTargetDetailsScreen extends State<EmployeeTargetDetailsScreen> {
                                               .employeeTargetDetail!
                                               .data!
                                               .length,
-                                          physics: const NeverScrollableScrollPhysics(),
+                                          physics:
+                                              const NeverScrollableScrollPhysics(),
                                           itemBuilder: (BuildContext context,
                                               int index) {
                                             return Padding(
-                                              padding: EdgeInsets.symmetric(
-                                                  horizontal: 8, vertical: 5),
+                                              padding: const EdgeInsets.symmetric(
+                                                  vertical: 8.0, horizontal: 10),
                                               child: Card(
                                                 elevation: 5,
-                                                shadowColor: primaryColor,
+                                                color: scoreController.employeeTargetDetail!.data![index].brandTargetStatus == "pending"
+                                                    ? Colors.red.shade50
+                                                    : Colors.green.shade50,
                                                 shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.all(
-                                                            Radius.circular(
-                                                                5))),
+                                                  borderRadius:
+                                                  BorderRadius.all(Radius.circular(10)),
+                                                ),
                                                 child: Padding(
-                                                  padding: EdgeInsets.symmetric(
-                                                      horizontal: 18,
-                                                      vertical: 10),
-                                                  child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
+                                                  padding: const EdgeInsets.symmetric(
+                                                      horizontal: 15.0, vertical: 8),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                    MainAxisAlignment.spaceBetween,
                                                     children: [
-                                                      Text(
-                                                          'Brand Name: ${scoreController.employeeTargetDetail!.data![index].brandName}'),
-                                                      SizedBox(
-                                                        height: 5,
+                                                      Expanded(
+                                                        child: Column(
+                                                          mainAxisAlignment:
+                                                          MainAxisAlignment.start,
+                                                          crossAxisAlignment:
+                                                          CrossAxisAlignment.start,
+                                                          children: [
+                                                            Text(
+                                                              'Brand Name: ${scoreController.employeeTargetDetail!.data![index].brandName}',
+                                                              style: const TextStyle(
+                                                                  color: primaryColor,
+                                                                  fontSize: 16,
+                                                                  fontWeight: FontWeight.bold),
+                                                            ),
+                                                            SizedBox(
+                                                              height: 5,
+                                                            ),
+                                                            Text(
+                                                              'Brand Assigned Target: ${scoreController.employeeTargetDetail!.data![index].brandAssignedTarget}',
+                                                              style: const TextStyle(
+                                                                  color: primaryColor,
+                                                                  fontSize: 13,
+                                                                  fontWeight: FontWeight.w500),
+                                                            ),
+                                                            SizedBox(
+                                                              height: 5,
+                                                            ),
+                                                            Text(
+                                                              'Brand Completed Target: ${scoreController.employeeTargetDetail!.data![index].brandCompletedTarget}',
+                                                              style: const TextStyle(
+                                                                  color: primaryColor,
+                                                                  fontSize: 13,
+                                                                  fontWeight: FontWeight.w500),
+                                                            ),
+                                                            SizedBox(
+                                                              height: 5,
+                                                            ),
+                                                            Text(
+                                                              'Brand Target Status: ${scoreController.employeeTargetDetail!.data![index].brandTargetStatus!}',
+                                                              style: TextStyle(
+                                                                  color: scoreController.employeeTargetDetail!.data![index].brandTargetStatus ==
+                                                                      "pending"
+                                                                      ? Colors.red
+                                                                      : Colors.green,
+                                                                  fontSize: 13,
+                                                                  fontWeight: FontWeight.w500),
+                                                            ),
+                                                          ],
+                                                        ),
                                                       ),
-                                                      Text(
-                                                          'Brand Assigned Target: ${scoreController.employeeTargetDetail!.data![index].brandAssignedTarget}'),
-                                                      SizedBox(
-                                                        height: 5,
-                                                      ),
-                                                      Text(
-                                                          'Brand Completed Target: ${scoreController.employeeTargetDetail!.data![index].brandCompletedTarget}'),
-                                                      SizedBox(
-                                                        height: 5,
-                                                      ),
-                                                      Text(
-                                                          'Brand Target Status: ${scoreController.employeeTargetDetail!.data![index].brandTargetStatus}'),
+                                                      InkWell(
+                                                        onTap: (){
+                                                          Navigator.push(context, MaterialPageRoute(builder: (context)=>BrandwiseTargetDetails(productList: scoreController.employeeTargetDetail!.data![index].productData!,brandName: scoreController.employeeTargetDetail!.data![index].brandName,)));
+                                                        },
+                                                        child: Icon(
+                                                          Icons.arrow_forward_ios_rounded,
+                                                          color: Colors.grey,
+                                                          size: 20,
+                                                        ),
+                                                      )
                                                     ],
                                                   ),
                                                 ),
