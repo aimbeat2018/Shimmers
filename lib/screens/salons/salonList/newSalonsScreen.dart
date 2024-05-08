@@ -288,9 +288,9 @@ class _NewSalonsScreenState extends State<NewSalonsScreen> {
                               ),
                             )),
                         keyboardType: TextInputType.text,
-                        // onChanged: (value) {
-                        //   onSearchTextChanged(value);
-                        // },
+                        onChanged: (value) {
+                          fetchsalonData(false);
+                        },
                         //    onChanged: onSearchTextChanged,
                       ),
                       const SizedBox(

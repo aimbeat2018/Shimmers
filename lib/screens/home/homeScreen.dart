@@ -424,7 +424,10 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                 onTap: () {
                                   //Call activity screen here
                                   showCustomSnackBar('Cooming soon!');
-
+                                  /*Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              ExecutiveListActivity()));*/
                                 },
                                 child: SizedBox(
                                   height: 135,

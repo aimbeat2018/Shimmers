@@ -7,13 +7,16 @@ import 'package:get/get.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:shimmers/constant/app_constants.dart';
 import 'package:shimmers/constant/no_internet_screen.dart';
+import 'package:shimmers/controllers/authController.dart';
 import 'package:shimmers/model/TRFExecutiveProfile.dart';
 import 'package:shimmers/screens/scoreCard/scoreCardScreen.dart';
 import 'package:shimmers/screens/tourVisit/executivesTourRequestList.dart';
 
 import '../../constant/colorsConstant.dart';
 import '../../constant/internetConnectivity.dart';
+import '../../controllers/targetController.dart';
 import '../../controllers/tourController.dart';
+import '../../model/employeeListModel.dart';
 import '../noDataFound/noDataFoundScreen.dart';
 
 class ExecutiveListActivity extends StatefulWidget {
@@ -29,8 +32,14 @@ class _ExecutiveListActivity extends State {
   late StreamSubscription<ConnectivityResult> _connectivitySubscription;
   TextEditingController searchController = TextEditingController();
 
-  List<TRFExecutiveProfileDetail>? _searchResult;
-  List<TRFExecutiveProfileDetail>? _executiveDetails;
+ // List<TRFExecutiveProfileDetail>? _searchResult;
+//  List<TRFExecutiveProfileDetail>? _executiveDetails;
+
+  List<Members>? _userDetails;
+  List<Members>? _searchResult;
+  EmployeeListModel? model;
+
+
 
   TRFExecutiveProfile? trfExecutiveProfile;
 
@@ -46,13 +55,22 @@ class _ExecutiveListActivity extends State {
             _connectionStatus = value;
           }));
         });
-    getTrfExcutiveDetails();
-    /*if (mounted) {
-      Get.find<TourController>().getExecutivesList();
-    }*/
+    //getTrfExcutiveDetails();
+    getEmployeeList();
+  }
+  Future<void> getEmployeeList() async {
+    _userDetails = [];
+    _searchResult = [];
+    model = await Get.find<TargetController>().getEmployeeList();
+    _userDetails = model!.data!.members!;
+    // _searchResult = model!.data!.members!;
+
+    if (mounted) {
+      setState(() {});
+    }
   }
 
-  Future<void> getTrfExcutiveDetails() async {
+ /* Future<void> getTrfExcutiveDetails() async {
     _executiveDetails = [];
     _searchResult = [];
     trfExecutiveProfile = await Get.find<TourController>().getExecutivesList();
@@ -63,12 +81,12 @@ class _ExecutiveListActivity extends State {
       setState(() {});
     }
   }
-
+*/
   @override
   Widget build(BuildContext context) {
     return _connectionStatus == AppConstants.connectivityCheck
         ? const NoInternetScreen()
-        : GetBuilder<TourController>(builder: (tourController) {
+        : GetBuilder<TargetController>(builder: (targetController) {
       return Scaffold(
         appBar: AppBar(
           iconTheme: IconThemeData(
@@ -122,12 +140,53 @@ class _ExecutiveListActivity extends State {
                 const SizedBox(
                   height: 20,
                 ),
-                tourController.isLoading &&
-                    tourController.trfExecutiveProfile == null
+                ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor:
+                      MaterialStateProperty.all<Color>(
+                          primaryColor),
+                      foregroundColor:
+                      MaterialStateProperty.all<Color>(
+                          primaryColor),
+                      textStyle:
+                      MaterialStateProperty.all<TextStyle>(
+                        const TextStyle(fontSize: 16),
+                      ),
+                      padding:
+                      MaterialStateProperty.all<EdgeInsets>(
+                        const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 8),
+                      ),
+                      shape: MaterialStateProperty.all<
+                          RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius:
+                          BorderRadius.circular(10),
+                        ),
+                      ),
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context)=>ScoreCardScreen(excutive_id: Get.find<AuthController>().getUserId())));
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: Text(
+                        'Check your Scorecard',
+                        style: const TextStyle(
+                            fontSize: 14,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w500),
+                      ),
+                    )),
+                const SizedBox(
+                  height: 20,
+                ),
+                targetController.isLoading &&
+                    model == null
                     ? const Center(
                   child: CircularProgressIndicator(),
                 )
-                    : tourController.trfExecutiveProfile!.data == null || tourController.trfExecutiveProfile!.data!.isEmpty
+                    : model!.data!.members == null || model!.data!.members!.isEmpty
                     ? Center(
                     child: SizedBox(
                         height:
@@ -141,6 +200,8 @@ class _ExecutiveListActivity extends State {
                   child: ListView.builder(
                       shrinkWrap: true,
                       itemCount: _searchResult!.length,
+                      physics:
+                      const NeverScrollableScrollPhysics(),
                       itemBuilder: (BuildContext context,
                           int index) {
                         return (Padding(
@@ -215,7 +276,9 @@ class _ExecutiveListActivity extends State {
                   padding: EdgeInsets.only(bottom: 10),
                   child: ListView.builder(
                       shrinkWrap: true,
-                      itemCount: _executiveDetails!.length,
+                      itemCount: _userDetails!.length,
+                      physics:
+                      const NeverScrollableScrollPhysics(),
                       itemBuilder: (BuildContext context,
                           int index) {
                         return (Padding(
@@ -226,7 +289,7 @@ class _ExecutiveListActivity extends State {
                               PersistentNavBarNavigator.pushNewScreen(
                                 context,
                                 screen:  ScoreCardScreen(
-                                    excutive_id: _executiveDetails![index]!.id.toString()),
+                                    excutive_id: _userDetails![index]!.id.toString()),
                                 withNavBar: false,
                               );
                              /* Navigator.of(context).push(
@@ -254,7 +317,7 @@ class _ExecutiveListActivity extends State {
                                       .start,
                                   children: [
                                     Text(
-                                      'Name: ${_executiveDetails![index].name!.toString()}',
+                                      'Name: ${_userDetails![index].name!.toString()}',
                                       style: TextStyle(
                                           color:
                                           Colors.grey,
@@ -267,7 +330,7 @@ class _ExecutiveListActivity extends State {
                                       height: 5,
                                     ),
                                     Text(
-                                      'Email: ${_executiveDetails![index].email!.toString()}',
+                                      'Email: ${_userDetails![index].email!.toString()}',
                                       style: TextStyle(
                                           color:
                                           Colors.grey,
@@ -280,7 +343,7 @@ class _ExecutiveListActivity extends State {
                                       height: 5,
                                     ),
                                     Text(
-                                      'Mobile: ${_executiveDetails![index].mobile!.toString()}',
+                                      'Mobile: ${_userDetails![index].mobile!.toString()}',
                                       style: TextStyle(
                                           color:
                                           Colors.grey,
@@ -304,8 +367,27 @@ class _ExecutiveListActivity extends State {
       );
     });
   }
-
   onSearchTextChanged(String text) async {
+    _searchResult!.clear();
+    if (text.isEmpty) {
+      // _searchResult = _userDetails;
+      setState(() {});
+      return;
+    }
+
+    for (var members in _userDetails!) {
+      if (members.name!.toLowerCase().contains(text.toLowerCase())) {
+        _searchResult!.add(members);
+      }
+    }
+    // for (var userDetail in _userDetails) {
+    //   _searchResult.add(userDetail);
+    // }
+
+    setState(() {});
+  }
+
+ /* onSearchTextChanged(String text) async {
     _searchResult!.clear();
     if (text.isEmpty) {
       // _searchResult = _userDetails;
@@ -323,5 +405,5 @@ class _ExecutiveListActivity extends State {
     // }
 
     setState(() {});
-  }
+  }*/
 }
