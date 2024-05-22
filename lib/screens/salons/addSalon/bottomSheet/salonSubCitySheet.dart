@@ -48,7 +48,21 @@ class _SalonSubCitySheet extends State<SalonSubCitySheet> {
                 _connectionStatus = value;
               }));
         });
-    //Get.find<SalonController>().getEmpRouteList();
+    if(mounted)
+      {
+        Future.delayed(Duration.zero,() async  {
+        employeeRouteListModel =
+        await Get.find<SalonController>().getEmpRouteList(key: "");
+        empRouteList = employeeRouteListModel!.data!;
+        if (empRouteList!.isNotEmpty) {
+          isDetailsVisible = true;
+        }
+        else{
+          showCustomSnackBar('City list not found!',isError: false);
+        }
+        });
+      }
+
   }
 
   @override
@@ -103,10 +117,13 @@ class _SalonSubCitySheet extends State<SalonSubCitySheet> {
                     SizedBox(
                       height: 20,
                     ),
-                    Visibility(
-                      visible: isDetailsVisible ? true : false,
-                      child: empRouteList == null || empRouteList!.isEmpty
-                          ? Center(child: SizedBox())
+                    // Visibility(
+                    //   visible: isDetailsVisible ? true : false,
+                    //   child:
+                    salonControlller.isLoading ?
+                    Center(child: CircularProgressIndicator()) :
+                      empRouteList == null || empRouteList!.isEmpty
+                          ? Center(child: Text('City not found in list'))
                           : Padding(
                         padding: EdgeInsets.only(bottom: 10),
                         child:ListView.separated(
@@ -164,7 +181,7 @@ class _SalonSubCitySheet extends State<SalonSubCitySheet> {
                           },
                         ),
                       ),
-                    ),
+                   // ),
 
                   ],
                 ),
@@ -175,7 +192,7 @@ class _SalonSubCitySheet extends State<SalonSubCitySheet> {
     });
   }
   onSearchTextChanged(String text) async {
-    if (text.isNotEmpty && text.length > 3) {
+    if (text.isNotEmpty && text.length > 2) {
       Future.delayed(Duration.zero, () async {
         employeeRouteListModel =
         await Get.find<SalonController>().getEmpRouteList(key: text);
@@ -184,7 +201,7 @@ class _SalonSubCitySheet extends State<SalonSubCitySheet> {
           isDetailsVisible = true;
         }
         else{
-          showCustomSnackBar('City not found in list!',isError: false);
+         // showCustomSnackBar('City not found in list!',isError: false);
         }
       });
       setState(() {});

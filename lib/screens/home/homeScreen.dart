@@ -1,6 +1,11 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:shimmers/constant/custom_snackbar.dart';
 import 'package:shimmers/model/profileModel.dart';
@@ -68,9 +73,10 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text(
-              'Location services are disabled. Please enable the services')));
+      // ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      //     content: Text(
+      //         'Location services are disabled. Please enable the services')));
+      showDisabledDialog();
       return false;
     }
     permission = await Geolocator.checkPermission();
@@ -82,6 +88,49 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       //       const SnackBar(content: Text('Location permissions are denied')));
       //   return false;
       // }
+      if (permission == LocationPermission.denied) {
+        showCupertinoDialog(
+          context: context,
+          builder: (context) =>
+              CupertinoAlertDialog(
+                title: const Text('Location Permission Denied'),
+                content:
+                const Text('You need to enable location permission in setting'),
+                actions: <Widget>[
+                  CupertinoDialogAction(
+                    child: const Text('Cancel'),
+                    onPressed: () {
+                      if (Platform.isAndroid) {
+                        exit(0);
+                        //SystemNavigator.pop();
+                        // Navigator.of(context).pop();
+                        // Navigator.pop(context);
+                      } else if (Platform.isIOS) {
+                        // iOS-specific code
+                        exit(0);
+                        // SystemNavigator.pop();
+                        // Navigator.of(context).pop();
+                        // Navigator.pop(context);
+                      }
+                    },
+                  ),
+                  CupertinoDialogAction(
+                    child: const Text('Setting'),
+                    onPressed: () {
+                      openAppSettings();
+                      Navigator.of(context).pop(false);
+                      SystemNavigator.pop();
+
+                      // Future.delayed(const Duration(milliseconds: 2000), () {
+                      //   SystemNavigator.pop();
+                      // });
+                    },
+                  ),
+                ],
+              ),
+        );
+      }
+      return false;
     }
     if (permission == LocationPermission.deniedForever) {
       // ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
@@ -90,13 +139,84 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
       // setState(() async {
       permission = await Geolocator.requestPermission();
-      // });
+      if (permission == LocationPermission.deniedForever) {
+        showCupertinoDialog(
+          context: context,
+          builder: (context) =>
+              CupertinoAlertDialog(
+                title: const Text('Location Permission Denied'),
+                content:
+                const Text('You need to enable location permission in setting'),
+                actions: <Widget>[
+                  CupertinoDialogAction(
+                    child: const Text('Cancel'),
+                    onPressed: () {
+                      if (Platform.isAndroid) {
+                        exit(0);
+                        //SystemNavigator.pop();
+                        // Navigator.of(context).pop();
+                        // Navigator.pop(context);
+                      } else if (Platform.isIOS) {
+                        // iOS-specific code
+                        exit(0);
+                        // SystemNavigator.pop();
+                        // Navigator.of(context).pop();
+                        // Navigator.pop(context);
+                      }
+                    },
+                  ),
+                  CupertinoDialogAction(
+                    child: const Text('Setting'),
+                    onPressed: () {
+                      openAppSettings();
+                      Navigator.of(context).pop(false);
+                      SystemNavigator.pop();
+                    },
+                  ),
+                ],
+              ),
+        );
+      }
 
-      // openAppSettings();
-
-      // return false;
+      return false;
     }
     return true;
+  }
+
+  void showDisabledDialog() {
+    showCupertinoDialog(
+      context: context,
+      builder: (context) => CupertinoAlertDialog(
+        title: const Text('Location Services Disabled'),
+        content: const Text('You need to enable location services'),
+        actions: <Widget>[
+          CupertinoDialogAction(
+            child: const Text('Ok'),
+            onPressed: () {
+              if (Platform.isAndroid) {
+                exit(0);
+                //SystemNavigator.pop();
+                // Navigator.of(context).pop();
+                // Navigator.pop(context);
+              } else if (Platform.isIOS) {
+                // iOS-specific code
+                exit(0);
+                // SystemNavigator.pop();
+                // Navigator.of(context).pop();
+                // Navigator.pop(context);
+              }
+            },
+          ),
+          // CupertinoDialogAction(
+          //   child: const Text('Setting'),
+          //   onPressed: () {
+          //     openAppSettings();
+          //     Navigator.of(context).pop(false);
+          //   },
+          // ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -376,15 +496,17 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             Center(
                               child: InkWell(
                                 onTap: () {
-                                    if (userRole == 'sales_manager') {
-                                      Navigator.of(context).push(MaterialPageRoute(
-                                          builder: (context) => SetTargetScreen(
-                                            from: 'target',
-                                          )));
+                                  if (userRole == 'sales_manager') {
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                SetTargetScreen(
+                                                  from: 'target',
+                                                )));
                                   } else {
-                                      showCustomSnackBar(
-                                          'You dont have the permission to use this module',
-                                          isError: true);
+                                    showCustomSnackBar(
+                                        'You dont have the permission to use this module',
+                                        isError: true);
                                   }
                                 },
                                 child: SizedBox(
@@ -464,7 +586,6 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             Center(
                               child: InkWell(
                                 onTap: () {
-
                                   if (userRole == 'sales_manager') {
                                     //Sales Manager see the activities of sales executive
                                     Navigator.of(context).push(
@@ -477,10 +598,9 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                             builder: (context) =>
                                                 ScoreCardScreen(
                                                     excutive_id: Get.find<
-                                                        AuthController>()
+                                                            AuthController>()
                                                         .getUserId())));
                                   }
-
                                 },
                                 child: SizedBox(
                                   height: 135,
@@ -778,9 +898,9 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                     screen: LiveTrackingScreen(),
                                     withNavBar: false,
                                   );
-                                }
-                                else{
-                                  showCustomSnackBar('You dont have the permission to use this module!');
+                                } else {
+                                  showCustomSnackBar(
+                                      'You dont have the permission to use this module!');
                                 }
                               },
                               child: SizedBox(

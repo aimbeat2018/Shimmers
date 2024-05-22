@@ -947,8 +947,14 @@ class _AddFinalSalonScreenState extends State<AddFinalSalonScreen> {
                               });*/
                                     //
                                     showModalBottomSheet(
+                                      isScrollControlled: true,
                                       context: context,
-                                      builder: (context) => SalonSubCitySheet(),
+                                      builder: (context) {
+                                        return Container(
+                                          height: MediaQuery.of(context).size.height*0.8,
+                                            child: SalonSubCitySheet()
+                                        );
+                                      },
                                       backgroundColor: Colors.transparent,
                                     ).then((empRouteModel) => {
                                           setState(() {
